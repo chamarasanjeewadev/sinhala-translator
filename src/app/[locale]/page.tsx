@@ -518,7 +518,7 @@ export default async function LandingPage({ params }: Props) {
                   <AudioWaveform className="w-5 h-5 text-white" />
                 </div>
                 <span className="text-xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
-                  HelaVoice
+                  HelaVoice.lk
                 </span>
               </div>
               <p className="text-sm text-slate-600 leading-relaxed font-medium">

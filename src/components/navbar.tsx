@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
+import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 import { AudioWaveform } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -79,14 +80,20 @@ export function Navbar() {
   const d = dict.navbar;
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-slate-200/50 shadow-sm">
+    <header className="sticky top-0 z-50 w-full bg-gradient-to-r from-blue-50/90 to-yellow-50/90 backdrop-blur-md border-b border-slate-200/50 shadow-sm">
       <div className="max-w-7xl mx-auto flex h-16 items-center justify-between px-6 lg:px-8">
         <LocaleLink href="/" className="flex items-center gap-2.5">
-          <div className="w-9 h-9 bg-gradient-to-br from-slate-900 to-slate-700 rounded-xl flex items-center justify-center shadow-lg shadow-slate-900/20">
-            <AudioWaveform className="w-4 h-4 text-white" />
+          <div className="flex items-center justify-center">
+             <Image
+              src="/logo.jpeg"
+              alt="HelaVoice.lk"
+              width={36}
+              height={36}
+              className="w-9 h-9 rounded-xl object-cover shadow-lg shadow-slate-900/20"
+            />
           </div>
           <span className="text-lg font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
-            HelaVoice
+            HelaVoice.lk
           </span>
         </LocaleLink>
 
@@ -100,19 +107,27 @@ export function Navbar() {
               >
                 {d.dashboard}
               </LocaleLink>
-              <LocaleLink
-                href="/pricing"
-                className="text-sm text-slate-600 hover:text-slate-900 transition-colors font-medium hidden sm:block"
-              >
-                {d.buyCredits}
+              <LocaleLink href="/pricing">
+                <Button className="bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 text-white shadow-md rounded-full px-6 mr-4" size="sm">
+                  {d.buyCredits}
+                </Button>
               </LocaleLink>
               {credits !== null && <CreditBalance credits={credits} />}
+              <div className="flex flex-col items-end mr-2">
+                 <span className="text-xs font-medium text-slate-500 hidden sm:inline-block">Logged in as</span>
+                 <span className="text-sm font-semibold text-slate-900">{user.email}</span>
+              </div>
               <Button variant="outline" size="sm" onClick={handleSignOut}>
                 {d.signOut}
               </Button>
             </>
           ) : (
             <>
+              <LocaleLink href="/pricing">
+                <Button className="bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 text-white shadow-md rounded-full px-6" size="sm">
+                  {d.buyCredits}
+                </Button>
+              </LocaleLink>
               <LocaleLink href="/login">
                 <Button
                   variant="ghost"

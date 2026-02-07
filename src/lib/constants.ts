@@ -4,14 +4,14 @@ export const CREDIT_PACKAGES: CreditPackage[] = [
   {
     id: "pack_10",
     name: "Starter",
-    credits: 10,
+    credits: 60,
     price: 500,
     priceDisplay: "$5",
   },
   {
     id: "pack_50",
     name: "Popular",
-    credits: 50,
+    credits: 300,
     price: 2000,
     priceDisplay: "$20",
     popular: true,
@@ -19,13 +19,20 @@ export const CREDIT_PACKAGES: CreditPackage[] = [
   {
     id: "pack_100",
     name: "Pro",
-    credits: 100,
-    price: 3500,
-    priceDisplay: "$35",
+    credits: 700,
+    price: 3000,
+    priceDisplay: "$30",
+  },
+  {
+    id: "pack_150",
+    name: "Premium",
+    credits: 1000,
+    price: 5000,
+    priceDisplay: "$50",
   },
 ];
 
-export const FREE_CREDITS = 30;
+export const FREE_CREDITS = 50;
 export const CREDIT_PER_MINUTE = 1;
 export const CHUNK_DURATION_SECONDS = 120; // 2 minutes per chunk - balance between performance and request size
 export const TARGET_SAMPLE_RATE = 16000;
@@ -44,5 +51,5 @@ export const SUPPORTED_AUDIO_TYPES = [
   "audio/x-m4a",
 ];
 
-export const PROTECTED_ROUTES = ["/dashboard", "/pricing"];
+export const PROTECTED_ROUTES = ["/dashboard"];
 export const AUTH_ROUTES = ["/login", "/signup"];

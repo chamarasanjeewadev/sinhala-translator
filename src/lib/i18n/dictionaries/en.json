@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "HelaVoice \u2014 Sinhala Audio Transcription",
+    "title": "HelaVoice.lk \u2014 Sinhala Audio Transcription",
     "description": "Professional Sinhala speech-to-text powered by advanced AI. Record or upload audio and get accurate transcriptions instantly."
   },
   "navbar": {
@@ -8,7 +8,8 @@
     "buyCredits": "Buy Credits",
     "signOut": "Sign Out",
     "logIn": "Log In",
-    "signUp": "Sign Up"
+    "signUp": "Sign Up",
+    "pricing": "Pricing"
   },
   "landing": {
     "badge": "AI-Powered Sinhala Transcription",
@@ -79,7 +80,7 @@
     "footerLegal": "Legal",
     "footerPrivacy": "Privacy",
     "footerTerms": "Terms",
-    "footerCopyright": "\u00a9 2025 HelaVoice. All rights reserved."
+    "footerCopyright": "\u00a9 2025 HelaVoice.lk. All rights reserved."
   },
   "auth": {
     "logInTitle": "Log In",

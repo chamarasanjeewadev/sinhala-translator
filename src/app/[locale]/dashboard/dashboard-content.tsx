@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import Image from "next/image";
 import {
   Mic,
   Search,
@@ -174,33 +175,31 @@ export function DashboardContent({
   const noCredits = credits <= 0;
 
   return (
-    <div className="min-h-screen bg-[#0f0f1e] text-white pb-40">
+    <div className="min-h-screen bg-slate-50 text-slate-900 pb-40">
       {/* Header */}
-      <div className="border-b border-white/10 bg-[#0f0f1e]/80 backdrop-blur-xl sticky top-0 z-40">
+      <div className="border-b border-slate-200 bg-gradient-to-r from-blue-50/90 to-yellow-50/90 backdrop-blur-xl sticky top-0 z-40">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           {/* Left: Brand + Nav */}
           <div className="flex items-center gap-6">
             <LocaleLink href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-violet-500 to-blue-600 rounded-lg flex items-center justify-center">
-                <AudioWaveform className="w-4 h-4 text-white" />
-              </div>
-              <span className="text-lg font-bold hidden sm:block">
-                HelaVoice
+              <Image
+                src="/logo.jpeg"
+                alt="HelaVoice.lk"
+                width={32}
+                height={32}
+                className="w-8 h-8 rounded-lg object-cover shadow-md"
+              />
+              <span className="text-lg font-bold hidden sm:block text-slate-900">
+                HelaVoice.lk
               </span>
             </LocaleLink>
 
             <nav className="hidden sm:flex items-center gap-1">
               <LocaleLink
                 href="/dashboard"
-                className="px-3 py-1.5 rounded-lg text-sm font-medium bg-white/10 text-white"
+                className="px-3 py-1.5 rounded-lg text-sm font-medium bg-white border border-slate-200 text-slate-900 shadow-sm"
               >
                 {d.title}
-              </LocaleLink>
-              <LocaleLink
-                href="/pricing"
-                className="px-3 py-1.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all"
-              >
-                {nav.buyCredits}
               </LocaleLink>
             </nav>
           </div>
@@ -208,13 +207,13 @@ export function DashboardContent({
           {/* Right: Credits + Language + Sign Out */}
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Credits pill */}
-            <div className="bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500 to-blue-600 flex items-center justify-center shrink-0">
+            <div className="bg-white border border-slate-200 rounded-xl px-3 py-1.5 flex items-center gap-2 shadow-sm">
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500 to-blue-600 flex items-center justify-center shrink-0 shadow-md">
                 <FileText className="w-3.5 h-3.5 text-white" />
               </div>
               <div className="leading-tight">
-                <div className="text-[10px] text-gray-500">Credits</div>
-                <div className="text-sm font-bold">{credits}</div>
+                <div className="text-[10px] text-slate-500">Credits</div>
+                <div className="text-sm font-bold text-slate-900">{credits}</div>
               </div>
             </div>
 
@@ -225,13 +224,13 @@ export function DashboardContent({
               {d.buyCredits}
             </LocaleLink>
 
-            <div className="[&_button]:text-gray-400 [&_button]:hover:text-white">
+            <div className="[&_button]:text-slate-500 [&_button]:hover:text-slate-900">
               <LanguageSwitcher />
             </div>
 
             <button
               onClick={handleSignOut}
-              className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-gray-400 hover:text-white hover:bg-white/5 transition-all"
+              className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all"
             >
               <LogOut className="w-4 h-4" />
               <span className="hidden sm:inline">{nav.signOut}</span>
@@ -251,8 +250,8 @@ export function DashboardContent({
                 onClick={() => setFilter(f)}
                 className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                   filter === f
-                    ? "bg-white text-black"
-                    : "bg-white/5 text-gray-400 hover:bg-white/10"
+                    ? "bg-slate-900 text-white shadow-md"
+                    : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300"
                 }`}
               >
                 {f === "all" ? "All" : f === "today" ? "Today" : "This Week"}
@@ -262,31 +261,31 @@ export function DashboardContent({
 
           {showSearch ? (
             <div className="relative flex items-center gap-2">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input
                 type="text"
                 autoFocus
                 placeholder="Search transcriptions..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent w-56"
+                className="bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent w-56 shadow-sm"
               />
               <button
                 onClick={() => {
                   setShowSearch(false);
                   setSearchQuery("");
                 }}
-                className="w-8 h-8 bg-white/5 hover:bg-white/10 rounded-lg flex items-center justify-center"
+                className="w-8 h-8 bg-slate-100 hover:bg-slate-200 rounded-lg flex items-center justify-center text-slate-500"
               >
-                <X className="w-4 h-4 text-gray-400" />
+                <X className="w-4 h-4" />
               </button>
             </div>
           ) : (
             <button
               onClick={() => setShowSearch(true)}
-              className="w-9 h-9 bg-white/5 hover:bg-white/10 rounded-xl flex items-center justify-center transition-all"
+              className="w-9 h-9 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl flex items-center justify-center transition-all shadow-sm"
             >
-              <Search className="w-4 h-4 text-gray-400" />
+              <Search className="w-4 h-4 text-slate-400" />
             </button>
           )}
         </div>
@@ -294,13 +293,13 @@ export function DashboardContent({
         {/* Transcription Grid */}
         {filteredTranscriptions.length === 0 ? (
           <div className="text-center py-20">
-            <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-5">
-              <Mic className="w-10 h-10 text-gray-600" />
+            <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-5">
+              <Mic className="w-10 h-10 text-slate-400" />
             </div>
-            <h3 className="text-xl font-semibold mb-2">
+            <h3 className="text-xl font-semibold mb-2 text-slate-900">
               No transcriptions yet
             </h3>
-            <p className="text-gray-500 max-w-sm mx-auto">
+            <p className="text-slate-500 max-w-sm mx-auto">
               Tap the microphone button below to record or upload Sinhala audio
             </p>
           </div>
@@ -308,17 +307,17 @@ export function DashboardContent({
           <div className="space-y-8">
             {Object.entries(groupedTranscriptions).map(([date, items]) => (
               <div key={date}>
-                <h2 className="text-sm font-semibold text-gray-500 mb-4 uppercase tracking-wider">
+                <h2 className="text-sm font-semibold text-slate-500 mb-4 uppercase tracking-wider">
                   {date}
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {items.map((t) => (
                     <div
                       key={t.id}
-                      className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 hover:bg-white/[0.06] transition-all group"
+                      className="bg-white border border-slate-200 rounded-2xl p-5 hover:shadow-lg hover:border-slate-300 transition-all group"
                     >
                       <div className="flex items-start justify-between mb-3">
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-slate-400 font-medium">
                           {new Date(t.created_at).toLocaleTimeString("en-US", {
                             hour: "numeric",
                             minute: "2-digit",
@@ -330,23 +329,23 @@ export function DashboardContent({
                             onClick={() =>
                               handleCopy(t.transcription_text, t.id)
                             }
-                            className="w-7 h-7 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center"
+                            className="w-7 h-7 bg-slate-100 hover:bg-slate-200 rounded-lg flex items-center justify-center transition-colors"
                           >
                             {copiedId === t.id ? (
-                              <Check className="w-3.5 h-3.5 text-green-400" />
+                              <Check className="w-3.5 h-3.5 text-green-500" />
                             ) : (
-                              <Copy className="w-3.5 h-3.5 text-gray-400" />
+                              <Copy className="w-3.5 h-3.5 text-slate-400" />
                             )}
                           </button>
                           <button
                             onClick={() => handleDelete(t.id)}
-                            className="w-7 h-7 bg-white/10 hover:bg-red-500/20 rounded-lg flex items-center justify-center"
+                            className="w-7 h-7 bg-slate-100 hover:bg-red-50 hover:text-red-500 rounded-lg flex items-center justify-center transition-colors"
                           >
-                            <Trash2 className="w-3.5 h-3.5 text-gray-400" />
+                            <Trash2 className="w-3.5 h-3.5 text-slate-400 group-hover/btn:text-red-500" />
                           </button>
                         </div>
                       </div>
-                      <p className="text-sm text-gray-300 line-clamp-4 leading-relaxed">
+                      <p className="text-sm text-slate-600 line-clamp-4 leading-relaxed">
                         {t.transcription_text}
                       </p>
                     </div>
@@ -376,11 +375,11 @@ export function DashboardContent({
         </div>
         {noCredits && (
           <div className="pointer-events-auto text-center pb-4">
-            <p className="text-xs text-red-400">
+            <p className="text-xs text-red-600 font-medium">
               {d.outOfCredits}{" "}
               <LocaleLink
                 href="/pricing"
-                className="underline hover:text-red-300"
+                className="underline hover:text-red-800"
               >
                 {d.buyCredits}
               </LocaleLink>
