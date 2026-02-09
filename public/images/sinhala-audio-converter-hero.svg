@@ -1,0 +1,32 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg_gradient" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="wave_gradient" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="50%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg_gradient)" />
+  
+  <!-- Abstract Waveforms -->
+  <path opacity="0.5" d="M0 315 C 200 250, 400 380, 600 315 S 1000 250, 1200 315 V 630 H 0 Z" fill="url(#wave_gradient)" />
+  <path opacity="0.3" d="M0 315 C 300 400, 500 200, 800 315 S 1100 400, 1200 315 V 630 H 0 Z" fill="url(#wave_gradient)" />
+  
+  <!-- Tech Elements -->
+  <circle cx="600" cy="250" r="60" stroke="url(#wave_gradient)" stroke-width="4" fill="none" />
+  <circle cx="600" cy="250" r="40" fill="#3b82f6" opacity="0.8">
+    <animate attributeName="r" values="40;45;40" dur="2s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.8;0.6;0.8" dur="2s" repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Microphone Icon -->
+  <path d="M600 220 c-11 0-20 9-20 20 v20 c0 11 9 20 20 20 s20-9 20-20 v-20 c0-11-9-20-20-20 z M630 260 c0 16.6-13.4 30-30 30 s-30-13.4-30-30 h-10 c0 20 15 36.6 34 39.6 v15.4 h-20 v10 h50 v-10 h-20 v-15.4 c19-3 34-19.6 34-39.6 h-10 z" fill="white" transform="translate(-600, -250) scale(1) translate(600, 250)" />
+  
+  <!-- Text -->
+  <text x="600" y="450" font-family="Arial, sans-serif" font-weight="bold" font-size="48" fill="white" text-anchor="middle">Sinhala Audio to Text</text>
+  <text x="600" y="500" font-family="Arial, sans-serif" font-size="24" fill="#94a3b8" text-anchor="middle">Automated Transcription Technology</text>
+</svg>

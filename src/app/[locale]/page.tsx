@@ -13,9 +13,28 @@ import {
 import { CREDIT_PACKAGES, FREE_CREDITS } from "@/lib/constants";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { locales, type Locale } from "@/lib/i18n/config";
-import { localePath, t } from "@/lib/i18n/utils";
+import { localePath, t, generateAlternates } from "@/lib/i18n/utils";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  if (!locales.includes(locale as Locale)) return {};
+  const dict = await getDictionary(locale as Locale);
+
+  return {
+    alternates: generateAlternates(locale as Locale, "/"),
+    openGraph: {
+      url:
+        locale === "en"
+          ? "https://helavoice.lk"
+          : `https://helavoice.lk/${locale}`,
+    },
+    title: dict.metadata.title,
+    description: dict.metadata.description,
+  };
+}
 
 const waveformBars = [
   { height: 65, duration: 0.7 },
@@ -91,8 +110,30 @@ export default async function LandingPage({ params }: Props) {
 
   const lp = (path: string) => localePath(path, locale as Locale);
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://helavoice.lk";
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "HelaVoice.lk",
+    url: siteUrl,
+    description: d.heroSubtitle,
+    applicationCategory: "MultimediaApplication",
+    operatingSystem: "Web",
+    inLanguage: ["en", "si"],
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+      description: `${FREE_CREDITS} free credits on signup`,
+    },
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Hero Section */}
       <section className="pt-24 pb-24 px-6 lg:px-8 relative overflow-hidden">
         <div className="absolute inset-0 -z-10">
@@ -537,6 +578,14 @@ export default async function LandingPage({ params }: Props) {
                     className="text-sm text-slate-600 hover:text-slate-900 transition-colors font-medium"
                   >
                     {d.footerFeatures}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={lp("/blog")}
+                    className="text-sm text-slate-600 hover:text-slate-900 transition-colors font-medium"
+                  >
+                    {d.footerBlog}
                   </Link>
                 </li>
                 <li>

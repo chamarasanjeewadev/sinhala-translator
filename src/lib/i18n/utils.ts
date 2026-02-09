@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { defaultLocale, locales, type Locale } from "./config";
 
 /**
@@ -36,4 +37,30 @@ export function t(
   return template.replace(/\{(\w+)\}/g, (_, key) =>
     vars[key] !== undefined ? String(vars[key]) : `{${key}}`
   );
+}
+
+/**
+ * Generate page-specific `alternates` metadata (canonical + hreflang).
+ * `path` is the locale-independent path, e.g. "/" or "/pricing".
+ */
+export function generateAlternates(
+  locale: Locale,
+  path: string
+): Metadata["alternates"] {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://helavoice.lk";
+  const normalizedPath = path === "/" ? "" : path;
+
+  const canonical =
+    locale === defaultLocale
+      ? `${siteUrl}${normalizedPath}`
+      : `${siteUrl}/${locale}${normalizedPath}`;
+
+  return {
+    canonical,
+    languages: {
+      en: `${siteUrl}${normalizedPath}`,
+      si: `${siteUrl}/si${normalizedPath}`,
+      "x-default": `${siteUrl}${normalizedPath}`,
+    },
+  };
 }

@@ -21,7 +21,19 @@ export async function middleware(request: NextRequest) {
     return await updateSession(request);
   }
 
+  // Redirect /en (default locale) to / to avoid double prefixing and strictly enforce clean URLs
+  if (pathname === `/${defaultLocale}` || pathname.startsWith(`/${defaultLocale}/`)) {
+    const newPath = pathname.replace(new RegExp(`^/${defaultLocale}`), "") || "/";
+    const url = request.nextUrl.clone();
+    url.pathname = newPath;
+    return NextResponse.redirect(url);
+  }
+
   const { locale } = getLocaleFromPath(pathname);
+
+  // Set locale header so the root layout can read it for <html lang>
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-locale", locale);
 
   // For default locale (en), the URL has no prefix — rewrite to /en/...
   // For si locale, the URL already has /si prefix — rewrite to /si/... (handled by [locale] segment)
@@ -29,16 +41,21 @@ export async function middleware(request: NextRequest) {
     // Rewrite /dashboard → /en/dashboard so the [locale] layout picks it up
     const url = request.nextUrl.clone();
     url.pathname = `/en${pathname}`;
-    const response = NextResponse.rewrite(url);
+    const response = NextResponse.rewrite(url, {
+      request: { headers: requestHeaders },
+    });
     // Run session update logic with locale awareness
     return await updateSession(request, locale, response);
   }
 
-  return await updateSession(request, locale);
+  const response = NextResponse.next({
+    request: { headers: requestHeaders },
+  });
+  return await updateSession(request, locale, response);
 }
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon\\.svg|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$|api/stripe/webhook).*)",
+    "/((?!_next/static|_next/image|favicon\\.svg|robots\\.txt|sitemap\\.xml|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$|api/stripe/webhook).*)",
   ],
 };
