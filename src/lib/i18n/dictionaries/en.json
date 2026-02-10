@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "HelaVoice.lk \u2014 Sinhala Audio Transcription",
+    "title": "HelaVoice.lk — Sinhala Audio Transcription",
     "description": "Professional Sinhala speech-to-text powered by advanced AI. Record or upload audio and get accurate transcriptions instantly."
   },
   "navbar": {
@@ -22,7 +22,7 @@
     "noSubscription": "No subscription",
     "poweredByGemini": "Powered by Google AI",
     "recording": "Recording",
-    "demoTranscript": "\u0d86\u0dba\u0dd4\u0db6\u0ddd\u0dc0\u0db1\u0dca, \u0db8\u0dd9\u0dba \u0dc4\u0dd9\u0dc5 \u0dc4\u0da7 \u0db4\u0dbb\u0dd3\u0d9a\u0dca\u0dc2\u0dab\u0dba\u0d9a\u0dd2...",
+    "demoTranscript": "ආයුබෝවන්, මෙය හෙළ හට පරීක්ෂණයකි...",
     "demoTitle1": "Real-time transcription",
     "demoTitle2": "that just works",
     "demoDesc": "Record directly in your browser or upload audio files. Get instant, accurate transcriptions powered by Google Speech-to-Text.",
@@ -55,7 +55,7 @@
     "freeCreditsCount": "{count}",
     "freeCreditsOnSignup": "free credits on signup",
     "creditsNeverExpire": "credits never expire",
-    "infinity": "\u221e",
+    "infinity": "∞",
     "credits": "credits",
     "mostPopular": "Most Popular",
     "perCredit": "${price}/credit",
@@ -81,7 +81,7 @@
     "footerLegal": "Legal",
     "footerPrivacy": "Privacy",
     "footerTerms": "Terms",
-    "footerCopyright": "\u00a9 2025 HelaVoice.lk. All rights reserved."
+    "footerCopyright": "© 2025 HelaVoice.lk. All rights reserved."
   },
   "auth": {
     "logInTitle": "Log In",
@@ -93,19 +93,19 @@
     "email": "Email",
     "emailPlaceholder": "you@example.com",
     "password": "Password",
-    "passwordPlaceholder": "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",
+    "passwordPlaceholder": "••••••••",
     "signIn": "Sign In",
     "createAccount": "Create Account",
     "loading": "Loading...",
     "checkEmail": "Check your email for a confirmation link.",
-    "noAccount": "Don\u2019t have an account?",
+    "noAccount": "Don’t have an account?",
     "signUpLink": "Sign up",
     "hasAccount": "Already have an account?",
     "logInLink": "Log in"
   },
   "dashboard": {
     "title": "Dashboard",
-    "outOfCredits": "You\u2019re out of credits. Purchase more to continue transcribing.",
+    "outOfCredits": "You’re out of credits. Purchase more to continue transcribing.",
     "buyCredits": "Buy Credits",
     "transcribeTitle": "Transcribe Sinhala Audio",
     "transcribeDesc": "Record or upload audio to get a Sinhala transcription",
@@ -164,6 +164,6 @@
   },
   "languageSwitcher": {
     "en": "EN",
-    "si": "\u0dc3\u0dd2\u0d82"
+    "si": "සිං"
   }
 }

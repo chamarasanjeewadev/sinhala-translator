@@ -1,23 +1,25 @@
-"use client";
+import type { Metadata } from "next";
+import { getDictionary } from "@/lib/i18n/get-dictionary";
+import { locales, type Locale } from "@/lib/i18n/config";
+import { generateAlternates } from "@/lib/i18n/utils";
+import SignupContent from "./signup-content";
 
-import { LocaleLink } from "@/components/locale-link";
-import { AuthForm } from "@/components/auth-form";
-import { useDictionary } from "@/lib/i18n/dictionary-context";
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  if (!locales.includes(locale as Locale)) return {};
+  const dict = await getDictionary(locale as Locale);
+
+  return {
+    title: `${dict.auth.createAccountTitle} | ${dict.metadata.title}`,
+    description: dict.auth.signUpDesc,
+    alternates: generateAlternates(locale as Locale, "/signup"),
+  };
+}
 
 export default function SignupPage() {
-  const dict = useDictionary();
-
-  return (
-    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4">
-      <div className="w-full max-w-md space-y-4">
-        <AuthForm mode="signup" />
-        <p className="text-center text-sm text-muted-foreground">
-          {dict.auth.hasAccount}{" "}
-          <LocaleLink href="/login" className="underline hover:text-foreground">
-            {dict.auth.logInLink}
-          </LocaleLink>
-        </p>
-      </div>
-    </div>
-  );
+  return <SignupContent />;
 }

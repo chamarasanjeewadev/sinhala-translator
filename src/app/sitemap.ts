@@ -7,7 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://helavoice.lk';
   
   // Static routes
-  const routes = ['', '/about', '/features', '/pricing', '/contact'];
+  const routes = ['', '/pricing'];
   
   // Blog posts
   const postSlugs = getPostSlugs();
