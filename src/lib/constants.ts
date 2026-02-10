@@ -32,7 +32,7 @@ export const CREDIT_PACKAGES: CreditPackage[] = [
   },
 ];
 
-export const FREE_CREDITS = 50;
+export const FREE_CREDITS = 30;
 export const CREDIT_PER_MINUTE = 1;
 export const CHUNK_DURATION_SECONDS = 120; // 2 minutes per chunk - balance between performance and request size
 export const TARGET_SAMPLE_RATE = 16000;
