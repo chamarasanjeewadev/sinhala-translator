@@ -17,12 +17,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: locales.includes(locale as Locale)
       ? generateAlternates(locale as Locale, "/blog")
       : undefined,
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
   };
 }
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+export const dynamic = 'force-static';
 
 export default async function BlogPage({ params }: Props) {
   const { locale } = await params;
   const posts = getAllPosts();
+  console.log(`Building BlogPage for [${locale}]: Found ${posts.length} posts`);
 
   return (
     <div className="container mx-auto px-4 py-16 max-w-6xl">
@@ -59,7 +77,7 @@ export default async function BlogPage({ params }: Props) {
                 <span>{post.readTime}</span>
               </div>
               <h2 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors line-clamp-2">
-                <Link prefetch={true} href={`/${locale}/blog/${post.slug}`}>
+                <Link prefetch={true} href={`/${post.language || 'en'}/blog/${post.slug}`}>
                   {post.title}
                 </Link>
               </h2>
@@ -69,7 +87,7 @@ export default async function BlogPage({ params }: Props) {
               <div className="mt-auto pt-4 border-t border-border/50">
                 <Link
                   prefetch={true}
-                  href={`/${locale}/blog/${post.slug}`}
+                  href={`/${post.language || 'en'}/blog/${post.slug}`}
                   className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
                 >
                   Read more

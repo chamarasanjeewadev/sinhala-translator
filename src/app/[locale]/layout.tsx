@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { ViewTransitions } from "next-view-transitions";
 import { Toaster } from "@/components/ui/sonner";
 import { Navbar } from "@/components/navbar";
 import { DictionaryProvider } from "@/lib/i18n/dictionary-context";
@@ -63,7 +64,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 
-import { ViewTransitions } from "next-view-transitions";
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+// export const dynamic = 'force-static';
+
+
 
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;

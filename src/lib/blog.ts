@@ -16,6 +16,7 @@ export type Post = {
   author?: string;
   categories?: string[];
   keywords?: string[];
+  language?: string;
 };
 
 export function getPostSlugs() {
@@ -46,6 +47,7 @@ export function getPostBySlug(slug: string): Post {
     author: data.author,
     categories: data.categories,
     keywords: data.keywords,
+    language: data.language || 'en',
   };
 }
 

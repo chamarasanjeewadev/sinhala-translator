@@ -9,6 +9,10 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   if (!locales.includes(locale as Locale)) return {};
@@ -18,6 +22,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${dict.pricing.title} | ${dict.metadata.title}`,
     description: dict.pricing.subtitle,
     alternates: generateAlternates(locale as Locale, "/pricing"),
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
   };
 }
 

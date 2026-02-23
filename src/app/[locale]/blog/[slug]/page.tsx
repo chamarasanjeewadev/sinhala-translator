@@ -48,9 +48,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export async function generateStaticParams() {
   const posts = getPostSlugs();
-  return posts.map((slug) => ({
-    slug: slug.replace(/\.mdx$/, ""),
-  }));
+  const params = [];
+
+  for (const slug of posts) {
+    for (const locale of locales) {
+      params.push({
+        slug: slug.replace(/\.mdx$/, ""),
+        locale,
+      });
+    }
+  }
+
+  return params;
 }
 
 export default async function BlogPost({ params }: Props) {

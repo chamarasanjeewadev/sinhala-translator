@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { DashboardContent } from "./dashboard-content";
+import { redirect } from "next/navigation";
 
 export async function DashboardServer() {
   const supabase = await createClient();
@@ -9,7 +10,7 @@ export async function DashboardServer() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return null;
+    return redirect("/login");
   }
 
   const { data: profile } = await supabase
