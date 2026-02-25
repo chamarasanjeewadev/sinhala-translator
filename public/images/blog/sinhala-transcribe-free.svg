@@ -1,0 +1,23 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="100" y1="90" x2="1520" y2="850" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#052E2B"/>
+      <stop offset="0.5" stop-color="#0F766E"/>
+      <stop offset="1" stop-color="#34D399"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1370" cy="190" r="220" fill="#A7F3D0" fill-opacity="0.23"/>
+  <circle cx="230" cy="750" r="280" fill="#6EE7B7" fill-opacity="0.2"/>
+  <rect x="162" y="238" width="1276" height="328" rx="42" fill="#ECFDF5" fill-opacity="0.12" stroke="#D1FAE5" stroke-opacity="0.26"/>
+  <text x="250" y="336" fill="#ECFDF5" font-family="Arial, sans-serif" font-size="44" font-weight="700">Sinhala Transcribe Free</text>
+  <text x="250" y="398" fill="#D1FAE5" font-family="Arial, sans-serif" font-size="30" font-weight="500">නොමිලේ ක්‍රමවලින් සිංහල හඬ පෙළට හරවන්න</text>
+  <rect x="250" y="430" width="238" height="56" rx="18" fill="#ECFDF5" fill-opacity="0.92"/>
+  <text x="296" y="468" fill="#065F46" font-family="Arial, sans-serif" font-size="30" font-weight="700">FREE 30 CREDITS</text>
+  <g transform="translate(1184 302)">
+    <rect x="0" y="0" width="164" height="164" rx="34" fill="#ECFDF5" fill-opacity="0.24"/>
+    <circle cx="82" cy="82" r="46" fill="#ECFDF5"/>
+    <path d="M82 52V112" stroke="#047857" stroke-width="10" stroke-linecap="round"/>
+    <path d="M52 82H112" stroke="#047857" stroke-width="10" stroke-linecap="round"/>
+  </g>
+</svg>

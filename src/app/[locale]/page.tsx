@@ -109,6 +109,7 @@ export default async function LandingPage({ params }: Props) {
   ];
 
   const lp = (path: string) => localePath(path, locale as Locale);
+  const guidePath = lp("/blog/how-to-transcribe-sinhala-audio-to-text");
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://helavoice.lk";
   const jsonLd = {
@@ -544,6 +545,15 @@ export default async function LandingPage({ params }: Props) {
                 <span>{d.ctaButton}</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
+              <p className="mt-6 text-sm text-slate-300">
+                {d.guideIntro}{" "}
+                <Link
+                  href={guidePath}
+                  className="text-white font-semibold underline underline-offset-4 hover:text-slate-200"
+                >
+                  {d.guideLink}
+                </Link>
+              </p>
             </div>
           </div>
         </div>

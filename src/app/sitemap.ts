@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
-import { getPostSlugs } from '@/lib/blog';
-import { locales } from '@/lib/i18n/config';
+import { getAllPosts } from '@/lib/blog';
+import { defaultLocale, locales } from '@/lib/i18n/config';
 
 export const dynamic = 'force-static';
 
@@ -21,20 +21,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/blog',    priority: 0.8, changeFrequency: 'daily'  },
   ];
 
-  const postSlugs = getPostSlugs();
-  const blogPostRoutes = postSlugs.map((slug) => ({
-    path: `/blog/${slug.replace(/\.mdx$/, '')}`,
-    priority: 0.7,
-    changeFrequency: 'monthly' as SitemapEntry['changeFrequency'],
-  }));
-
-  const allRoutes = [...staticRoutes, ...blogPostRoutes];
-
   const entries: MetadataRoute.Sitemap = [];
 
   for (const locale of locales) {
     const prefix = locale === 'en' ? '' : `/${locale}`;
-    for (const { path, priority, changeFrequency } of allRoutes) {
+    for (const { path, priority, changeFrequency } of staticRoutes) {
       entries.push({
         url: `${BASE_URL}${prefix}${path}`,
         lastModified: now,
@@ -43,6 +34,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
       });
     }
   }
+
+  const blogEntries = getAllPosts().map((post) => {
+    const postLocale = post.language === 'si' ? 'si' : defaultLocale;
+    const prefix = postLocale === defaultLocale ? '' : `/${postLocale}`;
+    const postDate = new Date(post.date);
+
+    return {
+      url: `${BASE_URL}${prefix}/blog/${post.slug}`,
+      lastModified: Number.isNaN(postDate.getTime()) ? now : postDate,
+      changeFrequency: 'monthly' as SitemapEntry['changeFrequency'],
+      priority: 0.7,
+    };
+  });
+
+  entries.push(...blogEntries);
 
   return entries;
 }

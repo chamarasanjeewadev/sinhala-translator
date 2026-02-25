@@ -1,0 +1,23 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="100" y1="90" x2="1520" y2="860" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0C1435"/>
+      <stop offset="0.5" stop-color="#312E81"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1380" cy="180" r="220" fill="#A5B4FC" fill-opacity="0.23"/>
+  <circle cx="220" cy="760" r="250" fill="#60A5FA" fill-opacity="0.2"/>
+  <rect x="170" y="236" width="1260" height="320" rx="40" fill="#FFFFFF" fill-opacity="0.1" stroke="#FFFFFF" stroke-opacity="0.2"/>
+  <text x="260" y="332" fill="#EEF2FF" font-family="Arial, sans-serif" font-size="46" font-weight="700">Sinhala Transcribe: Starter Guide</text>
+  <text x="260" y="396" fill="#DBEAFE" font-family="Arial, sans-serif" font-size="30" font-weight="500">Clear workflow for creators, students, and teams</text>
+  <text x="260" y="466" fill="#BFDBFE" font-family="Arial, sans-serif" font-size="26" font-weight="700">HelaVoice Blog</text>
+  <g transform="translate(1185 304)">
+    <rect x="0" y="0" width="160" height="160" rx="32" fill="#FFFFFF" fill-opacity="0.2"/>
+    <path d="M45 45H117V115H45V45Z" stroke="#EFF6FF" stroke-width="10"/>
+    <path d="M63 67H99" stroke="#EFF6FF" stroke-width="8" stroke-linecap="round"/>
+    <path d="M63 85H101" stroke="#EFF6FF" stroke-width="8" stroke-linecap="round"/>
+    <path d="M63 103H90" stroke="#EFF6FF" stroke-width="8" stroke-linecap="round"/>
+  </g>
+</svg>

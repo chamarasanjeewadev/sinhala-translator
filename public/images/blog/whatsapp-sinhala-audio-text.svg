@@ -1,0 +1,23 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="80" y1="70" x2="1520" y2="860" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0C2F1F"/>
+      <stop offset="0.5" stop-color="#116149"/>
+      <stop offset="1" stop-color="#84CC16"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1380" cy="190" r="200" fill="#D9F99D" fill-opacity="0.22"/>
+  <circle cx="250" cy="760" r="250" fill="#22C55E" fill-opacity="0.2"/>
+  <rect x="160" y="220" width="1280" height="340" rx="42" fill="#FFFFFF" fill-opacity="0.1" stroke="#FFFFFF" stroke-opacity="0.2"/>
+  <text x="250" y="325" fill="#F0FDF4" font-family="Arial, sans-serif" font-size="44" font-weight="700">How to Transcribe WhatsApp Sinhala Audio to Text</text>
+  <text x="250" y="390" fill="#DCFCE7" font-family="Arial, sans-serif" font-size="30" font-weight="500">Export voice note, transcribe, and clean in minutes</text>
+  <text x="250" y="456" fill="#ECFCCB" font-family="Arial, sans-serif" font-size="26" font-weight="700">HelaVoice Blog</text>
+  <g transform="translate(1190 302)">
+    <rect x="0" y="0" width="160" height="160" rx="38" fill="#F0FDF4" fill-opacity="0.24"/>
+    <path d="M45 45H115C123.837 45 131 52.1634 131 61V99C131 107.837 123.837 115 115 115H79L56 135V115H45C36.1634 115 29 107.837 29 99V61C29 52.1634 36.1634 45 45 45Z" fill="#F0FDF4"/>
+    <circle cx="62" cy="80" r="7" fill="#16A34A"/>
+    <circle cx="80" cy="80" r="7" fill="#16A34A"/>
+    <circle cx="98" cy="80" r="7" fill="#16A34A"/>
+  </g>
+</svg>
