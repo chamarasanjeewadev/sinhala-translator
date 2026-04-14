@@ -11,7 +11,7 @@ export interface CreditTransaction {
   id: string;
   user_id: string;
   amount: number;
-  type: "signup_bonus" | "purchase" | "transcription";
+  type: "signup_bonus" | "purchase" | "transcription" | "translation";
   stripe_session_id: string | null;
   balance_after: number;
   description: string | null;
@@ -72,8 +72,15 @@ export interface Transcription {
   user_id: string;
   title: string | null;
   transcription_text: string;
+  english_translation: string | null;
   audio_duration_seconds: number | null;
   credits_used: number;
   is_partial: boolean;
   created_at: string;
+}
+
+export interface TranslateResponse {
+  translation: string;
+  creditsUsed: number;
+  creditsRemaining: number;
 }

@@ -208,6 +208,11 @@ create policy "Users can delete own transcriptions"
   on public.transcriptions for delete
   using (auth.uid() = user_id);
 
+create policy "Users can update own transcriptions"
+  on public.transcriptions for update
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
+
 create index idx_transcriptions_user_id on public.transcriptions(user_id);
 create index idx_transcriptions_created_at on public.transcriptions(created_at desc);
 
@@ -224,3 +229,48 @@ create index idx_transcriptions_created_at on public.transcriptions(created_at d
 
 -- Update profiles default
 -- ALTER TABLE public.profiles ALTER COLUMN credits SET DEFAULT 30;
+
+-- ============================================================
+-- Translation feature migration (March 2026)
+-- ============================================================
+
+-- Add English translation column
+ALTER TABLE public.transcriptions
+  ADD COLUMN IF NOT EXISTS english_translation TEXT NULL;
+
+-- Update credit_transactions type check to include 'translation'
+-- Find your constraint name first:
+--   SELECT conname FROM pg_constraint
+--     WHERE conrelid = 'public.credit_transactions'::regclass AND contype = 'c';
+-- Then run (replace constraint name if different):
+-- ALTER TABLE public.credit_transactions DROP CONSTRAINT credit_transactions_type_check;
+-- ALTER TABLE public.credit_transactions
+--   ADD CONSTRAINT credit_transactions_type_check
+--   CHECK (type IN ('signup_bonus', 'purchase', 'transcription', 'translation'));
+
+-- RPC: deduct N credits atomically (used for translation billing)
+CREATE OR REPLACE FUNCTION public.deduct_n_credits(
+  p_user_id uuid,
+  p_amount integer,
+  p_description text DEFAULT 'Translation'
+)
+RETURNS TABLE (success boolean, credits_remaining integer)
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = ''
+AS $$
+DECLARE
+  v_current integer;
+  v_new integer;
+BEGIN
+  SELECT credits INTO v_current FROM public.profiles WHERE id = p_user_id FOR UPDATE;
+  IF v_current IS NULL OR v_current < p_amount THEN
+    RETURN QUERY SELECT false, COALESCE(v_current, 0); RETURN;
+  END IF;
+  v_new := v_current - p_amount;
+  UPDATE public.profiles SET credits = v_new, updated_at = now() WHERE id = p_user_id;
+  INSERT INTO public.credit_transactions (user_id, amount, type, balance_after, description)
+    VALUES (p_user_id, -p_amount, 'translation', v_new, p_description);
+  RETURN QUERY SELECT true, v_new;
+END;
+$$;
+
+GRANT EXECUTE ON FUNCTION public.deduct_n_credits(uuid, integer, text) TO authenticated;

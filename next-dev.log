@@ -1,0 +1,32 @@
+
+> sinhala-translator@0.1.0 dev
+> next dev
+
+⚠ Found lockfile missing swc dependencies, patching...
+⨯ Failed to patch lockfile, please try uninstalling and reinstalling next in this workspace
+Error: Failed to get registry from "yarn".
+    at ignore-listed frames {
+  [cause]: Error: Command failed: yarn config get registry 
+      at ignore-listed frames {
+    status: 1,
+    signal: null,
+    output: [
+      null,
+      <Buffer 1b 5b 33 31 6d 1b 5b 31 6d 55 73 61 67 65 20 45 72 72 6f 72 1b 5b 32 32 6d 1b 5b 33 39 6d 3a 20 43 6f 75 6c 64 6e 27 74 20 66 69 6e 64 20 61 20 63 6f ... 106 more bytes>,
+      <Buffer >
+    ],
+    pid: 41729,
+    stdout: <Buffer 1b 5b 33 31 6d 1b 5b 31 6d 55 73 61 67 65 20 45 72 72 6f 72 1b 5b 32 32 6d 1b 5b 33 39 6d 3a 20 43 6f 75 6c 64 6e 27 74 20 66 69 6e 64 20 61 20 63 6f ... 106 more bytes>,
+    stderr: <Buffer >
+  }
+}
+▲ Next.js 16.1.5 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.164:3000
+- Environments: .env.local
+
+✓ Starting...
+Using secrets defined in .dev.vars
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+✓ Ready in 1705ms
+ HEAD /blog/how-to-transcribe-sinhala-audio-from-youtube-for-free 200 in 924ms (compile: 651ms, proxy.ts: 49ms, generate-params: 261ms, render: 225ms)

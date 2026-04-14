@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+import { X } from "lucide-react";
 import { SUPPORTED_AUDIO_TYPES, MAX_AUDIO_SIZE_MB } from "@/lib/constants";
 import { useDictionary } from "@/lib/i18n/dictionary-context";
 import { t } from "@/lib/i18n/utils";
@@ -49,11 +50,13 @@ export function AudioUploader({
   return (
     <div className="flex flex-col gap-4 py-4">
       <div
-        className={`border-2 border-dashed rounded-2xl p-12 text-center transition-all ${
-          dragOver
-            ? "border-violet-500 bg-violet-500/10"
-            : "border-white/20 bg-white/5"
-        } ${disabled ? "opacity-50 pointer-events-none" : "cursor-pointer hover:border-white/30 hover:bg-white/10"}`}
+        className={`rounded-2xl p-12 text-center transition-all border border-[rgba(204,195,212,0.15)] ${
+          dragOver ? "bg-[#e7eeff]" : "bg-[#f0f3ff]"
+        } ${
+          disabled
+            ? "opacity-50 pointer-events-none"
+            : "cursor-pointer hover:bg-[#e7eeff]"
+        }`}
         onDragOver={(e) => {
           e.preventDefault();
           setDragOver(true);
@@ -63,7 +66,7 @@ export function AudioUploader({
         onClick={() => inputRef.current?.click()}
       >
         <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 bg-gradient-to-br from-violet-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-violet-500/25">
+          <div className="w-16 h-16 bg-gradient-to-br from-[#340075] to-[#4c1d95] rounded-full flex items-center justify-center shadow-[0_10px_30px_rgba(17,28,45,0.06)]">
             <svg
               className="h-8 w-8 text-white"
               fill="none"
@@ -79,8 +82,10 @@ export function AudioUploader({
             </svg>
           </div>
           <div>
-            <p className="text-sm text-white mb-1">{d.dragDrop}</p>
-            <p className="text-xs text-gray-400">
+            <p className="text-sm text-[#111c2d] mb-1 font-medium">
+              {d.dragDrop}
+            </p>
+            <p className="text-xs text-[#4a4452]">
               {t(d.formats, { size: MAX_AUDIO_SIZE_MB })}
             </p>
           </div>
@@ -100,17 +105,20 @@ export function AudioUploader({
       />
 
       {fileName && (
-        <div className="flex items-center justify-between rounded-xl bg-white/10 border border-white/10 p-4">
-          <span className="text-sm text-white truncate">{fileName}</span>
+        <div className="flex items-center justify-between rounded-xl bg-[#e7eeff] p-4">
+          <span className="text-sm text-[#111c2d] font-medium truncate">
+            {fileName}
+          </span>
           <button
             onClick={(e) => {
               e.stopPropagation();
               setFileName(null);
               if (inputRef.current) inputRef.current.value = "";
             }}
-            className="text-sm text-gray-400 hover:text-white transition-colors"
+            className="ml-3 shrink-0 text-[#ba1a1a] hover:text-[#93000a] transition-colors"
+            aria-label={d.remove}
           >
-            {d.remove}
+            <X className="w-4 h-4" />
           </button>
         </div>
       )}

@@ -1,17 +1,18 @@
 
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
-import { MDXRemote } from "next-mdx-remote/rsc";
+import nextDynamic from "next/dynamic";
 import { format } from "date-fns";
 import { Link } from "next-view-transitions";
 import { Metadata } from "next";
-// @ts-ignore
-import { MDXComponents } from "@/components/mdx-components";
 import { defaultLocale, locales, type Locale } from "@/lib/i18n/config";
 
 type Props = {
   params: Promise<{ slug: string; locale: string }>;
 };
+
+export const dynamic = "force-static";
+export const dynamicParams = false;
 
 const HOW_TO_SLUG = "how-to-transcribe-sinhala-audio-to-text";
 
@@ -91,6 +92,11 @@ export default async function BlogPost({ params }: Props) {
   if (!locales.includes(locale as Locale) || locale !== postLocale) {
     notFound();
   }
+
+  // Dynamically import MDX — compiled at build time by @next/mdx, no runtime compilation needed
+  const Content = nextDynamic(() => import(`@/content/blog/${slug}.mdx`), {
+    loading: () => <div className="animate-pulse h-40 bg-slate-100 rounded-lg" />,
+  });
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://helavoice.lk";
   const postPath = getLocalizedBlogPath(postLocale, post.slug);
@@ -245,7 +251,7 @@ export default async function BlogPost({ params }: Props) {
         )}
 
         <div className="prose prose-lg max-w-none rounded-3xl border border-slate-200/70 bg-white/75 p-7 text-slate-700 shadow-[0_16px_36px_-28px_rgba(15,23,42,0.75)] prose-headings:font-bold prose-headings:text-slate-900 prose-p:text-slate-700 prose-a:text-blue-700 hover:prose-a:text-blue-800 prose-img:rounded-xl md:p-10">
-          <MDXRemote source={post.content} components={MDXComponents} />
+          <Content />
         </div>
       </article>
     </div>

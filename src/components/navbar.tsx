@@ -3,8 +3,6 @@
 import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
-import { AudioWaveform } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { CreditBalance } from "@/components/credit-balance";
 import { LocaleLink } from "@/components/locale-link";
 import { LanguageSwitcher } from "@/components/language-switcher";
@@ -22,8 +20,6 @@ export function Navbar() {
   const supabaseRef = useRef<SupabaseClient | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [credits, setCredits] = useState<number | null>(null);
-
-
 
   function getSupabase() {
     if (!supabaseRef.current) {
@@ -80,74 +76,106 @@ export function Navbar() {
   const d = dict.navbar;
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-gradient-to-r from-blue-50/90 to-yellow-50/90 backdrop-blur-md border-b border-slate-200/50 shadow-sm">
+    <header className="glass-panel shadow-ambient sticky top-0 z-50 w-full">
       <div className="max-w-7xl mx-auto flex h-16 items-center justify-between px-6 lg:px-8">
-        <LocaleLink href="/" className="flex items-center gap-2.5">
-          <div className="flex items-center justify-center">
-             <Image
-              src="/logo.jpeg"
-              alt="HelaVoice.lk"
-              width={36}
-              height={36}
-              className="w-9 h-9 rounded-xl object-cover shadow-lg shadow-slate-900/20"
-            />
-          </div>
-          <span className="text-lg font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+
+        {/* Logo */}
+        <LocaleLink href="/" className="flex items-center gap-2.5 shrink-0">
+          <Image
+            src="/logo.jpeg"
+            alt="HelaVoice.lk"
+            width={36}
+            height={36}
+            className="w-9 h-9 rounded-xl object-cover"
+          />
+          <span className="font-display text-lg font-bold text-[#340075]">
             HelaVoice.lk
           </span>
         </LocaleLink>
 
-        <nav className="flex items-center gap-4">
+        {/* Center nav links — unauthenticated only, hidden on mobile */}
+        {!user && (
+          <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
+            <LocaleLink
+              href="/pricing"
+              className="px-4 py-2 rounded-full text-sm font-medium text-[#111c2d] hover:bg-[#f0f3ff] transition-colors"
+            >
+              {d.pricing}
+            </LocaleLink>
+            <LocaleLink
+              href="/blog"
+              className="px-4 py-2 rounded-full text-sm font-medium text-[#111c2d] hover:bg-[#f0f3ff] transition-colors"
+            >
+              {d.blog}
+            </LocaleLink>
+          </nav>
+        )}
+
+        {/* Right-side actions */}
+        <div className="flex items-center gap-2">
           <LanguageSwitcher />
+
           {user ? (
             <>
+              {/* Dashboard link */}
               <LocaleLink
                 href="/dashboard"
-                className="text-sm text-slate-600 hover:text-slate-900 transition-colors font-medium hidden sm:block"
+                className="hidden sm:inline-flex px-4 py-2 rounded-full text-sm font-medium text-[#111c2d] hover:bg-[#f0f3ff] transition-colors"
               >
                 {d.dashboard}
               </LocaleLink>
+
+              {/* Buy Credits CTA */}
               <LocaleLink href="/pricing">
-                <Button className="bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 text-white shadow-md rounded-full px-6 mr-4" size="sm">
+                <button
+                  className="inline-flex items-center gap-1.5 rounded-full px-5 py-2 text-sm font-semibold text-white bg-gradient-primary shadow-none ring-2 ring-[#4c1d95]/20 ring-offset-0 hover:opacity-90 transition-opacity"
+                >
                   {d.buyCredits}
-                </Button>
+                </button>
               </LocaleLink>
+
+              {/* Credit balance */}
               {credits !== null && <CreditBalance credits={credits} />}
-              <div className="flex flex-col items-end mr-2">
-                 <span className="text-xs font-medium text-slate-500 hidden sm:inline-block">Logged in as</span>
-                 <span className="text-sm font-semibold text-slate-900">{user.email}</span>
+
+              {/* User email */}
+              <div className="hidden sm:flex flex-col items-end">
+                <span className="text-[11px] font-medium text-[#4a4452] leading-none mb-0.5">
+                  Logged in as
+                </span>
+                <span className="text-xs font-semibold text-[#111c2d] max-w-[140px] truncate">
+                  {user.email}
+                </span>
               </div>
-              <Button variant="outline" size="sm" onClick={handleSignOut}>
+
+              {/* Sign out ghost button */}
+              <button
+                onClick={handleSignOut}
+                className="px-4 py-2 rounded-full text-sm font-medium text-[#111c2d] hover:bg-[#e7eeff] transition-colors"
+              >
                 {d.signOut}
-              </Button>
+              </button>
             </>
           ) : (
             <>
-              <LocaleLink href="/pricing">
-                <Button className="bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-700 hover:to-blue-700 text-white shadow-md rounded-full px-6" size="sm">
-                  {d.buyCredits}
-                </Button>
+              {/* Log In ghost button */}
+              <LocaleLink
+                href="/login"
+                className="px-4 py-2 rounded-full text-sm font-medium text-[#111c2d] hover:bg-[#f0f3ff] transition-colors"
+              >
+                {d.logIn}
               </LocaleLink>
-              <LocaleLink href="/login">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-slate-600 hover:text-slate-900"
-                >
-                  {d.logIn}
-                </Button>
-              </LocaleLink>
+
+              {/* Get Started primary CTA */}
               <LocaleLink href="/signup">
-                <Button
-                  size="sm"
-                  className="bg-gradient-to-r from-slate-900 to-slate-700 hover:from-slate-800 hover:to-slate-600 shadow-lg shadow-slate-900/20 rounded-xl"
+                <button
+                  className="inline-flex items-center gap-1.5 rounded-full px-5 py-2 text-sm font-semibold text-white bg-gradient-primary shadow-none ring-2 ring-[#4c1d95]/20 ring-offset-0 hover:opacity-90 transition-opacity"
                 >
-                  {d.signUp}
-                </Button>
+                  {d.getStarted}
+                </button>
               </LocaleLink>
             </>
           )}
-        </nav>
+        </div>
       </div>
     </header>
   );

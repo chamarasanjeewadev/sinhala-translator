@@ -1,0 +1,55 @@
+
+ ⛅️ wrangler 4.73.0 (update available 4.74.0)
+─────────────────────────────────────────────
+Using secrets defined in .dev.vars
+Your Worker has access to the following bindings:
+Binding                                                          Resource                  Mode
+env.WORKER_SELF_REFERENCE (sinhala-translator)                   Worker                    local [connected]
+env.IMAGES                                                       Images                    local
+env.ASSETS                                                       Assets                    local
+env.NEXT_PUBLIC_SUPABASE_URL ("")                                Environment Variable      local
+env.NEXT_PUBLIC_SUPABASE_ANON_KEY ("")                           Environment Variable      local
+env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ("")                      Environment Variable      local
+env.NEXT_PUBLIC_APP_URL ("")                                     Environment Variable      local
+env.NEXTJS_ENV ("(hidden)")                                      Environment Variable      local
+env.SUPABASE_SERVICE_ROLE_KEY ("(hidden)")                       Environment Variable      local
+env.STRIPE_SECRET_KEY ("(hidden)")                               Environment Variable      local
+env.STRIPE_WEBHOOK_SECRET ("(hidden)")                           Environment Variable      local
+env.GEMINI_API_KEY ("(hidden)")                                  Environment Variable      local
+
+
+Service bindings, Durable Object bindings, and Tail consumers connect to other Wrangler or Vite dev processes running locally, with their connection status indicated by [connected] or [not connected]. For more details, refer to https://developers.cloudflare.com/workers/runtime-apis/bindings/service-bindings/#local-development
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mUsing direct eval with a bundler is not recommended and may cause problems[0m [direct-eval]
+
+    .open-next/server-functions/default/handler.mjs:281:8:
+[37m      281 │ }());`),[32meval[37m(str)||{}}catch(err){if(wrap!==!1&&/(unexpected|ident...
+          ╵         [32m~~~~[0m
+
+  You can read more about direct eval and bundling here: [4mhttps://esbuild.github.io/link/direct-eval[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mUsing direct eval with a bundler is not recommended and may cause problems[0m [direct-eval]
+
+    .open-next/server-functions/default/handler.mjs:575:8:
+[37m      575 │ }());`),[32meval[37m(str)||{}}catch(err){if(wrap!==!1&&/(unexpected|ident...
+          ╵         [32m~~~~[0m
+
+  You can read more about direct eval and bundling here: [4mhttps://esbuild.github.io/link/direct-eval[0m
+
+
+⎔ Starting local server...
+[wrangler:info] ✨ Parsed 1 valid header rule.
+[wrangler:info] Ready on http://localhost:8788
+[wrangler:error] SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (/Users/chami/Documents/projects/sinhala-translator/node_modules/undici/lib/web/infra/index.js:164:15)
+    at successSteps (/Users/chami/Documents/projects/sinhala-translator/node_modules/undici/lib/web/fetch/body.js:463:23)
+    at readAllBytes (/Users/chami/Documents/projects/sinhala-translator/node_modules/undici/lib/web/fetch/util.js:998:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[wrangler:info] HEAD /blog/how-to-transcribe-sinhala-audio-from-youtube-for-free 500 Internal Server Error (41ms)
+[wrangler:error] Error: Network connection lost.
+    at async Object.proxy (file:///Users/chami/Documents/projects/sinhala-translator/.open-next/middleware/handler.mjs:685:26)
+    at async jsonError (file:///Users/chami/Documents/projects/sinhala-translator/node_modules/wrangler/templates/middleware/middleware-miniflare3-json-error.ts:22:10)
+    at async drainBody (file:///Users/chami/Documents/projects/sinhala-translator/node_modules/wrangler/templates/middleware/middleware-ensure-req-body-drained.ts:5:10)
+[wrangler:info] GET /blog/how-to-transcribe-sinhala-audio-from-youtube-for-free 500 Internal Server Error (143ms)

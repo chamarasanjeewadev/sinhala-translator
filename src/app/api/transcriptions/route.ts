@@ -30,6 +30,54 @@ export async function GET() {
   return NextResponse.json({ transcriptions });
 }
 
+export async function PATCH(request: Request) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
+
+  if (!id) {
+    return NextResponse.json(
+      { error: "Missing transcription ID" },
+      { status: 400 }
+    );
+  }
+
+  const body: { text?: string; englishTranslation?: string } = await request.json();
+
+  if (body.text === undefined && body.englishTranslation === undefined) {
+    return NextResponse.json({ error: "No fields to update" }, { status: 400 });
+  }
+
+  const updates: Record<string, string> = {};
+  if (typeof body.text === "string") updates.transcription_text = body.text;
+  if (typeof body.englishTranslation === "string") updates.english_translation = body.englishTranslation;
+
+  const { error } = await supabase
+    .from("transcriptions")
+    .update(updates)
+    .eq("id", id)
+    .eq("user_id", user.id);
+
+  if (error) {
+    console.error("Failed to update transcription:", error);
+    return NextResponse.json(
+      { error: "Failed to update transcription" },
+      { status: 500 }
+    );
+  }
+
+  return NextResponse.json({ success: true });
+}
+
 export async function DELETE(request: Request) {
   const supabase = await createClient();
 
