@@ -2,6 +2,7 @@ export type PostMeta = {
   slug: string;
   title: string;
   date: string;
+  dateModified?: string;
   excerpt: string;
   image?: string;
   readTime: string;
@@ -169,6 +170,75 @@ export const blogPosts: PostMeta[] = [
     image: "/images/blog/sinhala-dialect-variation.svg",
     language: "en",
     readTime: "12 min read",
+  },
+  {
+    slug: "guide-to-recording-audio-and-converting-to-text",
+    title: "A Comprehensive Guide to Recording Audio and Converting It to Text Easily",
+    excerpt:
+      "Everything you need to know about recording high-quality audio and converting it to accurate text — from equipment and environment setup to AI transcription tools, common challenges, and practical workflows for podcasters, students, journalists, and businesses.",
+    author: "HelaVoice Editorial Team",
+    date: "2026-04-15",
+    categories: ["How To", "Audio Recording", "Speech to Text", "Transcription"],
+    keywords: [
+      "how to record audio and convert to text",
+      "audio to text guide",
+      "best way to transcribe audio",
+      "convert audio to text",
+      "audio recording tips for transcription",
+      "speech to text tutorial",
+      "transcription software guide",
+      "how to transcribe audio",
+      "record and transcribe audio",
+      "audio transcription workflow",
+    ],
+    image: "/images/blog/guide-recording-audio-to-text.svg",
+    language: "en",
+    readTime: "14 min read",
+  },
+  {
+    slug: "benefits-of-ai-technology-in-sinhala-transcription",
+    title: "Benefits of Using AI Technology in Sinhala Transcription Applications",
+    excerpt:
+      "Discover how AI-powered speech recognition and natural language processing are transforming Sinhala transcription — making it faster, more accurate, and accessible to everyone from journalists to researchers.",
+    author: "HelaVoice Editorial Team",
+    date: "2026-04-15",
+    categories: ["AI Technology", "Sinhala Transcription", "Speech Recognition"],
+    keywords: [
+      "AI Sinhala transcription",
+      "Sinhala speech recognition",
+      "machine learning transcription",
+      "Sinhala audio to text AI",
+      "NLP Sinhala",
+      "automated transcription benefits",
+      "AI language technology Sinhala",
+      "සිංහල කථනය",
+      "සිංහල පරිවර්තනය",
+    ],
+    image: "/images/blog/ai-sinhala-transcription.svg",
+    language: "en",
+    readTime: "12 min read",
+  },
+  {
+    slug: "how-to-choose-speech-to-text-service-sri-lanka",
+    title: "How to Choose the Right Speech-to-Text Service in the Sri Lankan Market",
+    excerpt:
+      "A practical, in-depth guide for Sri Lankan businesses, students, and content creators on evaluating and selecting the right speech-to-text service — covering Sinhala accuracy, dialect support, pricing, privacy, and more.",
+    author: "HelaVoice Editorial Team",
+    date: "2026-04-15",
+    categories: ["Buyer's Guide", "Sinhala Transcription", "Speech to Text", "Sri Lanka"],
+    keywords: [
+      "speech to text service sri lanka",
+      "sinhala speech to text",
+      "best transcription service sri lanka",
+      "choose speech to text sri lanka",
+      "sinhala transcription comparison",
+      "sinhala audio to text tool",
+      "transcription service comparison sri lanka",
+      "සිංහල කථන-සිට-පෙළ සේවා",
+    ],
+    image: "/images/blog/choose-speech-to-text-sri-lanka.svg",
+    language: "en",
+    readTime: "13 min read",
   },
   {
     slug: "sinhala-transcribe-free",

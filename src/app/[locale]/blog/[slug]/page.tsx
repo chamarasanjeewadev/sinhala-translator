@@ -111,7 +111,7 @@ export default async function BlogPost({ params }: Props) {
     description: post.excerpt,
     image: post.image ? `${siteUrl}${post.image}` : undefined,
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.dateModified ?? post.date,
     author: {
       "@type": "Organization",
       name: post.author || "HelaVoice Editorial Team",
@@ -229,9 +229,9 @@ export default async function BlogPost({ params }: Props) {
           </h1>
           <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-slate-500 md:text-base">
             {post.author && (
-              <span className="rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-700">
+              <address rel="author" className="not-italic rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-700">
                 {post.author}
-              </span>
+              </address>
             )}
             <span className="rounded-full bg-slate-100 px-3 py-1">
               <time dateTime={post.date}>{format(new Date(post.date), "MMMM d, yyyy")}</time>

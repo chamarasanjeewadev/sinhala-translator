@@ -111,19 +111,28 @@ export default async function LandingPage({ params }: Props) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://helavoice.lk";
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
+    "@type": "SoftwareApplication",
     name: "HelaVoice.lk",
     url: siteUrl,
     description: d.heroSubtitle,
-    applicationCategory: "MultimediaApplication",
+    applicationCategory: "UtilitiesApplication",
     operatingSystem: "Web",
     inLanguage: ["en", "si"],
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-      description: `${FREE_CREDITS} free credits on signup`,
-    },
+    offers: [
+      {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+        description: `${FREE_CREDITS} free credits on signup — no credit card required`,
+      },
+      ...CREDIT_PACKAGES.map((pkg) => ({
+        "@type": "Offer",
+        name: pkg.name,
+        price: (pkg.price / 100).toFixed(2),
+        priceCurrency: "USD",
+        description: `${pkg.credits} transcription credits`,
+      })),
+    ],
   };
 
   return (

@@ -20,6 +20,17 @@ const jetBrainsMono = JetBrains_Mono({
 
 
 
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "HelaVoice",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://helavoice.lk",
+  logo: `${process.env.NEXT_PUBLIC_SITE_URL ?? "https://helavoice.lk"}/logo.jpeg`,
+  description:
+    "HelaVoice.lk — AI-powered Sinhala audio transcription tool for Sri Lankan creators, students, journalists, and businesses.",
+  sameAs: [],
+};
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -32,6 +43,10 @@ export default async function RootLayout({
     <html lang={locale} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml"></link>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <Script
           src="https://analytics.ahrefs.com/analytics.js"
           data-key="zES6ra/Qx8xmfraBbT8TYw"

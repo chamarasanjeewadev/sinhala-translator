@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${dict.auth.logInTitle} | ${dict.metadata.title}`,
     description: dict.auth.logInDesc,
     alternates: generateAlternates(locale as Locale, "/login"),
+    robots: { index: false, follow: false },
   };
 }
 

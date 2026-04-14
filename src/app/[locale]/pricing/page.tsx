@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { locales, type Locale } from "@/lib/i18n/config";
 import { generateAlternates } from "@/lib/i18n/utils";
+import { CREDIT_PACKAGES, FREE_CREDITS } from "@/lib/constants";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -36,10 +37,42 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://helavoice.lk";
+
+const pricingJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "HelaVoice.lk",
+  url: siteUrl,
+  applicationCategory: "UtilitiesApplication",
+  offers: [
+    {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+      name: "Free",
+      description: `${FREE_CREDITS} free transcription credits on signup`,
+    },
+    ...CREDIT_PACKAGES.map((pkg) => ({
+      "@type": "Offer",
+      name: pkg.name,
+      price: (pkg.price / 100).toFixed(2),
+      priceCurrency: "USD",
+      description: `${pkg.credits} transcription credits`,
+    })),
+  ],
+};
+
 export default function PricingPage() {
   return (
-    <Suspense>
-      <PricingContent />
-    </Suspense>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingJsonLd) }}
+      />
+      <Suspense>
+        <PricingContent />
+      </Suspense>
+    </>
   );
 }

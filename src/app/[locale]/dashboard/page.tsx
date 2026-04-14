@@ -1,8 +1,13 @@
 import { Suspense } from "react";
 import { DashboardServer } from "./dashboard-server";
 import { Loader2 } from "lucide-react";
+import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 function DashboardLoading() {
   return (

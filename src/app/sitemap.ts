@@ -4,7 +4,7 @@ import { defaultLocale, locales } from '@/lib/i18n/config';
 
 export const dynamic = 'force-static';
 
-const BASE_URL = 'https://helavoice.lk';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://helavoice.lk';
 
 type SitemapEntry = MetadataRoute.Sitemap[number];
 
@@ -39,13 +39,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const postLocale = post.language === 'si' ? 'si' : defaultLocale;
     const prefix = postLocale === defaultLocale ? '' : `/${postLocale}`;
     const postDate = new Date(post.date);
-
-    return {
+    const entry: SitemapEntry & { images?: Array<{ url: string; title?: string }> } = {
       url: `${BASE_URL}${prefix}/blog/${post.slug}`,
       lastModified: Number.isNaN(postDate.getTime()) ? now : postDate,
       changeFrequency: 'monthly' as SitemapEntry['changeFrequency'],
       priority: 0.7,
     };
+    if (post.image) {
+      (entry as Record<string, unknown>).images = [
+        { url: `${BASE_URL}${post.image}`, title: post.title },
+      ];
+    }
+    return entry;
   });
 
   entries.push(...blogEntries);

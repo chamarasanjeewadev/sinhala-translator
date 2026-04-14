@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${dict.auth.createAccountTitle} | ${dict.metadata.title}`,
     description: dict.auth.signUpDesc,
     alternates: generateAlternates(locale as Locale, "/signup"),
+    robots: { index: false, follow: false },
   };
 }
 
