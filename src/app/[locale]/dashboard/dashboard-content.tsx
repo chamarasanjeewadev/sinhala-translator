@@ -19,6 +19,7 @@ import {
   Eye,
   Pencil,
   Globe,
+  Star,
 } from "lucide-react";
 import { toast } from "sonner";
 import { LocaleLink } from "@/components/locale-link";
@@ -111,6 +112,12 @@ export function DashboardContent({
   // ── Translation state ──
   const [translateTarget, setTranslateTarget] = useState<Transcription | null>(null);
   const [translatingId, setTranslatingId] = useState<string | null>(null);
+  const [feedbackTranscriptionId, setFeedbackTranscriptionId] = useState<string | null>(null);
+  const [feedbackRating, setFeedbackRating] = useState<number>(0);
+  const [feedbackComment, setFeedbackComment] = useState("");
+  const [wouldRecommend, setWouldRecommend] = useState<boolean | null>(null);
+  const [recommendationReason, setRecommendationReason] = useState("");
+  const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
 
   // ── Transcription workspace state ──
   const [mode, setMode] = useState<"record" | "upload">("record");
@@ -163,14 +170,75 @@ export function DashboardContent({
   }, []);
 
   const handleTranscriptionComplete = useCallback(
-    (_text: string, creditsRemaining: number) => {
+    (_text: string, creditsRemaining: number, transcriptionId: string) => {
       setCredits(creditsRemaining);
       fetchTranscriptions();
       resetState();
+      setFeedbackTranscriptionId(transcriptionId);
       toast.success(d.transcriptionComplete);
     },
     [fetchTranscriptions, resetState, d.transcriptionComplete]
   );
+
+  const resetFeedbackState = useCallback(() => {
+    setFeedbackTranscriptionId(null);
+    setFeedbackRating(0);
+    setFeedbackComment("");
+    setWouldRecommend(null);
+    setRecommendationReason("");
+    setIsSubmittingFeedback(false);
+  }, []);
+
+  const handleSubmitFeedback = useCallback(async () => {
+    if (!feedbackTranscriptionId || feedbackRating < 1 || wouldRecommend === null) {
+      toast.error(d.feedbackValidation);
+      return;
+    }
+
+    if (!wouldRecommend && recommendationReason.trim() === "") {
+      toast.error(d.feedbackWhyRequired);
+      return;
+    }
+
+    setIsSubmittingFeedback(true);
+    try {
+      const res = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          transcriptionId: feedbackTranscriptionId,
+          rating: feedbackRating,
+          feedback: feedbackComment.trim(),
+          wouldRecommend,
+          notRecommendReason: wouldRecommend ? null : recommendationReason.trim(),
+        }),
+      });
+
+      if (!res.ok) {
+        const data: { error?: string } = await res.json();
+        toast.error(data.error || d.feedbackSubmitFailed);
+        return;
+      }
+
+      toast.success(d.feedbackThanks);
+      resetFeedbackState();
+    } catch {
+      toast.error(d.feedbackSubmitFailed);
+    } finally {
+      setIsSubmittingFeedback(false);
+    }
+  }, [
+    d.feedbackSubmitFailed,
+    d.feedbackThanks,
+    d.feedbackValidation,
+    d.feedbackWhyRequired,
+    feedbackComment,
+    feedbackRating,
+    feedbackTranscriptionId,
+    recommendationReason,
+    resetFeedbackState,
+    wouldRecommend,
+  ]);
 
   const analyzeAudio = useCallback(
     async (source: Blob) => {
@@ -276,7 +344,7 @@ export function DashboardContent({
       if (cancelledRef.current) return;
 
       if (fullText) {
-        await fetch("/api/transcribe/save", {
+        const saveRes = await fetch("/api/transcribe/save", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -287,8 +355,21 @@ export function DashboardContent({
           }),
         });
 
+        if (!saveRes.ok) {
+          const data: { error?: string } = await saveRes.json();
+          toast.error(data.error || d.transcriptionFailed);
+          setTranscribeState("idle");
+          return;
+        }
+
+        const saveData: { transcriptionId: string } = await saveRes.json();
+
         setTranscribeState(isPartial ? "partial" : "done");
-        handleTranscriptionComplete(fullText, lastCreditsRemaining);
+        handleTranscriptionComplete(
+          fullText,
+          lastCreditsRemaining,
+          saveData.transcriptionId
+        );
       } else {
         toast.error(d.transcriptionFailed);
         setTranscribeState("idle");
@@ -1256,6 +1337,127 @@ export function DashboardContent({
           </div>
         );
       })()}
+
+      {/* ── Feedback Modal ── */}
+      {feedbackTranscriptionId && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ background: "rgba(17,28,45,0.55)", backdropFilter: "blur(4px)" }}
+          onClick={() => !isSubmittingFeedback && resetFeedbackState()}
+        >
+          <div
+            className="bg-[#ffffff] rounded-3xl shadow-[0_24px_64px_rgba(17,28,45,0.18)] w-full max-w-lg overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-6 py-4 border-b border-[#f0f3ff]">
+              <h2 className="font-display text-lg font-bold text-[#111c2d]">
+                {d.feedbackTitle}
+              </h2>
+              <button
+                onClick={resetFeedbackState}
+                disabled={isSubmittingFeedback}
+                className="w-9 h-9 rounded-full bg-[#f0f3ff] hover:bg-[#e7eeff] flex items-center justify-center transition-colors disabled:opacity-50"
+              >
+                <X className="w-4 h-4 text-[#4a4452]" />
+              </button>
+            </div>
+
+            <div className="px-6 py-5 space-y-5">
+              <p className="text-sm text-[#4a4452]">{d.feedbackPrompt}</p>
+
+              <div>
+                <p className="text-sm font-semibold text-[#111c2d] mb-2">{d.feedbackRatingLabel}</p>
+                <div className="flex items-center gap-2">
+                  {[1, 2, 3, 4, 5].map((rating) => (
+                    <button
+                      key={rating}
+                      onClick={() => setFeedbackRating(rating)}
+                      className="w-9 h-9 rounded-full bg-[#f0f3ff] hover:bg-[#e7eeff] flex items-center justify-center transition-colors"
+                      title={`${rating}`}
+                    >
+                      <Star
+                        className={`w-4 h-4 ${
+                          rating <= feedbackRating
+                            ? "text-[#f59e0b] fill-[#f59e0b]"
+                            : "text-[#9aa5be]"
+                        }`}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <p className="text-sm font-semibold text-[#111c2d] mb-2">{d.feedbackRecommendLabel}</p>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setWouldRecommend(true)}
+                    className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
+                      wouldRecommend === true
+                        ? "bg-[#d6f5e3] text-[#0d6832]"
+                        : "bg-[#e7eeff] text-[#4a4452] hover:bg-[#d8e3fb]"
+                    }`}
+                  >
+                    {d.feedbackRecommendYes}
+                  </button>
+                  <button
+                    onClick={() => setWouldRecommend(false)}
+                    className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
+                      wouldRecommend === false
+                        ? "bg-[#ffdad6] text-[#ba1a1a]"
+                        : "bg-[#e7eeff] text-[#4a4452] hover:bg-[#d8e3fb]"
+                    }`}
+                  >
+                    {d.feedbackRecommendNo}
+                  </button>
+                </div>
+              </div>
+
+              {wouldRecommend === false && (
+                <div>
+                  <p className="text-sm font-semibold text-[#111c2d] mb-2">{d.feedbackWhyNoLabel}</p>
+                  <textarea
+                    value={recommendationReason}
+                    onChange={(e) => setRecommendationReason(e.target.value)}
+                    className="w-full min-h-[90px] resize-y rounded-2xl bg-[#f9f9ff] focus:bg-[#f0f3ff] border-0 outline-none px-4 py-3 text-[#111c2d] text-sm leading-relaxed transition-colors"
+                    placeholder={d.feedbackWhyNoPlaceholder}
+                    maxLength={500}
+                  />
+                </div>
+              )}
+
+              <div>
+                <p className="text-sm font-semibold text-[#111c2d] mb-2">{d.feedbackCommentLabel}</p>
+                <textarea
+                  value={feedbackComment}
+                  onChange={(e) => setFeedbackComment(e.target.value)}
+                  className="w-full min-h-[120px] resize-y rounded-2xl bg-[#f9f9ff] focus:bg-[#f0f3ff] border-0 outline-none px-4 py-3 text-[#111c2d] text-sm leading-relaxed transition-colors"
+                  placeholder={d.feedbackCommentPlaceholder}
+                  maxLength={1200}
+                />
+              </div>
+            </div>
+
+            <div className="px-6 py-4 border-t border-[#f0f3ff] flex items-center justify-end gap-3">
+              <button
+                onClick={resetFeedbackState}
+                disabled={isSubmittingFeedback}
+                className="px-5 py-2.5 rounded-full text-sm font-semibold bg-[#e7eeff] text-[#4a4452] hover:bg-[#d8e3fb] transition-colors disabled:opacity-50"
+              >
+                {d.feedbackSkip}
+              </button>
+              <button
+                onClick={handleSubmitFeedback}
+                disabled={isSubmittingFeedback}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold bg-gradient-to-r from-[#340075] to-[#4c1d95] text-white hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSubmittingFeedback && <Loader2 className="w-4 h-4 animate-spin" />}
+                {d.feedbackSubmit}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

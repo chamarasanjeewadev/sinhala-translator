@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: {
       default: dict.metadata.title,
-      template: `%s | ${dict.metadata.title}`,
+      template: `%s | HelaVoice.lk`,
     },
     description: dict.metadata.description,
     metadataBase: new URL(siteUrl),
@@ -34,11 +34,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: 'HelaVoice.lk',
       locale: locale,
       type: 'website',
+      images: [
+        {
+          url: '/opengraph-image',
+          width: 1200,
+          height: 630,
+          alt: 'HelaVoice — Sinhala voice transcriber',
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: dict.metadata.title,
       description: dict.metadata.description,
+      images: ['/opengraph-image'],
     },
     robots: {
       index: true,

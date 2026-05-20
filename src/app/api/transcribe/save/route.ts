@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { normalizeTranscriptionText } from "@/lib/transcription-format";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -25,8 +26,9 @@ export async function POST(request: Request) {
   }
 
   const { text, durationSeconds, creditsUsed, isPartial } = body;
+  const normalizedText = normalizeTranscriptionText(text);
 
-  if (!text) {
+  if (!normalizedText) {
     return NextResponse.json(
       { error: "Missing transcription text" },
       { status: 400 }
@@ -37,7 +39,7 @@ export async function POST(request: Request) {
     .from("transcriptions")
     .insert({
       user_id: user.id,
-      transcription_text: text,
+      transcription_text: normalizedText,
       audio_duration_seconds: Math.round(durationSeconds),
       credits_used: creditsUsed,
       is_partial: isPartial,

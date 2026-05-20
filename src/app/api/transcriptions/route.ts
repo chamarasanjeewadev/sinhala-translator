@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
+const hardDeleteTranscriptions =
+  process.env.HARD_DELETE_TRANSCRIPTIONS === "true";
+
 export async function GET() {
   const supabase = await createClient();
 
@@ -16,6 +19,7 @@ export async function GET() {
     .from("transcriptions")
     .select("*")
     .eq("user_id", user.id)
+    .eq("is_deleted", false)
     .order("created_at", { ascending: false })
     .limit(50);
 
@@ -65,7 +69,8 @@ export async function PATCH(request: Request) {
     .from("transcriptions")
     .update(updates)
     .eq("id", id)
-    .eq("user_id", user.id);
+    .eq("user_id", user.id)
+    .eq("is_deleted", false);
 
   if (error) {
     console.error("Failed to update transcription:", error);
@@ -99,11 +104,18 @@ export async function DELETE(request: Request) {
     );
   }
 
-  const { error } = await supabase
-    .from("transcriptions")
-    .delete()
-    .eq("id", id)
-    .eq("user_id", user.id);
+  const { error } = hardDeleteTranscriptions
+    ? await supabase
+        .from("transcriptions")
+        .delete()
+        .eq("id", id)
+        .eq("user_id", user.id)
+    : await supabase
+        .from("transcriptions")
+        .update({ is_deleted: true, deleted_at: new Date().toISOString() })
+        .eq("id", id)
+        .eq("user_id", user.id)
+        .eq("is_deleted", false);
 
   if (error) {
     console.error("Failed to delete transcription:", error);

@@ -48,7 +48,7 @@ export async function transcribeWithGemini(
           data: audioBase64,
         },
       },
-      "Please transcribe the following audio recording into Sinhala text accurately. Do not add any interpretations or summaries, just provide the exact transcription of the spoken Sinhala words.",
+      "Please transcribe the following audio recording into Sinhala text accurately. Return only plain paragraph text (no timestamps, no speaker labels, no bullet points, no line-by-line subtitle format). Do not add any interpretations or summaries.",
     ]);
 
     const result = await Promise.race([transcriptionPromise, timeoutPromise]);

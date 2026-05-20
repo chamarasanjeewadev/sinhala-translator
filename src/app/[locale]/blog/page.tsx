@@ -44,8 +44,57 @@ export default async function BlogPage({ params }: Props) {
   const makePostPath = (postLocale: string, slug: string) =>
     postLocale === defaultLocale ? `/blog/${slug}` : `/${postLocale}/blog/${slug}`;
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://helavoice.lk";
+  const blogPath = locale === defaultLocale ? "/blog" : `/${locale}/blog`;
+  const homePath = locale === defaultLocale ? "/" : `/${locale}`;
+
+  const collectionJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Sinhala Speech-to-Text Insights",
+    description:
+      "Field-tested guides for Sri Lankan creators, students, and teams using Sinhala transcription in real workflows.",
+    url: `${siteUrl}${blogPath}`,
+    inLanguage: locale,
+    isPartOf: { "@type": "WebSite", name: "HelaVoice.lk", url: siteUrl },
+    hasPart: posts.map((post) => ({
+      "@type": "BlogPosting",
+      headline: post.title,
+      url: `${siteUrl}${makePostPath(post.language || "en", post.slug)}`,
+      datePublished: post.date,
+      ...(post.image ? { image: `${siteUrl}${post.image}` } : {}),
+    })),
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${siteUrl}${homePath}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Blog",
+        item: `${siteUrl}${blogPath}`,
+      },
+    ],
+  };
+
   return (
     <div className="relative overflow-hidden bg-gradient-to-b from-slate-100 via-white to-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-20 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-blue-200/45 blur-3xl" />
         <div className="absolute top-32 -left-20 h-72 w-72 rounded-full bg-emerald-200/35 blur-3xl" />

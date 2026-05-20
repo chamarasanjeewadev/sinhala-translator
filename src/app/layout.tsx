@@ -1,6 +1,11 @@
 import { headers } from "next/headers";
 import Script from "next/script";
-import { Inter, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import {
+  Inter,
+  JetBrains_Mono,
+  Noto_Sans_Sinhala,
+  Plus_Jakarta_Sans,
+} from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -13,6 +18,11 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
+const notoSansSinhala = Noto_Sans_Sinhala({
+  variable: "--font-noto-sinhala",
+  subsets: ["sinhala"],
+});
+
 const jetBrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
@@ -20,15 +30,26 @@ const jetBrainsMono = JetBrains_Mono({
 
 
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://helavoice.lk";
+
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "HelaVoice",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://helavoice.lk",
-  logo: `${process.env.NEXT_PUBLIC_SITE_URL ?? "https://helavoice.lk"}/logo.jpeg`,
+  url: siteUrl,
+  logo: `${siteUrl}/logo.jpeg`,
   description:
     "HelaVoice.lk — AI-powered Sinhala audio transcription tool for Sri Lankan creators, students, journalists, and businesses.",
   sameAs: [],
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "HelaVoice.lk",
+  alternateName: "Sinhala Voice Transcriber",
+  url: siteUrl,
+  inLanguage: ["en", "si"],
 };
 
 export default async function RootLayout({
@@ -43,9 +64,14 @@ export default async function RootLayout({
     <html lang={locale} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml"></link>
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <Script
           src="https://analytics.ahrefs.com/analytics.js"
@@ -54,7 +80,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${plusJakartaSans.variable} ${jetBrainsMono.variable} antialiased`}
+        className={`${inter.variable} ${plusJakartaSans.variable} ${notoSansSinhala.variable} ${jetBrainsMono.variable} antialiased`}
       >
         {children}
       </body>

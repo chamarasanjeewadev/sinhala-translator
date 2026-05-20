@@ -76,6 +76,8 @@ export interface Transcription {
   audio_duration_seconds: number | null;
   credits_used: number;
   is_partial: boolean;
+  is_deleted: boolean;
+  deleted_at: string | null;
   created_at: string;
 }
 

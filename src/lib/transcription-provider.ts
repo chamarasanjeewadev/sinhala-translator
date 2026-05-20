@@ -1,5 +1,6 @@
 import { transcribeChunk as transcribeWithSpeechToText } from "./speech-to-text";
 import { transcribeWithGemini } from "./gemini-transcribe";
+import { normalizeTranscriptionText } from "./transcription-format";
 
 export type TranscriptionProvider = "gemini" | "speech-to-text";
 
@@ -37,14 +38,20 @@ export async function transcribeAudio(
 
   if (provider === "gemini") {
     const mimeType = options.mimeType || "audio/wav";
-    return transcribeWithGemini(options.apiKey, options.audioBase64, mimeType);
+    const text = await transcribeWithGemini(
+      options.apiKey,
+      options.audioBase64,
+      mimeType
+    );
+    return normalizeTranscriptionText(text);
   }
 
   // Use Google Speech-to-Text API
   const sampleRate = options.sampleRateHertz || 16000;
-  return transcribeWithSpeechToText(
+  const text = await transcribeWithSpeechToText(
     options.apiKey,
     options.audioBase64,
     sampleRate
   );
+  return normalizeTranscriptionText(text);
 }

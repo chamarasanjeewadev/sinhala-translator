@@ -76,7 +76,17 @@ export function Navbar() {
   const d = dict.navbar;
 
   return (
-    <header className="glass-panel shadow-ambient sticky top-0 z-50 w-full">
+    <header
+      className="sticky top-0 z-50 w-full border-b border-white/8"
+      style={{
+        background: "rgba(7,0,15,0.72)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+      }}
+    >
+      {/* Top accent line matching hero */}
+      <div className="absolute left-0 right-0 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(124,58,237,.45)_30%,rgba(232,121,249,.3)_70%,transparent)]" />
+
       <div className="max-w-7xl mx-auto flex h-16 items-center justify-between px-6 lg:px-8">
 
         {/* Logo */}
@@ -88,7 +98,7 @@ export function Navbar() {
             height={36}
             className="w-9 h-9 rounded-xl object-cover"
           />
-          <span className="font-display text-lg font-bold text-[#340075]">
+          <span className="font-display text-lg font-bold text-white">
             HelaVoice.lk
           </span>
         </LocaleLink>
@@ -98,13 +108,13 @@ export function Navbar() {
           <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
             <LocaleLink
               href="/pricing"
-              className="px-4 py-2 rounded-full text-sm font-medium text-[#111c2d] hover:bg-[#f0f3ff] transition-colors"
+              className="px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
             >
               {d.pricing}
             </LocaleLink>
             <LocaleLink
               href="/blog"
-              className="px-4 py-2 rounded-full text-sm font-medium text-[#111c2d] hover:bg-[#f0f3ff] transition-colors"
+              className="px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
             >
               {d.blog}
             </LocaleLink>
@@ -120,16 +130,14 @@ export function Navbar() {
               {/* Dashboard link */}
               <LocaleLink
                 href="/dashboard"
-                className="hidden sm:inline-flex px-4 py-2 rounded-full text-sm font-medium text-[#111c2d] hover:bg-[#f0f3ff] transition-colors"
+                className="hidden sm:inline-flex px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
               >
                 {d.dashboard}
               </LocaleLink>
 
               {/* Buy Credits CTA */}
               <LocaleLink href="/pricing">
-                <button
-                  className="inline-flex items-center gap-1.5 rounded-full px-5 py-2 text-sm font-semibold text-white bg-gradient-primary shadow-none ring-2 ring-[#4c1d95]/20 ring-offset-0 hover:opacity-90 transition-opacity"
-                >
+                <button className="hero-primary-button inline-flex items-center gap-1.5 rounded-2xl px-5 py-2 text-sm font-semibold text-white hover:opacity-90 transition-opacity">
                   {d.buyCredits}
                 </button>
               </LocaleLink>
@@ -139,10 +147,10 @@ export function Navbar() {
 
               {/* User email */}
               <div className="hidden sm:flex flex-col items-end">
-                <span className="text-[11px] font-medium text-[#4a4452] leading-none mb-0.5">
+                <span className="text-[11px] font-medium text-white/35 leading-none mb-0.5">
                   Logged in as
                 </span>
-                <span className="text-xs font-semibold text-[#111c2d] max-w-[140px] truncate">
+                <span className="text-xs font-semibold text-white/70 max-w-[140px] truncate">
                   {user.email}
                 </span>
               </div>
@@ -150,7 +158,7 @@ export function Navbar() {
               {/* Sign out ghost button */}
               <button
                 onClick={handleSignOut}
-                className="px-4 py-2 rounded-full text-sm font-medium text-[#111c2d] hover:bg-[#e7eeff] transition-colors"
+                className="px-4 py-2 rounded-full text-sm font-medium text-white/50 hover:text-white hover:bg-white/8 transition-colors"
               >
                 {d.signOut}
               </button>
@@ -160,16 +168,14 @@ export function Navbar() {
               {/* Log In ghost button */}
               <LocaleLink
                 href="/login"
-                className="px-4 py-2 rounded-full text-sm font-medium text-[#111c2d] hover:bg-[#f0f3ff] transition-colors"
+                className="px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
               >
                 {d.logIn}
               </LocaleLink>
 
               {/* Get Started primary CTA */}
               <LocaleLink href="/signup">
-                <button
-                  className="inline-flex items-center gap-1.5 rounded-full px-5 py-2 text-sm font-semibold text-white bg-gradient-primary shadow-none ring-2 ring-[#4c1d95]/20 ring-offset-0 hover:opacity-90 transition-opacity"
-                >
+                <button className="hero-primary-button inline-flex items-center gap-1.5 rounded-2xl px-5 py-2 text-sm font-semibold text-white">
                   {d.getStarted}
                 </button>
               </LocaleLink>

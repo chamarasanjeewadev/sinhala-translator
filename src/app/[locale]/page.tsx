@@ -7,10 +7,9 @@ import {
   Zap,
   Globe2,
   CheckCircle2,
+  ChevronDown,
   Clock,
   Languages,
-  FileAudio,
-  Link2,
   Shield,
 } from "lucide-react";
 import { CREDIT_PACKAGES, FREE_CREDITS } from "@/lib/constants";
@@ -20,24 +19,7 @@ import { localePath, t, generateAlternates } from "@/lib/i18n/utils";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params;
-  if (!locales.includes(locale as Locale)) return {};
-  const dict = await getDictionary(locale as Locale);
-
-  return {
-    alternates: generateAlternates(locale as Locale, "/"),
-    openGraph: {
-      url:
-        locale === "en"
-          ? "https://helavoice.lk"
-          : `https://helavoice.lk/${locale}`,
-    },
-    title: dict.metadata.title,
-    description: dict.metadata.description,
-  };
-}
+import { LandingHero } from "@/components/landing-hero";
 
 const waveformBars = [
   { height: 65, duration: 0.7 },
@@ -61,6 +43,33 @@ const waveformBars = [
   { height: 38, duration: 0.8 },
   { height: 72, duration: 0.6 },
 ];
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  if (!locales.includes(locale as Locale)) return {};
+  const dict = await getDictionary(locale as Locale);
+
+  return {
+    alternates: generateAlternates(locale as Locale, "/"),
+    openGraph: {
+      url:
+        locale === "en"
+          ? "https://helavoice.lk"
+          : `https://helavoice.lk/${locale}`,
+    },
+    title: dict.metadata.title,
+    description: dict.metadata.description,
+    keywords: [
+      "sinhala voice transcriber",
+      "sinhala speech to text",
+      "sinhala audio to text",
+      "sinhala transcription",
+      "audio to text sinhala",
+      "sri lanka transcription",
+      "voice note transcription sinhala",
+    ],
+  };
+}
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -113,11 +122,25 @@ export default async function LandingPage({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: "HelaVoice.lk",
+    alternateName: "Sinhala Voice Transcriber",
     url: siteUrl,
     description: d.heroSubtitle,
     applicationCategory: "UtilitiesApplication",
     operatingSystem: "Web",
     inLanguage: ["en", "si"],
+    featureList: [
+      "Sinhala speech-to-text",
+      "Audio file upload",
+      "Browser-based recording",
+      "Per-minute credit billing",
+      "Bilingual UI (English & Sinhala)",
+    ],
+    audience: {
+      "@type": "Audience",
+      audienceType:
+        "Sri Lankan creators, students, journalists, and businesses",
+      geographicArea: { "@type": "Country", name: "Sri Lanka" },
+    },
     offers: [
       {
         "@type": "Offer",
@@ -135,104 +158,46 @@ export default async function LandingPage({ params }: Props) {
     ],
   };
 
+  const faqItems = (d.faqItems ?? []) as { q: string; a: string }[];
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a,
+      },
+    })),
+  };
+
   return (
-    <div className="min-h-screen bg-[#f9f9ff]">
+    <div className="min-h-screen bg-[linear-gradient(155deg,#07000f_0%,#0d0020_50%,#130030_100%)] text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {faqItems.length > 0 ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      ) : null}
 
-      {/* ── Hero Section ─────────────────────────────────────────────── */}
-      <section className="relative pt-28 pb-20 px-6 lg:px-8 overflow-hidden">
-        {/* Ambient background blobs */}
-        <div className="absolute inset-0 -z-10 pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[#340075]/6 rounded-full blur-[120px]" />
-          <div className="absolute top-24 right-0 w-[500px] h-[500px] bg-[#0051d5]/5 rounded-full blur-[100px]" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#340075]/4 rounded-full blur-[80px]" />
-        </div>
-
-        <div className="max-w-7xl mx-auto">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-[#e7eeff] rounded-full px-5 py-2 mb-10">
-              <Sparkles className="w-4 h-4 text-[#340075]" />
-              <span className="text-sm font-semibold text-[#340075] font-sans">
-                {d.badge}
-              </span>
-            </div>
-
-            {/* Headline */}
-            <h1 className="font-display text-5xl md:text-7xl font-extrabold text-[#111c2d] leading-[1.08] tracking-tight mb-6">
-              {d.heroTitle1}
-              <br />
-              <span className="bg-gradient-to-r from-[#340075] to-[#4c1d95] bg-clip-text text-transparent">
-                {d.heroTitle2}
-              </span>
-            </h1>
-
-            {/* Subtitle */}
-            <p className="font-sans text-xl text-[#4a4452] mb-12 leading-relaxed max-w-2xl mx-auto">
-              {d.heroSubtitle}
-            </p>
-
-            {/* CTA buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-14">
-              <Link
-                href={lp("/signup")}
-                className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#340075] to-[#4c1d95] hover:brightness-110 text-white px-8 py-4 rounded-full font-semibold font-sans text-base transition-all shadow-[0_10px_30px_rgba(52,0,117,0.25)] hover:shadow-[0_14px_36px_rgba(52,0,117,0.35)] hover:-translate-y-0.5"
-              >
-                <span>{d.startTranscribing}</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                href={lp("/pricing")}
-                className="inline-flex items-center justify-center bg-[#d8e3fb] hover:bg-[#dee8ff] text-[#111c2d] px-8 py-4 rounded-full font-semibold font-sans text-base transition-all hover:-translate-y-0.5"
-              >
-                {d.viewPricing}
-              </Link>
-            </div>
-
-            {/* Trust signals */}
-            <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-[#4a4452]">
-              <div className="inline-flex items-center gap-2 bg-[#ffffff] rounded-full px-4 py-2 shadow-[0_10px_30px_rgba(17,28,45,0.06)]">
-                <CheckCircle2 className="w-4 h-4 text-[#047857]" />
-                <span className="font-medium font-sans">
-                  {t(d.freeCredits, { count: FREE_CREDITS })}
-                </span>
-              </div>
-              <div className="inline-flex items-center gap-2 bg-[#ffffff] rounded-full px-4 py-2 shadow-[0_10px_30px_rgba(17,28,45,0.06)]">
-                <CheckCircle2 className="w-4 h-4 text-[#047857]" />
-                <span className="font-medium font-sans">{d.noSubscription}</span>
-              </div>
-              <div className="inline-flex items-center gap-2 bg-[#ffffff] rounded-full px-4 py-2 shadow-[0_10px_30px_rgba(17,28,45,0.06)]">
-                <CheckCircle2 className="w-4 h-4 text-[#047857]" />
-                <span className="font-medium font-sans">{d.poweredByGemini}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Feature icon cards row */}
-          <div className="mt-20 grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-3xl mx-auto">
-            {[
-              { icon: FileAudio, label: "Audio File Upload" },
-              { icon: Link2, label: "Meeting Link" },
-              { icon: Mic, label: "Record & Share" },
-            ].map(({ icon: Icon, label }) => (
-              <div
-                key={label}
-                className="flex flex-col items-center gap-4 bg-[#ffffff] rounded-2xl py-8 px-6 shadow-[0_10px_30px_rgba(17,28,45,0.06)]"
-              >
-                <div className="w-14 h-14 bg-[#e7eeff] rounded-2xl flex items-center justify-center">
-                  <Icon className="w-6 h-6 text-[#340075]" />
-                </div>
-                <span className="font-sans text-sm font-semibold text-[#111c2d] text-center">
-                  {label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <LandingHero
+        locale={locale as Locale}
+        copy={{
+          badge: d.badge,
+          eyebrow: d.heroEyebrow,
+          heroTitle1: d.heroTitle1,
+          heroSubtitle: d.heroSubtitle,
+          startTranscribing: d.startTranscribing,
+          viewPricing: d.viewPricing,
+          noSubscription: d.noSubscription,
+        }}
+        freeCreditsLabel={t(d.freeCredits, { count: FREE_CREDITS })}
+      />
 
       {/* ── AI Features Section ───────────────────────────────────────── */}
       <section className="py-28 px-6 lg:px-8 bg-[#f0f3ff]">
@@ -392,6 +357,50 @@ export default async function LandingPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {/* ── FAQ Section ───────────────────────────────────────────────── */}
+      {faqItems.length > 0 ? (
+        <section id="faq" className="py-28 px-6 lg:px-8 bg-[#f9f9ff]">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-14">
+              <span className="inline-block font-sans text-xs font-bold uppercase tracking-[0.22em] text-[#340075] mb-4">
+                {d.faqEyebrow}
+              </span>
+              <h2 className="font-display text-4xl lg:text-5xl font-bold text-[#111c2d] mb-5 leading-tight">
+                {d.faqTitle1}
+                <br />
+                <span className="bg-gradient-to-r from-[#340075] to-[#4c1d95] bg-clip-text text-transparent">
+                  {d.faqTitle2}
+                </span>
+              </h2>
+              <p className="font-sans text-lg text-[#4a4452] leading-relaxed">
+                {d.faqSubtitle}
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              {faqItems.map((item, index) => (
+                <details
+                  key={index}
+                  className="group bg-[#ffffff] rounded-2xl shadow-[0_10px_30px_rgba(17,28,45,0.06)] overflow-hidden"
+                >
+                  <summary className="flex cursor-pointer items-center justify-between gap-4 px-6 py-5 list-none">
+                    <h3 className="font-sans font-semibold text-[#111c2d] text-base lg:text-lg">
+                      {item.q}
+                    </h3>
+                    <ChevronDown className="w-5 h-5 text-[#340075] flex-shrink-0 transition-transform group-open:rotate-180" />
+                  </summary>
+                  <div className="px-6 pb-6 -mt-1">
+                    <p className="font-sans text-[#4a4452] leading-relaxed text-sm lg:text-base">
+                      {item.a}
+                    </p>
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* ── Pricing Section ───────────────────────────────────────────── */}
       <section id="credits" className="py-28 px-6 lg:px-8 bg-[#f0f3ff]">

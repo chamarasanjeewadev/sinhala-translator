@@ -191,6 +191,8 @@ create table public.transcriptions (
   audio_duration_seconds integer,
   credits_used integer default 0,
   is_partial boolean default false,
+  is_deleted boolean default false not null,
+  deleted_at timestamptz,
   created_at timestamptz default now() not null
 );
 
@@ -215,6 +217,9 @@ create policy "Users can update own transcriptions"
 
 create index idx_transcriptions_user_id on public.transcriptions(user_id);
 create index idx_transcriptions_created_at on public.transcriptions(created_at desc);
+create index idx_transcriptions_user_visible_created_at
+  on public.transcriptions(user_id, created_at desc)
+  where is_deleted = false;
 
 -- ============================================================
 -- Migration for existing databases (run if tables already exist)
@@ -226,6 +231,11 @@ create index idx_transcriptions_created_at on public.transcriptions(created_at d
 -- Add columns to transcriptions if they don't exist
 -- ALTER TABLE public.transcriptions ADD COLUMN IF NOT EXISTS credits_used integer DEFAULT 0;
 -- ALTER TABLE public.transcriptions ADD COLUMN IF NOT EXISTS is_partial boolean DEFAULT false;
+-- ALTER TABLE public.transcriptions ADD COLUMN IF NOT EXISTS is_deleted boolean DEFAULT false NOT NULL;
+-- ALTER TABLE public.transcriptions ADD COLUMN IF NOT EXISTS deleted_at timestamptz;
+-- CREATE INDEX IF NOT EXISTS idx_transcriptions_user_visible_created_at
+--   ON public.transcriptions(user_id, created_at DESC)
+--   WHERE is_deleted = false;
 
 -- Update profiles default
 -- ALTER TABLE public.profiles ALTER COLUMN credits SET DEFAULT 30;
@@ -274,3 +284,77 @@ END;
 $$;
 
 GRANT EXECUTE ON FUNCTION public.deduct_n_credits(uuid, integer, text) TO authenticated;
+
+-- ============================================================
+-- Feedback feature migration (April 2026)
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS public.transcription_feedback (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id uuid REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
+  transcription_id uuid REFERENCES public.transcriptions(id) ON DELETE CASCADE NOT NULL,
+  rating integer NOT NULL CHECK (rating BETWEEN 1 AND 5),
+  feedback_text text NULL,
+  would_recommend boolean NOT NULL,
+  not_recommend_reason text NULL,
+  created_at timestamptz DEFAULT now() NOT NULL,
+  UNIQUE (user_id, transcription_id)
+);
+
+ALTER TABLE public.transcription_feedback ENABLE ROW LEVEL SECURITY;
+
+DO $$
+BEGIN
+  CREATE POLICY "Users can view own feedback"
+    ON public.transcription_feedback FOR SELECT
+    USING (auth.uid() = user_id);
+EXCEPTION
+  WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$
+BEGIN
+  CREATE POLICY "Users can insert own feedback"
+    ON public.transcription_feedback FOR INSERT
+    WITH CHECK (auth.uid() = user_id);
+EXCEPTION
+  WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$
+BEGIN
+  CREATE POLICY "Users can update own feedback"
+    ON public.transcription_feedback FOR UPDATE
+    USING (auth.uid() = user_id)
+    WITH CHECK (auth.uid() = user_id);
+EXCEPTION
+  WHEN duplicate_object THEN NULL;
+END $$;
+
+CREATE INDEX IF NOT EXISTS idx_transcription_feedback_user_id
+  ON public.transcription_feedback(user_id);
+
+CREATE INDEX IF NOT EXISTS idx_transcription_feedback_transcription_id
+  ON public.transcription_feedback(transcription_id);
+
+-- ============================================================
+-- Soft delete transcriptions migration (May 2026)
+-- ============================================================
+
+ALTER TABLE public.transcriptions
+  ADD COLUMN IF NOT EXISTS is_deleted boolean DEFAULT false;
+
+ALTER TABLE public.transcriptions
+  ADD COLUMN IF NOT EXISTS deleted_at timestamptz;
+
+UPDATE public.transcriptions
+  SET is_deleted = false
+  WHERE is_deleted IS NULL;
+
+ALTER TABLE public.transcriptions
+  ALTER COLUMN is_deleted SET DEFAULT false,
+  ALTER COLUMN is_deleted SET NOT NULL;
+
+CREATE INDEX IF NOT EXISTS idx_transcriptions_user_visible_created_at
+  ON public.transcriptions(user_id, created_at DESC)
+  WHERE is_deleted = false;

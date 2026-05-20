@@ -25,6 +25,18 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Missing transcriptionId or text" }, { status: 400 });
   }
 
+  const { data: transcription, error: transcriptionError } = await supabase
+    .from("transcriptions")
+    .select("id")
+    .eq("id", transcriptionId)
+    .eq("user_id", user.id)
+    .eq("is_deleted", false)
+    .single();
+
+  if (transcriptionError || !transcription) {
+    return NextResponse.json({ error: "Transcription not found" }, { status: 404 });
+  }
+
   const creditsNeeded = calcCredits(text);
 
   // Pre-flight credit check
@@ -80,7 +92,8 @@ export async function POST(request: Request) {
     .from("transcriptions")
     .update({ english_translation: translation })
     .eq("id", transcriptionId)
-    .eq("user_id", user.id);
+    .eq("user_id", user.id)
+    .eq("is_deleted", false);
 
   if (updateError) {
     console.error("Failed to save translation:", updateError);

@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "title": "HelaVoice.lk — Sinhala Audio Transcription",
-    "description": "Professional Sinhala speech-to-text powered by advanced AI. Record or upload audio and get accurate transcriptions instantly."
+    "title": "Sinhala Voice Transcriber — Audio to Text in Seconds | HelaVoice.lk",
+    "description": "HelaVoice is a Sinhala voice transcriber that converts audio to accurate text using AI. Upload or record Sinhala audio and get a transcript in seconds. Free credits on signup."
   },
   "navbar": {
     "dashboard": "Dashboard",
@@ -15,19 +15,20 @@
   },
   "landing": {
     "badge": "AI-Powered Sinhala Transcription",
+    "heroEyebrow": "The Sinhala voice transcriber for Sri Lanka",
     "heroTitle1": "Your voice,",
     "heroTitle2": "perfectly transcribed",
-    "heroSubtitle": "Professional Sinhala speech-to-text in seconds. Pay only for what you use with our flexible credit system.",
+    "heroSubtitle": "The AI-powered Sinhala voice transcriber that turns Sinhala speech into accurate text in seconds. Record or upload audio — pay only for the minutes you use.",
     "startTranscribing": "Start transcribing",
     "viewPricing": "View pricing",
     "freeCredits": "{count} free credits on signup",
     "noSubscription": "No subscription",
-    "poweredByGemini": "Powered by Google AI",
+    "poweredByGemini": "AI powered",
     "recording": "Recording",
     "demoTranscript": "ආයුබෝවන්, මෙය හෙළ හට පරීක්ෂණයකි...",
     "demoTitle1": "Real-time transcription",
     "demoTitle2": "that just works",
-    "demoDesc": "Record directly in your browser or upload audio files. Get instant, accurate transcriptions powered by Google Speech-to-Text.",
+    "demoDesc": "Record directly in your browser or upload audio files. Get instant, accurate transcriptions powered by advanced AI.",
     "lightningFast": "Lightning fast",
     "lightningFastDesc": "Process audio in seconds with our optimized AI engine",
     "sinhalaOptimized": "Sinhala optimized",
@@ -44,7 +45,7 @@
     "featureCopy": "Copy & export",
     "featureCopyDesc": "Copy transcription text instantly or download as needed",
     "featureAI": "AI powered",
-    "featureAIDesc": "Powered by Google Speech-to-Text for industry-leading accuracy",
+    "featureAIDesc": "Powered by advanced AI for industry-leading accuracy",
     "featureSinhala": "Sinhala optimized",
     "featureSinhalaDesc": "Purpose-built for Sinhala language nuances and dialects",
     "featureRecord": "Record or upload",
@@ -85,7 +86,41 @@
     "footerLegal": "Legal",
     "footerPrivacy": "Privacy",
     "footerTerms": "Terms",
-    "footerCopyright": "© 2025 HelaVoice.lk. All rights reserved."
+    "footerCopyright": "© 2025 HelaVoice.lk. All rights reserved.",
+    "faqEyebrow": "Frequently asked questions",
+    "faqTitle1": "Sinhala voice transcription,",
+    "faqTitle2": "answered",
+    "faqSubtitle": "Common questions about transcribing Sinhala audio with HelaVoice.",
+    "faqItems": [
+      {
+        "q": "What is a Sinhala voice transcriber?",
+        "a": "A Sinhala voice transcriber converts spoken Sinhala audio into written Sinhala text. HelaVoice is an AI-powered Sinhala voice transcriber built for Sri Lankan creators, students, journalists, and businesses — it accepts recordings or audio files and returns an accurate transcript in seconds."
+      },
+      {
+        "q": "How do I transcribe Sinhala audio to text?",
+        "a": "Sign up for a free HelaVoice account, then either record audio directly in your browser or upload an existing audio file (MP3, WAV, WebM, OGG, FLAC, or M4A). HelaVoice processes the audio in 60-second chunks and returns the Sinhala transcript, which you can copy, edit, or download."
+      },
+      {
+        "q": "How accurate is HelaVoice for Sinhala speech-to-text?",
+        "a": "HelaVoice is purpose-built for Sinhala speech-to-text and handles the nuances of Sinhala pronunciation and Sri Lankan dialects. Accuracy is highest when the audio is clear and free of heavy background noise; quiet single-speaker recordings typically transcribe with very high fidelity."
+      },
+      {
+        "q": "What does \"transcribe\" mean in Sinhala?",
+        "a": "In Sinhala, \"transcribe\" is commonly translated as \"පරිවර්තනය කිරීම\" or \"ලිවීම\" — converting spoken words into written text. HelaVoice is the Sinhala voice transcriber that does this automatically using AI."
+      },
+      {
+        "q": "Can I transcribe Sinhala audio messages (WhatsApp or voice notes)?",
+        "a": "Yes. Save the audio message from WhatsApp or your messaging app, then upload it to HelaVoice. Common voice-note formats (M4A, OGG, MP3) are supported up to 25MB per file. HelaVoice is well suited as an audio message transcription service for Sinhala language voice notes."
+      },
+      {
+        "q": "How much does HelaVoice cost?",
+        "a": "HelaVoice uses a simple credit system: 1 credit = 1 minute of audio. New accounts get 30 free credits on signup with no credit card required. Credit packages start small and never expire — you only pay for the minutes you transcribe."
+      },
+      {
+        "q": "What audio formats and file sizes are supported?",
+        "a": "HelaVoice accepts MP3, WAV, WebM, OGG, FLAC, and M4A files, up to 25MB per upload. You can also record directly in your browser without installing anything."
+      }
+    ]
   },
   "auth": {
     "logInTitle": "Log In",
@@ -170,7 +205,23 @@
     "sinhala": "Sinhala",
     "retranslate": "Re-translate",
     "resetEnglish": "Reset to saved",
-    "noTranslationYet": "Not yet translated — use the Translate button on the row."
+    "noTranslationYet": "Not yet translated — use the Translate button on the row.",
+    "feedbackTitle": "Help us improve",
+    "feedbackPrompt": "Please share honest feedback about this transcription experience.",
+    "feedbackRatingLabel": "How would you rate this result?",
+    "feedbackRecommendLabel": "Would you recommend this service to someone else?",
+    "feedbackRecommendYes": "Yes",
+    "feedbackRecommendNo": "No",
+    "feedbackWhyNoLabel": "If not, why?",
+    "feedbackWhyNoPlaceholder": "Tell us what stopped you from recommending it.",
+    "feedbackCommentLabel": "Honest feedback",
+    "feedbackCommentPlaceholder": "What worked well? What should we improve?",
+    "feedbackSubmit": "Send Feedback",
+    "feedbackSkip": "Not now",
+    "feedbackThanks": "Thanks for your feedback!",
+    "feedbackSubmitFailed": "Could not submit feedback. Please try again.",
+    "feedbackValidation": "Please add a rating and recommendation before submitting.",
+    "feedbackWhyRequired": "Please tell us why you would not recommend the service."
   },
   "pricing": {
     "title": "Buy Credits",
