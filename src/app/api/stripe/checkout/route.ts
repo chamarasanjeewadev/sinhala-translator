@@ -1,29 +1,31 @@
-import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createClientFromRequest } from "@/lib/supabase/request";
+import { privateJson } from "@/lib/api-response";
 import { createStripeClient } from "@/lib/stripe";
+import { describeStripeError } from "@/lib/stripe-errors";
 import { CREDIT_PACKAGES } from "@/lib/constants";
 import { defaultLocale, locales, type Locale } from "@/lib/i18n/config";
 import { localePath } from "@/lib/i18n/utils";
 
 export async function POST(request: Request) {
-  const supabase = await createClient();
+  const { supabase, bearerToken } = await createClientFromRequest(request);
 
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await supabase.auth.getUser(bearerToken);
 
   if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return privateJson({ error: "Unauthorized" }, { status: 401 });
   }
 
-  let body: { packageId: string; locale?: string };
+  let body: { packageId: string; locale?: string; platform?: string };
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+    return privateJson({ error: "Invalid request body" }, { status: 400 });
   }
 
   const { packageId } = body;
+  const isMobile = body.platform === "mobile";
   const locale: Locale =
     body.locale && locales.includes(body.locale as Locale)
       ? (body.locale as Locale)
@@ -31,7 +33,7 @@ export async function POST(request: Request) {
   const creditPackage = CREDIT_PACKAGES.find((p) => p.id === packageId);
 
   if (!creditPackage) {
-    return NextResponse.json(
+    return privateJson(
       { error: "Invalid package selected" },
       { status: 400 }
     );
@@ -58,8 +60,18 @@ export async function POST(request: Request) {
         },
       ],
       mode: "payment",
-      success_url: `${appUrl}${localePath("/dashboard", locale)}?payment=success`,
-      cancel_url: `${appUrl}${localePath("/pricing", locale)}?payment=cancelled`,
+      customer_email: user.email,
+      payment_intent_data: user.email
+        ? { receipt_email: user.email }
+        : undefined,
+      // session_id on the cancel URL lets the return page look up why the
+      // payment failed (declined card vs. user simply backing out).
+      success_url: isMobile
+        ? `${appUrl}/payment-complete?status=success`
+        : `${appUrl}${localePath("/dashboard", locale)}?payment=success`,
+      cancel_url: isMobile
+        ? `${appUrl}/payment-complete?status=cancelled&session_id={CHECKOUT_SESSION_ID}`
+        : `${appUrl}${localePath("/pricing", locale)}?payment=cancelled&session_id={CHECKOUT_SESSION_ID}`,
       metadata: {
         user_id: user.id,
         package_id: creditPackage.id,
@@ -67,12 +79,13 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json({ url: session.url });
+    return privateJson({ url: session.url });
   } catch (error) {
     console.error("Stripe checkout error:", error);
-    return NextResponse.json(
-      { error: "Failed to create checkout session" },
-      { status: 500 }
+    const { info, status } = describeStripeError(error);
+    return privateJson(
+      { error: info.message, errorKey: info.key, errorCode: info.code },
+      { status }
     );
   }
 }

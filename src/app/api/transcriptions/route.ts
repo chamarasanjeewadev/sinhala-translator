@@ -1,18 +1,18 @@
-import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createClientFromRequest } from "@/lib/supabase/request";
+import { privateJson } from "@/lib/api-response";
 
 const hardDeleteTranscriptions =
   process.env.HARD_DELETE_TRANSCRIPTIONS === "true";
 
-export async function GET() {
-  const supabase = await createClient();
+export async function GET(request: Request) {
+  const { supabase, bearerToken } = await createClientFromRequest(request);
 
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await supabase.auth.getUser(bearerToken);
 
   if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return privateJson({ error: "Unauthorized" }, { status: 401 });
   }
 
   const { data: transcriptions, error } = await supabase
@@ -25,31 +25,31 @@ export async function GET() {
 
   if (error) {
     console.error("Failed to fetch transcriptions:", error);
-    return NextResponse.json(
+    return privateJson(
       { error: "Failed to fetch transcriptions" },
       { status: 500 }
     );
   }
 
-  return NextResponse.json({ transcriptions });
+  return privateJson({ transcriptions });
 }
 
 export async function PATCH(request: Request) {
-  const supabase = await createClient();
+  const { supabase, bearerToken } = await createClientFromRequest(request);
 
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await supabase.auth.getUser(bearerToken);
 
   if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return privateJson({ error: "Unauthorized" }, { status: 401 });
   }
 
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
 
   if (!id) {
-    return NextResponse.json(
+    return privateJson(
       { error: "Missing transcription ID" },
       { status: 400 }
     );
@@ -58,7 +58,7 @@ export async function PATCH(request: Request) {
   const body: { text?: string; englishTranslation?: string } = await request.json();
 
   if (body.text === undefined && body.englishTranslation === undefined) {
-    return NextResponse.json({ error: "No fields to update" }, { status: 400 });
+    return privateJson({ error: "No fields to update" }, { status: 400 });
   }
 
   const updates: Record<string, string> = {};
@@ -74,31 +74,31 @@ export async function PATCH(request: Request) {
 
   if (error) {
     console.error("Failed to update transcription:", error);
-    return NextResponse.json(
+    return privateJson(
       { error: "Failed to update transcription" },
       { status: 500 }
     );
   }
 
-  return NextResponse.json({ success: true });
+  return privateJson({ success: true });
 }
 
 export async function DELETE(request: Request) {
-  const supabase = await createClient();
+  const { supabase, bearerToken } = await createClientFromRequest(request);
 
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await supabase.auth.getUser(bearerToken);
 
   if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return privateJson({ error: "Unauthorized" }, { status: 401 });
   }
 
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
 
   if (!id) {
-    return NextResponse.json(
+    return privateJson(
       { error: "Missing transcription ID" },
       { status: 400 }
     );
@@ -119,11 +119,11 @@ export async function DELETE(request: Request) {
 
   if (error) {
     console.error("Failed to delete transcription:", error);
-    return NextResponse.json(
+    return privateJson(
       { error: "Failed to delete transcription" },
       { status: 500 }
     );
   }
 
-  return NextResponse.json({ success: true });
+  return privateJson({ success: true });
 }

@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { privateJson } from "@/lib/api-response";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return privateJson({ error: "Unauthorized" }, { status: 401 });
   }
 
   let body: {
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+    return privateJson({ error: "Invalid request body" }, { status: 400 });
   }
 
   const {
@@ -35,19 +35,19 @@ export async function POST(request: Request) {
   } = body;
 
   if (!transcriptionId || typeof transcriptionId !== "string") {
-    return NextResponse.json({ error: "Missing transcriptionId" }, { status: 400 });
+    return privateJson({ error: "Missing transcriptionId" }, { status: 400 });
   }
 
   if (!rating || !Number.isInteger(rating) || rating < 1 || rating > 5) {
-    return NextResponse.json({ error: "Rating must be an integer between 1 and 5" }, { status: 400 });
+    return privateJson({ error: "Rating must be an integer between 1 and 5" }, { status: 400 });
   }
 
   if (typeof wouldRecommend !== "boolean") {
-    return NextResponse.json({ error: "Missing recommendation value" }, { status: 400 });
+    return privateJson({ error: "Missing recommendation value" }, { status: 400 });
   }
 
   if (!wouldRecommend && (!notRecommendReason || notRecommendReason.trim() === "")) {
-    return NextResponse.json({ error: "Please tell us why you would not recommend it" }, { status: 400 });
+    return privateJson({ error: "Please tell us why you would not recommend it" }, { status: 400 });
   }
 
   const { data: transcription, error: transcriptionError } = await supabase
@@ -58,7 +58,7 @@ export async function POST(request: Request) {
     .single();
 
   if (transcriptionError || !transcription || transcription.user_id !== user.id) {
-    return NextResponse.json({ error: "Transcription not found" }, { status: 404 });
+    return privateJson({ error: "Transcription not found" }, { status: 404 });
   }
 
   const { error: insertError } = await supabase
@@ -78,8 +78,8 @@ export async function POST(request: Request) {
 
   if (insertError) {
     console.error("Failed to save feedback:", insertError);
-    return NextResponse.json({ error: "Failed to save feedback" }, { status: 500 });
+    return privateJson({ error: "Failed to save feedback" }, { status: 500 });
   }
 
-  return NextResponse.json({ success: true });
+  return privateJson({ success: true });
 }

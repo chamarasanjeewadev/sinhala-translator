@@ -3,6 +3,7 @@ export interface Profile {
   email: string;
   full_name: string | null;
   credits: number;
+  is_admin: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -76,6 +77,8 @@ export interface Transcription {
   audio_duration_seconds: number | null;
   credits_used: number;
   is_partial: boolean;
+  has_timestamps: boolean;
+  is_conversation: boolean;
   is_deleted: boolean;
   deleted_at: string | null;
   created_at: string;

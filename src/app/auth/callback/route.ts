@@ -20,11 +20,19 @@ export async function GET(request: Request) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      return NextResponse.redirect(`${origin}${localePath(next, locale)}`);
+      return noStoreRedirect(`${origin}${localePath(next, locale)}`);
     }
   }
 
-  return NextResponse.redirect(
+  return noStoreRedirect(
     `${origin}${localePath("/login", locale)}?error=auth_failed`
   );
+}
+
+// The callback response carries session Set-Cookie headers — it must never
+// be cached by any intermediary.
+function noStoreRedirect(url: string): NextResponse {
+  const res = NextResponse.redirect(url);
+  res.headers.set("Cache-Control", "private, no-store, max-age=0");
+  return res;
 }

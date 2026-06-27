@@ -130,6 +130,8 @@ export function DashboardContent({
   const [currentChunk, setCurrentChunk] = useState(0);
   const [totalChunks, setTotalChunks] = useState(0);
   const [accumulatedText, setAccumulatedText] = useState("");
+  const [conversationMode, setConversationMode] = useState(false);
+  const [withTimestamps, setWithTimestamps] = useState(false);
   const creditsUsedRef = useRef(0);
   const cancelledRef = useRef(false);
 
@@ -165,6 +167,8 @@ export function DashboardContent({
     setCurrentChunk(0);
     setTotalChunks(0);
     setAccumulatedText("");
+    setConversationMode(false);
+    setWithTimestamps(false);
     creditsUsedRef.current = 0;
     cancelledRef.current = false;
   }, []);
@@ -308,6 +312,21 @@ export function DashboardContent({
 
         const base64 = await blobToBase64(chunks[i].blob);
 
+        // In conversation mode, hand the previous transcript tail and the
+        // speaker labels used so far to the server so Gemini keeps speaker
+        // numbering consistent across chunks.
+        const previousTail =
+          conversationMode && fullText ? fullText.slice(-500) : undefined;
+        const knownSpeakers = conversationMode
+          ? [
+              ...new Set(
+                [...fullText.matchAll(/Speaker (\d+):/g)].map(
+                  (m) => `Speaker ${m[1]}`
+                )
+              ),
+            ]
+          : undefined;
+
         const res = await fetch("/api/transcribe/chunk", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -315,6 +334,11 @@ export function DashboardContent({
             audio: base64,
             chunkIndex: i,
             totalChunks: chunks.length,
+            chunkDurationSec: chunks[i].durationSec,
+            conversation: conversationMode,
+            timestamps: withTimestamps,
+            previousTail,
+            knownSpeakers,
           }),
         });
 
@@ -334,7 +358,8 @@ export function DashboardContent({
         }
 
         const data: ChunkTranscribeResponse = await res.json();
-        fullText += (fullText && data.text ? " " : "") + data.text;
+        const separator = conversationMode || withTimestamps ? "\n" : " ";
+        fullText += (fullText && data.text ? separator : "") + data.text;
         usedCredits++;
         lastCreditsRemaining = data.creditsRemaining;
         setAccumulatedText(fullText);
@@ -352,6 +377,8 @@ export function DashboardContent({
             durationSeconds: analyzeResult.durationSeconds,
             creditsUsed: usedCredits,
             isPartial,
+            hasTimestamps: withTimestamps,
+            isConversation: conversationMode,
           }),
         });
 
@@ -378,7 +405,7 @@ export function DashboardContent({
       toast.error(d.transcriptionFailed);
       setTranscribeState("idle");
     }
-  }, [audioSource, analyzeResult, d.insufficientCredits, d.transcriptionFailed, handleTranscriptionComplete]);
+  }, [audioSource, analyzeResult, conversationMode, withTimestamps, d.insufficientCredits, d.transcriptionFailed, handleTranscriptionComplete]);
 
   // ── List action handlers ──
   const handleCopy = async (text: string, id: string) => {
@@ -766,6 +793,38 @@ export function DashboardContent({
                   </span>
                 </div>
 
+                <div className="h-px bg-[#f0f3ff]" />
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-[#111c2d] text-sm font-semibold">
+                      {d.conversationMode}
+                    </p>
+                    <p className="text-[#4a4452] text-xs mt-0.5">
+                      {d.conversationModeDesc}
+                    </p>
+                  </div>
+                  <ModeSwitch
+                    label={d.conversationMode}
+                    checked={conversationMode}
+                    onChange={setConversationMode}
+                  />
+                </div>
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-[#111c2d] text-sm font-semibold">
+                      {d.timestampsToggle}
+                    </p>
+                    <p className="text-[#4a4452] text-xs mt-0.5">
+                      {d.timestampsToggleDesc}
+                    </p>
+                  </div>
+                  <ModeSwitch
+                    label={d.timestampsToggle}
+                    checked={withTimestamps}
+                    onChange={setWithTimestamps}
+                  />
+                </div>
+
                 {!analyzeResult.canProceed && (
                   <div className="flex items-center gap-2 text-sm bg-[#ffdad6] text-[#ba1a1a] rounded-xl px-4 py-3">
                     <AlertCircle className="w-4 h-4 shrink-0" />
@@ -820,7 +879,7 @@ export function DashboardContent({
 
               {accumulatedText && (
                 <div className="bg-[#ffffff] rounded-2xl shadow-[0_10px_30px_rgba(17,28,45,0.06)] p-4 max-h-48 overflow-y-auto">
-                  <p className="text-sm text-[#111c2d] leading-relaxed sinhala-text">
+                  <p className="text-sm text-[#111c2d] leading-relaxed sinhala-text whitespace-pre-wrap">
                     {accumulatedText}
                   </p>
                 </div>
@@ -953,6 +1012,16 @@ export function DashboardContent({
                           {t.is_partial && (
                             <span className="inline-flex items-center bg-[#ffdad6] text-[#ba1a1a] text-[10px] font-semibold px-2 py-0.5 rounded-full">
                               {d.partial}
+                            </span>
+                          )}
+                          {t.is_conversation && (
+                            <span className="inline-flex items-center bg-[#e7eeff] text-[#340075] text-[10px] font-semibold px-2 py-0.5 rounded-full">
+                              {d.badgeConversation}
+                            </span>
+                          )}
+                          {t.has_timestamps && (
+                            <span className="inline-flex items-center bg-[#fff3d6] text-[#8a5a00] text-[10px] font-semibold px-2 py-0.5 rounded-full">
+                              {d.badgeTimestamps}
                             </span>
                           )}
                         </p>
@@ -1459,5 +1528,34 @@ export function DashboardContent({
         </div>
       )}
     </div>
+  );
+}
+
+function ModeSwitch({
+  label,
+  checked,
+  onChange,
+}: {
+  label: string;
+  checked: boolean;
+  onChange: (value: boolean) => void;
+}) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      aria-label={label}
+      onClick={() => onChange(!checked)}
+      className={`relative w-11 h-6 rounded-full transition-colors shrink-0 ${
+        checked ? "bg-[#340075]" : "bg-[#e7eeff]"
+      }`}
+    >
+      <span
+        className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
+          checked ? "translate-x-5" : ""
+        }`}
+      />
+    </button>
   );
 }

@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createClientFromRequest } from "@/lib/supabase/request";
 import { translateWithGemini } from "@/lib/gemini-translate";
+import { privateJson } from "@/lib/api-response";
 import type { TranslateResponse } from "@/lib/types";
 
 function calcCredits(text: string): number {
@@ -8,21 +8,21 @@ function calcCredits(text: string): number {
 }
 
 export async function POST(request: Request) {
-  const supabase = await createClient();
+  const { supabase, bearerToken } = await createClientFromRequest(request);
 
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await supabase.auth.getUser(bearerToken);
 
   if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return privateJson({ error: "Unauthorized" }, { status: 401 });
   }
 
   const body: { transcriptionId?: string; text?: string } = await request.json();
   const { transcriptionId, text } = body;
 
   if (!transcriptionId || !text || typeof text !== "string" || text.trim() === "") {
-    return NextResponse.json({ error: "Missing transcriptionId or text" }, { status: 400 });
+    return privateJson({ error: "Missing transcriptionId or text" }, { status: 400 });
   }
 
   const { data: transcription, error: transcriptionError } = await supabase
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     .single();
 
   if (transcriptionError || !transcription) {
-    return NextResponse.json({ error: "Transcription not found" }, { status: 404 });
+    return privateJson({ error: "Transcription not found" }, { status: 404 });
   }
 
   const creditsNeeded = calcCredits(text);
@@ -47,7 +47,7 @@ export async function POST(request: Request) {
     .single();
 
   if (!profile || profile.credits < creditsNeeded) {
-    return NextResponse.json(
+    return privateJson(
       {
         error: "Insufficient credits. Please purchase more.",
         creditsNeeded,
@@ -59,7 +59,7 @@ export async function POST(request: Request) {
 
   const apiKey = process.env.GOOGLE_CLOUD_API_KEY;
   if (!apiKey) {
-    return NextResponse.json({ error: "Translation service not configured" }, { status: 500 });
+    return privateJson({ error: "Translation service not configured" }, { status: 500 });
   }
 
   // Translate
@@ -68,7 +68,7 @@ export async function POST(request: Request) {
     translation = await translateWithGemini(apiKey, text);
   } catch (err) {
     console.error("Translation failed:", err);
-    return NextResponse.json({ error: "Translation failed. Please try again." }, { status: 500 });
+    return privateJson({ error: "Translation failed. Please try again." }, { status: 500 });
   }
 
   // Atomically deduct credits
@@ -79,7 +79,7 @@ export async function POST(request: Request) {
   });
 
   if (deductError || !deductData?.[0]?.success) {
-    return NextResponse.json(
+    return privateJson(
       { error: "Insufficient credits. Please purchase more." },
       { status: 402 }
     );
@@ -106,5 +106,5 @@ export async function POST(request: Request) {
     creditsRemaining,
   };
 
-  return NextResponse.json(response);
+  return privateJson(response);
 }

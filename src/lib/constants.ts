@@ -32,6 +32,36 @@ export const CREDIT_PACKAGES: CreditPackage[] = [
   },
 ];
 
+// Apple In-App Purchase product ids (consumables) → credits granted.
+// Purchases are verified by RevenueCat and credited via its webhook.
+// priceUsdCents is the App Store list price, used for the purchases ledger
+// when the RevenueCat event carries no price (e.g. sandbox purchases).
+export const IAP_PRODUCTS: Record<
+  string,
+  { credits: number; name: string; priceUsdCents: number }
+> = {
+  "com.helavoice.app.credits.starter": {
+    credits: 60,
+    name: "Starter",
+    priceUsdCents: 500,
+  },
+  "com.helavoice.app.credits.popular": {
+    credits: 300,
+    name: "Popular",
+    priceUsdCents: 2000,
+  },
+  "com.helavoice.app.credits.pro": {
+    credits: 700,
+    name: "Pro",
+    priceUsdCents: 3000,
+  },
+  "com.helavoice.app.credits.premium": {
+    credits: 1000,
+    name: "Premium",
+    priceUsdCents: 5000,
+  },
+};
+
 export const FREE_CREDITS = 30;
 export const CREDIT_PER_MINUTE = 1;
 export const CHUNK_DURATION_SECONDS = 120; // 2 minutes per chunk - balance between performance and request size

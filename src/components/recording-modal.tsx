@@ -44,6 +44,8 @@ export function RecordingModal({
   const [currentChunk, setCurrentChunk] = useState(0);
   const [totalChunks, setTotalChunks] = useState(0);
   const [accumulatedText, setAccumulatedText] = useState("");
+  const [conversationMode, setConversationMode] = useState(false);
+  const [withTimestamps, setWithTimestamps] = useState(false);
   const creditsUsedRef = useRef(0);
   const cancelledRef = useRef(false);
 
@@ -56,6 +58,8 @@ export function RecordingModal({
     setCurrentChunk(0);
     setTotalChunks(0);
     setAccumulatedText("");
+    setConversationMode(false);
+    setWithTimestamps(false);
     creditsUsedRef.current = 0;
     cancelledRef.current = false;
   };
@@ -131,6 +135,21 @@ export function RecordingModal({
 
         const base64 = await blobToBase64(chunks[i].blob);
 
+        // In conversation mode, hand the previous transcript tail and the
+        // speaker labels used so far to the server so Gemini keeps speaker
+        // numbering consistent across chunks.
+        const previousTail =
+          conversationMode && fullText ? fullText.slice(-500) : undefined;
+        const knownSpeakers = conversationMode
+          ? [
+              ...new Set(
+                [...fullText.matchAll(/Speaker (\d+):/g)].map(
+                  (m) => `Speaker ${m[1]}`
+                )
+              ),
+            ]
+          : undefined;
+
         const res = await fetch("/api/transcribe/chunk", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -138,6 +157,11 @@ export function RecordingModal({
             audio: base64,
             chunkIndex: i,
             totalChunks: chunks.length,
+            chunkDurationSec: chunks[i].durationSec,
+            conversation: conversationMode,
+            timestamps: withTimestamps,
+            previousTail,
+            knownSpeakers,
           }),
         });
 
@@ -159,7 +183,8 @@ export function RecordingModal({
         }
 
         const data: ChunkTranscribeResponse = await res.json();
-        fullText += (fullText && data.text ? " " : "") + data.text;
+        const separator = conversationMode || withTimestamps ? "\n" : " ";
+        fullText += (fullText && data.text ? separator : "") + data.text;
         usedCredits++;
         lastCreditsRemaining = data.creditsRemaining;
         setAccumulatedText(fullText);
@@ -178,6 +203,8 @@ export function RecordingModal({
             durationSeconds: analyzeResult.durationSeconds,
             creditsUsed: usedCredits,
             isPartial,
+            hasTimestamps: withTimestamps,
+            isConversation: conversationMode,
           }),
         });
 
@@ -237,6 +264,21 @@ export function RecordingModal({
                 <span className="text-white font-bold">
                   {analyzeResult.currentCredits}
                 </span>
+              </div>
+
+              <div className="border-t border-white/10 pt-4 space-y-3">
+                <ToggleRow
+                  label={d.conversationMode}
+                  description={d.conversationModeDesc}
+                  checked={conversationMode}
+                  onChange={setConversationMode}
+                />
+                <ToggleRow
+                  label={d.timestampsToggle}
+                  description={d.timestampsToggleDesc}
+                  checked={withTimestamps}
+                  onChange={setWithTimestamps}
+                />
               </div>
 
               {!analyzeResult.canProceed && (
@@ -301,7 +343,7 @@ export function RecordingModal({
               {/* Accumulated transcript preview */}
               {accumulatedText && (
                 <div className="bg-white/5 border border-white/10 rounded-2xl p-4 max-h-48 overflow-y-auto">
-                  <p className="text-sm text-gray-300 leading-relaxed">
+                  <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-wrap">
                     {accumulatedText}
                   </p>
                 </div>
@@ -371,6 +413,45 @@ export function RecordingModal({
           </>
         )}
       </div>
+    </div>
+  );
+}
+
+function ToggleRow({
+  label,
+  description,
+  checked,
+  onChange,
+}: {
+  label: string;
+  description: string;
+  checked: boolean;
+  onChange: (value: boolean) => void;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-4">
+      <div>
+        <p className="text-white text-sm font-semibold">{label}</p>
+        <p className="text-gray-400 text-xs mt-0.5">{description}</p>
+      </div>
+      <button
+        type="button"
+        role="switch"
+        aria-checked={checked}
+        aria-label={label}
+        onClick={() => onChange(!checked)}
+        className={`relative w-11 h-6 rounded-full transition-all shrink-0 ${
+          checked
+            ? "bg-gradient-to-r from-violet-600 to-blue-600"
+            : "bg-white/10"
+        }`}
+      >
+        <span
+          className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${
+            checked ? "translate-x-5" : ""
+          }`}
+        />
+      </button>
     </div>
   );
 }

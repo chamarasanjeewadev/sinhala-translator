@@ -17,10 +17,49 @@ export function PricingContent() {
   const d = dict.pricing;
   const [loadingId, setLoadingId] = useState<string | null>(null);
 
+  const stripeErrors = dict.stripeErrors as Record<string, string> | undefined;
+
+  const stripeErrorText = (errorKey?: string, errorCode?: string, fallback?: string) => {
+    const message = (errorKey && stripeErrors?.[errorKey]) || fallback;
+    if (!message) return null;
+    const codeNote =
+      errorCode && stripeErrors?.errorCode
+        ? ` (${stripeErrors.errorCode.replace("{code}", errorCode)})`
+        : "";
+    return `${message}${codeNote}`;
+  };
+
   useEffect(() => {
-    if (searchParams.get("payment") === "cancelled") {
+    if (searchParams.get("payment") !== "cancelled") return;
+    const sessionId = searchParams.get("session_id");
+    if (!sessionId) {
       toast.info(d.paymentCancelled);
+      return;
     }
+    // Ask Stripe why the payment didn't complete — a declined card deserves
+    // a clear reason, not just "cancelled".
+    let stale = false;
+    fetch(`/api/stripe/session-status?session_id=${encodeURIComponent(sessionId)}`)
+      .then(
+        (res) =>
+          res.json() as Promise<{ errorKey?: string; errorCode?: string; message?: string }>
+      )
+      .then((data) => {
+        if (stale) return;
+        const message = stripeErrorText(data.errorKey, data.errorCode, data.message);
+        if (data.errorKey && message) {
+          toast.error(message, { duration: 12000 });
+        } else {
+          toast.info(d.paymentCancelled);
+        }
+      })
+      .catch(() => {
+        if (!stale) toast.info(d.paymentCancelled);
+      });
+    return () => {
+      stale = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, d.paymentCancelled]);
 
   const handleBuy = async (packageId: string) => {
@@ -31,14 +70,18 @@ export function PricingContent() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ packageId, locale }),
       });
-      const data: { url?: string; error?: string } = await res.json();
+      const data: { url?: string; error?: string; errorKey?: string; errorCode?: string } =
+        await res.json();
       if (data.url) {
         window.location.href = data.url;
       } else {
-        alert(data.error || d.checkoutError);
+        toast.error(
+          stripeErrorText(data.errorKey, data.errorCode, data.error) || d.checkoutError,
+          { duration: 12000 }
+        );
       }
     } catch {
-      alert(d.genericError);
+      toast.error(d.genericError);
     } finally {
       setLoadingId(null);
     }
@@ -293,10 +336,10 @@ export function PricingContent() {
           <p className="mb-4 text-sm text-white/40">
             Have questions? Contact us at{" "}
             <a
-              href="mailto:support@helavoice.lk"
+              href="mailto:hi@helavoice.lk"
               className="text-violet-300 hover:text-violet-200 transition-colors"
             >
-              support@helavoice.lk
+              hi@helavoice.lk
             </a>
           </p>
           <Link

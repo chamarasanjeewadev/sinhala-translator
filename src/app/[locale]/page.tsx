@@ -629,6 +629,15 @@ export default async function LandingPage({ params }: Props) {
               <p className="font-sans text-sm text-[#4a4452] leading-relaxed">
                 {d.footerDesc}
               </p>
+              <p className="mt-4 font-sans text-sm text-[#4a4452] font-medium">
+                {d.footerContact}{" "}
+                <a
+                  href="mailto:hi@helavoice.lk"
+                  className="text-[#340075] hover:text-[#4c1d95] transition-colors"
+                >
+                  hi@helavoice.lk
+                </a>
+              </p>
             </div>
 
             {/* Product */}
@@ -704,20 +713,20 @@ export default async function LandingPage({ params }: Props) {
               </h4>
               <ul className="space-y-3">
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    href={lp("/privacy")}
                     className="font-sans text-sm text-[#4a4452] hover:text-[#111c2d] transition-colors font-medium"
                   >
                     {d.footerPrivacy}
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    href={lp("/terms")}
                     className="font-sans text-sm text-[#4a4452] hover:text-[#111c2d] transition-colors font-medium"
                   >
                     {d.footerTerms}
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

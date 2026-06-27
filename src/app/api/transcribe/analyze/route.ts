@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { privateJson } from "@/lib/api-response";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -9,20 +9,20 @@ export async function POST(request: Request) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return privateJson({ error: "Unauthorized" }, { status: 401 });
   }
 
   let body: { durationSeconds: number };
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+    return privateJson({ error: "Invalid request body" }, { status: 400 });
   }
 
   const { durationSeconds } = body;
 
   if (!durationSeconds || durationSeconds <= 0) {
-    return NextResponse.json(
+    return privateJson(
       { error: "Invalid duration" },
       { status: 400 }
     );
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
     .single();
 
   if (profileError || !profile) {
-    return NextResponse.json(
+    return privateJson(
       { error: "Failed to fetch profile" },
       { status: 500 }
     );
@@ -45,7 +45,7 @@ export async function POST(request: Request) {
 
   const currentCredits = profile.credits;
 
-  return NextResponse.json({
+  return privateJson({
     durationSeconds,
     requiredCredits,
     currentCredits,

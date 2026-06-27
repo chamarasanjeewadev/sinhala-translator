@@ -68,5 +68,19 @@ export async function updateSession(
     return NextResponse.redirect(url);
   }
 
+  // Personalized responses must never be cached by the edge, proxies, or the
+  // browser cache — a cached response could be served to a different user.
+  const isApi = pathname.startsWith("/api/");
+  const isProtected = PROTECTED_ROUTES.some((route) =>
+    strippedPath.startsWith(route)
+  );
+  if (isApi || isProtected || user) {
+    supabaseResponse.headers.set(
+      "Cache-Control",
+      "private, no-store, max-age=0"
+    );
+    supabaseResponse.headers.set("Vary", "Cookie, Authorization");
+  }
+
   return supabaseResponse;
 }
