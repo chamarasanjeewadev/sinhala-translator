@@ -137,11 +137,18 @@ export function DashboardContent({
 
   // ── Payment success ──
   useEffect(() => {
-    if (searchParams.get("payment") === "success") {
-      toast.success(d.paymentSuccess);
-      fetchCredits();
-    }
-  }, [searchParams, d.paymentSuccess]);
+    if (searchParams.get("payment") !== "success") return;
+    toast.success(d.paymentSuccess);
+    // Stripe webhooks are async — the credits DB update arrives seconds after
+    // the checkout redirect. Poll a few times so the UI catches up.
+    fetchCredits();
+    const timers = [
+      setTimeout(fetchCredits, 3000),
+      setTimeout(fetchCredits, 7000),
+      setTimeout(fetchCredits, 12000),
+    ];
+    return () => timers.forEach(clearTimeout);
+  }, [searchParams, d.paymentSuccess, fetchCredits]);
 
   const fetchCredits = useCallback(async () => {
     const res = await fetch("/api/credits");
