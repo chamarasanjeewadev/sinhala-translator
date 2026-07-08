@@ -24,7 +24,7 @@ export default function SignupContent() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xl font-bold text-white">{pkg.name} Pack</p>
-                <p className="mt-0.5 text-sm text-white/55">{pkg.credits} transcription minutes</p>
+                <p className="mt-0.5 text-sm text-white/55">{pkg.credits} transcription credits</p>
               </div>
               <span className="text-4xl font-extrabold text-white">{pkg.priceDisplay}</span>
             </div>

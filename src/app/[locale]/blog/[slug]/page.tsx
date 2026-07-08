@@ -65,7 +65,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         images: post.image ? [post.image] : [],
       },
     };
-  } catch (e) {
+  } catch {
     return {
       title: "Blog Post Not Found",
     };
@@ -84,7 +84,7 @@ export default async function BlogPost({ params }: Props) {
   let post: ReturnType<typeof getPostBySlug>;
   try {
     post = getPostBySlug(slug);
-  } catch (e) {
+  } catch {
     notFound();
   }
 
@@ -242,6 +242,7 @@ export default async function BlogPost({ params }: Props) {
 
         {post.image && (
           <div className="relative mb-12 aspect-video w-full overflow-hidden rounded-[2rem] border border-slate-200/70 shadow-[0_24px_48px_-34px_rgba(15,23,42,0.6)]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={post.image}
               alt={post.title}

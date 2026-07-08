@@ -371,29 +371,35 @@ export function RecordingModal({
         {modalState === "idle" && (
           <>
             {/* Mode Tabs */}
-            <div className="flex gap-2 p-6 pb-4">
-              <button
-                onClick={() => setMode("record")}
-                className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 ${
-                  mode === "record"
-                    ? "bg-gradient-to-r from-violet-600 to-blue-600 text-white"
-                    : "bg-white/5 text-gray-400 hover:bg-white/10"
-                }`}
-              >
-                <Mic className="w-4 h-4" />
-                {d.record}
-              </button>
-              <button
-                onClick={() => setMode("upload")}
-                className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 ${
-                  mode === "upload"
-                    ? "bg-gradient-to-r from-violet-600 to-blue-600 text-white"
-                    : "bg-white/5 text-gray-400 hover:bg-white/10"
-                }`}
-              >
-                <Upload className="w-4 h-4" />
-                {d.upload}
-              </button>
+            <div className="px-6 pt-6 pb-4">
+              <div className="flex gap-1 p-1 rounded-xl bg-white/5" role="tablist">
+                <button
+                  role="tab"
+                  aria-selected={mode === "record"}
+                  onClick={() => setMode("record")}
+                  className={`flex-1 py-2.5 px-4 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 ${
+                    mode === "record"
+                      ? "bg-gradient-to-r from-violet-600 to-blue-600 text-white shadow-sm"
+                      : "text-gray-400 hover:text-white"
+                  }`}
+                >
+                  <Mic className="w-4 h-4" />
+                  {d.record}
+                </button>
+                <button
+                  role="tab"
+                  aria-selected={mode === "upload"}
+                  onClick={() => setMode("upload")}
+                  className={`flex-1 py-2.5 px-4 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 ${
+                    mode === "upload"
+                      ? "bg-gradient-to-r from-violet-600 to-blue-600 text-white shadow-sm"
+                      : "text-gray-400 hover:text-white"
+                  }`}
+                >
+                  <Upload className="w-4 h-4" />
+                  {d.upload}
+                </button>
+              </div>
             </div>
 
             {/* Content */}

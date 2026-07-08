@@ -6,7 +6,7 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint",
+		"lint": "eslint .",
 		"deploy": "opennextjs-cloudflare build && opennextjs-cloudflare populateCache remote && opennextjs-cloudflare deploy",
 		"upload": "opennextjs-cloudflare build && opennextjs-cloudflare populateCache remote && opennextjs-cloudflare upload",
 		"preview": "opennextjs-cloudflare build && opennextjs-cloudflare populateCache local && opennextjs-cloudflare preview",
@@ -34,7 +34,9 @@
 		"radix-ui": "^1.4.3",
 		"react": "19.1.5",
 		"react-dom": "19.1.5",
+		"react-markdown": "^10.1.0",
 		"remark-frontmatter": "^5.0.0",
+		"remark-gfm": "^4.0.1",
 		"sonner": "^2.0.7",
 		"stripe": "^20.3.0",
 		"tailwind-merge": "^3.4.0"

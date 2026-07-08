@@ -185,7 +185,7 @@ export function Navbar() {
           <div className="flex md:hidden items-center gap-2">
             {user && (
               <>
-                {/* Buy Minutes — primary CTA always visible on mobile */}
+                {/* Buy Credits — primary CTA always visible on mobile */}
                 <LocaleLink href="/pricing">
                   <button className="hero-primary-button inline-flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-semibold text-white hover:opacity-90 transition-opacity">
                     {d.buyCredits}

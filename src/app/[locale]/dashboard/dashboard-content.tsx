@@ -24,6 +24,8 @@ import {
 import { toast } from "sonner";
 import { LocaleLink } from "@/components/locale-link";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { MarkdownView } from "@/components/markdown-view";
+import { MarkdownEditorPane } from "@/components/markdown-editor-pane";
 import { useDictionary } from "@/lib/i18n/dictionary-context";
 import { useLocale } from "@/lib/i18n/locale-context";
 import { localePath } from "@/lib/i18n/utils";
@@ -113,6 +115,9 @@ export function DashboardContent({
   const [translateTarget, setTranslateTarget] = useState<Transcription | null>(null);
   const [translatingId, setTranslatingId] = useState<string | null>(null);
   const [feedbackTranscriptionId, setFeedbackTranscriptionId] = useState<string | null>(null);
+  // When set, the Edit modal was opened right after a transcription finished;
+  // closing it (via any path) should then prompt for feedback on this id.
+  const pendingFeedbackIdRef = useRef<string | null>(null);
   const [feedbackRating, setFeedbackRating] = useState<number>(0);
   const [feedbackComment, setFeedbackComment] = useState("");
   const [wouldRecommend, setWouldRecommend] = useState<boolean | null>(null);
@@ -158,12 +163,16 @@ export function DashboardContent({
     return () => timers.forEach(clearTimeout);
   }, [searchParams, d.paymentSuccess, fetchCredits]);
 
-  const fetchTranscriptions = useCallback(async () => {
+  const fetchTranscriptions = useCallback(async (): Promise<
+    Transcription[] | null
+  > => {
     const res = await fetch("/api/transcriptions");
     if (res.ok) {
       const data: { transcriptions: Transcription[] } = await res.json();
       setTranscriptions(data.transcriptions);
+      return data.transcriptions;
     }
+    return null;
   }, []);
 
   // ── Transcription workspace handlers ──
@@ -181,15 +190,38 @@ export function DashboardContent({
   }, []);
 
   const handleTranscriptionComplete = useCallback(
-    (_text: string, creditsRemaining: number, transcriptionId: string) => {
+    async (_text: string, creditsRemaining: number, transcriptionId: string) => {
       setCredits(creditsRemaining);
-      fetchTranscriptions();
       resetState();
-      setFeedbackTranscriptionId(transcriptionId);
       toast.success(d.transcriptionComplete);
+
+      // Open the Edit modal on the fresh transcription so the user can review /
+      // edit / translate it. Feedback is deferred until that modal is closed.
+      const list = await fetchTranscriptions();
+      const fresh = list?.find((t) => t.id === transcriptionId);
+      if (fresh) {
+        setEditTranscription(fresh);
+        setEditText(fresh.transcription_text);
+        setEditEnglishText(fresh.english_translation ?? "");
+        pendingFeedbackIdRef.current = transcriptionId;
+      } else {
+        // Fallback: couldn't load the saved transcription — ask for feedback directly.
+        setFeedbackTranscriptionId(transcriptionId);
+      }
     },
     [fetchTranscriptions, resetState, d.transcriptionComplete]
   );
+
+  // Single close path for the Edit modal. When the modal was opened right after a
+  // transcription finished, closing it (Save / Cancel / ✕ / backdrop) prompts feedback.
+  const closeEditModal = useCallback(() => {
+    setEditTranscription(null);
+    const pending = pendingFeedbackIdRef.current;
+    if (pending) {
+      setFeedbackTranscriptionId(pending);
+      pendingFeedbackIdRef.current = null;
+    }
+  }, []);
 
   const resetFeedbackState = useCallback(() => {
     setFeedbackTranscriptionId(null);
@@ -465,7 +497,7 @@ export function DashboardContent({
 
     if (Object.keys(body).length === 0) {
       setIsSaving(false);
-      setEditTranscription(null);
+      closeEditModal();
       return;
     }
 
@@ -492,7 +524,7 @@ export function DashboardContent({
         )
       );
       toast.success(d.saveSuccess);
-      setEditTranscription(null);
+      closeEditModal();
     } else {
       toast.error(d.saveFailed);
     }
@@ -541,6 +573,14 @@ export function DashboardContent({
             : t
         )
       );
+      // Reflect the result in the Edit modal if it's showing this record
+      if (editTranscription?.id === target.id) {
+        setEditEnglishText(data.translation);
+        setEditTranscription({
+          ...editTranscription,
+          english_translation: data.translation,
+        });
+      }
       toast.success(d.translationSaved);
     } catch {
       toast.error(d.translationFailed);
@@ -706,24 +746,32 @@ export function DashboardContent({
                 <p className="text-[#4a4452] text-base">{d.transcribeDesc}</p>
               </div>
 
-              <div className="flex gap-2 mb-6 max-w-xs mx-auto">
+              <div
+                role="tablist"
+                aria-label={d.inputMethod}
+                className="flex gap-1 p-1 mb-6 max-w-xs mx-auto rounded-full bg-[#e7eeff]"
+              >
                 <button
+                  role="tab"
+                  aria-selected={mode === "record"}
                   onClick={() => setMode("record")}
-                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-5 rounded-full text-sm font-semibold transition-all ${
+                  className={`flex-1 flex items-center justify-center gap-2 py-2 px-5 rounded-full text-sm font-semibold transition-all ${
                     mode === "record"
-                      ? "bg-gradient-to-r from-[#340075] to-[#4c1d95] text-white"
-                      : "bg-[#e7eeff] text-[#4a4452] hover:bg-[#d8e3fb]"
+                      ? "bg-white text-[#340075] shadow-sm"
+                      : "text-[#4a4452] hover:text-[#340075]"
                   }`}
                 >
                   <Mic className="w-4 h-4" />
                   {d.record}
                 </button>
                 <button
+                  role="tab"
+                  aria-selected={mode === "upload"}
                   onClick={() => setMode("upload")}
-                  className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-5 rounded-full text-sm font-semibold transition-all ${
+                  className={`flex-1 flex items-center justify-center gap-2 py-2 px-5 rounded-full text-sm font-semibold transition-all ${
                     mode === "upload"
-                      ? "bg-gradient-to-r from-[#340075] to-[#4c1d95] text-white"
-                      : "bg-[#e7eeff] text-[#4a4452] hover:bg-[#d8e3fb]"
+                      ? "bg-white text-[#340075] shadow-sm"
+                      : "text-[#4a4452] hover:text-[#340075]"
                   }`}
                 >
                   <Upload className="w-4 h-4" />
@@ -1149,54 +1197,80 @@ export function DashboardContent({
                   })}
                 </p>
               </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() =>
-                    handleCopy(viewTranscription.transcription_text, viewTranscription.id)
-                  }
-                  className="flex items-center gap-1.5 bg-[#e7eeff] hover:bg-[#d8e3fb] text-[#340075] rounded-full px-4 py-2 text-sm font-semibold transition-colors"
-                >
-                  {copiedId === viewTranscription.id ? (
-                    <Check className="w-4 h-4 text-green-600" />
-                  ) : (
-                    <Copy className="w-4 h-4" />
-                  )}
-                  {d.copy}
-                </button>
-                <button
-                  onClick={() => setViewTranscription(null)}
-                  className="w-9 h-9 rounded-full bg-[#f0f3ff] hover:bg-[#e7eeff] flex items-center justify-center transition-colors"
-                >
-                  <X className="w-4 h-4 text-[#4a4452]" />
-                </button>
-              </div>
+              <button
+                onClick={() => setViewTranscription(null)}
+                className="w-9 h-9 rounded-full bg-[#f0f3ff] hover:bg-[#e7eeff] flex items-center justify-center transition-colors"
+              >
+                <X className="w-4 h-4 text-[#4a4452]" />
+              </button>
             </div>
 
-            {/* Body — two sections */}
-            <div className="flex-1 overflow-y-auto px-6 py-5 space-y-6">
+            {/* Body — Sinhala + English side by side */}
+            <div
+              className={`flex-1 overflow-y-auto px-6 py-5 grid grid-cols-1 gap-6 ${
+                viewTranscription.english_translation
+                  ? "sm:grid-cols-2 sm:gap-8 sm:divide-x divide-[#f0f3ff]"
+                  : ""
+              }`}
+            >
               {/* Sinhala */}
               <div>
-                <h3 className="text-xs font-semibold text-[#4a4452] uppercase tracking-widest mb-3">
-                  {d.sinhala}
-                </h3>
-                <p className="text-[#111c2d] text-base leading-relaxed sinhala-text whitespace-pre-wrap">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-xs font-semibold text-[#4a4452] uppercase tracking-widest">
+                    {d.sinhala}
+                  </h3>
+                  <button
+                    onClick={() =>
+                      handleCopy(
+                        viewTranscription.transcription_text,
+                        viewTranscription.id + "-si"
+                      )
+                    }
+                    title={d.copy}
+                    className="flex items-center gap-1.5 bg-[#e7eeff] hover:bg-[#d8e3fb] text-[#340075] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
+                  >
+                    {copiedId === viewTranscription.id + "-si" ? (
+                      <Check className="w-3.5 h-3.5 text-green-600" />
+                    ) : (
+                      <Copy className="w-3.5 h-3.5" />
+                    )}
+                    {d.copy}
+                  </button>
+                </div>
+                <MarkdownView className="sinhala-text text-base">
                   {viewTranscription.transcription_text}
-                </p>
+                </MarkdownView>
               </div>
 
               {/* English — only if translated */}
               {viewTranscription.english_translation && (
-                <>
-                  <div className="h-px bg-[#f0f3ff]" />
-                  <div>
-                    <h3 className="text-xs font-semibold text-[#4a4452] uppercase tracking-widest mb-3">
+                <div className="sm:pl-8">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-xs font-semibold text-[#4a4452] uppercase tracking-widest">
                       {d.english}
                     </h3>
-                    <p className="text-[#111c2d] text-base leading-relaxed whitespace-pre-wrap">
-                      {viewTranscription.english_translation}
-                    </p>
+                    <button
+                      onClick={() =>
+                        handleCopy(
+                          viewTranscription.english_translation!,
+                          viewTranscription.id + "-en"
+                        )
+                      }
+                      title={d.copy}
+                      className="flex items-center gap-1.5 bg-[#e7eeff] hover:bg-[#d8e3fb] text-[#340075] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
+                    >
+                      {copiedId === viewTranscription.id + "-en" ? (
+                        <Check className="w-3.5 h-3.5 text-green-600" />
+                      ) : (
+                        <Copy className="w-3.5 h-3.5" />
+                      )}
+                      {d.copy}
+                    </button>
                   </div>
-                </>
+                  <MarkdownView className="text-base">
+                    {viewTranscription.english_translation}
+                  </MarkdownView>
+                </div>
               )}
             </div>
 
@@ -1223,7 +1297,7 @@ export function DashboardContent({
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
           style={{ background: "rgba(17,28,45,0.55)", backdropFilter: "blur(4px)" }}
-          onClick={() => !isSaving && setEditTranscription(null)}
+          onClick={() => !isSaving && closeEditModal()}
         >
           <div
             className="bg-[#ffffff] rounded-3xl shadow-[0_24px_64px_rgba(17,28,45,0.18)] w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden"
@@ -1235,7 +1309,7 @@ export function DashboardContent({
                 {d.editTitle}
               </h2>
               <button
-                onClick={() => !isSaving && setEditTranscription(null)}
+                onClick={() => !isSaving && closeEditModal()}
                 className="w-9 h-9 rounded-full bg-[#f0f3ff] hover:bg-[#e7eeff] flex items-center justify-center transition-colors"
                 disabled={isSaving}
               >
@@ -1263,15 +1337,13 @@ export function DashboardContent({
                     </button>
                   </div>
                 </div>
-                <div className="flex-1 overflow-hidden p-3 pt-1">
-                  <textarea
-                    value={editText}
-                    onChange={(e) => setEditText(e.target.value)}
-                    className="w-full h-full min-h-[220px] resize-none rounded-2xl bg-[#f9f9ff] focus:bg-[#f0f3ff] border-0 outline-none px-4 py-3 text-[#111c2d] text-base leading-relaxed sinhala-text transition-colors"
-                    spellCheck={false}
-                    autoFocus
-                  />
-                </div>
+                <MarkdownEditorPane
+                  value={editText}
+                  onChange={setEditText}
+                  textClassName="sinhala-text"
+                  ariaLabel={d.sinhala}
+                  autoFocus
+                />
               </div>
 
               {/* English pane */}
@@ -1296,27 +1368,42 @@ export function DashboardContent({
                     )}
                   </div>
                 </div>
-                <div className="flex-1 overflow-hidden p-3 pt-1">
-                  {editTranscription.english_translation !== null ? (
-                    <textarea
-                      value={editEnglishText}
-                      onChange={(e) => setEditEnglishText(e.target.value)}
-                      className="w-full h-full min-h-[220px] resize-none rounded-2xl bg-[#f9f9ff] focus:bg-[#f0f3ff] border-0 outline-none px-4 py-3 text-[#111c2d] text-base leading-relaxed transition-colors"
-                      spellCheck={false}
-                    />
-                  ) : (
-                    <div className="flex items-center justify-center h-full min-h-[220px] text-center text-[#4a4452] text-sm px-6 leading-relaxed">
-                      {d.noTranslationYet}
+                {editTranscription.english_translation !== null ? (
+                  <MarkdownEditorPane
+                    value={editEnglishText}
+                    onChange={setEditEnglishText}
+                    ariaLabel={d.english}
+                  />
+                ) : (
+                  <div className="flex-1 overflow-hidden p-3 pt-1">
+                    <div className="flex items-center justify-center h-full min-h-[220px] px-6">
+                      {translatingId === editTranscription.id ? (
+                        <button
+                          disabled
+                          className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold bg-[#e7eeff] text-[#340075] opacity-60 cursor-not-allowed"
+                        >
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          {d.translating}
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => setTranslateTarget(editTranscription)}
+                          className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold bg-gradient-to-r from-[#340075] to-[#4c1d95] text-white hover:opacity-90 transition-opacity"
+                        >
+                          <Globe className="w-4 h-4" />
+                          {d.translate}
+                        </button>
+                      )}
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             </div>
 
             {/* Footer */}
             <div className="px-6 py-4 border-t border-[#f0f3ff] flex items-center justify-end gap-3 shrink-0">
               <button
-                onClick={() => setEditTranscription(null)}
+                onClick={closeEditModal}
                 disabled={isSaving}
                 className="px-5 py-2.5 rounded-full text-sm font-semibold bg-[#e7eeff] text-[#4a4452] hover:bg-[#d8e3fb] transition-colors disabled:opacity-50"
               >

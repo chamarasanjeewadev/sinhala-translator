@@ -2,7 +2,7 @@ import { AIVoiceInput } from "@/components/ui/ai-voice-input";
 import { useState } from "react";
 
 export function AIVoiceInputDemo() {
-  const [recordings, setRecordings] = useState<{ duration: number; timestamp: Date }[]>([]);
+  const [, setRecordings] = useState<{ duration: number; timestamp: Date }[]>([]);
 
   const handleStop = (duration: number) => {
     setRecordings(prev => [...prev.slice(-4), { duration, timestamp: new Date() }]);

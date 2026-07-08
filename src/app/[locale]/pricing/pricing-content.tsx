@@ -145,7 +145,7 @@ export function PricingContent() {
             </span>
           </h1>
           <p className="mx-auto max-w-[42ch] text-[1.05rem] leading-relaxed text-white/55">
-            Buy minutes once, use them anytime.{" "}
+            Buy credits once, use them anytime.{" "}
             <span className="font-medium text-white/80">No subscriptions, no commitments.</span>
           </p>
 
@@ -153,8 +153,8 @@ export function PricingContent() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             {[
               { label: "Per-minute billing", color: "violet" },
-              { label: `${FREE_CREDITS} free minutes on signup`, color: "emerald" },
-              { label: "Minutes never expire", color: "sky" },
+              { label: `${FREE_CREDITS} free credits on signup`, color: "emerald" },
+              { label: "Credits never expire", color: "sky" },
             ].map(({ label, color }) => (
               <span
                 key={label}
@@ -185,17 +185,12 @@ export function PricingContent() {
               <div className="mb-1 flex items-end gap-1.5">
                 <span className="font-display text-5xl font-extrabold text-white">$0</span>
               </div>
-              <p className="text-sm text-white/45">Forever free — no card needed</p>
-            </div>
-
-            <div className="mb-5 text-center">
-              <span className="font-display text-4xl font-black text-white">{FREE_CREDITS}</span>
-              <span className="ml-1.5 text-sm text-white/50">minutes</span>
+              <p className="text-sm text-white/45">Free forever · {FREE_CREDITS} credits</p>
             </div>
 
             <ul className="mb-8 flex-1 space-y-2.5">
               {[
-                `${FREE_CREDITS} transcription minutes`,
+                `${FREE_CREDITS} transcription credits`,
                 "All audio formats",
                 "Up to 25 MB per file",
                 "No credit card required",
@@ -223,7 +218,7 @@ export function PricingContent() {
             const isLoading = loadingId === pkg.id;
 
             const features = [
-              `${minutes} transcription minutes`,
+              `${minutes} transcription credits`,
               "All audio formats",
               "Up to 25 MB per file",
               ...(isPopular ? ["Best $/min value", "Priority processing"] : []),
@@ -233,7 +228,7 @@ export function PricingContent() {
               return (
                 <div
                   key={pkg.id}
-                  className="relative flex flex-col overflow-hidden rounded-[1.35rem] p-7 shadow-[0_24px_60px_rgba(124,58,237,0.35)] sm:col-span-2 lg:col-span-1 lg:scale-[1.04]"
+                  className="relative flex flex-col rounded-[1.35rem] p-7 shadow-[0_28px_70px_rgba(124,58,237,0.45)] sm:col-span-2 lg:col-span-1"
                   style={{
                     background: "linear-gradient(145deg,#4c0095 0%,#7c3aed 100%)",
                   }}
@@ -255,7 +250,7 @@ export function PricingContent() {
                     </span>
                   </div>
 
-                  <div className="relative mb-6 mt-3">
+                  <div className="relative mb-6 mt-5">
                     <div className="mb-1 flex items-end gap-1.5">
                       <span className="font-display text-5xl font-extrabold text-white">
                         {pkg.priceDisplay}
@@ -263,7 +258,7 @@ export function PricingContent() {
                       <span className="mb-1.5 text-sm font-semibold text-white/50">one-time</span>
                     </div>
                     <p className="text-sm text-white/50">
-                      ${pricePerCredit}/min · {minutes} minutes
+                      ${pricePerCredit}/min · {minutes} credits
                     </p>
                   </div>
 
@@ -303,7 +298,7 @@ export function PricingContent() {
                     <span className="mb-1.5 text-sm font-semibold text-white/40">one-time</span>
                   </div>
                   <p className="text-sm text-white/40">
-                    ${pricePerCredit}/min · {minutes} minutes
+                    ${pricePerCredit}/min · {minutes} credits
                   </p>
                 </div>
 
@@ -323,30 +318,29 @@ export function PricingContent() {
                 >
                   {isLoading ? "Redirecting…" : `Buy ${pkg.priceDisplay}`}
                 </button>
-                {pkg.id === "pack_10" && (
-                  <p className="mt-2 text-center text-xs text-white/35">
-                    Have a promo code? Enter it at checkout.
-                  </p>
-                )}
               </div>
             );
           })}
         </div>
 
+        <p className="mt-6 text-center text-xs text-white/35">
+          Have a promo code? Enter it at checkout.
+        </p>
+
         {/* ── FAQ / reassurance strip ──────────────────────────────────── */}
         <div className="mt-20 grid gap-5 sm:grid-cols-3">
           {[
             {
-              q: "How do minutes work?",
-              a: "1 minute of audio = 1 minute billed. Minutes are deducted only when a transcription succeeds.",
+              q: "How do credits work?",
+              a: "1 minute of audio = 1 credit. Credits are deducted only when a transcription succeeds.",
             },
             {
-              q: "Do minutes expire?",
-              a: "Never. Buy once and use your minutes at your own pace — no rushing.",
+              q: "Do credits expire?",
+              a: "Never. Buy once and use your credits at your own pace — no rushing.",
             },
             {
               q: "Is a credit card required for free?",
-              a: `No. Sign up and instantly receive ${FREE_CREDITS} free minutes. Card only needed when buying a pack.`,
+              a: `No. Sign up and instantly receive ${FREE_CREDITS} free credits. Card only needed when buying a pack.`,
             },
           ].map(({ q, a }) => (
             <div
@@ -374,7 +368,7 @@ export function PricingContent() {
             href={localePath("/signup", locale)}
             className="group inline-flex items-center gap-2 rounded-2xl border border-violet-400/25 bg-violet-500/12 px-6 py-3 text-sm font-semibold text-violet-200 transition-all hover:bg-violet-500/20 hover:text-white"
           >
-            Start with {FREE_CREDITS} free minutes
+            Start with {FREE_CREDITS} free credits
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>

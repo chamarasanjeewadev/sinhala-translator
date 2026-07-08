@@ -20,6 +20,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { LandingHero } from "@/components/landing-hero";
+import { HowItWorks } from "@/components/how-it-works";
 
 const waveformBars = [
   { height: 65, duration: 0.7 },
@@ -132,7 +133,7 @@ export default async function LandingPage({ params }: Props) {
       "Sinhala speech-to-text",
       "Audio file upload",
       "Browser-based recording",
-      "Per-minute credit billing",
+      "Per-minute billing",
       "Bilingual UI (English & Sinhala)",
     ],
     audience: {
@@ -146,14 +147,14 @@ export default async function LandingPage({ params }: Props) {
         "@type": "Offer",
         price: "0",
         priceCurrency: "USD",
-        description: `${FREE_CREDITS} free credits on signup — no credit card required`,
+        description: `${FREE_CREDITS} free minutes on signup — no credit card required`,
       },
       ...CREDIT_PACKAGES.map((pkg) => ({
         "@type": "Offer",
         name: pkg.name,
         price: (pkg.price / 100).toFixed(2),
         priceCurrency: "USD",
-        description: `${pkg.credits} transcription credits`,
+        description: `${pkg.credits} transcription minutes`,
       })),
     ],
   };
@@ -172,8 +173,28 @@ export default async function LandingPage({ params }: Props) {
     })),
   };
 
+  const demoHighlights = [
+    {
+      icon: Sparkles,
+      title: d.featureAI,
+      desc: d.featureAIDesc,
+    },
+    {
+      icon: Download,
+      title: d.featureCopy,
+      desc: d.featureCopyDesc,
+    },
+    {
+      icon: Shield,
+      title: d.featureSecure ?? "Secure & private",
+      desc:
+        d.featureSecureDesc ??
+        "Your audio is processed securely and never stored without your permission.",
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-[linear-gradient(155deg,#07000f_0%,#0d0020_50%,#130030_100%)] text-white">
+    <div className="min-h-screen bg-[#07000f] text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -199,55 +220,50 @@ export default async function LandingPage({ params }: Props) {
         freeCreditsLabel={t(d.freeCredits, { count: FREE_CREDITS })}
       />
 
-      {/* ── AI Features Section ───────────────────────────────────────── */}
-      <section className="py-28 px-6 lg:px-8 bg-[#f0f3ff]">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left: feature list */}
-            <div className="space-y-10">
-              <div>
-                <h2 className="font-display text-4xl lg:text-5xl font-bold text-[#111c2d] leading-tight mb-4">
-                  {d.demoTitle1}
-                  <br />
-                  <span className="bg-gradient-to-r from-[#340075] to-[#4c1d95] bg-clip-text text-transparent">
-                    {d.demoTitle2}
-                  </span>
-                </h2>
-                <p className="font-sans text-lg text-[#4a4452] leading-relaxed">
-                  {d.demoDesc}
-                </p>
-              </div>
+      {/* ── How it works (numbered, arrowed step-by-step) ─────────────── */}
+      <HowItWorks
+        copy={{
+          eyebrow: d.howEyebrow,
+          title: d.howTitle,
+          subtitle: d.howSubtitle,
+          steps: d.howSteps,
+        }}
+      />
 
-              <div className="space-y-5">
-                {[
-                  {
-                    icon: Sparkles,
-                    title: d.featureAI,
-                    desc: d.featureAIDesc,
-                  },
-                  {
-                    icon: Download,
-                    title: d.featureCopy,
-                    desc: d.featureCopyDesc,
-                  },
-                  {
-                    icon: Shield,
-                    title: "Secure & Private",
-                    desc: "Your audio data is processed securely and never stored without your permission.",
-                  },
-                ].map(({ icon: Icon, title, desc }) => (
+      {/* ── Showcase: built for Sinhala ───────────────────────────────── */}
+      <section className="relative overflow-hidden bg-[#0d0020] px-6 py-24 sm:py-28 lg:px-8">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(124,58,237,.35)_35%,rgba(232,121,249,.3)_65%,transparent)]" />
+        <div className="pointer-events-none absolute -bottom-24 left-[8%] h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(76,0,149,0.22)_0%,transparent_65%)]" />
+
+        <div className="relative z-10 mx-auto max-w-6xl">
+          <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+            {/* Left: narrative + differentiated proof points */}
+            <div>
+              <div className="flex items-center gap-3">
+                <span className="flow-line h-px w-8 rounded-full" />
+                <span className="section-eyebrow text-violet-300">
+                  {d.demoEyebrow}
+                </span>
+              </div>
+              <h2 className="mt-5 font-display text-[clamp(1.9rem,3.6vw,3rem)] font-black leading-[1.08] tracking-tight text-white">
+                {d.demoTitle1} {d.demoTitle2}
+              </h2>
+              <p className="mt-5 max-w-lg text-base leading-relaxed text-[#a99fc4]">
+                {d.demoDesc}
+              </p>
+
+              <div className="mt-9 space-y-3">
+                {demoHighlights.map(({ icon: Icon, title, desc }) => (
                   <div
                     key={title}
-                    className="flex gap-5 items-start bg-[#ffffff] rounded-2xl p-5 shadow-[0_10px_30px_rgba(17,28,45,0.06)]"
+                    className="dark-card flex items-start gap-4 rounded-2xl p-5"
                   >
-                    <div className="w-11 h-11 bg-[#e7eeff] rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Icon className="w-5 h-5 text-[#340075]" />
-                    </div>
+                    <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-violet-400/25 bg-violet-500/12">
+                      <Icon className="h-5 w-5 text-violet-200" />
+                    </span>
                     <div>
-                      <h3 className="font-sans font-bold text-[#111c2d] mb-1">
-                        {title}
-                      </h3>
-                      <p className="font-sans text-sm text-[#4a4452] leading-relaxed">
+                      <h3 className="font-sans font-bold text-white">{title}</h3>
+                      <p className="mt-1 text-sm leading-relaxed text-[#a99fc4]">
                         {desc}
                       </p>
                     </div>
@@ -256,36 +272,31 @@ export default async function LandingPage({ params }: Props) {
               </div>
             </div>
 
-            {/* Right: decorative AI card */}
+            {/* Right: live-recording showcase card */}
             <div className="relative">
-              <div className="rounded-2xl bg-gradient-to-br from-[#340075] to-[#4c1d95] p-8 shadow-[0_24px_60px_rgba(52,0,117,0.22)] overflow-hidden">
-                {/* Soft inner glow */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-[#0051d5]/20 rounded-full blur-[80px] pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-[60px] pointer-events-none" />
+              <div className="relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-gradient-to-br from-[#1a0038] to-[#2a0055] p-8 shadow-[0_24px_60px_rgba(0,0,0,0.4)]">
+                <div className="pointer-events-none absolute right-0 top-0 h-64 w-64 rounded-full bg-[#7c3aed]/20 blur-[80px]" />
+                <div className="pointer-events-none absolute bottom-0 left-0 h-48 w-48 rounded-full bg-fuchsia-500/10 blur-[60px]" />
 
-                {/* Recording indicator */}
-                <div className="relative z-10 flex items-center gap-2.5 mb-8">
-                  <div className="relative w-3 h-3">
-                    <div className="absolute inset-0 bg-red-400 rounded-full animate-ping opacity-60" />
-                    <div className="relative w-3 h-3 bg-red-400 rounded-full" />
-                  </div>
-                  <span className="font-sans text-sm font-semibold text-white/90">
+                <div className="relative z-10 mb-8 flex items-center gap-2.5">
+                  <span className="relative flex h-3 w-3">
+                    <span className="absolute inset-0 animate-ping rounded-full bg-red-400 opacity-60" />
+                    <span className="relative h-3 w-3 rounded-full bg-red-400" />
+                  </span>
+                  <span className="text-sm font-semibold text-white/90">
                     {d.recording}
                   </span>
-                  <div className="ml-auto">
-                    <span className="font-display text-3xl font-black text-white/20 tracking-widest select-none">
-                      AI
-                    </span>
-                  </div>
+                  <span className="section-eyebrow ml-auto text-white/25">
+                    AI
+                  </span>
                 </div>
 
-                {/* Waveform visualization */}
-                <div className="relative z-10 bg-white/10 backdrop-blur-sm rounded-xl p-5 mb-6">
-                  <div className="flex items-end gap-0.5 h-16">
+                <div className="relative z-10 mb-6 rounded-xl border border-white/8 bg-white/5 p-5 backdrop-blur-sm">
+                  <div className="flex h-16 items-end gap-0.5">
                     {waveformBars.map((bar, i) => (
                       <div
                         key={i}
-                        className="flex-1 bg-gradient-to-t from-white/50 to-white/90 rounded-full"
+                        className="flex-1 rounded-full bg-gradient-to-t from-violet-400/60 to-fuchsia-300/90"
                         style={{
                           height: `${bar.height}%`,
                           animation: `pulse ${bar.duration}s ease-in-out infinite`,
@@ -295,24 +306,25 @@ export default async function LandingPage({ params }: Props) {
                   </div>
                 </div>
 
-                {/* Demo transcript chip */}
-                <div className="relative z-10 bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                  <p className="font-sans text-sm text-white/90 leading-relaxed sinhala-text">
+                <div className="relative z-10 rounded-xl border border-white/8 bg-white/5 p-4 backdrop-blur-sm">
+                  <p
+                    className="text-sm leading-relaxed text-white/90"
+                    style={{ fontFamily: "var(--font-noto-sinhala)" }}
+                  >
                     {d.demoTranscript}
                   </p>
                 </div>
               </div>
 
-              {/* Floating stat chips */}
-              <div className="absolute -top-5 -right-5 bg-[#ffffff] rounded-full px-4 py-2 shadow-[0_10px_30px_rgba(17,28,45,0.10)] flex items-center gap-2">
-                <Zap className="w-4 h-4 text-[#340075]" />
-                <span className="font-sans text-xs font-bold text-[#111c2d]">
+              <div className="absolute -right-4 -top-4 flex items-center gap-2 rounded-full border border-white/10 bg-[#0d0020]/90 px-4 py-2 backdrop-blur">
+                <Zap className="h-4 w-4 text-fuchsia-300" />
+                <span className="text-xs font-bold text-white">
                   {d.lightningFast}
                 </span>
               </div>
-              <div className="absolute -bottom-5 -left-5 bg-[#ffffff] rounded-full px-4 py-2 shadow-[0_10px_30px_rgba(17,28,45,0.10)] flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#047857]" />
-                <span className="font-sans text-xs font-bold text-[#111c2d]">
+              <div className="absolute -bottom-4 -left-4 flex items-center gap-2 rounded-full border border-white/10 bg-[#0d0020]/90 px-4 py-2 backdrop-blur">
+                <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                <span className="text-xs font-bold text-white">
                   {d.sinhalaOptimized}
                 </span>
               </div>
@@ -321,35 +333,41 @@ export default async function LandingPage({ params }: Props) {
         </div>
       </section>
 
-      {/* ── Features Grid Section ─────────────────────────────────────── */}
-      <section id="features" className="py-28 px-6 lg:px-8 bg-[#f9f9ff]">
-        <div className="max-w-7xl mx-auto">
-          <div className="max-w-2xl mx-auto text-center mb-20">
-            <h2 className="font-display text-4xl lg:text-5xl font-bold text-[#111c2d] leading-tight mb-5">
-              {d.featuresTitle1}
-              <br />
-              <span className="bg-gradient-to-r from-[#340075] to-[#4c1d95] bg-clip-text text-transparent">
-                {d.featuresTitle2}
-              </span>
-            </h2>
-            <p className="font-sans text-lg text-[#4a4452] leading-relaxed">
+      {/* ── Capabilities grid ─────────────────────────────────────────── */}
+      <section id="features" className="relative bg-[#07000f] px-6 py-24 sm:py-28 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          {/* Split header: title left, subtitle right */}
+          <div className="grid gap-6 border-b border-white/8 pb-12 lg:grid-cols-[1.1fr_1fr] lg:items-end lg:gap-16">
+            <div>
+              <div className="flex items-center gap-3">
+                <span className="flow-line h-px w-8 rounded-full" />
+                <span className="section-eyebrow text-violet-300">
+                  {d.featuresEyebrow}
+                </span>
+              </div>
+              <h2 className="mt-5 font-display text-[clamp(1.9rem,3.6vw,3rem)] font-black leading-[1.08] tracking-tight text-white">
+                {d.featuresTitle1}{" "}
+                <span className="hero-gradient-text">{d.featuresTitle2}</span>
+              </h2>
+            </div>
+            <p className="max-w-md text-base leading-relaxed text-[#a99fc4] lg:pb-2">
               {d.featuresSubtitle}
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="group bg-[#ffffff] rounded-2xl p-8 shadow-[0_10px_30px_rgba(17,28,45,0.06)] hover:shadow-[0_20px_50px_rgba(17,28,45,0.10)] hover:-translate-y-1 transition-all"
+                className="dark-card group rounded-2xl p-7"
               >
-                <div className="w-12 h-12 bg-[#e7eeff] rounded-xl flex items-center justify-center mb-6 group-hover:bg-[#d8e3fb] transition-colors">
-                  <feature.icon className="w-6 h-6 text-[#340075]" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-violet-400/20 bg-violet-500/10 transition-colors group-hover:bg-violet-500/20">
+                  <feature.icon className="h-5 w-5 text-violet-200" />
                 </div>
-                <h3 className="font-sans text-lg font-bold text-[#111c2d] mb-3">
+                <h3 className="mt-6 font-sans text-lg font-bold text-white">
                   {feature.title}
                 </h3>
-                <p className="font-sans text-sm text-[#4a4452] leading-relaxed">
+                <p className="mt-2.5 text-sm leading-relaxed text-[#a99fc4]">
                   {feature.desc}
                 </p>
               </div>
@@ -358,22 +376,22 @@ export default async function LandingPage({ params }: Props) {
         </div>
       </section>
 
-      {/* ── FAQ Section ───────────────────────────────────────────────── */}
+      {/* ── FAQ ───────────────────────────────────────────────────────── */}
       {faqItems.length > 0 ? (
-        <section id="faq" className="py-28 px-6 lg:px-8 bg-[#f9f9ff]">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-14">
-              <span className="inline-block font-sans text-xs font-bold uppercase tracking-[0.22em] text-[#340075] mb-4">
-                {d.faqEyebrow}
-              </span>
-              <h2 className="font-display text-4xl lg:text-5xl font-bold text-[#111c2d] mb-5 leading-tight">
-                {d.faqTitle1}
-                <br />
-                <span className="bg-gradient-to-r from-[#340075] to-[#4c1d95] bg-clip-text text-transparent">
-                  {d.faqTitle2}
+        <section id="faq" className="relative bg-[#0b0018] px-6 py-24 sm:py-28 lg:px-8">
+          <div className="mx-auto max-w-3xl">
+            <div className="mb-12 text-center">
+              <div className="mb-5 flex items-center justify-center gap-3">
+                <span className="flow-line h-px w-8 rounded-full" />
+                <span className="section-eyebrow text-violet-300">
+                  {d.faqEyebrow}
                 </span>
+                <span className="flow-line h-px w-8 rounded-full" />
+              </div>
+              <h2 className="font-display text-[clamp(1.9rem,3.6vw,3rem)] font-black leading-[1.08] tracking-tight text-white">
+                {d.faqTitle1} {d.faqTitle2}
               </h2>
-              <p className="font-sans text-lg text-[#4a4452] leading-relaxed">
+              <p className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-[#a99fc4]">
                 {d.faqSubtitle}
               </p>
             </div>
@@ -382,16 +400,16 @@ export default async function LandingPage({ params }: Props) {
               {faqItems.map((item, index) => (
                 <details
                   key={index}
-                  className="group bg-[#ffffff] rounded-2xl shadow-[0_10px_30px_rgba(17,28,45,0.06)] overflow-hidden"
+                  className="dark-card group rounded-2xl [&[open]]:border-violet-400/30"
                 >
-                  <summary className="flex cursor-pointer items-center justify-between gap-4 px-6 py-5 list-none">
-                    <h3 className="font-sans font-semibold text-[#111c2d] text-base lg:text-lg">
+                  <summary className="focus-ring flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5">
+                    <h3 className="font-sans text-base font-semibold text-white lg:text-lg">
                       {item.q}
                     </h3>
-                    <ChevronDown className="w-5 h-5 text-[#340075] flex-shrink-0 transition-transform group-open:rotate-180" />
+                    <ChevronDown className="h-5 w-5 flex-shrink-0 text-violet-300 transition-transform group-open:rotate-180" />
                   </summary>
-                  <div className="px-6 pb-6 -mt-1">
-                    <p className="font-sans text-[#4a4452] leading-relaxed text-sm lg:text-base">
+                  <div className="-mt-1 px-6 pb-6">
+                    <p className="text-sm leading-relaxed text-[#a99fc4] lg:text-base">
                       {item.a}
                     </p>
                   </div>
@@ -402,46 +420,50 @@ export default async function LandingPage({ params }: Props) {
         </section>
       ) : null}
 
-      {/* ── Pricing Section ───────────────────────────────────────────── */}
-      <section id="credits" className="py-28 px-6 lg:px-8 bg-[#f0f3ff]">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-20">
-            <h2 className="font-display text-4xl lg:text-5xl font-bold text-[#111c2d] mb-5 leading-tight">
-              {d.pricingTitle1}
-              <span className="bg-gradient-to-r from-[#340075] to-[#4c1d95] bg-clip-text text-transparent">
-                {d.pricingTitle2}
+      {/* ── Pricing (the single warm light band, so prices pop) ───────── */}
+      <section id="credits" className="bg-[#f4f2fb] px-6 py-24 sm:py-28 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <div className="mx-auto mb-16 max-w-2xl text-center">
+            <div className="mb-5 flex items-center justify-center gap-3">
+              <span className="h-px w-8 rounded-full bg-[#340075]/30" />
+              <span className="section-eyebrow text-[#340075]">
+                {d.pricingEyebrow}
               </span>
+              <span className="h-px w-8 rounded-full bg-[#340075]/30" />
+            </div>
+            <h2 className="font-display text-[clamp(1.9rem,3.6vw,3rem)] font-black leading-[1.08] tracking-tight text-[#111c2d]">
+              {d.pricingTitle1} {d.pricingTitle2}
             </h2>
-            <p className="font-sans text-lg text-[#4a4452] leading-relaxed">
+            <p className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-[#4a4452]">
               {d.pricingSubtitle}
             </p>
           </div>
 
           {/* Credit model summary */}
-          <div className="max-w-3xl mx-auto mb-16">
-            <div className="bg-[#ffffff] rounded-2xl p-8 shadow-[0_10px_30px_rgba(17,28,45,0.06)]">
-              <div className="grid md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-[#e7eeff]">
-                <div className="text-center pt-4 md:pt-0">
-                  <div className="font-display text-4xl font-extrabold bg-gradient-to-r from-[#340075] to-[#4c1d95] bg-clip-text text-transparent mb-2">
+          <div className="mx-auto mb-14 max-w-3xl">
+            <div className="rounded-2xl border border-[#e2ddf2] bg-white p-8 shadow-[0_12px_40px_rgba(52,0,117,0.08)]">
+              <div className="grid divide-y divide-[#eee9fb] md:grid-cols-3 md:divide-x md:divide-y-0">
+                <div className="pt-4 text-center md:pt-0">
+                  <div className="font-display text-4xl font-extrabold text-[#340075]">
                     {d.oneCredit}
                   </div>
-                  <div className="font-sans text-sm text-[#4a4452] font-medium">
+                  <div className="mt-1 text-sm font-medium text-[#4a4452]">
                     {d.oneTranscription}
                   </div>
                 </div>
-                <div className="text-center pt-6 md:pt-0">
-                  <div className="font-display text-4xl font-extrabold bg-gradient-to-r from-[#340075] to-[#4c1d95] bg-clip-text text-transparent mb-2">
+                <div className="pt-6 text-center md:pt-0">
+                  <div className="font-display text-4xl font-extrabold text-[#340075]">
                     {FREE_CREDITS}
                   </div>
-                  <div className="font-sans text-sm text-[#4a4452] font-medium">
+                  <div className="mt-1 text-sm font-medium text-[#4a4452]">
                     {d.freeCreditsOnSignup}
                   </div>
                 </div>
-                <div className="text-center pt-6 md:pt-0">
-                  <div className="font-display text-4xl font-extrabold text-[#047857] mb-2">
+                <div className="pt-6 text-center md:pt-0">
+                  <div className="font-display text-4xl font-extrabold text-[#047857]">
                     &infin;
                   </div>
-                  <div className="font-sans text-sm text-[#4a4452] font-medium">
+                  <div className="mt-1 text-sm font-medium text-[#4a4452]">
                     {d.creditsNeverExpire}
                   </div>
                 </div>
@@ -450,7 +472,7 @@ export default async function LandingPage({ params }: Props) {
           </div>
 
           {/* Pricing cards */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-4">
             {CREDIT_PACKAGES.map((pkg) => {
               const isPopular = pkg.popular;
               const pricePerCredit = (pkg.price / 100 / pkg.credits).toFixed(2);
@@ -465,27 +487,27 @@ export default async function LandingPage({ params }: Props) {
                 return (
                   <div
                     key={pkg.id}
-                    className="relative bg-gradient-to-br from-[#340075] to-[#4c1d95] rounded-2xl p-7 shadow-[0_24px_60px_rgba(52,0,117,0.25)] lg:scale-105"
+                    className="relative rounded-2xl bg-gradient-to-br from-[#340075] to-[#4c1d95] p-7 shadow-[0_24px_60px_rgba(52,0,117,0.25)] lg:scale-105"
                   >
-                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-white rounded-full px-4 py-1 shadow-[0_4px_12px_rgba(17,28,45,0.12)]">
-                      <span className="font-sans text-xs font-black text-[#340075] uppercase tracking-wider">
+                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-white px-4 py-1 shadow-[0_4px_12px_rgba(17,28,45,0.12)]">
+                      <span className="section-eyebrow text-[#340075]">
                         {d.mostPopular}
                       </span>
                     </div>
 
                     <div className="mb-7 mt-2">
-                      <div className="font-sans text-xs font-bold text-white/60 mb-3 uppercase tracking-wider">
+                      <div className="section-eyebrow mb-3 text-white/60">
                         {pkg.name}
                       </div>
-                      <div className="flex items-end gap-2 mb-3">
+                      <div className="mb-3 flex items-end gap-2">
                         <span className="font-display text-5xl font-extrabold text-white">
                           {pkg.credits}
                         </span>
-                        <span className="font-sans text-white/60 mb-2 text-base font-semibold">
+                        <span className="mb-2 text-base font-semibold text-white/60">
                           {d.credits}
                         </span>
                       </div>
-                      <div className="font-sans text-sm text-white/60 font-medium">
+                      <div className="text-sm font-medium text-white/60">
                         {pkg.priceDisplay}{" "}
                         <span className="text-white/40">
                           &middot; {t(d.perCredit, { price: pricePerCredit })}
@@ -493,13 +515,13 @@ export default async function LandingPage({ params }: Props) {
                       </div>
                     </div>
 
-                    <ul className="space-y-3 mb-8">
+                    <ul className="mb-8 space-y-3">
                       {tierFeatures.map((item, i) => (
                         <li
                           key={i}
-                          className="flex items-start gap-2.5 font-sans text-sm text-white/90"
+                          className="flex items-start gap-2.5 text-sm text-white/90"
                         >
-                          <CheckCircle2 className="w-4 h-4 text-white/70 flex-shrink-0 mt-0.5" />
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-white/70" />
                           <span className="font-medium">{item}</span>
                         </li>
                       ))}
@@ -507,7 +529,7 @@ export default async function LandingPage({ params }: Props) {
 
                     <Link
                       href={lp("/signup")}
-                      className="block w-full bg-white hover:bg-[#f0f3ff] text-[#340075] px-5 py-3.5 rounded-full font-bold font-sans text-sm transition-all text-center shadow-[0_4px_16px_rgba(255,255,255,0.3)]"
+                      className="focus-ring block w-full rounded-full bg-white px-5 py-3.5 text-center text-sm font-bold text-[#340075] shadow-[0_4px_16px_rgba(255,255,255,0.3)] transition-all hover:bg-[#f0f3ff]"
                     >
                       {d.getStarted}
                     </Link>
@@ -518,21 +540,21 @@ export default async function LandingPage({ params }: Props) {
               return (
                 <div
                   key={pkg.id}
-                  className="bg-[#ffffff] rounded-2xl p-7 shadow-[0_10px_30px_rgba(17,28,45,0.06)] hover:shadow-[0_20px_50px_rgba(17,28,45,0.10)] hover:-translate-y-1 transition-all"
+                  className="rounded-2xl border border-[#e2ddf2] bg-white p-7 shadow-[0_10px_30px_rgba(52,0,117,0.06)] transition-all hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(52,0,117,0.12)]"
                 >
                   <div className="mb-7">
-                    <div className="font-sans text-xs font-bold text-[#4a4452] mb-3 uppercase tracking-wider">
+                    <div className="section-eyebrow mb-3 text-[#4a4452]">
                       {pkg.name}
                     </div>
-                    <div className="flex items-end gap-2 mb-3">
+                    <div className="mb-3 flex items-end gap-2">
                       <span className="font-display text-5xl font-extrabold text-[#111c2d]">
                         {pkg.credits}
                       </span>
-                      <span className="font-sans text-[#4a4452] mb-2 text-base font-semibold">
+                      <span className="mb-2 text-base font-semibold text-[#4a4452]">
                         {d.credits}
                       </span>
                     </div>
-                    <div className="font-sans text-sm text-[#4a4452] font-medium">
+                    <div className="text-sm font-medium text-[#4a4452]">
                       {pkg.priceDisplay}{" "}
                       <span className="text-[#4a4452]/60">
                         &middot; {t(d.perCredit, { price: pricePerCredit })}
@@ -540,13 +562,13 @@ export default async function LandingPage({ params }: Props) {
                     </div>
                   </div>
 
-                  <ul className="space-y-3 mb-8">
+                  <ul className="mb-8 space-y-3">
                     {tierFeatures.map((item, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-2.5 font-sans text-sm text-[#4a4452]"
+                        className="flex items-start gap-2.5 text-sm text-[#4a4452]"
                       >
-                        <CheckCircle2 className="w-4 h-4 text-[#047857] flex-shrink-0 mt-0.5" />
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#047857]" />
                         <span className="font-medium">{item}</span>
                       </li>
                     ))}
@@ -554,7 +576,7 @@ export default async function LandingPage({ params }: Props) {
 
                   <Link
                     href={lp("/signup")}
-                    className="block w-full bg-[#e7eeff] hover:bg-[#d8e3fb] text-[#111c2d] px-5 py-3.5 rounded-full font-bold font-sans text-sm transition-all text-center"
+                    className="focus-ring block w-full rounded-full bg-[#340075] px-5 py-3.5 text-center text-sm font-bold text-white transition-all hover:bg-[#4c1d95]"
                   >
                     {d.getStarted}
                   </Link>
@@ -563,46 +585,50 @@ export default async function LandingPage({ params }: Props) {
             })}
           </div>
 
-          <div className="text-center mt-14">
-            <p className="font-sans text-[#4a4452] mb-4">{d.needMoreCredits}</p>
+          <div className="mt-14 text-center">
+            <p className="mb-4 text-[#4a4452]">{d.needMoreCredits}</p>
             <Link
               href={lp("/pricing")}
-              className="group inline-flex items-center gap-2 font-sans font-bold text-[#340075] hover:text-[#4c1d95] transition-colors"
+              className="focus-ring group inline-flex items-center gap-2 font-bold text-[#340075] transition-colors hover:text-[#4c1d95]"
             >
               {d.viewAllPackages}
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ── CTA Section ───────────────────────────────────────────────── */}
-      <section className="py-28 px-6 lg:px-8 bg-[#f9f9ff]">
-        <div className="max-w-4xl mx-auto">
-          <div className="relative bg-gradient-to-br from-[#340075] to-[#4c1d95] rounded-2xl p-14 lg:p-20 text-center overflow-hidden shadow-[0_24px_80px_rgba(52,0,117,0.25)]">
-            {/* Ambient glow inside card */}
-            <div className="absolute top-0 right-0 w-72 h-72 bg-[#0051d5]/20 rounded-full blur-[80px] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-[60px] pointer-events-none" />
+      {/* ── CTA ───────────────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden bg-[#07000f] px-6 py-24 sm:py-28 lg:px-8">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(124,58,237,.4)_35%,rgba(232,121,249,.35)_65%,transparent)]" />
+        <div className="mx-auto max-w-4xl">
+          <div className="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-gradient-to-br from-[#1a0038] to-[#2a0055] p-14 text-center shadow-[0_24px_80px_rgba(0,0,0,0.45)] lg:p-20">
+            <div className="pointer-events-none absolute right-0 top-0 h-72 w-72 rounded-full bg-[#7c3aed]/25 blur-[80px]" />
+            <div className="pointer-events-none absolute bottom-0 left-0 h-64 w-64 rounded-full bg-fuchsia-500/10 blur-[60px]" />
 
             <div className="relative z-10">
-              <h2 className="font-display text-4xl lg:text-5xl font-extrabold text-white mb-5 leading-tight">
+              <span className="section-eyebrow text-violet-300">
+                {d.ctaEyebrow}
+              </span>
+              <h2 className="mt-5 font-display text-[clamp(2rem,4vw,3.25rem)] font-black leading-[1.05] tracking-tight text-white">
                 {d.ctaTitle}
               </h2>
-              <p className="font-sans text-lg text-white/75 mb-10 max-w-xl mx-auto leading-relaxed">
+              <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-white/70">
                 {t(d.ctaSubtitle, { count: FREE_CREDITS })}
               </p>
               <Link
                 href={lp("/signup")}
-                className="group inline-flex items-center gap-2 bg-white hover:bg-[#f0f3ff] text-[#340075] px-9 py-4 rounded-full font-bold font-sans text-base transition-all shadow-[0_8px_24px_rgba(255,255,255,0.25)] hover:shadow-[0_12px_32px_rgba(255,255,255,0.35)] hover:-translate-y-0.5"
+                className="hero-primary-button focus-ring mt-10 inline-flex items-center gap-2.5 rounded-2xl px-8 py-4 text-base font-bold text-white"
               >
+                <Mic className="h-[15px] w-[15px]" />
                 <span>{d.ctaButton}</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="h-4 w-4" />
               </Link>
-              <p className="mt-7 font-sans text-sm text-white/60">
+              <p className="mt-7 text-sm text-white/55">
                 {d.guideIntro}{" "}
                 <Link
                   href={guidePath}
-                  className="text-white/90 font-semibold underline underline-offset-4 hover:text-white transition-colors"
+                  className="font-semibold text-white/90 underline underline-offset-4 transition-colors hover:text-white"
                 >
                   {d.guideLink}
                 </Link>
@@ -613,27 +639,27 @@ export default async function LandingPage({ params }: Props) {
       </section>
 
       {/* ── Footer ────────────────────────────────────────────────────── */}
-      <footer className="bg-[#f0f3ff] py-16 px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-12 mb-14">
+      <footer className="border-t border-white/8 bg-[#07000f] px-6 py-16 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-14 grid gap-12 md:grid-cols-4">
             {/* Brand */}
             <div>
-              <div className="flex items-center gap-2.5 mb-5">
-                <div className="w-9 h-9 bg-gradient-to-br from-[#340075] to-[#4c1d95] rounded-xl flex items-center justify-center shadow-[0_4px_12px_rgba(52,0,117,0.20)]">
-                  <AudioWaveform className="w-4 h-4 text-white" />
+              <div className="mb-5 flex items-center gap-2.5">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#4c0095] to-[#7c3aed] shadow-[0_4px_12px_rgba(124,58,237,0.35)]">
+                  <AudioWaveform className="h-4 w-4 text-white" />
                 </div>
-                <span className="font-display text-lg font-bold text-[#111c2d]">
+                <span className="font-display text-lg font-bold text-white">
                   HelaVoice.lk
                 </span>
               </div>
-              <p className="font-sans text-sm text-[#4a4452] leading-relaxed">
+              <p className="text-sm leading-relaxed text-[#a99fc4]">
                 {d.footerDesc}
               </p>
-              <p className="mt-4 font-sans text-sm text-[#4a4452] font-medium">
+              <p className="mt-4 text-sm font-medium text-[#a99fc4]">
                 {d.footerContact}{" "}
                 <a
                   href="mailto:hi@helavoice.lk"
-                  className="text-[#340075] hover:text-[#4c1d95] transition-colors"
+                  className="text-violet-300 transition-colors hover:text-fuchsia-300"
                 >
                   hi@helavoice.lk
                 </a>
@@ -642,14 +668,14 @@ export default async function LandingPage({ params }: Props) {
 
             {/* Product */}
             <div>
-              <h4 className="font-sans text-xs font-bold text-[#111c2d] mb-5 uppercase tracking-wider">
+              <h4 className="section-eyebrow mb-5 text-white/50">
                 {d.footerProduct}
               </h4>
               <ul className="space-y-3">
                 <li>
                   <Link
                     href={lp("/#features")}
-                    className="font-sans text-sm text-[#4a4452] hover:text-[#111c2d] transition-colors font-medium"
+                    className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
                   >
                     {d.footerFeatures}
                   </Link>
@@ -657,7 +683,7 @@ export default async function LandingPage({ params }: Props) {
                 <li>
                   <Link
                     href={lp("/blog")}
-                    className="font-sans text-sm text-[#4a4452] hover:text-[#111c2d] transition-colors font-medium"
+                    className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
                   >
                     {d.footerBlog}
                   </Link>
@@ -665,7 +691,7 @@ export default async function LandingPage({ params }: Props) {
                 <li>
                   <Link
                     href={lp("/pricing")}
-                    className="font-sans text-sm text-[#4a4452] hover:text-[#111c2d] transition-colors font-medium"
+                    className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
                   >
                     {d.footerPricing}
                   </Link>
@@ -675,14 +701,14 @@ export default async function LandingPage({ params }: Props) {
 
             {/* Account */}
             <div>
-              <h4 className="font-sans text-xs font-bold text-[#111c2d] mb-5 uppercase tracking-wider">
+              <h4 className="section-eyebrow mb-5 text-white/50">
                 {d.footerAccount}
               </h4>
               <ul className="space-y-3">
                 <li>
                   <Link
                     href={lp("/login")}
-                    className="font-sans text-sm text-[#4a4452] hover:text-[#111c2d] transition-colors font-medium"
+                    className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
                   >
                     {d.footerLogIn}
                   </Link>
@@ -690,7 +716,7 @@ export default async function LandingPage({ params }: Props) {
                 <li>
                   <Link
                     href={lp("/signup")}
-                    className="font-sans text-sm text-[#4a4452] hover:text-[#111c2d] transition-colors font-medium"
+                    className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
                   >
                     {d.footerSignUp}
                   </Link>
@@ -698,7 +724,7 @@ export default async function LandingPage({ params }: Props) {
                 <li>
                   <Link
                     href={lp("/dashboard")}
-                    className="font-sans text-sm text-[#4a4452] hover:text-[#111c2d] transition-colors font-medium"
+                    className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
                   >
                     {d.footerDashboard}
                   </Link>
@@ -708,14 +734,14 @@ export default async function LandingPage({ params }: Props) {
 
             {/* Legal */}
             <div>
-              <h4 className="font-sans text-xs font-bold text-[#111c2d] mb-5 uppercase tracking-wider">
+              <h4 className="section-eyebrow mb-5 text-white/50">
                 {d.footerLegal}
               </h4>
               <ul className="space-y-3">
                 <li>
                   <Link
                     href={lp("/privacy")}
-                    className="font-sans text-sm text-[#4a4452] hover:text-[#111c2d] transition-colors font-medium"
+                    className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
                   >
                     {d.footerPrivacy}
                   </Link>
@@ -723,7 +749,7 @@ export default async function LandingPage({ params }: Props) {
                 <li>
                   <Link
                     href={lp("/terms")}
-                    className="font-sans text-sm text-[#4a4452] hover:text-[#111c2d] transition-colors font-medium"
+                    className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
                   >
                     {d.footerTerms}
                   </Link>
@@ -732,9 +758,8 @@ export default async function LandingPage({ params }: Props) {
             </div>
           </div>
 
-          {/* Bottom bar — no top border, subtle text separator only */}
-          <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="font-sans text-sm text-[#4a4452]/70 font-medium">
+          <div className="flex flex-col items-center justify-between gap-4 border-t border-white/8 pt-8 md:flex-row">
+            <p className="text-sm font-medium text-[#a99fc4]/70">
               {d.footerCopyright}
             </p>
           </div>

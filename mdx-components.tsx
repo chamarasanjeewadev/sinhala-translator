@@ -1,3 +1,4 @@
+import type { ComponentPropsWithoutRef } from "react";
 import type { MDXComponents } from "mdx/types";
 import { Link } from "next-view-transitions";
 
@@ -28,7 +29,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
       />
     ),
-    a: ({ href, ...props }: any) => {
+    a: ({ href, ...props }: ComponentPropsWithoutRef<"a">) => {
       if (href?.startsWith("/")) {
         return (
           <Link
@@ -48,10 +49,13 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         />
       );
     },
-    img: (props: any) => (
+    img: (props: ComponentPropsWithoutRef<"img">) => (
       <div className="my-8 rounded-xl overflow-hidden shadow-lg border border-border/50">
+        {/* Content images come from MDX with unknown dimensions — <img> is intentional here. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           {...props}
+          alt={props.alt ?? ""}
           className="w-full h-auto object-cover hover:scale-[1.02] transition-transform duration-500"
         />
         {props.alt && (

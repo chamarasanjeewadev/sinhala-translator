@@ -129,6 +129,7 @@ export default async function BlogPage({ params }: Props) {
                       href={makePostPath(featuredPost.language || "en", featuredPost.slug)}
                       className="relative block aspect-[16/10] overflow-hidden md:aspect-auto"
                     >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={featuredPost.image}
                         alt={featuredPost.title}
@@ -203,6 +204,7 @@ export default async function BlogPage({ params }: Props) {
                           href={makePostPath(post.language || "en", post.slug)}
                           className="relative block aspect-video overflow-hidden bg-slate-100"
                         >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={post.image}
                             alt={post.title}

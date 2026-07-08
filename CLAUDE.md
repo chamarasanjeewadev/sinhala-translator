@@ -46,7 +46,7 @@ All pages live under `src/app/[locale]/`. Supported locales: `en` (default), `si
 
 ### Blog
 
-MDX blog posts in `src/content/blog/`. Parsed by `src/lib/blog.ts` using `gray-matter` for frontmatter (title, date, excerpt, image, author, categories, keywords). Pages at `/blog` (list) and `/blog/[slug]` (detail). Custom MDX components in `src/components/mdx-components.tsx`. Blog routes are included in `src/app/sitemap.ts`.
+MDX blog posts in `src/content/blog/`. Parsed by `src/lib/blog.ts` using `gray-matter` for frontmatter (title, date, excerpt, image, author, categories, keywords). Pages at `/blog` (list) and `/blog/[slug]` (detail). Custom MDX components in the root `mdx-components.tsx` (`useMDXComponents`, auto-applied by `@next/mdx`). Blog routes are included in `src/app/sitemap.ts`.
 
 ### Supabase clients
 

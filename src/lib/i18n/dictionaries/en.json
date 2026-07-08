@@ -5,7 +5,7 @@
   },
   "navbar": {
     "dashboard": "Dashboard",
-    "buyCredits": "Buy Minutes",
+    "buyCredits": "Buy Credits",
     "signOut": "Sign Out",
     "logIn": "Log In",
     "signUp": "Sign Up",
@@ -35,6 +35,29 @@
     "sinhalaOptimizedDesc": "Purpose-built for Sinhala language nuances and dialects",
     "recordOrUpload": "Record or upload",
     "recordOrUploadDesc": "Record in-browser or upload MP3, WAV, WebM and more",
+    "howEyebrow": "How it works",
+    "howTitle": "From voice to text, in three steps",
+    "howSubtitle": "No installs, no setup. Record or upload your Sinhala audio, let the AI do the listening, and read your transcript minutes later.",
+    "howSteps": [
+      {
+        "title": "Record or upload",
+        "desc": "Record a Sinhala voice note right in your browser, or upload an existing audio file — MP3, WAV, M4A, and more."
+      },
+      {
+        "title": "The AI transcribes",
+        "desc": "Our Sinhala speech-to-text engine listens and writes it down, minute by minute. You only pay for the minutes you use."
+      },
+      {
+        "title": "Read your text",
+        "desc": "Get accurate Sinhala text in seconds — ready to read, edit, copy, or download wherever you need it."
+      }
+    ],
+    "demoEyebrow": "Built for Sinhala",
+    "featureSecure": "Secure & private",
+    "featureSecureDesc": "Your audio is processed securely and never stored without your permission.",
+    "featuresEyebrow": "What you get",
+    "pricingEyebrow": "Credits, not subscriptions",
+    "ctaEyebrow": "Start free",
     "featuresTitle1": "Everything you need for",
     "featuresTitle2": "perfect transcription",
     "featuresSubtitle": "Professional features designed for content creators, journalists, researchers, and businesses.",
@@ -53,16 +76,16 @@
     "pricingTitle1": "Simple, ",
     "pricingTitle2": "flexible pricing",
     "pricingSubtitle": "Buy credits once, use them anytime. No subscriptions, no commitments.",
-    "oneCredit": "1 credit",
-    "oneTranscription": "= 1 minute of audio",
+    "oneCredit": "1 minute",
+    "oneTranscription": "of audio",
     "freeCreditsCount": "{count}",
     "freeCreditsOnSignup": "free credits on signup",
     "creditsNeverExpire": "credits never expire",
     "infinity": "∞",
     "credits": "credits",
     "mostPopular": "Most Popular",
-    "perCredit": "${price}/credit",
-    "transcriptions": "{count} minutes",
+    "perCredit": "${price}/minute",
+    "transcriptions": "{count} credits",
     "allAudioFormats": "All audio formats",
     "upTo25MB": "Up to 25MB per file",
     "bestValue": "Best value",
@@ -115,7 +138,7 @@
       },
       {
         "q": "How much does HelaVoice cost?",
-        "a": "HelaVoice uses a simple credit system: 1 credit = 1 minute of audio. New accounts get 30 free credits on signup with no credit card required. Credit packages start small and never expire — you only pay for the minutes you transcribe."
+        "a": "HelaVoice is simple: 1 minute of audio uses 1 credit. New accounts get 30 free credits on signup with no credit card required. Credit packages start small and never expire — you only pay for the credits you use."
       },
       {
         "q": "What audio formats and file sizes are supported?",
@@ -127,7 +150,7 @@
     "logInTitle": "Log In",
     "createAccountTitle": "Create Account",
     "logInDesc": "Sign in to your account to continue",
-    "signUpDesc": "Sign up to get 30 free transcription credits",
+    "signUpDesc": "Sign up to get 30 free recording credits",
     "continueWithGoogle": "Continue with Google",
     "or": "or",
     "email": "Email",
@@ -145,12 +168,13 @@
   },
   "dashboard": {
     "title": "Dashboard",
-    "outOfCredits": "You’re out of credits. Purchase more to continue transcribing.",
+    "outOfCredits": "You’re out of recording credits. Purchase more to continue transcribing.",
     "buyCredits": "Buy Credits",
     "transcribeTitle": "Transcribe Sinhala Audio",
     "transcribeDesc": "Record or upload audio to get a Sinhala transcription",
     "record": "Record",
     "upload": "Upload",
+    "inputMethod": "Choose input method",
     "transcribing": "Transcribing...",
     "analyzing": "Analyzing audio...",
     "transcribeButton": "Transcribe",
@@ -159,10 +183,10 @@
     "transcriptionFailed": "Something went wrong. Please try again.",
     "audioDuration": "Audio duration",
     "creditsRequired": "Credits required",
-    "creditsAvailable": "Your balance",
+    "creditsAvailable": "Recording credits left",
     "confirmTranscription": "Transcribe",
     "processingChunk": "Processing chunk {current} of {total}...",
-    "insufficientCredits": "Insufficient credits. Please purchase more.",
+    "insufficientCredits": "Not enough credits. Please purchase more.",
     "perMinute": "1 per minute",
     "conversationMode": "Conversation mode",
     "conversationModeDesc": "Label each speaker (Speaker 1, Speaker 2, …)",
@@ -185,7 +209,7 @@
     "download": "Download",
     "delete": "Delete",
     "partial": "Partial",
-    "creditsLabel": "Credits",
+    "creditsLabel": "Credits left",
     "searchPlaceholder": "Search transcriptions...",
     "copied": "Copied to clipboard!",
     "deleted": "Transcription deleted",
@@ -232,11 +256,11 @@
   },
   "pricing": {
     "title": "Buy Credits",
-    "subtitle": "1 credit = 1 minute of audio. Choose a pack that fits your needs.",
+    "subtitle": "Pay only for the credits you use. Choose a pack that fits your needs.",
     "mostPopular": "Most Popular",
-    "transcriptionCredits": "{count} minutes of transcription",
+    "transcriptionCredits": "{count} transcription credits",
     "oneTime": "one-time",
-    "perCredit": "${price} per credit",
+    "perCredit": "${price} per minute",
     "buyButton": "Buy Credits",
     "redirecting": "Redirecting...",
     "paymentCancelled": "Payment was cancelled.",
@@ -246,6 +270,8 @@
   "recorder": {
     "startRecording": "Start Recording",
     "stopRecording": "Stop Recording",
+    "pauseRecording": "Pause",
+    "resumeRecording": "Resume",
     "hint": "Click to start recording Sinhala audio",
     "micError": "Could not access microphone. Please allow microphone access and try again."
   },
@@ -262,8 +288,8 @@
     "copied": "Copied!"
   },
   "credits": {
-    "credit": "minute",
-    "credits": "minutes"
+    "credit": "credit",
+    "credits": "credits"
   },
   "languageSwitcher": {
     "en": "EN",
