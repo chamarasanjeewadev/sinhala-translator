@@ -5,7 +5,7 @@
   },
   "navbar": {
     "dashboard": "Dashboard",
-    "buyCredits": "Buy Credits",
+    "buyCredits": "Buy Minutes",
     "signOut": "Sign Out",
     "logIn": "Log In",
     "signUp": "Sign Up",
@@ -262,8 +262,8 @@
     "copied": "Copied!"
   },
   "credits": {
-    "credit": "credit",
-    "credits": "credits"
+    "credit": "minute",
+    "credits": "minutes"
   },
   "languageSwitcher": {
     "en": "EN",

@@ -60,6 +60,9 @@ export async function POST(request: Request) {
         },
       ],
       mode: "payment",
+      // Promo codes only offered on the Starter pack — inline price_data can't
+      // be coupon-restricted to a product, so we gate it here instead.
+      allow_promotion_codes: creditPackage.id === "pack_10",
       customer_email: user.email,
       payment_intent_data: user.email
         ? { receipt_email: user.email }

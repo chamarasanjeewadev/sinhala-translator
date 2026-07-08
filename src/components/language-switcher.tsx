@@ -37,10 +37,10 @@ export function LanguageSwitcher() {
       variant="ghost"
       size="sm"
       onClick={handleSwitch}
-      className="gap-1.5 text-slate-600 hover:text-slate-900"
+      className="gap-1.5 text-white/60 hover:text-white"
     >
       <Globe className="h-4 w-4" />
-      <span className="text-xs font-medium">{label}</span>
+      <span className="hidden sm:inline text-xs font-medium">{label}</span>
     </Button>
   );
 }

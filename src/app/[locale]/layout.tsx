@@ -82,14 +82,14 @@ export default async function LocaleLayout({ children, params }: Props) {
   const dict = await getDictionary(locale as Locale);
 
   return (
-    <ViewTransitions>
-      <LocaleProvider locale={locale as Locale}>
-        <DictionaryProvider dictionary={dict}>
-          <Navbar />
+    <LocaleProvider locale={locale as Locale}>
+      <DictionaryProvider dictionary={dict}>
+        <Navbar />
+        <ViewTransitions>
           <main>{children}</main>
-          <Toaster />
-        </DictionaryProvider>
-      </LocaleProvider>
-    </ViewTransitions>
+        </ViewTransitions>
+        <Toaster />
+      </DictionaryProvider>
+    </LocaleProvider>
   );
 }

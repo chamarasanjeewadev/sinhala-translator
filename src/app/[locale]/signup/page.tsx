@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { locales, type Locale } from "@/lib/i18n/config";
@@ -22,5 +23,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default function SignupPage() {
-  return <SignupContent />;
+  return (
+    <Suspense>
+      <SignupContent />
+    </Suspense>
+  );
 }

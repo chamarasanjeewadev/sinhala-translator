@@ -17,17 +17,23 @@ import { createClient } from "@/lib/supabase/client";
 import { useDictionary } from "@/lib/i18n/dictionary-context";
 import { useLocale } from "@/lib/i18n/locale-context";
 import { localePath } from "@/lib/i18n/utils";
+import { CREDIT_PACKAGES } from "@/lib/constants";
 
 interface AuthFormProps {
   mode: "login" | "signup";
+  packageId?: string;
 }
 
-export function AuthForm({ mode }: AuthFormProps) {
+export function AuthForm({ mode, packageId }: AuthFormProps) {
   const router = useRouter();
   const supabase = createClient();
   const dict = useDictionary();
   const locale = useLocale();
   const d = dict.auth;
+
+  const pkg = packageId ? CREDIT_PACKAGES.find((p) => p.id === packageId) : null;
+  // Path to redirect after auth — no locale prefix, the callback/router adds it
+  const postAuthPath = pkg ? `/pricing?buy=${pkg.id}` : null;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -42,12 +48,13 @@ export function AuthForm({ mode }: AuthFormProps) {
 
     try {
       if (mode === "signup") {
+        const callbackUrl = postAuthPath
+          ? `${window.location.origin}/auth/callback?next=${encodeURIComponent(postAuthPath)}`
+          : `${window.location.origin}/auth/callback`;
         const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback`,
-          },
+          options: { emailRedirectTo: callbackUrl },
         });
         if (error) throw error;
         setMessage(d.checkEmail);
@@ -57,7 +64,10 @@ export function AuthForm({ mode }: AuthFormProps) {
           password,
         });
         if (error) throw error;
-        router.push(localePath("/dashboard", locale));
+        const destination = postAuthPath
+          ? localePath("/pricing", locale) + `?buy=${pkg!.id}`
+          : localePath("/dashboard", locale);
+        router.push(destination);
         router.refresh();
       }
     } catch (err) {
@@ -68,11 +78,12 @@ export function AuthForm({ mode }: AuthFormProps) {
   };
 
   const handleGoogleSignIn = async () => {
+    const callbackUrl = postAuthPath
+      ? `${window.location.origin}/auth/callback?next=${encodeURIComponent(postAuthPath)}`
+      : `${window.location.origin}/auth/callback`;
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
+      options: { redirectTo: callbackUrl },
     });
     if (error) {
       setError(error.message);
@@ -86,7 +97,11 @@ export function AuthForm({ mode }: AuthFormProps) {
           {mode === "login" ? d.logInTitle : d.createAccountTitle}
         </CardTitle>
         <CardDescription>
-          {mode === "login" ? d.logInDesc : d.signUpDesc}
+          {pkg
+            ? `${mode === "login" ? "Log in to purchase" : "Sign up to purchase"} the ${pkg.name} pack (${pkg.priceDisplay})`
+            : mode === "login"
+              ? d.logInDesc
+              : d.signUpDesc}
         </CardDescription>
       </CardHeader>
       <CardContent>

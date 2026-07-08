@@ -1,14 +1,16 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CREDIT_PACKAGES, FREE_CREDITS } from "@/lib/constants";
 import { useDictionary } from "@/lib/i18n/dictionary-context";
 import { useLocale } from "@/lib/i18n/locale-context";
 import { localePath } from "@/lib/i18n/utils";
+import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { Check, Zap, ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
+import type { User } from "@supabase/supabase-js";
 
 export function PricingContent() {
   const searchParams = useSearchParams();
@@ -16,6 +18,17 @@ export function PricingContent() {
   const locale = useLocale();
   const d = dict.pricing;
   const [loadingId, setLoadingId] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [authLoaded, setAuthLoaded] = useState(false);
+  const autoTriggered = useRef(false);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user);
+      setAuthLoaded(true);
+    });
+  }, []);
 
   const stripeErrors = dict.stripeErrors as Record<string, string> | undefined;
 
@@ -28,6 +41,16 @@ export function PricingContent() {
         : "";
     return `${message}${codeNote}`;
   };
+
+  // Auto-trigger checkout when returning from auth with ?buy=<packageId>
+  useEffect(() => {
+    const buy = searchParams.get("buy");
+    if (buy && authLoaded && user && !autoTriggered.current) {
+      autoTriggered.current = true;
+      handleBuy(buy);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authLoaded, user]);
 
   useEffect(() => {
     if (searchParams.get("payment") !== "cancelled") return;
@@ -63,6 +86,10 @@ export function PricingContent() {
   }, [searchParams, d.paymentCancelled]);
 
   const handleBuy = async (packageId: string) => {
+    if (!user) {
+      window.location.href = localePath("/signup", locale) + `?package=${packageId}`;
+      return;
+    }
     setLoadingId(packageId);
     try {
       const res = await fetch("/api/stripe/checkout", {
@@ -118,16 +145,16 @@ export function PricingContent() {
             </span>
           </h1>
           <p className="mx-auto max-w-[42ch] text-[1.05rem] leading-relaxed text-white/55">
-            Buy credits once, use them anytime.{" "}
+            Buy minutes once, use them anytime.{" "}
             <span className="font-medium text-white/80">No subscriptions, no commitments.</span>
           </p>
 
           {/* Credit model pills */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             {[
-              { label: "1 credit = 1 min of audio", color: "violet" },
-              { label: `${FREE_CREDITS} free credits on signup`, color: "emerald" },
-              { label: "Credits never expire", color: "sky" },
+              { label: "Per-minute billing", color: "violet" },
+              { label: `${FREE_CREDITS} free minutes on signup`, color: "emerald" },
+              { label: "Minutes never expire", color: "sky" },
             ].map(({ label, color }) => (
               <span
                 key={label}
@@ -163,8 +190,7 @@ export function PricingContent() {
 
             <div className="mb-5 text-center">
               <span className="font-display text-4xl font-black text-white">{FREE_CREDITS}</span>
-              <span className="ml-1.5 text-sm text-white/50">credits</span>
-              <p className="mt-0.5 text-xs text-white/35">= {FREE_CREDITS} minutes of audio</p>
+              <span className="ml-1.5 text-sm text-white/50">minutes</span>
             </div>
 
             <ul className="mb-8 flex-1 space-y-2.5">
@@ -200,14 +226,14 @@ export function PricingContent() {
               `${minutes} transcription minutes`,
               "All audio formats",
               "Up to 25 MB per file",
-              ...(isPopular ? ["Best $/credit value", "Priority processing"] : []),
+              ...(isPopular ? ["Best $/min value", "Priority processing"] : []),
             ];
 
             if (isPopular) {
               return (
                 <div
                   key={pkg.id}
-                  className="relative flex flex-col overflow-hidden rounded-[1.35rem] p-7 shadow-[0_24px_60px_rgba(124,58,237,0.35)] lg:col-span-1 lg:scale-[1.04]"
+                  className="relative flex flex-col overflow-hidden rounded-[1.35rem] p-7 shadow-[0_24px_60px_rgba(124,58,237,0.35)] sm:col-span-2 lg:col-span-1 lg:scale-[1.04]"
                   style={{
                     background: "linear-gradient(145deg,#4c0095 0%,#7c3aed 100%)",
                   }}
@@ -230,9 +256,6 @@ export function PricingContent() {
                   </div>
 
                   <div className="relative mb-6 mt-3">
-                    <div className="mb-1 text-xs font-bold uppercase tracking-widest text-white/60">
-                      {pkg.name}
-                    </div>
                     <div className="mb-1 flex items-end gap-1.5">
                       <span className="font-display text-5xl font-extrabold text-white">
                         {pkg.priceDisplay}
@@ -240,7 +263,7 @@ export function PricingContent() {
                       <span className="mb-1.5 text-sm font-semibold text-white/50">one-time</span>
                     </div>
                     <p className="text-sm text-white/50">
-                      ${pricePerCredit} per credit · {minutes} minutes
+                      ${pricePerCredit}/min · {minutes} minutes
                     </p>
                   </div>
 
@@ -255,7 +278,7 @@ export function PricingContent() {
 
                   <button
                     onClick={() => handleBuy(pkg.id)}
-                    disabled={isLoading}
+                    disabled={isLoading || !authLoaded}
                     className="relative block w-full rounded-2xl bg-white py-3.5 text-center text-sm font-black text-[#340075] shadow-[0_4px_16px_rgba(255,255,255,0.25)] transition-all hover:-translate-y-0.5 hover:bg-[#f0f3ff] hover:shadow-[0_8px_24px_rgba(255,255,255,0.35)] disabled:opacity-60"
                   >
                     {isLoading ? "Redirecting…" : `Buy ${pkg.priceDisplay}`}
@@ -280,7 +303,7 @@ export function PricingContent() {
                     <span className="mb-1.5 text-sm font-semibold text-white/40">one-time</span>
                   </div>
                   <p className="text-sm text-white/40">
-                    ${pricePerCredit} per credit · {minutes} minutes
+                    ${pricePerCredit}/min · {minutes} minutes
                   </p>
                 </div>
 
@@ -295,11 +318,16 @@ export function PricingContent() {
 
                 <button
                   onClick={() => handleBuy(pkg.id)}
-                  disabled={isLoading}
+                  disabled={isLoading || !authLoaded}
                   className="block w-full rounded-2xl border border-white/12 bg-white/8 py-3 text-center text-sm font-bold text-white/80 transition-all hover:bg-white/14 hover:text-white disabled:opacity-60"
                 >
                   {isLoading ? "Redirecting…" : `Buy ${pkg.priceDisplay}`}
                 </button>
+                {pkg.id === "pack_10" && (
+                  <p className="mt-2 text-center text-xs text-white/35">
+                    Have a promo code? Enter it at checkout.
+                  </p>
+                )}
               </div>
             );
           })}
@@ -309,16 +337,16 @@ export function PricingContent() {
         <div className="mt-20 grid gap-5 sm:grid-cols-3">
           {[
             {
-              q: "How do credits work?",
-              a: "1 credit = 1 minute of audio. Credits are deducted only when a transcription succeeds.",
+              q: "How do minutes work?",
+              a: "1 minute of audio = 1 minute billed. Minutes are deducted only when a transcription succeeds.",
             },
             {
-              q: "Do credits expire?",
-              a: "Never. Buy once and use your credits at your own pace — no rushing.",
+              q: "Do minutes expire?",
+              a: "Never. Buy once and use your minutes at your own pace — no rushing.",
             },
             {
               q: "Is a credit card required for free?",
-              a: `No. Sign up and instantly receive ${FREE_CREDITS} free credits. Card only needed when buying a pack.`,
+              a: `No. Sign up and instantly receive ${FREE_CREDITS} free minutes. Card only needed when buying a pack.`,
             },
           ].map(({ q, a }) => (
             <div
@@ -346,7 +374,7 @@ export function PricingContent() {
             href={localePath("/signup", locale)}
             className="group inline-flex items-center gap-2 rounded-2xl border border-violet-400/25 bg-violet-500/12 px-6 py-3 text-sm font-semibold text-violet-200 transition-all hover:bg-violet-500/20 hover:text-white"
           >
-            Start with {FREE_CREDITS} free credits
+            Start with {FREE_CREDITS} free minutes
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
