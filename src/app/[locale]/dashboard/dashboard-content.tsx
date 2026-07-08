@@ -135,6 +135,14 @@ export function DashboardContent({
   const creditsUsedRef = useRef(0);
   const cancelledRef = useRef(false);
 
+  const fetchCredits = useCallback(async () => {
+    const res = await fetch("/api/credits");
+    if (res.ok) {
+      const data: { credits: number } = await res.json();
+      setCredits(data.credits);
+    }
+  }, []);
+
   // ── Payment success ──
   useEffect(() => {
     if (searchParams.get("payment") !== "success") return;
@@ -149,14 +157,6 @@ export function DashboardContent({
     ];
     return () => timers.forEach(clearTimeout);
   }, [searchParams, d.paymentSuccess, fetchCredits]);
-
-  const fetchCredits = useCallback(async () => {
-    const res = await fetch("/api/credits");
-    if (res.ok) {
-      const data: { credits: number } = await res.json();
-      setCredits(data.credits);
-    }
-  }, []);
 
   const fetchTranscriptions = useCallback(async () => {
     const res = await fetch("/api/transcriptions");
