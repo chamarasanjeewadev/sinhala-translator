@@ -90,8 +90,8 @@ export async function transcribeWithGemini(
 
   const genAI = new GoogleGenerativeAI(apiKey);
 
-  // Use gemini-2.0-flash-exp by default (configurable via env var)
-  const modelName = process.env.GEMINI_MODEL || "gemini-2.0-flash-exp";
+  // Configurable via env var; gemini-2.0-flash-exp was retired (API 404s)
+  const modelName = process.env.GEMINI_MODEL || "gemini-flash-lite-latest";
 
   try {
     const model = genAI.getGenerativeModel({

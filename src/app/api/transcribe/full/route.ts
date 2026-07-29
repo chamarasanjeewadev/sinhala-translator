@@ -1,6 +1,7 @@
 import { createClientFromRequest } from "@/lib/supabase/request";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { privateJson } from "@/lib/api-response";
+import { checkRateLimit } from "@/lib/rate-limit";
 import {
   transcribeAudio,
   type TranscribeResult,
@@ -40,6 +41,13 @@ export async function POST(request: Request) {
 
   if (!user) {
     return privateJson({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  if (!(await checkRateLimit(`transcribe:${user.id}`))) {
+    return privateJson(
+      { error: "Too many requests. Please slow down and try again." },
+      { status: 429 }
+    );
   }
 
   let body: {
@@ -87,9 +95,13 @@ export async function POST(request: Request) {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("credits")
+    .select("credits, is_blocked")
     .eq("id", user.id)
     .single();
+
+  if (profile?.is_blocked) {
+    return privateJson({ error: "Account suspended" }, { status: 403 });
+  }
 
   if (!profile || profile.credits < creditsNeeded) {
     return privateJson(

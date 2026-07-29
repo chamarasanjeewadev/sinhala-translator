@@ -1,5 +1,6 @@
 import { createClientFromRequest } from "@/lib/supabase/request";
 import { privateJson } from "@/lib/api-response";
+import { gateTranscriptions } from "@/lib/transcript-preview";
 
 const hardDeleteTranscriptions =
   process.env.HARD_DELETE_TRANSCRIPTIONS === "true";
@@ -31,7 +32,20 @@ export async function GET(request: Request) {
     );
   }
 
-  return privateJson({ transcriptions });
+  // Preview-only for users who haven't unlocked exports (mirrors the dashboard
+  // server component, so a client refetch can't reveal the full text).
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("has_purchased")
+    .eq("id", user.id)
+    .single();
+
+  return privateJson({
+    transcriptions: gateTranscriptions(
+      transcriptions ?? [],
+      profile?.has_purchased ?? false
+    ),
+  });
 }
 
 export async function PATCH(request: Request) {

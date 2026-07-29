@@ -7,22 +7,19 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 export async function translateWithGemini(
   apiKey: string,
   sinhalaText: string,
-  timeoutMs: number = 30000
+  timeoutMs: number = 60000
 ): Promise<string> {
   if (!apiKey) {
     throw new Error("API Key is missing. Please ensure GOOGLE_CLOUD_API_KEY is configured.");
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const modelName = process.env.GEMINI_MODEL || "gemini-2.0-flash-exp";
+  const modelName = process.env.GEMINI_MODEL || "gemini-flash-latest";
 
+  // No generationConfig: Gemini 3 thinking models loop indefinitely when
+  // temperature is lowered below the 1.0 default — keep model defaults.
   const model = genAI.getGenerativeModel({
     model: modelName,
-    generationConfig: {
-      temperature: 0,
-      topP: 1,
-      topK: 1,
-    },
   });
 
   const prompt = `You are a professional Sinhala-to-English translator.

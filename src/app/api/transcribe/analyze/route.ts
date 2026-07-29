@@ -32,7 +32,7 @@ export async function POST(request: Request) {
 
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
-    .select("credits")
+    .select("credits, is_blocked")
     .eq("id", user.id)
     .single();
 
@@ -41,6 +41,10 @@ export async function POST(request: Request) {
       { error: "Failed to fetch profile" },
       { status: 500 }
     );
+  }
+
+  if (profile.is_blocked) {
+    return privateJson({ error: "Account suspended" }, { status: 403 });
   }
 
   const currentCredits = profile.credits;

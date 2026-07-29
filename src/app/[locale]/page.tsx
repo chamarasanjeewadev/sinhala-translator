@@ -1,6 +1,5 @@
 import {
   Mic,
-  AudioWaveform,
   Sparkles,
   Download,
   ArrowRight,
@@ -21,6 +20,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { LandingHero } from "@/components/landing-hero";
 import { HowItWorks } from "@/components/how-it-works";
+import { PricingBuyButton } from "@/components/pricing-buy-button";
 
 const waveformBars = [
   { height: 65, duration: 0.7 },
@@ -422,7 +422,7 @@ export default async function LandingPage({ params }: Props) {
 
       {/* ── Pricing (the single warm light band, so prices pop) ───────── */}
       <section id="credits" className="bg-[#f4f2fb] px-6 py-24 sm:py-28 lg:px-8">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-7xl">
           <div className="mx-auto mb-16 max-w-2xl text-center">
             <div className="mb-5 flex items-center justify-center gap-3">
               <span className="h-px w-8 rounded-full bg-[#340075]/30" />
@@ -472,7 +472,54 @@ export default async function LandingPage({ params }: Props) {
           </div>
 
           {/* Pricing cards */}
-          <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-2 lg:grid-cols-5">
+            {/* Free tier — the trial option so new visitors can try before buying */}
+            <div className="flex flex-col rounded-2xl border border-[#e2ddf2] bg-white p-7 shadow-[0_10px_30px_rgba(52,0,117,0.06)] transition-all hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(52,0,117,0.12)]">
+              <div className="mb-7">
+                <div className="section-eyebrow mb-3 text-[#4a4452]">
+                  {d.freeTier}
+                </div>
+                <div className="mb-3 flex items-end gap-2">
+                  <span className="font-display text-5xl font-extrabold text-[#111c2d]">
+                    {FREE_CREDITS}
+                  </span>
+                  <span className="mb-2 text-base font-semibold text-[#4a4452]">
+                    {d.credits}
+                  </span>
+                </div>
+                <div className="text-sm font-medium text-[#4a4452]">
+                  $0{" "}
+                  <span className="text-[#4a4452]/60">
+                    &middot; {d.freeForever}
+                  </span>
+                </div>
+              </div>
+
+              <ul className="mb-8 flex-1 space-y-3">
+                {[
+                  t(d.transcriptions, { count: FREE_CREDITS }),
+                  d.allAudioFormats,
+                  d.upTo25MB,
+                  d.noCreditCard,
+                ].map((item, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-2.5 text-sm text-[#4a4452]"
+                  >
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#047857]" />
+                    <span className="font-medium">{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <Link
+                href={lp("/signup")}
+                className="focus-ring mt-auto block w-full rounded-full border border-[#340075]/20 bg-[#340075]/5 px-5 py-3.5 text-center text-sm font-bold text-[#340075] transition-all hover:bg-[#340075]/10"
+              >
+                {d.startFree}
+              </Link>
+            </div>
+
             {CREDIT_PACKAGES.map((pkg) => {
               const isPopular = pkg.popular;
               const pricePerCredit = (pkg.price / 100 / pkg.credits).toFixed(2);
@@ -527,12 +574,11 @@ export default async function LandingPage({ params }: Props) {
                       ))}
                     </ul>
 
-                    <Link
-                      href={lp("/signup")}
+                    <PricingBuyButton
+                      packageId={pkg.id}
+                      label={d.getStarted}
                       className="focus-ring block w-full rounded-full bg-white px-5 py-3.5 text-center text-sm font-bold text-[#340075] shadow-[0_4px_16px_rgba(255,255,255,0.3)] transition-all hover:bg-[#f0f3ff]"
-                    >
-                      {d.getStarted}
-                    </Link>
+                    />
                   </div>
                 );
               }
@@ -574,12 +620,11 @@ export default async function LandingPage({ params }: Props) {
                     ))}
                   </ul>
 
-                  <Link
-                    href={lp("/signup")}
+                  <PricingBuyButton
+                    packageId={pkg.id}
+                    label={d.getStarted}
                     className="focus-ring block w-full rounded-full bg-[#340075] px-5 py-3.5 text-center text-sm font-bold text-white transition-all hover:bg-[#4c1d95]"
-                  >
-                    {d.getStarted}
-                  </Link>
+                  />
                 </div>
               );
             })}
@@ -637,134 +682,6 @@ export default async function LandingPage({ params }: Props) {
           </div>
         </div>
       </section>
-
-      {/* ── Footer ────────────────────────────────────────────────────── */}
-      <footer className="border-t border-white/8 bg-[#07000f] px-6 py-16 lg:px-8">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-14 grid gap-12 md:grid-cols-4">
-            {/* Brand */}
-            <div>
-              <div className="mb-5 flex items-center gap-2.5">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#4c0095] to-[#7c3aed] shadow-[0_4px_12px_rgba(124,58,237,0.35)]">
-                  <AudioWaveform className="h-4 w-4 text-white" />
-                </div>
-                <span className="font-display text-lg font-bold text-white">
-                  HelaVoice.lk
-                </span>
-              </div>
-              <p className="text-sm leading-relaxed text-[#a99fc4]">
-                {d.footerDesc}
-              </p>
-              <p className="mt-4 text-sm font-medium text-[#a99fc4]">
-                {d.footerContact}{" "}
-                <a
-                  href="mailto:hi@helavoice.lk"
-                  className="text-violet-300 transition-colors hover:text-fuchsia-300"
-                >
-                  hi@helavoice.lk
-                </a>
-              </p>
-            </div>
-
-            {/* Product */}
-            <div>
-              <h4 className="section-eyebrow mb-5 text-white/50">
-                {d.footerProduct}
-              </h4>
-              <ul className="space-y-3">
-                <li>
-                  <Link
-                    href={lp("/#features")}
-                    className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
-                  >
-                    {d.footerFeatures}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href={lp("/blog")}
-                    className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
-                  >
-                    {d.footerBlog}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href={lp("/pricing")}
-                    className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
-                  >
-                    {d.footerPricing}
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Account */}
-            <div>
-              <h4 className="section-eyebrow mb-5 text-white/50">
-                {d.footerAccount}
-              </h4>
-              <ul className="space-y-3">
-                <li>
-                  <Link
-                    href={lp("/login")}
-                    className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
-                  >
-                    {d.footerLogIn}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href={lp("/signup")}
-                    className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
-                  >
-                    {d.footerSignUp}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href={lp("/dashboard")}
-                    className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
-                  >
-                    {d.footerDashboard}
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Legal */}
-            <div>
-              <h4 className="section-eyebrow mb-5 text-white/50">
-                {d.footerLegal}
-              </h4>
-              <ul className="space-y-3">
-                <li>
-                  <Link
-                    href={lp("/privacy")}
-                    className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
-                  >
-                    {d.footerPrivacy}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href={lp("/terms")}
-                    className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
-                  >
-                    {d.footerTerms}
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="flex flex-col items-center justify-between gap-4 border-t border-white/8 pt-8 md:flex-row">
-            <p className="text-sm font-medium text-[#a99fc4]/70">
-              {d.footerCopyright}
-            </p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

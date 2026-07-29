@@ -114,7 +114,7 @@ export const STRIPE_ERROR_MESSAGES_EN: Record<StripeErrorKey, string> = {
   genericDecline:
     "Your card was declined. Please try a different card or payment method.",
   contactBank:
-    "Your bank declined this payment without giving a reason. Please contact your bank for details, or try a different card.",
+    "Your bank declined this payment without giving a reason. This often happens when online or international transactions are disabled on your card — ask your bank to enable them, then try again, or use a different card.",
   insufficientFunds:
     "Your card has insufficient funds. Please use a different card or add funds and try again.",
   limitExceeded:

@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/blog',           priority: 0.8, changeFrequency: 'daily'   },
     { path: '/privacy',        priority: 0.3, changeFrequency: 'monthly' },
     { path: '/terms',          priority: 0.3, changeFrequency: 'monthly' },
+    { path: '/support',        priority: 0.5, changeFrequency: 'monthly' },
     { path: '/account-delete', priority: 0.3, changeFrequency: 'monthly' },
   ];
 

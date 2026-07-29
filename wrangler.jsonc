@@ -35,6 +35,20 @@
 	"observability": {
 		"enabled": true
 	},
+	// Per-user burst protection on the transcription endpoints (Workers Rate
+	// Limiting API). Consumed via checkRateLimit() in src/lib/rate-limit.ts,
+	// which fails open when this binding is absent (local dev / preview).
+	// period must be 10 or 60. Tune limit as needed.
+	"unsafe": {
+		"bindings": [
+			{
+				"name": "TRANSCRIBE_RATE_LIMITER",
+				"type": "ratelimit",
+				"namespace_id": "1001",
+				"simple": { "limit": 60, "period": 60 }
+			}
+		]
+	},
 	"vars": {
 		"NEXT_PUBLIC_SUPABASE_URL": "",
 		"NEXT_PUBLIC_SUPABASE_ANON_KEY": "",
