@@ -456,113 +456,91 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
   // ── Render ───────────────────────────────────────────────────────────
 
   return (
-    <div className="min-h-screen bg-[#0f0f1e] text-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
-        {/* Header */}
-        <div className="flex flex-wrap items-center gap-3 mb-6">
-          <LocaleLink
-            href="/dashboard/subtitles"
-            className="p-2 rounded-full text-white/60 hover:text-white hover:bg-white/8 transition-colors"
-            aria-label={d.backToProjects}
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </LocaleLink>
-          <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="bg-transparent text-lg font-semibold outline-none border-b border-transparent focus:border-violet-500 min-w-0 flex-1"
-            aria-label={d.projectTitle}
-          />
-          <span className="text-xs text-white/40">
-            {saving ? d.saving : ""}
-          </span>
-          <span className="text-sm text-white/60">
-            {t(d.creditsLeft, { credits })}
-          </span>
-          {segments.length > 0 && (
-            <>
-              <button
-                onClick={() => setShowTranslateConfirm(true)}
-                disabled={busy}
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium bg-white/8 hover:bg-white/15 transition-colors disabled:opacity-50"
-              >
-                <Languages className="w-4 h-4" />
+    <div className="flex min-h-[100dvh] flex-col bg-[#0f0f1e] text-white lg:h-[100dvh] lg:overflow-hidden">
+      {/* ── Toolbar ── */}
+      <header className="flex shrink-0 items-center gap-2 border-b border-white/10 bg-[#12121f] px-3 py-2 sm:px-4">
+        <LocaleLink
+          href="/dashboard/subtitles"
+          className="rounded-full p-2 text-white/60 transition-colors hover:bg-white/8 hover:text-white"
+          aria-label={d.backToProjects}
+        >
+          <ArrowLeft className="h-5 w-5" />
+        </LocaleLink>
+        <input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="min-w-0 flex-1 border-b border-transparent bg-transparent text-sm font-semibold outline-none focus:border-violet-500 sm:text-base"
+          aria-label={d.projectTitle}
+        />
+        <span className="hidden text-xs text-white/40 sm:inline">
+          {saving ? d.saving : ""}
+        </span>
+        <span className="hidden rounded-full bg-white/8 px-3 py-1 text-xs font-medium text-white/70 sm:inline">
+          {t(d.creditsLeft, { credits })}
+        </span>
+        {segments.length > 0 && (
+          <>
+            <button
+              onClick={() => setShowTranslateConfirm(true)}
+              disabled={busy}
+              className="inline-flex items-center gap-1.5 rounded-xl bg-white/8 px-3 py-2 text-sm font-medium transition-colors hover:bg-white/15 disabled:opacity-50"
+            >
+              <Languages className="h-4 w-4" />
+              <span className="hidden md:inline">
                 {project.language === "en" ? d.translateToSinhala : d.translateToEnglish}
-              </button>
-              <button
-                onClick={() => setShowExport(true)}
-                disabled={busy}
-                className="hero-primary-button inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
-              >
-                <Download className="w-4 h-4" />
-                {d.export}
-              </button>
-            </>
-          )}
+              </span>
+            </button>
+            <button
+              onClick={() => setShowExport(true)}
+              disabled={busy}
+              className="hero-primary-button inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
+            >
+              <Download className="h-4 w-4" />
+              {d.export}
+            </button>
+          </>
+        )}
+      </header>
+
+      {/* ── Generation / translation status bar ── */}
+      {(genState === "extracting" || genState === "generating") && (
+        <div className="flex shrink-0 items-center gap-3 border-b border-violet-500/30 bg-violet-500/10 px-4 py-2">
+          <Loader2 className="h-4 w-4 shrink-0 animate-spin text-violet-400" />
+          <p className="flex-1 truncate text-sm font-medium">
+            {genState === "extracting"
+              ? d.extracting
+              : t(d.chunkProgress, {
+                  current: chunkProgress.current,
+                  total: chunkProgress.total,
+                })}
+            <span className="ml-2 text-white/40">{d.keepTabOpen}</span>
+          </p>
+          <button
+            onClick={() => {
+              cancelledRef.current = true;
+            }}
+            className="p-1.5 text-white/50 transition-colors hover:text-white"
+            aria-label={d.cancel}
+          >
+            <X className="h-4 w-4" />
+          </button>
         </div>
+      )}
+      {genState === "translating" && (
+        <div className="flex shrink-0 items-center gap-3 border-b border-violet-500/30 bg-violet-500/10 px-4 py-2">
+          <Loader2 className="h-4 w-4 shrink-0 animate-spin text-violet-400" />
+          <p className="text-sm font-medium">{d.translating}</p>
+        </div>
+      )}
 
-        {/* Missing video prompt (resume after reload) */}
-        {!videoFile && (
-          <div className="rounded-2xl bg-white/5 border border-white/10 p-8 text-center mb-6">
-            <p className="text-sm text-white/70 mb-1">{d.reselectPrompt}</p>
-            <p className="text-xs text-white/40 mb-4">
-              {project.video_filename}
-            </p>
-            <button
-              onClick={() => reselectRef.current?.click()}
-              className="hero-primary-button rounded-xl px-5 py-2.5 text-sm font-semibold text-white"
-            >
-              {d.reselectButton}
-            </button>
-            <input
-              ref={reselectRef}
-              type="file"
-              accept={SUPPORTED_VIDEO_TYPES.join(",")}
-              className="hidden"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) handleReselect(file);
-              }}
-            />
+      {/* ── Middle: subtitles | preview | style (CapCut-style, fills height) ── */}
+      <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
+        {/* Subtitle list */}
+        <div className="flex max-h-[38vh] shrink-0 flex-col border-white/10 lg:max-h-none lg:min-h-0 lg:w-80 lg:border-r xl:w-96">
+          <div className="shrink-0 px-4 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/40">
+            {d.title}
           </div>
-        )}
-
-        {/* Generation progress */}
-        {(genState === "extracting" || genState === "generating") && (
-          <div className="rounded-2xl bg-violet-500/10 border border-violet-500/30 p-4 mb-6 flex items-center gap-3">
-            <Loader2 className="w-5 h-5 text-violet-400 animate-spin shrink-0" />
-            <div className="flex-1">
-              <p className="text-sm font-medium">
-                {genState === "extracting"
-                  ? d.extracting
-                  : t(d.chunkProgress, {
-                      current: chunkProgress.current,
-                      total: chunkProgress.total,
-                    })}
-              </p>
-              <p className="text-xs text-white/50">{d.keepTabOpen}</p>
-            </div>
-            <button
-              onClick={() => {
-                cancelledRef.current = true;
-              }}
-              className="p-2 text-white/50 hover:text-white transition-colors"
-              aria-label={d.cancel}
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-        )}
-        {genState === "translating" && (
-          <div className="rounded-2xl bg-violet-500/10 border border-violet-500/30 p-4 mb-6 flex items-center gap-3">
-            <Loader2 className="w-5 h-5 text-violet-400 animate-spin shrink-0" />
-            <p className="text-sm font-medium">{d.translating}</p>
-          </div>
-        )}
-
-        {/* Main layout: list | preview+style */}
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-6 mb-6">
-          <div className="rounded-2xl bg-white/5 border border-white/10 p-4 h-[480px]">
+          <div className="min-h-0 flex-1 overflow-hidden px-3 pb-3">
             <SegmentList
               segments={segments}
               selectedId={selectedId}
@@ -573,28 +551,55 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
               onAddBelow={handleAddBelow}
             />
           </div>
-          <div className="flex flex-col gap-4">
-            {videoUrl ? (
-              <VideoPreview
-                videoRef={videoRef}
-                videoUrl={videoUrl}
-                activeText={activeSegment?.text ?? null}
-                style={style}
-                onTimeUpdate={setCurrentTime}
-              />
-            ) : (
-              <div className="rounded-xl bg-black/40 border border-white/10 h-[280px] flex items-center justify-center text-sm text-white/40">
-                {d.noVideoLoaded}
-              </div>
-            )}
-            <StylePanel
-              style={style}
-              onChange={(updates) => setStyle((s) => ({ ...s, ...updates }))}
-            />
-          </div>
         </div>
 
-        {/* Timeline */}
+        {/* Preview */}
+        <div className="flex min-h-[240px] flex-1 items-center justify-center bg-black/40 p-3 lg:min-h-0 sm:p-5">
+          {videoUrl ? (
+            <VideoPreview
+              videoRef={videoRef}
+              videoUrl={videoUrl}
+              activeText={activeSegment?.text ?? null}
+              style={style}
+              onTimeUpdate={setCurrentTime}
+            />
+          ) : (
+            <div className="max-w-sm rounded-2xl border border-white/10 bg-white/5 p-8 text-center">
+              <p className="mb-1 text-sm text-white/70">{d.reselectPrompt}</p>
+              <p className="mb-4 truncate text-xs text-white/40">
+                {project.video_filename}
+              </p>
+              <button
+                onClick={() => reselectRef.current?.click()}
+                className="hero-primary-button rounded-xl px-5 py-2.5 text-sm font-semibold text-white"
+              >
+                {d.reselectButton}
+              </button>
+              <input
+                ref={reselectRef}
+                type="file"
+                accept={SUPPORTED_VIDEO_TYPES.join(",")}
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) handleReselect(file);
+                }}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Style panel */}
+        <div className="max-h-[38vh] shrink-0 overflow-y-auto border-t border-white/10 p-3 lg:max-h-none lg:w-80 lg:border-l lg:border-t-0">
+          <StylePanel
+            style={style}
+            onChange={(updates) => setStyle((s) => ({ ...s, ...updates }))}
+          />
+        </div>
+      </div>
+
+      {/* ── Timeline (always visible) ── */}
+      <div className="shrink-0 border-t border-white/10 bg-[#12121f] p-3">
         <Timeline
           segments={segments}
           durationSeconds={project.video_duration_seconds}

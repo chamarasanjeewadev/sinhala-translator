@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { redirect, notFound } from "next/navigation";
 import { SubtitleEditor } from "@/components/subtitles/subtitle-editor";
+import { SUBTITLE_FONTS_HREF } from "@/lib/subtitle-style";
 import type { SubtitleProject } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -50,10 +51,15 @@ async function EditorServer({ id }: { id: string }) {
     .single();
 
   return (
-    <SubtitleEditor
-      project={project as SubtitleProject}
-      initialCredits={profile?.credits ?? 0}
-    />
+    <>
+      {/* Subtitle fonts (free/OFL) for the styled overlay and burned-in export */}
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+      <link rel="stylesheet" href={SUBTITLE_FONTS_HREF} />
+      <SubtitleEditor
+        project={project as SubtitleProject}
+        initialCredits={profile?.credits ?? 0}
+      />
+    </>
   );
 }
 

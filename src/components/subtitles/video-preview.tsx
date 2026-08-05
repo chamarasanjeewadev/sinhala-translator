@@ -39,13 +39,13 @@ export function VideoPreview({
   const { wrapper, text } = subtitleOverlayCss(style, videoHeightPx);
 
   return (
-    <div className="relative w-full bg-black rounded-xl overflow-hidden">
+    <div className="relative inline-flex max-h-full max-w-full overflow-hidden rounded-xl bg-black">
       <video
         ref={videoRef}
         src={videoUrl}
         controls
         playsInline
-        className="w-full max-h-[420px]"
+        className="block max-h-full max-w-full object-contain"
         onTimeUpdate={(e) => onTimeUpdate(e.currentTarget.currentTime)}
         onLoadedMetadata={(e) => onLoadedMetadata?.(e.currentTarget.duration)}
       />

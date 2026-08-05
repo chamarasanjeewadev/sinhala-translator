@@ -111,10 +111,23 @@ export async function exportBurnedInMp4(
         const sink = new EncodedPacketSink(audioTrack);
         const decoderConfig = await audioTrack.getDecoderConfig();
         let first = true;
+        // AAC (and some other codecs) emit priming packets with small negative
+        // timestamps (encoder delay). mediabunny rejects negative timestamps,
+        // so shift every packet by the first packet's offset — this keeps the
+        // packets monotonic (clamping to 0 would collide with the next packet)
+        // and only delays audio by the priming duration (~20ms, imperceptible).
+        let tsOffset = 0;
         for await (const packet of sink.packets()) {
           if (abortSignal.aborted) return;
+          if (first && packet.timestamp < 0) {
+            tsOffset = -packet.timestamp;
+          }
+          const adjusted =
+            tsOffset > 0
+              ? packet.clone({ timestamp: packet.timestamp + tsOffset })
+              : packet;
           await packetSource.add(
-            packet,
+            adjusted,
             first && decoderConfig ? { decoderConfig } : undefined
           );
           first = false;
@@ -154,9 +167,11 @@ export async function exportBurnedInMp4(
           drawSubtitle(ctx, style, active.text, width, height);
         }
 
-        await videoSource.add(timestamp, frameDuration);
+        // Guard against a negative first-frame timestamp (same class of crash
+        // as audio priming); the encoder requires non-negative timestamps.
+        await videoSource.add(Math.max(0, timestamp), frameDuration);
         if (duration > 0) {
-          onProgress({ fraction: Math.min(timestamp / duration, 1) });
+          onProgress({ fraction: Math.min(Math.max(0, timestamp) / duration, 1) });
         }
       }
       videoSource.close();

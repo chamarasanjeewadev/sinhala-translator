@@ -14,22 +14,47 @@ export const DEFAULT_SUBTITLE_STYLE: SubtitleStyle = {
   verticalOffsetPct: 5,
 };
 
+// Literal family names (loaded via the Google Fonts <link> on the editor page)
+// so the DOM preview and the canvas export render identically — canvas cannot
+// resolve CSS variables, so both maps use the same concrete names.
 export const FONT_STACKS: Record<SubtitleStyle["fontFamily"], string> = {
-  "noto-sans-sinhala":
-    "var(--font-noto-sinhala), 'Noto Sans Sinhala', sans-serif",
-  inter: "var(--font-inter), Inter, sans-serif",
-  arial: "Arial, Helvetica, sans-serif",
+  "noto-sans-sinhala": "'Noto Sans Sinhala', sans-serif",
+  "gemunu-libre": "'Gemunu Libre', sans-serif",
+  "abhaya-libre": "'Abhaya Libre', serif",
+  yaldevi: "'Yaldevi', sans-serif",
+  "noto-serif-sinhala": "'Noto Serif Sinhala', serif",
+  inter: "'Inter', sans-serif",
 };
 
-/** Font stacks usable in a canvas 2D context (no CSS variables) */
-export const CANVAS_FONT_STACKS: Record<SubtitleStyle["fontFamily"], string> = {
-  "noto-sans-sinhala": "'Noto Sans Sinhala', sans-serif",
-  inter: "Inter, sans-serif",
-  arial: "Arial, Helvetica, sans-serif",
-};
+/** Same concrete family names for a canvas 2D context */
+export const CANVAS_FONT_STACKS: Record<SubtitleStyle["fontFamily"], string> =
+  FONT_STACKS;
+
+// Google Fonts families (all free / OFL) to load on the editor page.
+export const SUBTITLE_FONT_FAMILIES = [
+  "Noto Sans Sinhala:wght@400;600;700",
+  "Gemunu Libre:wght@400;600;700",
+  "Abhaya Libre:wght@400;600;700",
+  "Yaldevi:wght@400;600;700",
+  "Noto Serif Sinhala:wght@400;600;700",
+  "Inter:wght@400;600;700",
+];
+
+export const SUBTITLE_FONTS_HREF = `https://fonts.googleapis.com/css2?${SUBTITLE_FONT_FAMILIES.map(
+  (f) => `family=${f.replace(/ /g, "+")}`
+).join("&")}&display=swap`;
 
 export function mergeStyle(style: Partial<SubtitleStyle> | null | undefined): SubtitleStyle {
-  return { ...DEFAULT_SUBTITLE_STYLE, ...(style ?? {}) };
+  const merged = { ...DEFAULT_SUBTITLE_STYLE, ...(style ?? {}) };
+  // Guard against font keys removed since a project was saved (e.g. "arial").
+  if (!(merged.fontFamily in FONT_STACKS)) {
+    merged.fontFamily = DEFAULT_SUBTITLE_STYLE.fontFamily;
+  }
+  return merged;
+}
+
+function fontStack(family: SubtitleStyle["fontFamily"]): string {
+  return FONT_STACKS[family] ?? FONT_STACKS[DEFAULT_SUBTITLE_STYLE.fontFamily];
 }
 
 function hexToRgba(hex: string, opacity: number): string {
@@ -76,7 +101,7 @@ export function subtitleOverlayCss(
   const fontSize = (style.fontSizePct / 100) * videoHeightPx;
 
   const text: React.CSSProperties = {
-    fontFamily: FONT_STACKS[style.fontFamily],
+    fontFamily: fontStack(style.fontFamily),
     fontSize: `${fontSize}px`,
     lineHeight: 1.3,
     color: style.color,
@@ -124,7 +149,7 @@ export function drawSubtitle(
   }
 
   ctx.save();
-  ctx.font = `${fontSize}px ${CANVAS_FONT_STACKS[style.fontFamily]}`;
+  ctx.font = `${fontSize}px ${fontStack(style.fontFamily)}`;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
 

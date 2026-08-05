@@ -102,8 +102,16 @@ export interface SubtitleSegment {
 
 export type SubtitleLanguage = "si" | "en" | "auto";
 
+export type SubtitleFontFamily =
+  | "noto-sans-sinhala"
+  | "gemunu-libre"
+  | "abhaya-libre"
+  | "yaldevi"
+  | "noto-serif-sinhala"
+  | "inter";
+
 export interface SubtitleStyle {
-  fontFamily: "noto-sans-sinhala" | "inter" | "arial";
+  fontFamily: SubtitleFontFamily;
   /** Font size as a percentage of the video height */
   fontSizePct: number;
   color: string;

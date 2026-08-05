@@ -74,9 +74,9 @@ export function Navbar() {
     router.refresh();
   };
 
-  // Hide navbar on dashboard
+  // Hide navbar on the dashboard and the full-screen subtitle editor
   const { rest } = parsePathname(pathname);
-  if (rest === "/dashboard") {
+  if (rest === "/dashboard" || rest.startsWith("/dashboard/subtitles/")) {
     return null;
   }
 

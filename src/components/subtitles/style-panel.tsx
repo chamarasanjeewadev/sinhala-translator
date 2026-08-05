@@ -10,8 +10,11 @@ interface StylePanelProps {
 
 const FONT_OPTIONS: { value: SubtitleStyle["fontFamily"]; label: string }[] = [
   { value: "noto-sans-sinhala", label: "Noto Sans Sinhala" },
-  { value: "inter", label: "Inter" },
-  { value: "arial", label: "Arial" },
+  { value: "gemunu-libre", label: "Gemunu Libre" },
+  { value: "abhaya-libre", label: "Abhaya Libre" },
+  { value: "yaldevi", label: "Yaldevi" },
+  { value: "noto-serif-sinhala", label: "Noto Serif Sinhala" },
+  { value: "inter", label: "Inter (English)" },
 ];
 
 export function StylePanel({ style, onChange }: StylePanelProps) {
