@@ -1,0 +1,23 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="100" y1="90" x2="1520" y2="860" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0C0A25"/>
+      <stop offset="0.5" stop-color="#4C1D95"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1380" cy="180" r="220" fill="#C4B5FD" fill-opacity="0.22"/>
+  <circle cx="220" cy="760" r="250" fill="#A78BFA" fill-opacity="0.2"/>
+  <rect x="170" y="236" width="1260" height="320" rx="40" fill="#FFFFFF" fill-opacity="0.1" stroke="#FFFFFF" stroke-opacity="0.2"/>
+  <text x="260" y="332" fill="#F5F3FF" font-family="Arial, sans-serif" font-size="46" font-weight="700">Sinhala Voice to Text</text>
+  <text x="260" y="396" fill="#EDE9FE" font-family="Arial, sans-serif" font-size="30" font-weight="500">Free online converter — record or upload, get text in seconds</text>
+  <text x="260" y="466" fill="#DDD6FE" font-family="Arial, sans-serif" font-size="26" font-weight="700">HelaVoice Blog</text>
+  <g transform="translate(1185 304)">
+    <rect x="0" y="0" width="160" height="160" rx="32" fill="#FFFFFF" fill-opacity="0.2"/>
+    <rect x="66" y="34" width="28" height="60" rx="14" fill="#F5F3FF"/>
+    <path d="M52 84C52 100 64 112 80 112C96 112 108 100 108 84" stroke="#F5F3FF" stroke-width="8" stroke-linecap="round"/>
+    <path d="M80 112V128" stroke="#F5F3FF" stroke-width="8" stroke-linecap="round"/>
+    <path d="M62 128H98" stroke="#F5F3FF" stroke-width="8" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -47,7 +47,7 @@ const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "HelaVoice.lk",
-  alternateName: "Sinhala Voice Transcriber",
+  alternateName: ["Sinhala Voice to Text", "Sinhala Voice Transcriber"],
   url: siteUrl,
   inLanguage: ["en", "si"],
 };

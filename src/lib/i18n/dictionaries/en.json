@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "title": "Sinhala Voice Transcriber — Audio to Text in Seconds | HelaVoice.lk",
-    "description": "HelaVoice is a Sinhala voice transcriber that converts audio to accurate text using AI. Upload or record Sinhala audio and get a transcript in seconds. Free credits on signup."
+    "title": "Sinhala Voice to Text — Transcribe Audio Free in Seconds | HelaVoice.lk",
+    "description": "HelaVoice converts Sinhala voice to text with AI. Record or upload audio and transcribe Sinhala speech into accurate text in seconds — free credits on signup."
   },
   "navbar": {
     "dashboard": "Dashboard",
@@ -15,10 +15,10 @@
   },
   "landing": {
     "badge": "AI-Powered Sinhala Transcription",
-    "heroEyebrow": "The Sinhala voice transcriber for Sri Lanka",
-    "heroTitle1": "Your voice,",
+    "heroEyebrow": "Sinhala voice to text — built for Sri Lanka",
+    "heroTitle1": "Sinhala voice to text,",
     "heroTitle2": "perfectly transcribed",
-    "heroSubtitle": "The AI-powered Sinhala voice transcriber that turns Sinhala speech into accurate text in seconds. Record or upload audio — pay only for the minutes you use.",
+    "heroSubtitle": "The AI-powered way to convert Sinhala voice to text. Record or upload audio and transcribe Sinhala speech into accurate text in seconds — pay only for the minutes you use.",
     "startTranscribing": "Start transcribing",
     "viewPricing": "View pricing",
     "freeCredits": "{count} free credits on signup",
@@ -60,7 +60,7 @@
     "ctaEyebrow": "Start free",
     "featuresTitle1": "Everything you need for",
     "featuresTitle2": "perfect transcription",
-    "featuresSubtitle": "Professional features designed for content creators, journalists, researchers, and businesses.",
+    "featuresSubtitle": "Everything you need to convert Sinhala voice to text — professional features for content creators, journalists, researchers, and businesses.",
     "featureRealtime": "Real-time processing",
     "featureRealtimeDesc": "Get instant transcriptions as you speak with no delays",
     "featureAnywhere": "Works anywhere",
@@ -124,6 +124,10 @@
       {
         "q": "What is a Sinhala voice transcriber?",
         "a": "A Sinhala voice transcriber converts spoken Sinhala audio into written Sinhala text. HelaVoice is an AI-powered Sinhala voice transcriber built for Sri Lankan creators, students, journalists, and businesses — it accepts recordings or audio files and returns an accurate transcript in seconds."
+      },
+      {
+        "q": "How do I convert Sinhala voice to text?",
+        "a": "To convert Sinhala voice to text, sign in to HelaVoice, then record your voice directly in the browser or upload an audio file. The AI transcribes your Sinhala voice to text in seconds, and you can copy, edit, or download the transcript. It's the fastest way to turn Sinhala voice notes, meetings, and interviews into accurate text."
       },
       {
         "q": "How do I transcribe Sinhala audio to text?",
@@ -229,9 +233,6 @@
     "saveFailed": "Failed to save changes",
     "saveSuccess": "Changes saved",
     "charCount": "{count} characters",
-    "unlockToExport": "Buy credits to unlock and export your full transcript.",
-    "unlockBanner": "This is a preview. Buy any credit pack to unlock the full transcript, copy and download.",
-    "unlockCta": "Unlock",
     "translate": "Translate",
     "translating": "Translating...",
     "translateConfirmTitle": "Translate to English",

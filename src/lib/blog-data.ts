@@ -14,6 +14,28 @@ export type PostMeta = {
 
 export const blogPosts: PostMeta[] = [
   {
+    slug: "sinhala-voice-to-text",
+    title: "Sinhala Voice to Text: Free Online Converter (2026 Guide)",
+    excerpt:
+      "Convert Sinhala voice to text online with AI. Learn the fastest way to transcribe Sinhala speech, voice notes, and recordings into accurate, editable text — with free credits to start.",
+    author: "HelaVoice Editorial Team",
+    date: "2026-08-05",
+    dateModified: "2026-08-05",
+    categories: ["Sinhala Voice to Text", "Speech to Text", "Guide"],
+    keywords: [
+      "sinhala voice to text",
+      "convert sinhala voice to text",
+      "sinhala voice to text converter",
+      "sinhala transcribe",
+      "sinhala transcript",
+      "sinhala speech to text",
+      "සිංහල හඬ පෙළට",
+    ],
+    image: "/images/blog/sinhala-voice-to-text.svg",
+    language: "en",
+    readTime: "8 min read",
+  },
+  {
     slug: "how-to-transcribe-sinhala-audio-to-text",
     title: "How to Transcribe Sinhala Audio to Text: A Practical Guide for Sri Lanka",
     excerpt:

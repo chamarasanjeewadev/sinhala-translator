@@ -441,7 +441,7 @@ export function LandingHero({
           <div className="relative order-1 lg:order-2 lg:flex-1">
             <div className="relative h-64 w-full overflow-hidden sm:h-80 lg:absolute lg:inset-0 lg:h-full">
               <Image
-                src="/images/landing-hero.png"
+                src="/images/landing-hero.webp"
                 alt="Sinhala voice transcriber — recording Sinhala audio for AI-powered speech-to-text transcription"
                 fill
                 priority
