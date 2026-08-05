@@ -64,11 +64,25 @@ export const IAP_PRODUCTS: Record<
 
 export const FREE_CREDITS = 10;
 export const CREDIT_PER_MINUTE = 1;
+export const SUBTITLE_CREDITS_PER_MINUTE = 2;
 export const CHUNK_DURATION_SECONDS = 120; // 2 minutes per chunk - balance between performance and request size
 export const TARGET_SAMPLE_RATE = 16000;
 export const MAX_RETRIES = 2;
 export const MAX_AUDIO_SIZE_MB = 25;
 export const MAX_AUDIO_SIZE_BYTES = MAX_AUDIO_SIZE_MB * 1024 * 1024;
+
+export const MAX_VIDEO_SIZE_MB = 500;
+export const MAX_VIDEO_SIZE_BYTES = MAX_VIDEO_SIZE_MB * 1024 * 1024;
+export const MAX_VIDEO_DURATION_SECONDS = 30 * 60;
+
+export const SUPPORTED_VIDEO_TYPES = [
+  "video/mp4",
+  "video/webm",
+  "video/quicktime",
+];
+
+// Server-side caps for saved subtitle projects (segments jsonb payload)
+export const MAX_SUBTITLE_SEGMENTS = 5000;
 
 export const SUPPORTED_AUDIO_TYPES = [
   "audio/webm",

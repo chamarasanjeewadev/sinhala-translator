@@ -67,7 +67,7 @@ export async function chunkAudio(
   return chunks;
 }
 
-function encodeWav(audioBuffer: AudioBuffer): Blob {
+export function encodeWav(audioBuffer: AudioBuffer): Blob {
   const numChannels = 1;
   const sampleRate = audioBuffer.sampleRate;
   const samples = audioBuffer.getChannelData(0);

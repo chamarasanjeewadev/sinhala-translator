@@ -124,6 +124,13 @@ export function Navbar() {
                   {d.dashboard}
                 </LocaleLink>
 
+                <LocaleLink
+                  href="/dashboard/subtitles"
+                  className="px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
+                >
+                  {d.subtitles}
+                </LocaleLink>
+
                 <LocaleLink href="/pricing">
                   <button className="hero-primary-button inline-flex items-center gap-1.5 rounded-2xl px-5 py-2 text-sm font-semibold text-white hover:opacity-90 transition-opacity">
                     {d.buyCredits}
@@ -151,6 +158,12 @@ export function Navbar() {
             ) : (
               <>
                 <nav className="flex items-center gap-1">
+                  <LocaleLink
+                    href="/subtitles"
+                    className="px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
+                  >
+                    {d.subtitles}
+                  </LocaleLink>
                   <LocaleLink
                     href="/pricing"
                     className="px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
@@ -234,6 +247,12 @@ export function Navbar() {
                 >
                   {d.dashboard}
                 </LocaleLink>
+                <LocaleLink
+                  href="/dashboard/subtitles"
+                  className="px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
+                >
+                  {d.subtitles}
+                </LocaleLink>
                 <button
                   onClick={handleSignOut}
                   className="text-left px-3 py-2.5 rounded-xl text-sm font-medium text-white/50 hover:text-white hover:bg-white/8 transition-colors"
@@ -250,6 +269,12 @@ export function Navbar() {
                   className="px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
                 >
                   Home
+                </LocaleLink>
+                <LocaleLink
+                  href="/subtitles"
+                  className="px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
+                >
+                  {d.subtitles}
                 </LocaleLink>
                 <LocaleLink
                   href="/pricing"

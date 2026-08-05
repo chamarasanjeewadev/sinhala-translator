@@ -675,6 +675,12 @@ export function DashboardContent({
                 {d.home}
               </LocaleLink>
               <LocaleLink
+                href="/dashboard/subtitles"
+                className="px-3 py-1.5 rounded-full text-sm font-medium text-[#4a4452] hover:text-[#111c2d] hover:bg-[#e7eeff] transition-colors"
+              >
+                {nav.subtitles}
+              </LocaleLink>
+              <LocaleLink
                 href="/blog"
                 className="px-3 py-1.5 rounded-full text-sm font-medium text-[#4a4452] hover:text-[#111c2d] hover:bg-[#e7eeff] transition-colors"
               >

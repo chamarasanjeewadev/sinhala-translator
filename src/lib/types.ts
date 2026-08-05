@@ -89,3 +89,60 @@ export interface TranslateResponse {
   creditsUsed: number;
   creditsRemaining: number;
 }
+
+export interface SubtitleSegment {
+  id: string;
+  /** Start time in seconds from the beginning of the video */
+  start: number;
+  /** End time in seconds from the beginning of the video */
+  end: number;
+  /** Subtitle text; may contain a single "\n" for a two-line subtitle */
+  text: string;
+}
+
+export type SubtitleLanguage = "si" | "en" | "auto";
+
+export interface SubtitleStyle {
+  fontFamily: "noto-sans-sinhala" | "inter" | "arial";
+  /** Font size as a percentage of the video height */
+  fontSizePct: number;
+  color: string;
+  backgroundColor: string;
+  /** 0–1 */
+  backgroundOpacity: number;
+  anchor: "bottom" | "middle" | "top";
+  /** Distance from the anchor edge as a percentage of the video height */
+  verticalOffsetPct: number;
+}
+
+export interface SubtitleProject {
+  id: string;
+  user_id: string;
+  title: string | null;
+  video_filename: string;
+  video_size_bytes: number | null;
+  video_duration_seconds: number;
+  language: SubtitleLanguage;
+  segments: SubtitleSegment[];
+  style: SubtitleStyle | null;
+  credits_used: number;
+  is_partial: boolean;
+  is_deleted: boolean;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SubtitleAnalyzeResponse {
+  durationSeconds: number;
+  requiredCredits: number;
+  currentCredits: number;
+  canProceed: boolean;
+}
+
+export interface SubtitleChunkResponse {
+  /** Segments with absolute (whole-video) times, already offset by the server */
+  segments: SubtitleSegment[];
+  creditsRemaining: number;
+  chunkIndex: number;
+}

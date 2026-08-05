@@ -293,6 +293,21 @@
 	-webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 100%);
 }
 
+.sub-play-pulse {
+	animation: subPlayPulse 2.6s ease-in-out infinite;
+}
+
+@keyframes subPlayPulse {
+	0%, 100% {
+		box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.18);
+		transform: scale(1);
+	}
+	50% {
+		box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+		transform: scale(1.04);
+	}
+}
+
 @media (max-width: 1023px) {
 	.hero-image-fade {
 		mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
@@ -468,7 +483,8 @@
 	.hero-glow-slow,
 	.hero-glow-delayed,
 	.hero-primary-button::before,
-	.hero-live-dot::after {
+	.hero-live-dot::after,
+	.sub-play-pulse {
 		animation: none !important;
 	}
 }
