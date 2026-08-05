@@ -39,12 +39,6 @@ import { getAudioDuration, chunkAudio, blobToBase64 } from "@/lib/audio-utils";
 interface DashboardContentProps {
   initialCredits: number;
   initialTranscriptions: Transcription[];
-  /**
-   * Whether the user has ever purchased credits or redeemed a promo. When
-   * false, transcript text arrives truncated to a preview from the server and
-   * copy/download/edit are gated behind a purchase (the conversion paywall).
-   */
-  hasPurchased: boolean;
 }
 
 type TranscribeState =
@@ -75,7 +69,6 @@ function calcTranslationCredits(text: string): number {
 export function DashboardContent({
   initialCredits,
   initialTranscriptions,
-  hasPurchased,
 }: DashboardContentProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -453,19 +446,8 @@ export function DashboardContent({
     }
   }, [audioSource, analyzeResult, conversationMode, withTimestamps, d.insufficientCredits, d.transcriptionFailed, handleTranscriptionComplete]);
 
-  // Free (never-purchased) users get preview-only transcripts. Exporting the
-  // full text requires a purchase — send them to pricing instead. Returns true
-  // when the action was blocked.
-  const requireUnlock = () => {
-    if (hasPurchased) return false;
-    toast.error(d.unlockToExport);
-    router.push(localePath("/pricing", locale));
-    return true;
-  };
-
   // ── List action handlers ──
   const handleCopy = async (text: string, id: string) => {
-    if (requireUnlock()) return;
     await navigator.clipboard.writeText(text);
     setCopiedId(id);
     toast.success(d.copied);
@@ -473,7 +455,6 @@ export function DashboardContent({
   };
 
   const handleDownload = (text: string, id: string) => {
-    if (requireUnlock()) return;
     const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -500,9 +481,6 @@ export function DashboardContent({
 
   // ── Edit handlers ──
   const openEdit = (t: Transcription) => {
-    // Gated users only hold the truncated preview client-side; opening the
-    // editor would let a save overwrite the stored transcript with the preview.
-    if (requireUnlock()) return;
     setEditTranscription(t);
     setEditText(t.transcription_text);
     setEditEnglishText(t.english_translation ?? "");
@@ -1235,21 +1213,6 @@ export function DashboardContent({
                   : ""
               }`}
             >
-              {/* Preview paywall banner for never-purchased users */}
-              {!hasPurchased && (
-                <div className="col-span-full flex flex-wrap items-center justify-between gap-3 bg-[#fff3d6] text-[#8a5a00] rounded-2xl px-4 py-3">
-                  <span className="text-xs font-semibold">
-                    {d.unlockBanner}
-                  </span>
-                  <button
-                    onClick={() => router.push(localePath("/pricing", locale))}
-                    className="shrink-0 bg-[#340075] hover:bg-[#2a005e] text-white rounded-full px-4 py-1.5 text-xs font-semibold transition-colors"
-                  >
-                    {d.unlockCta}
-                  </button>
-                </div>
-              )}
-
               {/* Sinhala */}
               <div>
                 <div className="flex items-center justify-between mb-3">
