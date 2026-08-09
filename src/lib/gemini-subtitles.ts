@@ -133,6 +133,8 @@ export async function generateSubtitlesWithGemini(
       ? {
           promptTokens: meta.promptTokenCount ?? 0,
           outputTokens: meta.candidatesTokenCount ?? 0,
+          thoughtsTokens:
+            (meta as { thoughtsTokenCount?: number }).thoughtsTokenCount ?? 0,
           totalTokens: meta.totalTokenCount ?? 0,
         }
       : null;
