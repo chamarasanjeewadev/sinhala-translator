@@ -7,6 +7,7 @@ import {
   type TranscribeResult,
 } from "@/lib/transcription-provider";
 import { offsetTimestamps } from "@/lib/transcription-format";
+import { getTranscriptionConfig } from "@/lib/app-settings";
 import {
   CHUNK_DURATION_SECONDS,
   MAX_RETRIES,
@@ -100,6 +101,10 @@ export async function POST(request: Request) {
     );
   }
 
+  // Admin-configurable model + thinking level (app_settings, env fallback).
+  const { model: transcriptionModel, thinkingLevel } =
+    await getTranscriptionConfig();
+
   // Retry logic for the transcription API call with timeout
   let result: TranscribeResult | null = null;
   let lastError: Error | null = null;
@@ -115,6 +120,8 @@ export async function POST(request: Request) {
         timestamps,
         previousTail,
         knownSpeakers,
+        model: transcriptionModel,
+        thinkingLevel,
       });
       lastError = null;
       break;
@@ -154,6 +161,7 @@ export async function POST(request: Request) {
       audio_seconds: chunkDurationSec ?? CHUNK_DURATION_SECONDS,
       prompt_tokens: result.usage?.promptTokens ?? null,
       output_tokens: result.usage?.outputTokens ?? null,
+      thoughts_tokens: result.usage?.thoughtsTokens ?? null,
       total_tokens: result.usage?.totalTokens ?? null,
     });
     if (usageError) {

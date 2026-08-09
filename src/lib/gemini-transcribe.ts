@@ -18,11 +18,20 @@ export interface GeminiTranscribeOptions {
    * (mobile whole-file flow) — timestamps are absolute, no offsetting.
    */
   wholeFile?: boolean;
+  /** Override the Gemini model (else GEMINI_MODEL env / default). */
+  model?: string;
+  /**
+   * Gemini 3 thinking level: "minimal" | "low" | "medium" | "high". Omit/null
+   * to leave the model's own default (no thinkingConfig sent).
+   */
+  thinkingLevel?: string | null;
 }
 
 export interface GeminiUsage {
   promptTokens: number;
   outputTokens: number;
+  /** Reasoning tokens (billed at the output rate). 0 when thinking is off. */
+  thoughtsTokens: number;
   totalTokens: number;
 }
 
@@ -90,38 +99,50 @@ export async function transcribeWithGemini(
 
   const genAI = new GoogleGenerativeAI(apiKey);
 
-  // Configurable via env var; gemini-2.0-flash-exp was retired (API 404s)
-  const modelName = process.env.GEMINI_MODEL || "gemini-flash-lite-latest";
+  // Model + thinking level are admin-configurable (app_settings), threaded in
+  // via opts; fall back to env/default. gemini-2.0-flash-exp was retired (404s).
+  const modelName =
+    opts.model?.trim() || process.env.GEMINI_MODEL || "gemini-flash-lite-latest";
+  const thinkingLevel = opts.thinkingLevel?.trim() || null;
+
+  const contentParts = [
+    { inlineData: { mimeType, data: audioBase64 } },
+    buildPrompt(opts),
+  ];
+  const baseGenConfig = { temperature: 0.1, topP: 0.8, topK: 40 };
+
+  // One attempt, raced against a timeout. `thinkingConfig` isn't in the legacy
+  // SDK's GenerationConfig type but IS forwarded verbatim to the v1beta API
+  // (verified); all live models are Gemini-3-era and use thinkingLevel.
+  const callOnce = (withThinking: boolean) => {
+    const generationConfig =
+      withThinking && thinkingLevel
+        ? { ...baseGenConfig, thinkingConfig: { thinkingLevel } }
+        : baseGenConfig;
+    const model = genAI.getGenerativeModel({ model: modelName, generationConfig });
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      setTimeout(
+        () => reject(new Error(`Transcription timeout after ${timeoutMs}ms`)),
+        timeoutMs
+      );
+    });
+    return Promise.race([model.generateContent(contentParts), timeoutPromise]);
+  };
 
   try {
-    const model = genAI.getGenerativeModel({
-      model: modelName,
-      generationConfig: {
-        temperature: 0.1,
-        topP: 0.8,
-        topK: 40,
-      },
+    // Never let an unsupported thinkingConfig break transcription: on a
+    // thinking-related 400, retry once without it.
+    const result = await callOnce(true).catch((err: unknown) => {
+      const msg = err instanceof Error ? err.message : String(err);
+      if (thinkingLevel && /thinking|400/i.test(msg)) {
+        console.warn(
+          `Gemini thinkingConfig rejected for ${modelName}; retrying without it: ${msg.slice(0, 160)}`
+        );
+        return callOnce(false);
+      }
+      throw err;
     });
 
-    // Create timeout promise
-    const timeoutPromise = new Promise<never>((_, reject) => {
-      setTimeout(() => {
-        reject(new Error(`Transcription timeout after ${timeoutMs}ms`));
-      }, timeoutMs);
-    });
-
-    // Race between API call and timeout
-    const transcriptionPromise = model.generateContent([
-      {
-        inlineData: {
-          mimeType,
-          data: audioBase64,
-        },
-      },
-      buildPrompt(opts),
-    ]);
-
-    const result = await Promise.race([transcriptionPromise, timeoutPromise]);
     const response = await result.response;
     const text = response.text();
 
@@ -130,6 +151,8 @@ export async function transcribeWithGemini(
       ? {
           promptTokens: meta.promptTokenCount ?? 0,
           outputTokens: meta.candidatesTokenCount ?? 0,
+          thoughtsTokens:
+            (meta as { thoughtsTokenCount?: number }).thoughtsTokenCount ?? 0,
           totalTokens: meta.totalTokenCount ?? 0,
         }
       : null;

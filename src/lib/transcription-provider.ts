@@ -19,6 +19,10 @@ interface TranscribeOptions {
   /** Audio is a complete recording, not a 2-minute chunk (mobile flow) */
   wholeFile?: boolean;
   timeoutMs?: number;
+  /** Gemini model override (else GEMINI_MODEL env / default). */
+  model?: string;
+  /** Gemini 3 thinking level (minimal|low|medium|high) or null for default. */
+  thinkingLevel?: string | null;
 }
 
 export interface TranscribeResult {
@@ -64,6 +68,8 @@ export async function transcribeAudio(
       knownSpeakers: options.knownSpeakers,
       wholeFile: options.wholeFile,
       timeoutMs: options.timeoutMs,
+      model: options.model,
+      thinkingLevel: options.thinkingLevel,
     });
     const text = structured
       ? normalizeStructuredTranscription(result.text)

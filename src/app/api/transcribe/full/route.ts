@@ -6,6 +6,7 @@ import {
   transcribeAudio,
   type TranscribeResult,
 } from "@/lib/transcription-provider";
+import { getTranscriptionConfig } from "@/lib/app-settings";
 import { MAX_RETRIES } from "@/lib/constants";
 
 // Whole-file transcription for the mobile app: one request transcribes,
@@ -114,6 +115,10 @@ export async function POST(request: Request) {
     );
   }
 
+  // Admin-configurable model + thinking level (app_settings, env fallback).
+  const { model: transcriptionModel, thinkingLevel } =
+    await getTranscriptionConfig();
+
   // Retry transient provider failures, mirroring the chunked route.
   let result: TranscribeResult | null = null;
   let lastError: Error | null = null;
@@ -128,6 +133,8 @@ export async function POST(request: Request) {
         timestamps,
         wholeFile: true,
         timeoutMs: WHOLE_FILE_TIMEOUT_MS,
+        model: transcriptionModel,
+        thinkingLevel,
       });
       lastError = null;
       break;
@@ -159,6 +166,7 @@ export async function POST(request: Request) {
       audio_seconds: Math.round(durationSeconds),
       prompt_tokens: result.usage?.promptTokens ?? null,
       output_tokens: result.usage?.outputTokens ?? null,
+      thoughts_tokens: result.usage?.thoughtsTokens ?? null,
       total_tokens: result.usage?.totalTokens ?? null,
     });
     if (usageError) {
