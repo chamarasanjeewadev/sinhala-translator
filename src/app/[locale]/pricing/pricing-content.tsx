@@ -12,7 +12,7 @@ import { Check, Zap, ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
 
-export function PricingContent() {
+export function PricingContent({ freeTier }: { freeTier: boolean }) {
   const searchParams = useSearchParams();
   const dict = useDictionary();
   const locale = useLocale();
@@ -153,7 +153,14 @@ export function PricingContent() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             {[
               { label: "Per-minute billing", color: "violet" },
-              { label: `${FREE_CREDITS} free credits on signup`, color: "emerald" },
+              ...(freeTier
+                ? [
+                    {
+                      label: `${FREE_CREDITS} free credits on signup`,
+                      color: "emerald",
+                    },
+                  ]
+                : []),
               { label: "Credits never expire", color: "sky" },
             ].map(({ label, color }) => (
               <span
@@ -174,9 +181,14 @@ export function PricingContent() {
         </div>
 
         {/* ── Pricing grid ────────────────────────────────────────────── */}
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        <div
+          className={`grid gap-5 sm:grid-cols-2 ${
+            freeTier ? "lg:grid-cols-5" : "lg:grid-cols-4"
+          }`}
+        >
 
-          {/* Free tier */}
+          {/* Free tier — hidden while the free tier is disabled. */}
+          {freeTier && (
           <div className="relative flex flex-col overflow-hidden rounded-[1.35rem] border border-white/8 bg-white/4 p-7 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-white/15 hover:bg-white/6 lg:col-span-1">
             <div className="mb-6">
               <div className="mb-1 text-xs font-bold uppercase tracking-widest text-white/40">
@@ -209,6 +221,7 @@ export function PricingContent() {
               Get started free
             </Link>
           </div>
+          )}
 
           {/* Paid packages */}
           {CREDIT_PACKAGES.map((pkg) => {
@@ -338,10 +351,15 @@ export function PricingContent() {
               q: "Do credits expire?",
               a: "Never. Buy once and use your credits at your own pace — no rushing.",
             },
-            {
-              q: "Is a credit card required for free?",
-              a: `No. Sign up and instantly receive ${FREE_CREDITS} free credits. Card only needed when buying a pack.`,
-            },
+            freeTier
+              ? {
+                  q: "Is a credit card required for free?",
+                  a: `No. Sign up and instantly receive ${FREE_CREDITS} free credits. Card only needed when buying a pack.`,
+                }
+              : {
+                  q: "Do I need a subscription?",
+                  a: "No. HelaVoice is pay-as-you-go — buy a credit pack once and use it whenever you like. No recurring charges.",
+                },
           ].map(({ q, a }) => (
             <div
               key={q}
@@ -368,7 +386,7 @@ export function PricingContent() {
             href={localePath("/signup", locale)}
             className="group inline-flex items-center gap-2 rounded-2xl border border-violet-400/25 bg-violet-500/12 px-6 py-3 text-sm font-semibold text-violet-200 transition-all hover:bg-violet-500/20 hover:text-white"
           >
-            Start with {FREE_CREDITS} free credits
+            {freeTier ? `Start with ${FREE_CREDITS} free credits` : "Get started"}
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>

@@ -22,7 +22,7 @@ const en: LegalDoc = {
     {
       heading: "Credits and payments",
       body: [
-        "The Service uses prepaid credits: one credit corresponds to one minute of audio transcription, and translation costs are shown before you confirm. New accounts receive free credits as a welcome gift.",
+        "The Service uses prepaid credits: one credit corresponds to one minute of audio transcription, and translation costs are shown before you confirm. New accounts may receive free credits as a welcome bonus from time to time.",
         "Credits can be purchased on the website (processed by Stripe) or inside the iOS app (processed by Apple as an in-app purchase). Credits are not transferable, have no cash value, and unused credits are forfeited when an account is deleted.",
         "Except where required by law or by the rules of the store you purchased through, purchases are non-refundable. Purchases made through Apple are subject to Apple's refund policies and must be requested through Apple.",
       ],

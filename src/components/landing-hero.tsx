@@ -20,7 +20,8 @@ type LandingHeroCopy = {
 type LandingHeroProps = {
   locale: Locale;
   copy: LandingHeroCopy;
-  freeCreditsLabel: string;
+  /** Free-credits trust badge; null hides it while the free tier is disabled. */
+  freeCreditsLabel: string | null;
 };
 
 const ENGLISH_WORDS = ["transcribed", "translated", "preserved"];
@@ -403,7 +404,7 @@ export function LandingHero({
               {[
                 freeCreditsLabel,
                 copy.noSubscription,
-              ].map((label) => (
+              ].filter((label): label is string => Boolean(label)).map((label) => (
                 <div key={label} className="flex items-center gap-2">
                   <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-violet-400/20">
                     <Check className="h-2.5 w-2.5 text-violet-300" />

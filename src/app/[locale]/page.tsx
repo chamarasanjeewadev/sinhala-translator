@@ -12,6 +12,7 @@ import {
   Shield,
 } from "lucide-react";
 import { CREDIT_PACKAGES, FREE_CREDITS } from "@/lib/constants";
+import { isSignupBonusEnabled } from "@/lib/app-settings";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { locales, type Locale } from "@/lib/i18n/config";
 import { localePath, t, generateAlternates } from "@/lib/i18n/utils";
@@ -86,6 +87,7 @@ export default async function LandingPage({ params }: Props) {
   if (!locales.includes(locale as Locale)) notFound();
   const dict = await getDictionary(locale as Locale);
   const d = dict.landing;
+  const freeTier = await isSignupBonusEnabled();
 
   const features = [
     {
@@ -149,12 +151,16 @@ export default async function LandingPage({ params }: Props) {
       geographicArea: { "@type": "Country", name: "Sri Lanka" },
     },
     offers: [
-      {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "USD",
-        description: `${FREE_CREDITS} free minutes on signup — no credit card required`,
-      },
+      ...(freeTier
+        ? [
+            {
+              "@type": "Offer",
+              price: "0",
+              priceCurrency: "USD",
+              description: `${FREE_CREDITS} free minutes on signup — no credit card required`,
+            },
+          ]
+        : []),
       ...CREDIT_PACKAGES.map((pkg) => ({
         "@type": "Offer",
         name: pkg.name,
@@ -223,7 +229,7 @@ export default async function LandingPage({ params }: Props) {
           viewPricing: d.viewPricing,
           noSubscription: d.noSubscription,
         }}
-        freeCreditsLabel={t(d.freeCredits, { count: FREE_CREDITS })}
+        freeCreditsLabel={freeTier ? t(d.freeCredits, { count: FREE_CREDITS }) : null}
       />
 
       {/* ── How it works (numbered, arrowed step-by-step) ─────────────── */}
@@ -448,7 +454,11 @@ export default async function LandingPage({ params }: Props) {
           {/* Credit model summary */}
           <div className="mx-auto mb-14 max-w-3xl">
             <div className="rounded-2xl border border-[#e2ddf2] bg-white p-8 shadow-[0_12px_40px_rgba(52,0,117,0.08)]">
-              <div className="grid divide-y divide-[#eee9fb] md:grid-cols-3 md:divide-x md:divide-y-0">
+              <div
+                className={`grid divide-y divide-[#eee9fb] ${
+                  freeTier ? "md:grid-cols-3" : "md:grid-cols-2"
+                } md:divide-x md:divide-y-0`}
+              >
                 <div className="pt-4 text-center md:pt-0">
                   <div className="font-display text-4xl font-extrabold text-[#340075]">
                     {d.oneCredit}
@@ -457,14 +467,16 @@ export default async function LandingPage({ params }: Props) {
                     {d.oneTranscription}
                   </div>
                 </div>
-                <div className="pt-6 text-center md:pt-0">
-                  <div className="font-display text-4xl font-extrabold text-[#340075]">
-                    {FREE_CREDITS}
+                {freeTier && (
+                  <div className="pt-6 text-center md:pt-0">
+                    <div className="font-display text-4xl font-extrabold text-[#340075]">
+                      {FREE_CREDITS}
+                    </div>
+                    <div className="mt-1 text-sm font-medium text-[#4a4452]">
+                      {d.freeCreditsOnSignup}
+                    </div>
                   </div>
-                  <div className="mt-1 text-sm font-medium text-[#4a4452]">
-                    {d.freeCreditsOnSignup}
-                  </div>
-                </div>
+                )}
                 <div className="pt-6 text-center md:pt-0">
                   <div className="font-display text-4xl font-extrabold text-[#047857]">
                     &infin;
@@ -478,8 +490,14 @@ export default async function LandingPage({ params }: Props) {
           </div>
 
           {/* Pricing cards */}
-          <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-2 lg:grid-cols-5">
-            {/* Free tier — the trial option so new visitors can try before buying */}
+          <div
+            className={`mx-auto grid max-w-7xl gap-6 md:grid-cols-2 ${
+              freeTier ? "lg:grid-cols-5" : "lg:grid-cols-4"
+            }`}
+          >
+            {/* Free tier — the trial option so new visitors can try before buying.
+                Hidden while the free tier is disabled (everyone must purchase). */}
+            {freeTier && (
             <div className="flex flex-col rounded-2xl border border-[#e2ddf2] bg-white p-7 shadow-[0_10px_30px_rgba(52,0,117,0.06)] transition-all hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(52,0,117,0.12)]">
               <div className="mb-7">
                 <div className="section-eyebrow mb-3 text-[#4a4452]">
@@ -525,6 +543,7 @@ export default async function LandingPage({ params }: Props) {
                 {d.startFree}
               </Link>
             </div>
+            )}
 
             {CREDIT_PACKAGES.map((pkg) => {
               const isPopular = pkg.popular;
@@ -659,20 +678,22 @@ export default async function LandingPage({ params }: Props) {
 
             <div className="relative z-10">
               <span className="section-eyebrow text-violet-300">
-                {d.ctaEyebrow}
+                {freeTier ? d.ctaEyebrow : d.getStarted}
               </span>
               <h2 className="mt-5 font-display text-[clamp(2rem,4vw,3.25rem)] font-black leading-[1.05] tracking-tight text-white">
-                {d.ctaTitle}
+                {freeTier ? d.ctaTitle : d.ctaTitlePaid}
               </h2>
               <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-white/70">
-                {t(d.ctaSubtitle, { count: FREE_CREDITS })}
+                {freeTier
+                  ? t(d.ctaSubtitle, { count: FREE_CREDITS })
+                  : d.pricingSubtitle}
               </p>
               <Link
                 href={lp("/signup")}
                 className="hero-primary-button focus-ring mt-10 inline-flex items-center gap-2.5 rounded-2xl px-8 py-4 text-base font-bold text-white"
               >
                 <Mic className="h-[15px] w-[15px]" />
-                <span>{d.ctaButton}</span>
+                <span>{freeTier ? d.ctaButton : d.getStarted}</span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <p className="mt-7 text-sm text-white/55">

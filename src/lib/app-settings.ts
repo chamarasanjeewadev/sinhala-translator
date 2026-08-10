@@ -54,3 +54,31 @@ export async function getTranscriptionConfig(): Promise<TranscriptionConfig> {
     return fallback;
   }
 }
+
+/**
+ * Whether new sign-ups receive the welcome free credits, admin-controlled via
+ * the same app_settings table (key `signup_bonus_enabled`, read by the DB
+ * trigger handle_new_user). Drives the "free credits" marketing copy so a single
+ * admin toggle governs both the grant and the messaging. Every `[locale]` page
+ * is already server-rendered per request (the root layout reads request
+ * headers), so this read reflects the toggle immediately with no redeploy.
+ * Defaults to enabled when the setting is unset or the table is unreachable
+ * (fail-open), matching the trigger, so a settings blip never wrongly hides a
+ * live free tier.
+ */
+export async function isSignupBonusEnabled(): Promise<boolean> {
+  try {
+    const admin = createAdminClient();
+    const { data, error } = await admin
+      .from("app_settings")
+      .select("value")
+      .eq("key", "signup_bonus_enabled")
+      .maybeSingle();
+
+    if (error || !data) return true;
+    const v = (data.value ?? "").trim().toLowerCase();
+    return !["false", "0", "no", "off"].includes(v);
+  } catch {
+    return true;
+  }
+}

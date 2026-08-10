@@ -98,6 +98,7 @@
     "needMoreCredits": "Need more credits?",
     "viewAllPackages": "View all credit packages",
     "ctaTitle": "Try it free today",
+    "ctaTitlePaid": "Start transcribing today",
     "ctaSubtitle": "Start with {count} free credits. No credit card required.",
     "ctaButton": "Get your free credits",
     "guideIntro": "Prefer a step-by-step tutorial?",

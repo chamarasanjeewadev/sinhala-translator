@@ -91,7 +91,7 @@ export default async function SubtitlesLandingPage({ params }: Props) {
       "@type": "Offer",
       price: "0",
       priceCurrency: "USD",
-      description: "Free credits on signup; 2 credits per minute of video",
+      description: "2 credits per minute of video — pay only for what you use",
     },
   };
 

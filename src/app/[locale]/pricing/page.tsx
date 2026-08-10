@@ -5,6 +5,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { locales, type Locale } from "@/lib/i18n/config";
 import { generateAlternates } from "@/lib/i18n/utils";
 import { CREDIT_PACKAGES, FREE_CREDITS } from "@/lib/constants";
+import { isSignupBonusEnabled } from "@/lib/app-settings";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -39,31 +40,40 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://helavoice.lk";
 
-const pricingJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "HelaVoice.lk",
-  url: siteUrl,
-  applicationCategory: "UtilitiesApplication",
-  offers: [
-    {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-      name: "Free",
-      description: `${FREE_CREDITS} free transcription credits on signup`,
-    },
-    ...CREDIT_PACKAGES.map((pkg) => ({
-      "@type": "Offer",
-      name: pkg.name,
-      price: (pkg.price / 100).toFixed(2),
-      priceCurrency: "USD",
-      description: `${pkg.credits} transcription credits`,
-    })),
-  ],
-};
+function buildPricingJsonLd(freeTier: boolean) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "HelaVoice.lk",
+    url: siteUrl,
+    applicationCategory: "UtilitiesApplication",
+    offers: [
+      // Only advertise a free offer while the free tier is enabled.
+      ...(freeTier
+        ? [
+            {
+              "@type": "Offer",
+              price: "0",
+              priceCurrency: "USD",
+              name: "Free",
+              description: `${FREE_CREDITS} free transcription credits on signup`,
+            },
+          ]
+        : []),
+      ...CREDIT_PACKAGES.map((pkg) => ({
+        "@type": "Offer",
+        name: pkg.name,
+        price: (pkg.price / 100).toFixed(2),
+        priceCurrency: "USD",
+        description: `${pkg.credits} transcription credits`,
+      })),
+    ],
+  };
+}
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const freeTier = await isSignupBonusEnabled();
+  const pricingJsonLd = buildPricingJsonLd(freeTier);
   return (
     <>
       <script
@@ -71,7 +81,7 @@ export default function PricingPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingJsonLd) }}
       />
       <Suspense>
-        <PricingContent />
+        <PricingContent freeTier={freeTier} />
       </Suspense>
     </>
   );
