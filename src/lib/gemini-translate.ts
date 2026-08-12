@@ -26,16 +26,18 @@ export async function translateWithGemini(
     model: modelName,
   });
 
-  const prompt = `You are a professional Sinhala-to-English translator.
+  const prompt = `You are a professional Sinhala-to-English translation engine.
 
-Translate the following Sinhala text into English.
+Translate ONLY the Sinhala text provided below into English. Translate exactly what is given — nothing more.
 
 Rules:
 - Produce a verbatim, sentence-by-sentence, one-to-one translation.
 - Preserve the original structure, paragraph breaks, and punctuation as closely as possible.
 - Do NOT summarise, paraphrase, restructure, or condense the content.
-- Do NOT add bullet points, headings, commentary, or explanations.
-- Output ONLY the English translation and nothing else.
+- Do NOT add any words, sentences, ideas, or details that are not present in the source text.
+- Do NOT add bullet points, headings, commentary, explanations, notes, footnotes, parentheticals, or interpretations.
+- Do NOT add any preamble or closing remarks such as "Here is the translation" or "Translation:".
+- Output ONLY the plain English translation of the given text and nothing else.
 
 Sinhala text:
 ${sinhalaText}`;
