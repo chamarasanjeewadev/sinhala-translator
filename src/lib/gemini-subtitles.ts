@@ -65,6 +65,8 @@ function buildPrompt(opts: GeminiSubtitleOptions): string {
     `two lines, separate them with a single \\n. Split long sentences into multiple ` +
     `segments at natural phrase boundaries. Segments must not overlap and must be in ` +
     `chronological order. Align start/end times to when the words are actually spoken. ` +
+    `Transcribe only the words actually spoken in the audio — do not continue, complete, ` +
+    `guess, or invent any words, sentences, or phrases that are not clearly heard. ` +
     `Do not add interpretations, summaries, or speaker labels. ` +
     `If the clip contains no speech, return an empty array [].`
   );
@@ -98,7 +100,8 @@ export async function generateSubtitlesWithGemini(
     const model = genAI.getGenerativeModel({
       model: modelName,
       generationConfig: {
-        temperature: 0.1,
+        // temperature 0 (argmax) reduces speculative continuation on short clips.
+        temperature: 0,
         topP: 0.8,
         topK: 40,
         responseMimeType: "application/json",

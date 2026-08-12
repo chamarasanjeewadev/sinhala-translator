@@ -44,14 +44,19 @@ export interface GeminiTranscribeResult {
 const BASE_INSTRUCTION =
   "Please transcribe the following audio recording into Sinhala text accurately.";
 const NO_EXTRAS = "Do not add any interpretations or summaries.";
+// Anti-hallucination: on short/quiet/unclear clips the model tends to "complete"
+// a familiar phrase and emit words that were never spoken. Forbid that explicitly.
+const TRANSCRIBE_ONLY =
+  "Transcribe only the words actually spoken in the audio. Do not continue, complete, guess, or invent any words, sentences, or phrases that are not clearly heard. If the audio is short, silent, or unclear, transcribe only what is actually spoken and nothing more.";
 
 function buildPrompt(opts: GeminiTranscribeOptions): string {
   const { conversation, timestamps, previousTail, knownSpeakers } = opts;
 
   if (!conversation && !timestamps) {
-    // Must stay byte-identical to the original prompt — default mode output
-    // is relied on by normalizeTranscriptionText and existing users.
-    return `${BASE_INSTRUCTION} Return only plain paragraph text (no timestamps, no speaker labels, no bullet points, no line-by-line subtitle format). ${NO_EXTRAS}`;
+    // Output FORMAT (plain paragraph) is relied on by normalizeTranscriptionText
+    // and existing users — keep it. The added TRANSCRIBE_ONLY clause constrains
+    // content only (anti-hallucination), not format, so it's safe.
+    return `${BASE_INSTRUCTION} ${TRANSCRIBE_ONLY} Return only plain paragraph text (no timestamps, no speaker labels, no bullet points, no line-by-line subtitle format). ${NO_EXTRAS}`;
   }
 
   const timestampRule = opts.wholeFile
@@ -60,11 +65,11 @@ function buildPrompt(opts: GeminiTranscribeOptions): string {
 
   let prompt: string;
   if (conversation && timestamps) {
-    prompt = `${BASE_INSTRUCTION} This recording may contain multiple speakers. Put each speaker turn on its own line in the exact format "[mm:ss] Speaker N: <text>" (for example "[00:12] Speaker 1: …"), where the timestamp is ${timestampRule} and the same speaker number is used for the same voice throughout. ${NO_EXTRAS} Output nothing except the transcript lines.`;
+    prompt = `${BASE_INSTRUCTION} ${TRANSCRIBE_ONLY} This recording may contain multiple speakers. Put each speaker turn on its own line in the exact format "[mm:ss] Speaker N: <text>" (for example "[00:12] Speaker 1: …"), where the timestamp is ${timestampRule} and the same speaker number is used for the same voice throughout. ${NO_EXTRAS} Output nothing except the transcript lines.`;
   } else if (conversation) {
-    prompt = `${BASE_INSTRUCTION} This recording may contain multiple speakers. Put each speaker turn on its own line in the exact format "Speaker N: <text>" (for example "Speaker 1: …", "Speaker 2: …"), using the same number for the same voice throughout. Do not include timestamps. ${NO_EXTRAS} Output nothing except the labeled transcript lines.`;
+    prompt = `${BASE_INSTRUCTION} ${TRANSCRIBE_ONLY} This recording may contain multiple speakers. Put each speaker turn on its own line in the exact format "Speaker N: <text>" (for example "Speaker 1: …", "Speaker 2: …"), using the same number for the same voice throughout. Do not include timestamps. ${NO_EXTRAS} Output nothing except the labeled transcript lines.`;
   } else {
-    prompt = `${BASE_INSTRUCTION} Start each sentence or natural segment on a new line, prefixed with ${timestampRule}. Do not use speaker labels. ${NO_EXTRAS} Output nothing except the timestamped transcript lines.`;
+    prompt = `${BASE_INSTRUCTION} ${TRANSCRIBE_ONLY} Start each sentence or natural segment on a new line, prefixed with ${timestampRule}. Do not use speaker labels. ${NO_EXTRAS} Output nothing except the timestamped transcript lines.`;
   }
 
   if (conversation && (previousTail || knownSpeakers?.length)) {
@@ -109,7 +114,8 @@ export async function transcribeWithGemini(
     { inlineData: { mimeType, data: audioBase64 } },
     buildPrompt(opts),
   ];
-  const baseGenConfig = { temperature: 0.1, topP: 0.8, topK: 40 };
+  // temperature 0 (argmax) sharply reduces speculative continuation on short clips.
+  const baseGenConfig = { temperature: 0, topP: 0.8, topK: 40 };
 
   // One attempt, raced against a timeout. `thinkingConfig` isn't in the legacy
   // SDK's GenerationConfig type but IS forwarded verbatim to the v1beta API
