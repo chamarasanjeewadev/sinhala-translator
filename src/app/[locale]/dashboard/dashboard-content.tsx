@@ -27,6 +27,7 @@ import { LanguageSwitcher } from "@/components/language-switcher";
 import { MarkdownView } from "@/components/markdown-view";
 import { MarkdownEditorPane } from "@/components/markdown-editor-pane";
 import { useDictionary } from "@/lib/i18n/dictionary-context";
+import { apiErrorMessage } from "@/lib/client-error";
 import { useLocale } from "@/lib/i18n/locale-context";
 import { localePath } from "@/lib/i18n/utils";
 import { createClient } from "@/lib/supabase/client";
@@ -298,8 +299,8 @@ export function DashboardContent({
         });
 
         if (!res.ok) {
-          const data: { error?: string } = await res.json();
-          toast.error(data.error || d.transcriptionFailed);
+          const data: { error?: string; code?: string } = await res.json();
+          toast.error(apiErrorMessage(data, d, d.transcriptionFailed));
           setTranscribeState("idle");
           return;
         }
@@ -388,8 +389,8 @@ export function DashboardContent({
         }
 
         if (!res.ok) {
-          const data: { error?: string } = await res.json();
-          toast.error(data.error || d.transcriptionFailed);
+          const data: { error?: string; code?: string } = await res.json();
+          toast.error(apiErrorMessage(data, d, d.transcriptionFailed));
           if (fullText) {
             isPartial = true;
           }
@@ -422,8 +423,8 @@ export function DashboardContent({
         });
 
         if (!saveRes.ok) {
-          const data: { error?: string } = await saveRes.json();
-          toast.error(data.error || d.transcriptionFailed);
+          const data: { error?: string; code?: string } = await saveRes.json();
+          toast.error(apiErrorMessage(data, d, d.transcriptionFailed));
           setTranscribeState("idle");
           return;
         }

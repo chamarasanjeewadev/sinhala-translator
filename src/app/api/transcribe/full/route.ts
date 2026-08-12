@@ -1,6 +1,7 @@
 import { createClientFromRequest } from "@/lib/supabase/request";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { privateJson } from "@/lib/api-response";
+import { reportError, toClientError } from "@/lib/report-error";
 import { checkRateLimit } from "@/lib/rate-limit";
 import {
   transcribeAudio,
@@ -148,11 +149,15 @@ export async function POST(request: Request) {
   }
 
   if (lastError || !result || !result.text) {
-    console.error("Transcription error after retries:", lastError);
-    return privateJson(
-      { error: `Failed to transcribe audio: ${lastError?.message ?? "empty transcript"}` },
-      { status: 500 }
+    reportError(lastError ?? new Error("empty transcript"), {
+      route: "transcribe/full",
+      userId: user.id,
+    });
+    const { message, code, status } = toClientError(
+      lastError,
+      "Transcription failed. Please try again."
     );
+    return privateJson({ error: message, code }, { status });
   }
 
   // Log token usage for cost tracking. Must never fail the transcription.

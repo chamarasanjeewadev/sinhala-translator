@@ -13,6 +13,14 @@ import { localePath, parsePathname } from "@/lib/i18n/utils";
 import { createClient } from "@/lib/supabase/client";
 import type { User, SupabaseClient } from "@supabase/supabase-js";
 
+function NewBadge({ label }: { label: string }) {
+  return (
+    <span className="ml-1.5 inline-flex items-center rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] font-bold uppercase leading-none tracking-wide text-white shadow-[0_0_10px_rgba(239,68,68,0.7)] animate-pulse">
+      {label}
+    </span>
+  );
+}
+
 export function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
@@ -126,9 +134,10 @@ export function Navbar() {
 
                 <LocaleLink
                   href="/dashboard/subtitles"
-                  className="px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
+                  className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
                 >
                   {d.subtitles}
+                  <NewBadge label={d.new} />
                 </LocaleLink>
 
                 <LocaleLink href="/pricing">
@@ -160,9 +169,10 @@ export function Navbar() {
                 <nav className="flex items-center gap-1">
                   <LocaleLink
                     href="/subtitles"
-                    className="px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
+                    className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
                   >
                     {d.subtitles}
+                    <NewBadge label={d.new} />
                   </LocaleLink>
                   <LocaleLink
                     href="/pricing"
@@ -249,9 +259,10 @@ export function Navbar() {
                 </LocaleLink>
                 <LocaleLink
                   href="/dashboard/subtitles"
-                  className="px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
+                  className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
                 >
                   {d.subtitles}
+                  <NewBadge label={d.new} />
                 </LocaleLink>
                 <button
                   onClick={handleSignOut}
@@ -272,9 +283,10 @@ export function Navbar() {
                 </LocaleLink>
                 <LocaleLink
                   href="/subtitles"
-                  className="px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
+                  className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
                 >
                   {d.subtitles}
+                  <NewBadge label={d.new} />
                 </LocaleLink>
                 <LocaleLink
                   href="/pricing"

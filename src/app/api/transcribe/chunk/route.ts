@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { privateJson } from "@/lib/api-response";
+import { reportError, toClientError } from "@/lib/report-error";
 import { checkRateLimit } from "@/lib/rate-limit";
 import {
   transcribeAudio,
@@ -136,11 +137,17 @@ export async function POST(request: Request) {
   }
 
   if (lastError || !result) {
-    console.error("Transcription error after retries:", lastError);
-    return privateJson(
-      { error: `Failed to transcribe audio chunk: ${lastError?.message ?? "unknown error"}` },
-      { status: 500 }
+    reportError(lastError, {
+      route: "transcribe/chunk",
+      userId: user.id,
+      chunkIndex,
+    });
+    // Never surface the raw provider error to the client.
+    const { message, code, status } = toClientError(
+      lastError,
+      "Transcription failed. Please try again."
     );
+    return privateJson({ error: message, code }, { status });
   }
 
   // Gemini returns timestamps relative to the chunk; shift them to absolute

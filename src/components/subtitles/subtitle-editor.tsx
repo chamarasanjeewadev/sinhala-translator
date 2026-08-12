@@ -16,6 +16,7 @@ import { Timeline } from "./timeline";
 import { StylePanel } from "./style-panel";
 import { ExportDialog } from "./export-dialog";
 import { useDictionary } from "@/lib/i18n/dictionary-context";
+import { apiErrorMessage } from "@/lib/client-error";
 import { t } from "@/lib/i18n/utils";
 import { takePendingVideo } from "@/lib/pending-video";
 import { extractAudioChunks } from "@/lib/video-audio";
@@ -107,8 +108,8 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
           }),
         });
         if (!res.ok) {
-          const data: { error?: string } = await res.json();
-          toast.error(data.error || d.generationFailed);
+          const data: { error?: string; code?: string } = await res.json();
+          toast.error(apiErrorMessage(data, d, d.generationFailed));
           setGenState("idle");
           return;
         }
@@ -213,8 +214,8 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
           break;
         }
         if (!res.ok) {
-          const data: { error?: string } = await res.json();
-          toast.error(data.error || d.generationFailed);
+          const data: { error?: string; code?: string } = await res.json();
+          toast.error(apiErrorMessage(data, d, d.generationFailed));
           if (chunkArrays.length > 0) isPartial = true;
           else {
             setGenState("idle");
@@ -391,8 +392,8 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
         }),
       });
       if (!res.ok) {
-        const data: { error?: string } = await res.json();
-        toast.error(data.error || d.translateFailed);
+        const data: { error?: string; code?: string } = await res.json();
+        toast.error(apiErrorMessage(data, d, d.translateFailed));
         return;
       }
       const data: {

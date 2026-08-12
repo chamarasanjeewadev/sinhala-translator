@@ -1,5 +1,6 @@
 import { createClientFromRequest } from "@/lib/supabase/request";
 import { privateJson } from "@/lib/api-response";
+import { reportError } from "@/lib/report-error";
 import {
   MAX_VIDEO_DURATION_SECONDS,
   SUBTITLE_CREDITS_PER_MINUTE,
@@ -43,6 +44,10 @@ export async function POST(request: Request) {
     .single();
 
   if (profileError || !profile) {
+    reportError(profileError ?? new Error("profile not found"), {
+      route: "subtitles/analyze",
+      userId: user.id,
+    });
     return privateJson({ error: "Failed to fetch profile" }, { status: 500 });
   }
 

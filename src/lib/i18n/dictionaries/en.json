@@ -12,6 +12,7 @@
     "pricing": "Pricing",
     "blog": "Blog",
     "subtitles": "Subtitles",
+    "new": "NEW",
     "getStarted": "Get Started"
   },
   "landing": {
@@ -192,6 +193,7 @@
     "paymentSuccess": "Payment successful! Credits have been added.",
     "transcriptionComplete": "Transcription complete!",
     "transcriptionFailed": "Something went wrong. Please try again.",
+    "serviceBusy": "Our service is busy right now. Please try again in a few minutes.",
     "audioDuration": "Audio duration",
     "creditsRequired": "Credits required",
     "creditsAvailable": "Recording credits left",
@@ -425,6 +427,7 @@
     "keepTabOpen": "Keep this tab open until it finishes.",
     "insufficientCredits": "You've run out of credits. The subtitles generated so far were saved.",
     "generationFailed": "Subtitle generation failed. Please try again.",
+    "serviceBusy": "Our service is busy right now. Please try again in a few minutes.",
     "generated": "Subtitles generated!",
     "generatedPartial": "Subtitles partially generated — you can edit and export what was created.",
     "noAudioTrack": "This video appears to have no audio track.",

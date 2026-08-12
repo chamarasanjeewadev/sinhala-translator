@@ -1,6 +1,7 @@
 import { createClientFromRequest } from "@/lib/supabase/request";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { privateJson } from "@/lib/api-response";
+import { reportError, toClientError } from "@/lib/report-error";
 import { checkRateLimit } from "@/lib/rate-limit";
 import {
   generateSubtitlesWithGemini,
@@ -109,13 +110,19 @@ export async function POST(request: Request) {
   }
 
   if (lastError || !result) {
-    console.error("Subtitle generation error after retries:", lastError);
-    return privateJson(
-      {
-        error: `Failed to generate subtitles for chunk: ${lastError?.message ?? "unknown error"}`,
-      },
-      { status: 500 }
+    reportError(lastError, {
+      route: "subtitles/chunk",
+      userId: user.id,
+      chunkIndex,
+      totalChunks,
+    });
+    // Never surface the raw provider error (model names, billing URLs, quota
+    // details) to the client — return a generic, safe message + code.
+    const { message, code, status } = toClientError(
+      lastError,
+      "Subtitle generation failed. Please try again."
     );
+    return privateJson({ error: message, code }, { status });
   }
 
   // Validate/clamp the model output, then shift chunk-relative times to

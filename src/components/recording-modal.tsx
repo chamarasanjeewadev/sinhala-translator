@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { X, Mic, Upload, Loader2, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useDictionary } from "@/lib/i18n/dictionary-context";
+import { apiErrorMessage } from "@/lib/client-error";
 import { AudioRecorder } from "./audio-recorder";
 import { AudioUploader } from "./audio-uploader";
 import { getAudioDuration, chunkAudio, blobToBase64 } from "@/lib/audio-utils";
@@ -90,8 +91,8 @@ export function RecordingModal({
       });
 
       if (!res.ok) {
-        const data: { error?: string } = await res.json();
-        toast.error(data.error || d.transcriptionFailed);
+        const data: { error?: string; code?: string } = await res.json();
+        toast.error(apiErrorMessage(data, d, d.transcriptionFailed));
         setModalState("idle");
         return;
       }

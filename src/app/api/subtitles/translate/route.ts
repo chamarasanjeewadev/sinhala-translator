@@ -1,5 +1,6 @@
 import { createClientFromRequest } from "@/lib/supabase/request";
 import { privateJson } from "@/lib/api-response";
+import { reportError, toClientError } from "@/lib/report-error";
 import { checkRateLimit } from "@/lib/rate-limit";
 import {
   translateSegments,
@@ -91,11 +92,12 @@ export async function POST(request: Request) {
       direction
     );
   } catch (err) {
-    console.error("Segment translation failed:", err);
-    return privateJson(
-      { error: "Translation failed. Please try again." },
-      { status: 500 }
+    reportError(err, { route: "subtitles/translate", userId: user.id });
+    const { message, code, status } = toClientError(
+      err,
+      "Translation failed. Please try again."
     );
+    return privateJson({ error: message, code }, { status });
   }
 
   // Deduct AFTER successful translation, via the existing translation biller

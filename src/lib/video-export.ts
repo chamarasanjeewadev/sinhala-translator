@@ -35,7 +35,7 @@ export async function exportBurnedInMp4(
     EncodedAudioPacketSource,
     CanvasSource,
     AudioBufferSource,
-    QUALITY_HIGH,
+    Quality,
     QUALITY_MEDIUM,
     canEncodeVideo,
     ALL_FORMATS,
@@ -72,12 +72,33 @@ export async function exportBurnedInMp4(
     const format = new Mp4OutputFormat({ fastStart: false });
     const output = new Output({ format, target: new BufferTarget() });
 
+    // Match the encoder to the source's actual bitrate so burn-in doesn't
+    // balloon the file. Re-encoding every frame is unavoidable (the subtitle is
+    // composited onto each frame), but a fixed high-quality preset ignores how
+    // the source was encoded and can quadruple the size of an efficiently
+    // encoded clip. Encoding at ~the source bitrate keeps output ≈ input.
+    const MIN_BITRATE = 600_000; // floor: avoid garbage on tiny/bad estimates
+    const MAX_BITRATE = 12_000_000; // ceiling: cap runaway estimates
+    const sourceBitrate = await estimateSourceVideoBitrate(
+      videoTrack,
+      audioTrack,
+      file.size,
+      duration,
+      width,
+      height
+    );
+    // 1.1× headroom: the subtitle boxes are flat and compress well, so matching
+    // the source is enough; the margin just avoids softening detail near text.
+    const targetBitrate = Math.round(
+      Math.min(Math.max(sourceBitrate * 1.1, MIN_BITRATE), MAX_BITRATE)
+    );
+
     const videoCodec = (await canEncodeVideo("avc", { width, height }))
       ? ("avc" as const)
       : ("vp9" as const);
     const videoSource = new CanvasSource(canvas, {
       codec: videoCodec,
-      quality: QUALITY_HIGH,
+      quality: new Quality({ bitrate: targetBitrate }),
     });
     output.addVideoTrack(videoSource);
 
@@ -191,4 +212,39 @@ export async function exportBurnedInMp4(
   } finally {
     input.dispose();
   }
+}
+
+/** Minimal structural view of a mediabunny input track's bitrate accessor. */
+interface BitrateSource {
+  getAverageBitrate(): Promise<number | null>;
+}
+
+/**
+ * Best-effort estimate of the source video track's bitrate in bits/sec, so the
+ * burn-in encoder can target ~the same rate. Prefers the cheap metadata average;
+ * falls back to (file size ÷ duration) minus audio; finally a resolution-based
+ * default so the encoder is never handed 0.
+ */
+async function estimateSourceVideoBitrate(
+  videoTrack: BitrateSource,
+  audioTrack: BitrateSource | null,
+  fileSize: number,
+  durationSeconds: number,
+  width: number,
+  height: number
+): Promise<number> {
+  const metaBitrate = await videoTrack.getAverageBitrate().catch(() => null);
+  if (metaBitrate && metaBitrate > 0) return metaBitrate;
+
+  if (durationSeconds > 0) {
+    const totalBps = (fileSize * 8) / durationSeconds;
+    const audioBps = audioTrack
+      ? (await audioTrack.getAverageBitrate().catch(() => null)) ?? 128_000
+      : 0;
+    const videoBps = totalBps - audioBps;
+    if (videoBps > 0) return videoBps;
+  }
+
+  // Last resort: ~0.1 bits per pixel per second at 30fps.
+  return Math.max(width * height * 30 * 0.1, 1_000_000);
 }

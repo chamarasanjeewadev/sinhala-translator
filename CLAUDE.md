@@ -62,11 +62,13 @@ Schema is in `supabase-migration.sql`. Tables: `profiles` (user credits), `credi
 
 ### Cloudflare deployment
 
-Uses `@opennextjs/cloudflare` to run Next.js on Cloudflare Workers. Config in `wrangler.jsonc`. Public env vars go in `wrangler.jsonc` `vars`; secrets (`SUPABASE_SERVICE_ROLE_KEY`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `GOOGLE_CLOUD_API_KEY`) must be set via `wrangler secret put`. The Stripe client uses `createFetchHttpClient()` and `createSubtleCryptoProvider()` for Cloudflare Workers compatibility. No gRPC or native binaries — use REST APIs via `fetch()`.
+Uses `@opennextjs/cloudflare` to run Next.js on Cloudflare Workers. Config in `wrangler.jsonc`. Public env vars go in `wrangler.jsonc` `vars`; secrets (`SUPABASE_SERVICE_ROLE_KEY`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `GOOGLE_CLOUD_API_KEY`, `SENTRY_DSN`) must be set via `wrangler secret put`. The Stripe client uses `createFetchHttpClient()` and `createSubtleCryptoProvider()` for Cloudflare Workers compatibility. No gRPC or native binaries — use REST APIs via `fetch()`.
+
+**Error tracking:** The wrangler `main` points at a custom worker entry (`worker.ts`) that wraps the OpenNext-generated `.open-next/worker.js` with `@sentry/cloudflare`'s `withSentry` (re-exporting the Durable Objects `DOQueueHandler`, `DOShardedTagCache`, `BucketCachePurge`). Server code reports errors via `reportError()` in `src/lib/report-error.ts`, which also exposes `toClientError()` — used by API routes to return a generic, safe message + machine `code` instead of raw provider errors (e.g. Gemini 429/billing text). Clients localize the code via `apiErrorMessage()` in `src/lib/client-error.ts`. Sentry is inert when `SENTRY_DSN` is unset (dev / preview).
 
 ### Environment variables
 
-See `.env.example` for required vars. `NEXT_PUBLIC_*` vars are exposed to the browser. Server-only secrets: `SUPABASE_SERVICE_ROLE_KEY`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `GOOGLE_CLOUD_API_KEY`.
+See `.env.example` for required vars. `NEXT_PUBLIC_*` vars are exposed to the browser. Server-only secrets: `SUPABASE_SERVICE_ROLE_KEY`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `GOOGLE_CLOUD_API_KEY`, `SENTRY_DSN` (optional — Sentry error tracking).
 
 Transcription provider is configured via `TRANSCRIPTION_PROVIDER` (defaults to `gemini`; set to `speech-to-text` for Google Speech-to-Text API). Gemini model can be customized via `GEMINI_MODEL` (defaults to `gemini-1.5-flash`).
 
