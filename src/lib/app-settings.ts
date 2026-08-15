@@ -1,4 +1,16 @@
 import { createAdminClient } from "@/lib/supabase/admin";
+import { FREE_CREDITS } from "@/lib/constants";
+
+// Welcome-bonus amount bounds — keep in sync with the SQL trigger clamp in
+// supabase-migration-2026-08-signup-bonus-amount.sql and the admin app.
+const SIGNUP_BONUS_MIN = 1;
+const SIGNUP_BONUS_MAX = 50;
+
+function clampSignupBonusAmount(raw: string | null | undefined): number {
+  const n = parseInt((raw ?? "").trim(), 10);
+  if (!Number.isFinite(n)) return FREE_CREDITS;
+  return Math.min(SIGNUP_BONUS_MAX, Math.max(SIGNUP_BONUS_MIN, n));
+}
 
 /**
  * Runtime transcription config, admin-controlled via the app_settings table
@@ -55,30 +67,36 @@ export async function getTranscriptionConfig(): Promise<TranscriptionConfig> {
   }
 }
 
+export interface SignupBonusConfig {
+  /** Whether new sign-ups receive the welcome free credits. */
+  enabled: boolean;
+  /** How many credits a new sign-up receives when enabled (clamped 1–50). */
+  amount: number;
+}
+
 /**
- * Whether new sign-ups receive the welcome free credits, admin-controlled via
- * the same app_settings table (key `signup_bonus_enabled`, read by the DB
- * trigger handle_new_user). Drives the "free credits" marketing copy so a single
- * admin toggle governs both the grant and the messaging. Every `[locale]` page
- * is already server-rendered per request (the root layout reads request
- * headers), so this read reflects the toggle immediately with no redeploy.
- * Defaults to enabled when the setting is unset or the table is unreachable
- * (fail-open), matching the trigger, so a settings blip never wrongly hides a
- * live free tier.
+ * The free-tier config that drives the marketing copy — both the ON/OFF switch
+ * and the grant amount, read in a single query from the same app_settings rows
+ * the DB trigger handle_new_user() uses. Fail-open (enabled + default amount) so
+ * a settings blip never wrongly hides a live free tier or shows a wrong number.
  */
-export async function isSignupBonusEnabled(): Promise<boolean> {
+export async function getSignupBonusConfig(): Promise<SignupBonusConfig> {
   try {
     const admin = createAdminClient();
     const { data, error } = await admin
       .from("app_settings")
-      .select("value")
-      .eq("key", "signup_bonus_enabled")
-      .maybeSingle();
+      .select("key, value")
+      .in("key", ["signup_bonus_enabled", "signup_bonus_amount"]);
 
-    if (error || !data) return true;
-    const v = (data.value ?? "").trim().toLowerCase();
-    return !["false", "0", "no", "off"].includes(v);
+    if (error || !data) return { enabled: true, amount: FREE_CREDITS };
+
+    const map = new Map(
+      data.map((r) => [r.key as string, r.value as string | null])
+    );
+    const rawEnabled = (map.get("signup_bonus_enabled") ?? "").trim().toLowerCase();
+    const enabled = !["false", "0", "no", "off"].includes(rawEnabled);
+    return { enabled, amount: clampSignupBonusAmount(map.get("signup_bonus_amount")) };
   } catch {
-    return true;
+    return { enabled: true, amount: FREE_CREDITS };
   }
 }

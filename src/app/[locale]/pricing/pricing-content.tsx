@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { CREDIT_PACKAGES, FREE_CREDITS } from "@/lib/constants";
+import { CREDIT_PACKAGES } from "@/lib/constants";
 import { useDictionary } from "@/lib/i18n/dictionary-context";
 import { useLocale } from "@/lib/i18n/locale-context";
 import { localePath } from "@/lib/i18n/utils";
@@ -12,7 +12,13 @@ import { Check, Zap, ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
 
-export function PricingContent({ freeTier }: { freeTier: boolean }) {
+export function PricingContent({
+  freeTier,
+  freeCredits,
+}: {
+  freeTier: boolean;
+  freeCredits: number;
+}) {
   const searchParams = useSearchParams();
   const dict = useDictionary();
   const locale = useLocale();
@@ -156,7 +162,7 @@ export function PricingContent({ freeTier }: { freeTier: boolean }) {
               ...(freeTier
                 ? [
                     {
-                      label: `${FREE_CREDITS} free credits on signup`,
+                      label: `${freeCredits} free credits on signup`,
                       color: "emerald",
                     },
                   ]
@@ -197,12 +203,12 @@ export function PricingContent({ freeTier }: { freeTier: boolean }) {
               <div className="mb-1 flex items-end gap-1.5">
                 <span className="font-display text-5xl font-extrabold text-white">$0</span>
               </div>
-              <p className="text-sm text-white/45">Free forever · {FREE_CREDITS} credits</p>
+              <p className="text-sm text-white/45">Free forever · {freeCredits} credits</p>
             </div>
 
             <ul className="mb-8 flex-1 space-y-2.5">
               {[
-                `${FREE_CREDITS} transcription credits`,
+                `${freeCredits} transcription credits`,
                 "All audio formats",
                 "Up to 25 MB per file",
                 "No credit card required",
@@ -354,7 +360,7 @@ export function PricingContent({ freeTier }: { freeTier: boolean }) {
             freeTier
               ? {
                   q: "Is a credit card required for free?",
-                  a: `No. Sign up and instantly receive ${FREE_CREDITS} free credits. Card only needed when buying a pack.`,
+                  a: `No. Sign up and instantly receive ${freeCredits} free credits. Card only needed when buying a pack.`,
                 }
               : {
                   q: "Do I need a subscription?",
@@ -386,7 +392,7 @@ export function PricingContent({ freeTier }: { freeTier: boolean }) {
             href={localePath("/signup", locale)}
             className="group inline-flex items-center gap-2 rounded-2xl border border-violet-400/25 bg-violet-500/12 px-6 py-3 text-sm font-semibold text-violet-200 transition-all hover:bg-violet-500/20 hover:text-white"
           >
-            {freeTier ? `Start with ${FREE_CREDITS} free credits` : "Get started"}
+            {freeTier ? `Start with ${freeCredits} free credits` : "Get started"}
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>

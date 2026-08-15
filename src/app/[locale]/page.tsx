@@ -11,8 +11,8 @@ import {
   Languages,
   Shield,
 } from "lucide-react";
-import { CREDIT_PACKAGES, FREE_CREDITS } from "@/lib/constants";
-import { isSignupBonusEnabled } from "@/lib/app-settings";
+import { CREDIT_PACKAGES } from "@/lib/constants";
+import { getSignupBonusConfig } from "@/lib/app-settings";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { locales, type Locale } from "@/lib/i18n/config";
 import { localePath, t, generateAlternates } from "@/lib/i18n/utils";
@@ -87,7 +87,7 @@ export default async function LandingPage({ params }: Props) {
   if (!locales.includes(locale as Locale)) notFound();
   const dict = await getDictionary(locale as Locale);
   const d = dict.landing;
-  const freeTier = await isSignupBonusEnabled();
+  const { enabled: freeTier, amount: freeCredits } = await getSignupBonusConfig();
 
   const features = [
     {
@@ -157,7 +157,7 @@ export default async function LandingPage({ params }: Props) {
               "@type": "Offer",
               price: "0",
               priceCurrency: "USD",
-              description: `${FREE_CREDITS} free minutes on signup — no credit card required`,
+              description: `${freeCredits} free minutes on signup — no credit card required`,
             },
           ]
         : []),
@@ -229,7 +229,7 @@ export default async function LandingPage({ params }: Props) {
           viewPricing: d.viewPricing,
           noSubscription: d.noSubscription,
         }}
-        freeCreditsLabel={freeTier ? t(d.freeCredits, { count: FREE_CREDITS }) : null}
+        freeCreditsLabel={freeTier ? t(d.freeCredits, { count: freeCredits }) : null}
       />
 
       {/* ── How it works (numbered, arrowed step-by-step) ─────────────── */}
@@ -470,7 +470,7 @@ export default async function LandingPage({ params }: Props) {
                 {freeTier && (
                   <div className="pt-6 text-center md:pt-0">
                     <div className="font-display text-4xl font-extrabold text-[#340075]">
-                      {FREE_CREDITS}
+                      {freeCredits}
                     </div>
                     <div className="mt-1 text-sm font-medium text-[#4a4452]">
                       {d.freeCreditsOnSignup}
@@ -505,7 +505,7 @@ export default async function LandingPage({ params }: Props) {
                 </div>
                 <div className="mb-3 flex items-end gap-2">
                   <span className="font-display text-5xl font-extrabold text-[#111c2d]">
-                    {FREE_CREDITS}
+                    {freeCredits}
                   </span>
                   <span className="mb-2 text-base font-semibold text-[#4a4452]">
                     {d.credits}
@@ -521,7 +521,7 @@ export default async function LandingPage({ params }: Props) {
 
               <ul className="mb-8 flex-1 space-y-3">
                 {[
-                  t(d.transcriptions, { count: FREE_CREDITS }),
+                  t(d.transcriptions, { count: freeCredits }),
                   d.allAudioFormats,
                   d.upTo25MB,
                   d.noCreditCard,
@@ -685,7 +685,7 @@ export default async function LandingPage({ params }: Props) {
               </h2>
               <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-white/70">
                 {freeTier
-                  ? t(d.ctaSubtitle, { count: FREE_CREDITS })
+                  ? t(d.ctaSubtitle, { count: freeCredits })
                   : d.pricingSubtitle}
               </p>
               <Link
