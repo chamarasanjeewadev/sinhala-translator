@@ -40,7 +40,12 @@ const organizationJsonLd = {
   logo: `${siteUrl}/logo.jpeg`,
   description:
     "HelaVoice.lk — AI-powered Sinhala audio transcription tool for Sri Lankan creators, students, journalists, and businesses.",
-  sameAs: [],
+  sameAs: ["https://grittech.lk"],
+  parentOrganization: {
+    "@type": "Organization",
+    name: "GritTech",
+    url: "https://grittech.lk",
+  },
 };
 
 const websiteJsonLd = {

@@ -9,6 +9,12 @@ type FooterProps = {
   dict: Dictionary;
 };
 
+const SISTER_PRODUCTS = [
+  { name: "BabyJourney", url: "https://babyjourney.lk" },
+  { name: "FlowerMarket", url: "https://flowermarket.lk" },
+  { name: "FindAJob", url: "https://findajob.lk" },
+] as const;
+
 export function Footer({ locale, dict }: FooterProps) {
   const d = dict.landing;
   const lp = (path: string) => localePath(path, locale);
@@ -16,7 +22,7 @@ export function Footer({ locale, dict }: FooterProps) {
   return (
     <footer className="border-t border-white/8 bg-[#07000f] px-6 py-16 lg:px-8">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-14 grid gap-12 md:grid-cols-4">
+        <div className="mb-14 grid gap-12 md:grid-cols-5">
           {/* Brand */}
           <div>
             <div className="mb-5 flex items-center gap-2.5">
@@ -139,11 +145,43 @@ export function Footer({ locale, dict }: FooterProps) {
               </li>
             </ul>
           </div>
+
+          {/* GritTech network */}
+          <div>
+            <h4 className="section-eyebrow mb-5 text-white/50">
+              {d.footerGritTechNetwork}
+            </h4>
+            <ul className="space-y-3">
+              {SISTER_PRODUCTS.map((product) => (
+                <li key={product.url}>
+                  <a
+                    href={product.url}
+                    target="_blank"
+                    rel="noopener"
+                    className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                  >
+                    {product.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-white/8 pt-8 md:flex-row">
           <p className="text-sm font-medium text-[#a99fc4]/70">
             {d.footerCopyright}
+          </p>
+          <p className="text-sm font-medium text-[#a99fc4]/70">
+            {d.footerBuiltBy}{" "}
+            <a
+              href="https://grittech.lk"
+              target="_blank"
+              rel="noopener"
+              className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+            >
+              GritTech
+            </a>
           </p>
         </div>
       </div>
