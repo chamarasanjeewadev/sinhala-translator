@@ -63,6 +63,22 @@ export function Footer({ locale, dict }: FooterProps) {
               </li>
               <li>
                 <Link
+                  href={lp("/subtitles")}
+                  className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                >
+                  {d.footerSubtitles}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={lp("/qr-code-generator")}
+                  className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                >
+                  {d.footerQrGenerator}
+                </Link>
+              </li>
+              <li>
+                <Link
                   href={lp("/blog")}
                   className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
                 >

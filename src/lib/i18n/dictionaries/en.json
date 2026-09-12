@@ -108,6 +108,8 @@
     "footerContact": "Need help? Email us at",
     "footerProduct": "Product",
     "footerFeatures": "Features",
+    "footerSubtitles": "Subtitle generator",
+    "footerQrGenerator": "QR code generator",
     "footerBlog": "Blog",
     "footerPricing": "Pricing",
     "footerAccount": "Account",
@@ -512,5 +514,147 @@
     "checkoutUnavailable": "We couldn't start the checkout. Please try again in a moment.",
     "paymentFailed": "Your payment could not be completed. Please try again or use a different payment method.",
     "errorCode": "code: {code}"
+  },
+  "qrGenerator": {
+    "metaTitle": "Free QR Code Generator with Logo — No Sign-up | HelaVoice",
+    "metaDescription": "Create custom QR codes for free — for a website, WiFi, vCard, email or phone. Add your logo, pick colours and shapes, then download in high-quality PNG, JPG or SVG. No sign-up, no watermark, no expiry. Made in Sri Lanka.",
+    "heroBadge": "100% free · no sign-up · no watermark",
+    "heroTitle": "Free QR Code Generator",
+    "heroSubtitle": "Design a custom QR code with your logo, colours and shapes, then download it in high-resolution PNG, JPG or SVG. Everything runs in your browser — your data never leaves your device.",
+    "content": {
+      "sectionTitle": "1. What should the QR code do?",
+      "types": {
+        "url": "Website",
+        "text": "Text",
+        "wifi": "WiFi",
+        "email": "Email",
+        "phone": "Phone",
+        "sms": "SMS",
+        "vcard": "vCard"
+      },
+      "urlLabel": "Website URL",
+      "urlPlaceholder": "https://helavoice.lk",
+      "textLabel": "Text",
+      "textPlaceholder": "Any text you want to encode",
+      "wifiSsid": "Network name (SSID)",
+      "wifiPassword": "Password",
+      "wifiEncryption": "Security",
+      "wifiHidden": "Hidden network",
+      "emailTo": "Email address",
+      "emailSubject": "Subject",
+      "emailBody": "Message",
+      "phoneLabel": "Phone number",
+      "smsNumber": "Phone number",
+      "smsMessage": "Message",
+      "vcFirstName": "First name",
+      "vcLastName": "Last name",
+      "vcPhone": "Phone",
+      "vcEmail": "Email",
+      "vcOrg": "Organisation",
+      "vcTitle": "Job title",
+      "vcUrl": "Website"
+    },
+    "design": {
+      "styleTitle": "2. QR code style",
+      "dotsLabel": "Body shape",
+      "cornerSquareLabel": "Corner frame",
+      "cornerDotLabel": "Corner dot",
+      "colorsTitle": "Colours",
+      "foreground": "QR colour",
+      "background": "Background",
+      "transparent": "Transparent background",
+      "gradient": "Gradient",
+      "correctionTitle": "Error correction",
+      "correctionHint": "Higher levels stay readable even if the code is scratched or partly covered, but pack in more dots.",
+      "logoTitle": "Center logo",
+      "logoHint": "Add a logo in the middle of the QR code. PNG, JPG or SVG, max 2MB. It stays on your device.",
+      "logoUpload": "Upload your logo",
+      "logoRemove": "Remove",
+      "logoSize": "Logo size",
+      "captionTitle": "Caption (optional)",
+      "captionPlaceholder": "e.g. SCAN ME",
+      "logoForcesHigh": "Error correction is set to High automatically so the logo doesn't stop the code from scanning."
+    },
+    "preview": {
+      "previewLabel": "Live preview",
+      "emptyHint": "Fill in the details on the left and your QR code will appear here.",
+      "downloadTitle": "Download",
+      "scanMeDefault": "SCAN ME"
+    },
+    "howEyebrow": "How it works",
+    "howTitle": "Make a QR code in 3 steps",
+    "howSteps": [
+      {
+        "title": "Choose the content",
+        "desc": "Point the QR code at a website, WiFi network, contact card, email, phone number or plain text."
+      },
+      {
+        "title": "Design it",
+        "desc": "Pick shapes and colours, drop your logo in the centre and add a “Scan me” caption to boost scans."
+      },
+      {
+        "title": "Download & share",
+        "desc": "Export a crisp PNG or JPG for social and print, or a scalable SVG for large banners and signage."
+      }
+    ],
+    "featuresEyebrow": "Why use it",
+    "featuresTitle": "Everything you need, free",
+    "features": [
+      {
+        "title": "Add your logo",
+        "desc": "Place any logo in the middle of the QR code. We raise error correction automatically so it still scans reliably."
+      },
+      {
+        "title": "Full customisation",
+        "desc": "Dozens of dot and corner shapes, solid or gradient colours, and a transparent background option."
+      },
+      {
+        "title": "High-quality downloads",
+        "desc": "Export high-resolution PNG and JPG, or vector SVG that stays sharp at any size."
+      },
+      {
+        "title": "No sign-up, no watermark",
+        "desc": "No account, no email, no watermark and no expiry. The QR codes are yours to keep forever."
+      },
+      {
+        "title": "Private by design",
+        "desc": "Everything is generated in your browser. Your links, logos and data are never uploaded to a server."
+      },
+      {
+        "title": "Static QR codes",
+        "desc": "The data is encoded directly in the code, so it keeps working forever with no subscription or redirect."
+      }
+    ],
+    "faqEyebrow": "FAQ",
+    "faqTitle": "Questions, answered",
+    "faqItems": [
+      {
+        "q": "Is this QR code generator really free?",
+        "a": "Yes. You can create and download unlimited QR codes for free, with no sign-up, no watermark and no expiry date."
+      },
+      {
+        "q": "Can I add a logo to the QR code?",
+        "a": "Yes. Upload any PNG, JPG or SVG logo and it is placed in the centre of the QR code. We automatically raise the error-correction level so the code still scans reliably with the logo in place."
+      },
+      {
+        "q": "Do the QR codes expire?",
+        "a": "No. These are static QR codes — the information is encoded directly into the pattern, so they keep working forever. There is no subscription and nothing to renew."
+      },
+      {
+        "q": "Which format should I download?",
+        "a": "Use PNG or JPG for websites, social media and everyday printing. Use SVG when you need to print large — on banners, posters or packaging — because it stays perfectly sharp at any size."
+      },
+      {
+        "q": "Can I make a WiFi QR code?",
+        "a": "Yes. Choose the WiFi tab, enter your network name and password, and anyone who scans the code will connect automatically — no need to type the password."
+      },
+      {
+        "q": "Is my data safe?",
+        "a": "Yes. Every QR code is generated inside your browser. Your URLs, WiFi passwords, contact details and logos are never sent to or stored on any server."
+      }
+    ],
+    "ctaTitle": "Need Sinhala voice to text too?",
+    "ctaSubtitle": "HelaVoice turns Sinhala audio and video into accurate text and subtitles in seconds. Try it free.",
+    "ctaButton": "Try HelaVoice free"
   }
 }
