@@ -100,3 +100,41 @@ export async function getSignupBonusConfig(): Promise<SignupBonusConfig> {
     return { enabled: true, amount: FREE_CREDITS };
   }
 }
+
+export interface TranslateConfig {
+  provider: "gemini" | "openai";
+  /** Gemini model name (gemini provider) or Whisper model (openai provider). */
+  model: string;
+  openaiApiKey: string | undefined;
+}
+
+/**
+ * Live-translate (any language → Sinhala) config. Falls back to Gemini so the
+ * feature always works without admin setup; OpenAI requires OPENAI_API_KEY env.
+ */
+export async function getTranslateConfig(): Promise<TranslateConfig> {
+  const openaiApiKey = process.env.OPENAI_API_KEY || undefined;
+  const geminiDefault = process.env.GEMINI_MODEL ?? "gemini-flash-latest";
+
+  try {
+    const admin = createAdminClient();
+    const { data, error } = await admin
+      .from("app_settings")
+      .select("key, value")
+      .in("key", ["translate_provider", "translate_model"]);
+
+    if (error || !data) {
+      return { provider: "gemini", model: geminiDefault, openaiApiKey };
+    }
+
+    const map = new Map(data.map((r) => [r.key as string, r.value as string | null]));
+    const rawProvider = (map.get("translate_provider") ?? "").trim().toLowerCase();
+    const provider: "gemini" | "openai" = rawProvider === "openai" ? "openai" : "gemini";
+    const modelFallback = provider === "openai" ? "whisper-1" : geminiDefault;
+    const model = (map.get("translate_model") ?? "").trim() || modelFallback;
+
+    return { provider, model, openaiApiKey };
+  } catch {
+    return { provider: "gemini", model: geminiDefault, openaiApiKey };
+  }
+}

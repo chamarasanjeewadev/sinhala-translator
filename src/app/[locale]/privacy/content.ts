@@ -2,7 +2,7 @@ import type { LegalDoc } from "@/components/legal-page";
 
 const en: LegalDoc = {
   title: "Privacy Policy",
-  updated: "Last updated: June 12, 2026",
+  updated: "Last updated: September 23, 2026",
   intro: [
     "HelaVoice (\"we\", \"us\") provides Sinhala audio transcription and translation through the helavoice.lk website and the HelaVoice mobile app (together, the \"Service\"). This policy explains what data we collect, how we use it, and the choices you have.",
   ],
@@ -14,7 +14,7 @@ const en: LegalDoc = {
         "Audio you record or upload: audio is transmitted securely to our servers and to Google's Gemini API to produce a transcription. We do not keep a copy of your audio after transcription is complete.",
         "Transcripts and translations: the text results of your transcriptions and any translations or edits you make are stored in your account so you can access them later.",
         "Purchase and credit history: records of credit purchases and credit usage. Payments are processed by Stripe (web) or Apple (iOS app); we never see or store your full card details.",
-        "Technical usage data: basic processing metadata such as audio duration and API token counts, used for cost monitoring and abuse prevention. We do not use third-party advertising or analytics trackers.",
+        "Technical usage data: basic processing metadata such as audio duration and API token counts, used for cost monitoring and abuse prevention. We also use Google Analytics through Google Tag to understand aggregate website usage, including interactions with free tools such as the QR code generator.",
       ],
     },
     {
@@ -28,7 +28,7 @@ const en: LegalDoc = {
     {
       heading: "Third-party processors",
       body: [
-        "We rely on a small number of service providers to operate the Service, each processing data on our behalf: Supabase (authentication and database hosting), Google (Gemini API for transcription and translation), Cloudflare (hosting and content delivery), Stripe (web payments), Apple and RevenueCat (iOS in-app purchases).",
+        "We rely on a small number of service providers to operate the Service, each processing data on our behalf: Supabase (authentication and database hosting), Google (Gemini API for transcription and translation, and Google Analytics for website usage analytics), Cloudflare (hosting and content delivery), Stripe (web payments), Apple and RevenueCat (iOS in-app purchases).",
         "Audio sent to Google's Gemini API is processed to generate your transcription and is subject to Google's API data-handling commitments.",
       ],
     },
@@ -76,7 +76,7 @@ const en: LegalDoc = {
 
 const si: LegalDoc = {
   title: "පෞද්ගලිකත්ව ප්‍රතිපත්තිය",
-  updated: "අවසන් යාවත්කාලීනය: 2026 ජුනි 12",
+  updated: "අවසන් යාවත්කාලීනය: 2026 සැප්තැම්බර් 23",
   intro: [
     "HelaVoice (\"අපි\") helavoice.lk වෙබ් අඩවිය සහ HelaVoice ජංගම යෙදුම හරහා සිංහල ශ්‍රව්‍ය පිටපත් කිරීමේ සහ පරිවර්තන සේවාවක් (\"සේවාව\") සපයයි. මෙම ප්‍රතිපත්තියෙන් අප එකතු කරන දත්ත, ඒවා භාවිතා කරන ආකාරය සහ ඔබට ඇති තේරීම් පැහැදිලි කෙරේ.",
   ],
@@ -88,7 +88,7 @@ const si: LegalDoc = {
         "ඔබ පටිගත කරන හෝ උඩුගත කරන ශ්‍රව්‍ය: පිටපතක් සෑදීම සඳහා ශ්‍රව්‍ය දත්ත ආරක්ෂිතව අපගේ සේවාදායක වෙත සහ Google Gemini API වෙත යවනු ලැබේ. පිටපත් කිරීම අවසන් වූ පසු ඔබගේ ශ්‍රව්‍ය පටිගත කිරීම් අප ළඟ තබා නොගනිමු.",
         "පිටපත් සහ පරිවර්තන: ඔබගේ පිටපත්, පරිවර්තන සහ සංස්කරණ ඔබට පසුව ලබා ගත හැකි වන පරිදි ඔබගේ ගිණුමේ ගබඩා කෙරේ.",
         "මිලදී ගැනීම් සහ ක්‍රෙඩිට් ඉතිහාසය: ක්‍රෙඩිට් මිලදී ගැනීම් සහ භාවිත වාර්තා. ගෙවීම් Stripe (වෙබ්) හෝ Apple (iOS යෙදුම) මගින් සිදු කෙරෙන අතර ඔබගේ සම්පූර්ණ කාඩ්පත් විස්තර අප කිසි විටෙක නොදකිමු, ගබඩා නොකරමු.",
-        "තාක්ෂණික භාවිත දත්ත: පිරිවැය නිරීක්ෂණය සහ අවභාවිත වැළැක්වීම සඳහා ශ්‍රව්‍ය කාලසීමාව වැනි මූලික දත්ත. තෙවන පාර්ශ්ව වෙළඳ දැන්වීම් හෝ විශ්ලේෂණ ට්‍රැකර් අප භාවිතා නොකරමු.",
+        "තාක්ෂණික භාවිත දත්ත: පිරිවැය නිරීක්ෂණය සහ අවභාවිත වැළැක්වීම සඳහා ශ්‍රව්‍ය කාලසීමාව වැනි මූලික දත්ත. QR කේත ජනකය වැනි නොමිලේ මෙවලම් භාවිතා කරන ආකාරය ඇතුළුව වෙබ් අඩවියේ සමස්ත භාවිතය තේරුම් ගැනීමට අප Google Tag හරහා Google Analytics ද භාවිතා කරමු.",
       ],
     },
     {
@@ -102,7 +102,7 @@ const si: LegalDoc = {
     {
       heading: "තෙවන පාර්ශ්ව සැකසුම්කරුවන්",
       body: [
-        "සේවාව ක්‍රියාත්මක කිරීමට අප විශ්වාසදායක සේවා සපයන්නන් කිහිප දෙනෙකු භාවිතා කරමු: Supabase (සත්‍යාපනය සහ දත්ත සමුදාය), Google (පිටපත් කිරීම සහ පරිවර්තනය සඳහා Gemini API), Cloudflare (සත්කාරකත්වය), Stripe (වෙබ් ගෙවීම්), Apple සහ RevenueCat (iOS යෙදුම් තුළ මිලදී ගැනීම්).",
+        "සේවාව ක්‍රියාත්මක කිරීමට අප විශ්වාසදායක සේවා සපයන්නන් කිහිප දෙනෙකු භාවිතා කරමු: Supabase (සත්‍යාපනය සහ දත්ත සමුදාය), Google (පිටපත් කිරීම සහ පරිවර්තනය සඳහා Gemini API සහ වෙබ් භාවිත විශ්ලේෂණ සඳහා Google Analytics), Cloudflare (සත්කාරකත්වය), Stripe (වෙබ් ගෙවීම්), Apple සහ RevenueCat (iOS යෙදුම් තුළ මිලදී ගැනීම්).",
       ],
     },
     {

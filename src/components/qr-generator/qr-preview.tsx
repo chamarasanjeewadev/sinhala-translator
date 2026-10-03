@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Download, Loader2 } from "lucide-react";
 import type QRCodeStyling from "qr-code-styling";
+import { trackEvent } from "@/lib/analytics";
 import { toQrOptions, type QrDesign } from "@/lib/qr-design";
 import { cn } from "@/lib/utils";
 
@@ -74,6 +75,11 @@ export function QrPreview({
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
+      trackEvent("qr_code_generated", {
+        format: format === "jpeg" ? "jpg" : format,
+        has_logo: Boolean(design.logoDataUrl),
+        has_caption: Boolean(design.caption.trim()),
+      });
     } finally {
       setBusy(null);
     }

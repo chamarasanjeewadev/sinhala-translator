@@ -134,9 +134,16 @@ export function Navbar() {
 
                 <LocaleLink
                   href="/dashboard/subtitles"
-                  className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
+                  className="px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
                 >
                   {d.subtitles}
+                </LocaleLink>
+
+                <LocaleLink
+                  href="/qr-code-generator"
+                  className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
+                >
+                  {d.qrGenerator}
                   <NewBadge label={d.new} />
                 </LocaleLink>
 
@@ -169,9 +176,15 @@ export function Navbar() {
                 <nav className="flex items-center gap-1">
                   <LocaleLink
                     href="/subtitles"
-                    className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
+                    className="px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
                   >
                     {d.subtitles}
+                  </LocaleLink>
+                  <LocaleLink
+                    href="/qr-code-generator"
+                    className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
+                  >
+                    {d.qrGenerator}
                     <NewBadge label={d.new} />
                   </LocaleLink>
                   <LocaleLink
@@ -259,9 +272,15 @@ export function Navbar() {
                 </LocaleLink>
                 <LocaleLink
                   href="/dashboard/subtitles"
-                  className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
+                  className="px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
                 >
                   {d.subtitles}
+                </LocaleLink>
+                <LocaleLink
+                  href="/qr-code-generator"
+                  className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
+                >
+                  {d.qrGenerator}
                   <NewBadge label={d.new} />
                 </LocaleLink>
                 <button
@@ -283,9 +302,15 @@ export function Navbar() {
                 </LocaleLink>
                 <LocaleLink
                   href="/subtitles"
-                  className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
+                  className="px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
                 >
                   {d.subtitles}
+                </LocaleLink>
+                <LocaleLink
+                  href="/qr-code-generator"
+                  className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
+                >
+                  {d.qrGenerator}
                   <NewBadge label={d.new} />
                 </LocaleLink>
                 <LocaleLink

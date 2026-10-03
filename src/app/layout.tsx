@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
 import Script from "next/script";
+import { GoogleTagManager } from "@next/third-parties/google";
 import {
   Inter,
   JetBrains_Mono,
@@ -31,6 +32,8 @@ const jetBrainsMono = JetBrains_Mono({
 
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://helavoice.lk";
+const googleTagManagerId =
+  process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID || "GTM-P85D892K";
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -87,7 +90,17 @@ export default async function RootLayout({
       <body
         className={`${inter.variable} ${plusJakartaSans.variable} ${notoSansSinhala.variable} ${jetBrainsMono.variable} antialiased`}
       >
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${googleTagManagerId}`}
+            height="0"
+            width="0"
+            title="Google Tag Manager"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         {children}
+        <GoogleTagManager gtmId={googleTagManagerId} />
       </body>
     </html>
   );
