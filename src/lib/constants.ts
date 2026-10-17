@@ -68,7 +68,10 @@ export const SUBTITLE_CREDITS_PER_MINUTE = 2;
 export const CHUNK_DURATION_SECONDS = 120; // 2 minutes per chunk - balance between performance and request size
 export const TARGET_SAMPLE_RATE = 16000;
 export const MAX_RETRIES = 2;
-export const MAX_AUDIO_SIZE_MB = 25;
+// Audio upload size: 25 MB unless an admin enables large uploads (app_settings
+// large_upload_enabled / large_upload_mb), which can raise it up to the ceiling.
+export const DEFAULT_AUDIO_SIZE_MB = 25;
+export const MAX_AUDIO_SIZE_MB = 500; // hard ceiling the admin slider can reach
 export const MAX_AUDIO_SIZE_BYTES = MAX_AUDIO_SIZE_MB * 1024 * 1024;
 
 export const MAX_VIDEO_SIZE_MB = 500;

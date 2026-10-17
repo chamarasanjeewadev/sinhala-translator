@@ -7,7 +7,8 @@ import { useDictionary } from "@/lib/i18n/dictionary-context";
 import { apiErrorMessage } from "@/lib/client-error";
 import { AudioRecorder } from "./audio-recorder";
 import { AudioUploader } from "./audio-uploader";
-import { getAudioDuration, chunkAudio, blobToBase64 } from "@/lib/audio-utils";
+import { getAudioDuration, blobToBase64 } from "@/lib/audio-utils";
+import { extractAudioChunks } from "@/lib/video-audio";
 import type {
   AnalyzeResponse,
   ChunkTranscribeResponse,
@@ -121,7 +122,7 @@ export function RecordingModal({
     cancelledRef.current = false;
 
     try {
-      const chunks = await chunkAudio(audioSource);
+      const chunks = await extractAudioChunks(audioSource);
       setTotalChunks(chunks.length);
 
       let fullText = "";

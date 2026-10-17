@@ -15,7 +15,7 @@ import type { AudioChunk } from "./types";
  * decodes the whole file at once via decodeAudioData — fine on desktop, risky
  * for large files, but better than failing on browsers without WebCodecs.
  */
-export async function extractAudioChunks(file: File): Promise<AudioChunk[]> {
+export async function extractAudioChunks(file: Blob): Promise<AudioChunk[]> {
   try {
     const chunks = await extractWithMediabunny(file);
     if (chunks.length > 0) return chunks;
@@ -46,7 +46,7 @@ export function getVideoDuration(source: Blob): Promise<number> {
   });
 }
 
-async function extractWithMediabunny(file: File): Promise<AudioChunk[]> {
+async function extractWithMediabunny(file: Blob): Promise<AudioChunk[]> {
   const { Input, BlobSource, AudioSampleSink, ALL_FORMATS } = await import(
     "mediabunny"
   );

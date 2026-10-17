@@ -35,7 +35,8 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Transcription, AnalyzeResponse, ChunkTranscribeResponse, TranslateResponse } from "@/lib/types";
 import { AudioRecorder } from "@/components/audio-recorder";
 import { AudioUploader } from "@/components/audio-uploader";
-import { getAudioDuration, chunkAudio, blobToBase64 } from "@/lib/audio-utils";
+import { getAudioDuration, blobToBase64 } from "@/lib/audio-utils";
+import { extractAudioChunks } from "@/lib/video-audio";
 
 interface DashboardContentProps {
   initialCredits: number;
@@ -337,7 +338,7 @@ export function DashboardContent({
     cancelledRef.current = false;
 
     try {
-      const chunks = await chunkAudio(audioSource);
+      const chunks = await extractAudioChunks(audioSource);
       setTotalChunks(chunks.length);
 
       let fullText = "";

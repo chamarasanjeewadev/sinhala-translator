@@ -1,5 +1,9 @@
 import { createAdminClient } from "@/lib/supabase/admin";
-import { FREE_CREDITS } from "@/lib/constants";
+import {
+  FREE_CREDITS,
+  DEFAULT_AUDIO_SIZE_MB,
+  MAX_AUDIO_SIZE_MB,
+} from "@/lib/constants";
 
 // Welcome-bonus amount bounds — keep in sync with the SQL trigger clamp in
 // supabase-migration-2026-08-signup-bonus-amount.sql and the admin app.
@@ -136,5 +140,33 @@ export async function getTranslateConfig(): Promise<TranslateConfig> {
     return { provider, model, openaiApiKey };
   } catch {
     return { provider: "gemini", model: geminiDefault, openaiApiKey };
+  }
+}
+
+/**
+ * Effective audio upload cap in MB. Admin-controlled via app_settings
+ * (large_upload_enabled + large_upload_mb). Fail-closed: disabled, unset or
+ * unreachable settings mean the 25 MB default.
+ */
+export async function getAudioUploadLimitMb(): Promise<number> {
+  try {
+    const admin = createAdminClient();
+    const { data, error } = await admin
+      .from("app_settings")
+      .select("key, value")
+      .in("key", ["large_upload_enabled", "large_upload_mb"]);
+    if (error || !data) return DEFAULT_AUDIO_SIZE_MB;
+
+    const map = new Map(data.map((r) => [r.key as string, r.value as string | null]));
+    const enabled = ["true", "1", "yes", "on"].includes(
+      (map.get("large_upload_enabled") ?? "").trim().toLowerCase()
+    );
+    if (!enabled) return DEFAULT_AUDIO_SIZE_MB;
+
+    const n = parseInt((map.get("large_upload_mb") ?? "").trim(), 10);
+    if (!Number.isFinite(n)) return DEFAULT_AUDIO_SIZE_MB;
+    return Math.min(MAX_AUDIO_SIZE_MB, Math.max(DEFAULT_AUDIO_SIZE_MB, n));
+  } catch {
+    return DEFAULT_AUDIO_SIZE_MB;
   }
 }

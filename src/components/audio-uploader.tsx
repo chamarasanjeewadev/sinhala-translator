@@ -1,8 +1,12 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { X } from "lucide-react";
-import { SUPPORTED_AUDIO_TYPES, MAX_AUDIO_SIZE_MB } from "@/lib/constants";
+import {
+  SUPPORTED_AUDIO_TYPES,
+  DEFAULT_AUDIO_SIZE_MB,
+  MAX_AUDIO_SIZE_MB,
+} from "@/lib/constants";
 import { useDictionary } from "@/lib/i18n/dictionary-context";
 import { t } from "@/lib/i18n/utils";
 
@@ -20,6 +24,26 @@ export function AudioUploader({
   const [dragOver, setDragOver] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  // Admin-controlled cap (25 MB unless large uploads are enabled in the admin app).
+  const [maxMb, setMaxMb] = useState(DEFAULT_AUDIO_SIZE_MB);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/public-config")
+      .then((r) => (r.ok ? (r.json() as Promise<{ maxAudioUploadMb?: number }>) : null))
+      .then((cfg) => {
+        const n = Number(cfg?.maxAudioUploadMb);
+        if (!cancelled && Number.isFinite(n)) {
+          setMaxMb(
+            Math.min(MAX_AUDIO_SIZE_MB, Math.max(DEFAULT_AUDIO_SIZE_MB, n))
+          );
+        }
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleFile = useCallback(
     (file: File) => {
@@ -27,14 +51,14 @@ export function AudioUploader({
         alert(d.unsupportedFormat);
         return;
       }
-      if (file.size > MAX_AUDIO_SIZE_MB * 1024 * 1024) {
-        alert(t(d.tooLarge, { size: MAX_AUDIO_SIZE_MB }));
+      if (file.size > maxMb * 1024 * 1024) {
+        alert(t(d.tooLarge, { size: maxMb }));
         return;
       }
       setFileName(file.name);
       onFileSelected(file);
     },
-    [onFileSelected, d.unsupportedFormat, d.tooLarge]
+    [onFileSelected, d.unsupportedFormat, d.tooLarge, maxMb]
   );
 
   const handleDrop = useCallback(
@@ -86,7 +110,7 @@ export function AudioUploader({
               {d.dragDrop}
             </p>
             <p className="text-xs text-[#4a4452]">
-              {t(d.formats, { size: MAX_AUDIO_SIZE_MB })}
+              {t(d.formats, { size: maxMb })}
             </p>
           </div>
         </div>
