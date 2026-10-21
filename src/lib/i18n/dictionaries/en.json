@@ -14,7 +14,8 @@
     "subtitles": "Subtitles",
     "qrGenerator": "QR Generator",
     "new": "NEW",
-    "getStarted": "Get Started"
+    "getStarted": "Get Started",
+    "singlishTool": "Sinhala Typing"
   },
   "landing": {
     "badge": "AI-Powered Sinhala Transcription",
@@ -161,7 +162,8 @@
         "q": "What audio formats and file sizes are supported?",
         "a": "HelaVoice accepts MP3, WAV, WebM, OGG, FLAC, and M4A files, up to 25MB per upload. You can also record directly in your browser without installing anything."
       }
-    ]
+    ],
+    "footerSinglishTool": "Singlish to Sinhala"
   },
   "auth": {
     "logInTitle": "Log In",
@@ -225,6 +227,18 @@
     "newShort": "New",
     "copy": "Copy",
     "download": "Download",
+    "exportPdf": "PDF",
+    "exportWord": "Word (.docx)",
+    "exportText": "Plain text (.txt)",
+    "exportMarkdown": "Markdown (.md)",
+    "exportPdfHint": "Choose “Save as PDF” in the print dialog.",
+    "exportFailed": "Export failed. Please try again.",
+    "singlishToggle": "Type Sinhala with English letters (Singlish), like Helakuru",
+    "singlishOn": "Singlish typing on",
+    "singlishOff": "Singlish typing off",
+    "singlishGuideTitle": "Key guide",
+    "singlishPreviewIdle": "Type in English letters — e.g. mama → මම",
+    "singlishGuideHint": "Type Sinhala words in English letters and they turn into Sinhala as you type — e.g. “mama gedhara yanavaa” → මම ගෙදර යනවා. Turn Singlish off to type English.",
     "delete": "Delete",
     "partial": "Partial",
     "creditsLabel": "Credits left",
@@ -517,7 +531,7 @@
     "errorCode": "code: {code}"
   },
   "qrGenerator": {
-    "metaTitle": "Free QR Code Generator with Logo — No Sign-up | HelaVoice",
+    "metaTitle": "Free QR Code Generator with Logo — No Sign-up",
     "metaDescription": "Create custom QR codes for free — for a website, WiFi, vCard, email or phone. Add your logo, pick colours and shapes, then download in high-quality PNG, JPG or SVG. No sign-up, no watermark, no expiry. Made in Sri Lanka.",
     "heroBadge": "100% free · no sign-up · no watermark",
     "heroTitle": "Free QR Code Generator",
@@ -657,5 +671,131 @@
     "ctaTitle": "Need Sinhala voice to text too?",
     "ctaSubtitle": "HelaVoice turns Sinhala audio and video into accurate text and subtitles in seconds. Try it free.",
     "ctaButton": "Try HelaVoice free"
+  },
+  "singlishTool": {
+    "metaTitle": "Singlish to Sinhala Typing — Free Online Sinhala Keyboard",
+    "metaDescription": "Type Sinhala online using English letters (Singlish). Free Sinhala Unicode keyboard with live conversion, Sinhala voice typing, FM Abhaya legacy font converter and Sinhala to Singlish. No sign-up.",
+    "heroBadge": "Free tool · No sign-up",
+    "heroTitle": "Singlish to Sinhala Typing",
+    "heroSubtitle": "Type Sinhala with English letters and watch it turn into Sinhala Unicode as you type. Paste chats to convert them, speak instead of typing, or get FM Abhaya text for your designs.",
+    "ui": {
+      "editorLabel": "Sinhala text",
+      "placeholder": "Start typing in English letters… e.g. mama gedhara yanavaa",
+      "singlishOn": "Singlish typing on",
+      "singlishOff": "Singlish typing off — typing as normal",
+      "previewIdle": "Type in English letters — e.g. mama → මම",
+      "listeningHint": "Listening… speak in Sinhala",
+      "voiceStart": "Speak",
+      "voiceStop": "Stop",
+      "voiceUnsupported": "Voice typing works in Chrome and Edge.",
+      "voiceDenied": "Microphone access was blocked. Allow it in your browser to use voice typing.",
+      "voiceError": "Voice typing stopped. Please try again.",
+      "convertPasted": "Convert pasted Singlish",
+      "convertedToast": "Converted to Sinhala",
+      "nothingToConvert": "No English letters to convert",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "clear": "Clear",
+      "clearConfirm": "Clear all text?",
+      "words": "{count} words",
+      "chars": "{count} characters",
+      "savedLocally": "Saved in this browser",
+      "outputsTitle": "Other formats",
+      "tabLegacy": "FM Abhaya (legacy font)",
+      "tabSinglish": "Sinhala → Singlish",
+      "legacyHint": "For Photoshop, Illustrator and older Word files: paste this and set the font to FM Abhaya (or another FM font).",
+      "singlishHint": "Your Sinhala text in English letters — handy for chats and names.",
+      "outputEmpty": "Type or paste Sinhala above to see it here.",
+      "guideTitle": "Singlish key guide",
+      "guideHint": "Every Sinhala letter has an English spelling. A consonant alone gets a hal (k → ක්); add a vowel to complete it (ka → ක, kaa → කා).",
+      "examplesTitle": "Try these",
+      "download": "Download",
+      "exportPdf": "PDF",
+      "exportWord": "Word (.docx)",
+      "exportText": "Plain text (.txt)",
+      "exportMarkdown": "Markdown (.md)",
+      "exportPdfHint": "Choose “Save as PDF” in the print dialog.",
+      "exportFailed": "Download failed. Please try again.",
+      "docTitle": "Sinhala text"
+    },
+    "howEyebrow": "How it works",
+    "howTitle": "Type Sinhala in three steps",
+    "howSteps": [
+      {
+        "title": "Type the way you chat",
+        "desc": "Write Sinhala words in English letters — “oyaata kohomadha” — and each word turns into Sinhala Unicode while you type."
+      },
+      {
+        "title": "Fix and format",
+        "desc": "Backspace corrects the last English letter of the word you are typing. Paste a whole Singlish paragraph and convert it in one click."
+      },
+      {
+        "title": "Copy or download",
+        "desc": "Copy Unicode Sinhala for Facebook, WhatsApp or email, download PDF or Word, or grab FM Abhaya text for your design."
+      }
+    ],
+    "featuresEyebrow": "Features",
+    "featuresTitle": "Everything you need to write in Sinhala",
+    "features": [
+      {
+        "title": "Live Singlish to Sinhala",
+        "desc": "Natural Singlish spelling: th = ත, dh = ද, aa = ා. See every word convert as you type."
+      },
+      {
+        "title": "Sinhala voice typing",
+        "desc": "Speak in Sinhala and the words appear in the editor. Free, in Chrome and Edge."
+      },
+      {
+        "title": "Paste and convert",
+        "desc": "Got a Singlish message or post? Paste it and convert the whole thing at once."
+      },
+      {
+        "title": "FM Abhaya converter",
+        "desc": "Turn Unicode Sinhala into FM Abhaya legacy text for Photoshop, posters and old templates."
+      },
+      {
+        "title": "Sinhala to Singlish",
+        "desc": "Convert Sinhala script back to English letters for chats, captions and names."
+      },
+      {
+        "title": "Private and free",
+        "desc": "Everything runs in your browser. Nothing is uploaded, nothing is stored on our servers, and there is no limit."
+      }
+    ],
+    "faqEyebrow": "FAQ",
+    "faqTitle": "Singlish typing questions",
+    "faqItems": [
+      {
+        "q": "How do I type Sinhala using English letters?",
+        "a": "Type each word the way it sounds in English letters, for example “mama gedhara yanavaa”. The tool turns it into Sinhala Unicode (මම ගෙදර යනවා) as you type. Use th for ත, dh for ද, t for ට and d for ඩ, and double a vowel to make it long (aa = ා)."
+      },
+      {
+        "q": "Is this Sinhala keyboard free?",
+        "a": "Yes. The Singlish typing tool is completely free with no sign-up and no limits. It runs in your browser, so there is nothing to install."
+      },
+      {
+        "q": "Is the output Sinhala Unicode?",
+        "a": "Yes. The text is standard Sinhala Unicode, so it works on Facebook, WhatsApp, Gmail, Word, Google Docs and websites without any special font."
+      },
+      {
+        "q": "How do I convert Unicode Sinhala to FM Abhaya?",
+        "a": "Type or paste Sinhala in the editor and open the FM Abhaya tab under “Other formats”. Copy that text into Photoshop or Illustrator and set the font to FM Abhaya."
+      },
+      {
+        "q": "Can I type Sinhala by voice?",
+        "a": "Yes. Press Speak and talk in Sinhala. Voice typing uses your browser's built-in speech recognition and works best in Chrome and Edge. For long recordings and higher accuracy, use HelaVoice transcription."
+      },
+      {
+        "q": "Is my text saved or uploaded?",
+        "a": "Your text stays in your browser. It is saved locally so it is still there if you refresh, and it is never sent to our servers."
+      },
+      {
+        "q": "How do I type ං, ඳ or ශ්‍රී?",
+        "a": "Type x for ං (laxkaava → ලංකාව), zdh for ඳ, zg for ඟ, and shrii for ශ්‍රී. The key guide on this page lists every letter."
+      }
+    ],
+    "ctaTitle": "Tired of typing? Just speak.",
+    "ctaSubtitle": "HelaVoice turns Sinhala recordings and voice notes into editable text with AI. Start with free minutes.",
+    "ctaButton": "Try Sinhala voice to text"
   }
 }

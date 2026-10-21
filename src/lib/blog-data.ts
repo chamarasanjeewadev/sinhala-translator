@@ -14,6 +14,29 @@ export type PostMeta = {
 
 export const blogPosts: PostMeta[] = [
   {
+    slug: "how-to-type-sinhala-using-singlish",
+    title: "How to Type Sinhala Using English Letters (Singlish): A Complete Guide",
+    excerpt:
+      "Turn the way you already chat into proper Sinhala Unicode. Learn the Singlish typing rules (th = ත, dh = ද, aa = ා), convert pasted paragraphs, type by voice and get FM Abhaya text — free, no install.",
+    author: "HelaVoice Editorial Team",
+    date: "2026-10-21",
+    dateModified: "2026-10-21",
+    categories: ["Sinhala Typing", "Free Tools", "Guide"],
+    keywords: [
+      "singlish to sinhala",
+      "how to type sinhala",
+      "sinhala typing",
+      "type sinhala using english letters",
+      "sinhala unicode typing",
+      "online sinhala keyboard",
+      "unicode to fm abhaya",
+      "සිංහල ටයිප්",
+    ],
+    image: "/images/blog/how-to-type-sinhala-using-singlish.svg",
+    language: "en",
+    readTime: "6 min read",
+  },
+  {
     slug: "sinhala-voice-to-text",
     title: "Sinhala Voice to Text: Free Online Converter (2026 Guide)",
     excerpt:

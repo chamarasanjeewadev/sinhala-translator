@@ -12,7 +12,6 @@ import {
   Check,
   X,
   LogOut,
-  Download,
   Upload,
   Loader2,
   AlertCircle,
@@ -26,6 +25,8 @@ import { LocaleLink } from "@/components/locale-link";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { MarkdownView } from "@/components/markdown-view";
 import { MarkdownEditorPane } from "@/components/markdown-editor-pane";
+import { ExportMenu, type ExportMenuLabels } from "@/components/export-menu";
+import type { ExportSource } from "@/lib/transcript-export";
 import { useDictionary } from "@/lib/i18n/dictionary-context";
 import { apiErrorMessage } from "@/lib/client-error";
 import { useLocale } from "@/lib/i18n/locale-context";
@@ -456,15 +457,24 @@ export function DashboardContent({
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  const handleDownload = (text: string, id: string) => {
-    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `transcription-${id.slice(0, 8)}.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
+  const exportLabels: ExportMenuLabels = {
+    download: d.download,
+    pdf: d.exportPdf,
+    word: d.exportWord,
+    text: d.exportText,
+    markdown: d.exportMarkdown,
+    pdfHint: d.exportPdfHint,
+    failed: d.exportFailed,
   };
+
+  const exportSource = (t: Transcription): ExportSource => ({
+    id: t.id,
+    title: t.title,
+    createdAt: t.created_at,
+    sinhala: t.transcription_text,
+    english: t.english_translation,
+    labels: { sinhala: d.sinhala, english: d.english },
+  });
 
   const handleDelete = async (id: string) => {
     if (!confirm(d.deleteConfirm)) return;
@@ -1150,14 +1160,11 @@ export function DashboardContent({
                           <span className="hidden sm:inline">{d.copy}</span>
                         </button>
 
-                        <button
-                          onClick={() => handleDownload(t.transcription_text, t.id)}
-                          title={d.download}
-                          className="flex items-center gap-1.5 bg-[#e7eeff] hover:bg-[#d8e3fb] text-[#340075] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
-                        >
-                          <Download className="w-3.5 h-3.5" />
-                          <span className="hidden sm:inline">{d.download}</span>
-                        </button>
+                        <ExportMenu
+                          source={() => exportSource(t)}
+                          labels={exportLabels}
+                          compact
+                        />
 
                         <button
                           onClick={() => handleDelete(t.id)}
@@ -1205,12 +1212,18 @@ export function DashboardContent({
                   })}
                 </p>
               </div>
+              <div className="flex items-center gap-2">
+              <ExportMenu
+                source={() => exportSource(viewTranscription)}
+                labels={exportLabels}
+              />
               <button
                 onClick={() => setViewTranscription(null)}
                 className="w-9 h-9 rounded-full bg-[#f0f3ff] hover:bg-[#e7eeff] flex items-center justify-center transition-colors"
               >
                 <X className="w-4 h-4 text-[#4a4452]" />
               </button>
+              </div>
             </div>
 
             {/* Body — Sinhala + English side by side */}
@@ -1308,7 +1321,7 @@ export function DashboardContent({
           onClick={() => !isSaving && closeEditModal()}
         >
           <div
-            className="bg-[#ffffff] rounded-3xl shadow-[0_24px_64px_rgba(17,28,45,0.18)] w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden"
+            className="bg-[#ffffff] rounded-3xl shadow-[0_24px_64px_rgba(17,28,45,0.18)] w-full max-w-5xl h-[92vh] sm:h-[88vh] flex flex-col overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
@@ -1351,6 +1364,15 @@ export function DashboardContent({
                   textClassName="sinhala-text"
                   ariaLabel={d.sinhala}
                   autoFocus
+                  singlish
+                  singlishLabels={{
+                    toggle: d.singlishToggle,
+                    on: d.singlishOn,
+                    off: d.singlishOff,
+                    guideTitle: d.singlishGuideTitle,
+                    guideHint: d.singlishGuideHint,
+                    previewIdle: d.singlishPreviewIdle,
+                  }}
                 />
               </div>
 

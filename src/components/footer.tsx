@@ -71,6 +71,14 @@ export function Footer({ locale, dict }: FooterProps) {
               </li>
               <li>
                 <Link
+                  href={lp("/singlish-to-sinhala")}
+                  className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                >
+                  {d.footerSinglishTool}
+                </Link>
+              </li>
+              <li>
+                <Link
                   href={lp("/qr-code-generator")}
                   className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
                 >

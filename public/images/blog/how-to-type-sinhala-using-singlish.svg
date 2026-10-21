@@ -1,0 +1,17 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#130030"/>
+      <stop offset="0.55" stop-color="#340075"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1360" cy="170" r="240" fill="#E879F9" fill-opacity="0.16"/>
+  <circle cx="220" cy="780" r="300" fill="#A78BFA" fill-opacity="0.14"/>
+  <rect x="200" y="250" width="1200" height="400" rx="40" fill="#FFFFFF" fill-opacity="0.08" stroke="#FFFFFF" stroke-opacity="0.18"/>
+  <text x="300" y="420" fill="#E9D5FF" font-family="Menlo, monospace" font-size="72">mama gedhara yanavaa</text>
+  <path d="M300 480 H 520" stroke="#F0ABFC" stroke-width="6" stroke-linecap="round"/>
+  <path d="M500 462 L 524 480 L 500 498" stroke="#F0ABFC" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="300" y="590" fill="#FFFFFF" font-family="Noto Sans Sinhala, Iskoola Pota, sans-serif" font-size="96" font-weight="700">මම ගෙදර යනවා</text>
+</svg>

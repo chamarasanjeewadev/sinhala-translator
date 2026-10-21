@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }> = [
     { path: '',                    priority: 1.0, changeFrequency: 'daily'   },
     { path: '/subtitles',          priority: 0.9, changeFrequency: 'weekly'  },
+    { path: '/singlish-to-sinhala', priority: 0.9, changeFrequency: 'weekly'  },
     { path: '/qr-code-generator',  priority: 0.9, changeFrequency: 'weekly'  },
     { path: '/pricing',        priority: 0.9, changeFrequency: 'weekly'  },
     { path: '/blog',           priority: 0.8, changeFrequency: 'daily'   },
