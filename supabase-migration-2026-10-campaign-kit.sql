@@ -322,7 +322,7 @@ returns table(recipient_id text, email text, name text, rank int)
 language sql stable security definer set search_path = public as $$
   select p.id::text, p.email, p.full_name, extract(epoch from p.created_at)::int
   from profiles p
-  where p.has_purchased = true and p.is_blocked = false
+  where exists (select 1 from purchases pu where pu.user_id = p.id) and p.is_blocked = false
     and p.email is not null and btrim(p.email) <> ''
 $$;
 
@@ -331,7 +331,7 @@ returns table(recipient_id text, email text, name text, rank int)
 language sql stable security definer set search_path = public as $$
   select p.id::text, p.email, p.full_name, extract(epoch from p.created_at)::int
   from profiles p
-  where p.has_purchased = false and p.is_blocked = false
+  where not exists (select 1 from purchases pu where pu.user_id = p.id) and p.is_blocked = false
     and p.email is not null and btrim(p.email) <> ''
 $$;
 
