@@ -30,7 +30,7 @@ for (const name of files) {
   if (!existsSync(p)) { lines.push(`| ${name} | not done | | | | | | | |`); continue; }
   const r = JSON.parse(readFileSync(p, "utf8"));
   const final = r.paragraphs.join(" ").split(" ").length;
-  lines.push(`| ${r.base} | ${mmss(r.durationSeconds)} | ${mmss(r.speechSeconds)} | ${r.passWords.join("/")} → ${final} | ${r.restored.length} | ${r.doubtful.length} | ${r.onlyA.length} | ${r.dense.length} | ${r.repeats.length} |`);
+  lines.push(`| ${r.base} | ${mmss(r.durationSeconds)} | ${r.speechSeconds == null ? "—" : mmss(r.speechSeconds)} | ${r.passWords.join("/")} → ${final} | ${r.restored.length} | ${r.doubtful.length} | ${r.onlyA.length} | ${r.dense.length} | ${r.repeats.length} |`);
   toReview += r.doubtful.length + r.onlyA.length + r.dense.length + r.repeats.length;
   if (r.restored.length + r.doubtful.length + r.onlyA.length + r.dense.length + r.repeats.length === 0) continue;
   detail.push(`## ${r.base}`, "");

@@ -14,7 +14,7 @@
 //   4. output validation: chatty English replies or empty chunks are retried.
 // Resumable: everything is cached under $WORK. See README.md.
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, writeFileSync, rmSync, renameSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync, rmSync, renameSync } from "node:fs";
 import { join } from "node:path";
 import { GoogleGenerativeAI, type UsageMetadata } from "@google/generative-ai";
 import { transcribeWithGemini } from "../../src/lib/gemini-transcribe.ts";
@@ -259,7 +259,11 @@ for (const f of files) {
   // downloads. A local copy in $WORK/source/<file name> is used if present.
   const Lp = join(dir, "left.raw"), Rp = join(dir, "right.raw");
   if (!existsSync(Rp)) {
-    const local = join(WORK, "source", f.name);
+    // Match the original Drive name loosely ("1 ii.wav" ≈ "1_ii.wav").
+    const loose = (n: string) => n.toLowerCase().replace(/[\s_]+/g, "");
+    const sourceDir = join(WORK, "source");
+    const match = existsSync(sourceDir) ? readdirSync(sourceDir).find((n) => loose(n) === loose(f.name)) : undefined;
+    const local = join(sourceDir, match ?? f.name);
     const src = existsSync(local) ? local : join(dir, "source.part");
     if (!existsSync(local)) {
       const url = `https://drive.usercontent.google.com/download?id=${f.id}&export=download&confirm=t`;
