@@ -101,6 +101,7 @@ export async function POST(request: Request) {
     // Silent or unclear audio — no credit deducted
     return privateJson({
       translatedText: "",
+      originalText: "",
       detectedLanguage: translationResult.detectedLanguage,
       targetLanguage: translationResult.targetLanguage,
       audioBase64: null,
@@ -149,6 +150,7 @@ export async function POST(request: Request) {
 
   return privateJson({
     translatedText: translationResult.translatedText,
+    originalText: translationResult.originalText,
     detectedLanguage: translationResult.detectedLanguage,
     targetLanguage: translationResult.targetLanguage,
     audioBase64,

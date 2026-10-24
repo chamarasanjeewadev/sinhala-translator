@@ -25,6 +25,8 @@ export interface TranslateAudioOptions {
 export interface TranslateAudioResult {
   /** Translated text (in the language opposite to what was detected). */
   translatedText: string;
+  /** Verbatim transcription of what was spoken (empty when silent). */
+  originalText: string;
   /** ISO 639-1 code of the detected language ("si" or the foreignLanguage). */
   detectedLanguage: string;
   /** ISO 639-1 code of the output language. */
@@ -155,6 +157,7 @@ If the audio is silent or unclear, return empty strings for originalText and tra
 
   return {
     translatedText: parsed.translatedText?.trim() ?? "",
+    originalText: parsed.originalText?.trim() ?? "",
     detectedLanguage,
     targetLanguage,
     model: modelName,
@@ -213,6 +216,7 @@ async function translateWithOpenAI(
   if (!sourceText) {
     return {
       translatedText: "",
+      originalText: "",
       detectedLanguage: foreignLanguage,
       targetLanguage: "si",
       model: `${model}+gpt-4o-mini`,
@@ -256,6 +260,7 @@ async function translateWithOpenAI(
     };
     return {
       translatedText: data.choices[0]?.message?.content?.trim() ?? "",
+      originalText: sourceText,
       detectedLanguage,
       targetLanguage,
       model: `${model}+${chatModel}`,

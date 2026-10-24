@@ -146,6 +146,20 @@ export function Navbar() {
                   {d.singlishTool}
                   <NewBadge label={d.new} />
                 </LocaleLink>
+
+                <LocaleLink
+
+                  href="/english-to-sinhala"
+
+                  className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
+
+                >
+
+                  {d.translate}
+
+                  <NewBadge label={d.new} />
+
+                </LocaleLink>
                 <LocaleLink
                   href="/qr-code-generator"
                   className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
@@ -191,6 +205,13 @@ export function Navbar() {
                     className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
                   >
                     {d.singlishTool}
+                    <NewBadge label={d.new} />
+                  </LocaleLink>
+                  <LocaleLink
+                    href="/english-to-sinhala"
+                    className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
+                  >
+                    {d.translate}
                     <NewBadge label={d.new} />
                   </LocaleLink>
                   <LocaleLink
@@ -296,6 +317,13 @@ export function Navbar() {
                   <NewBadge label={d.new} />
                 </LocaleLink>
                 <LocaleLink
+                  href="/english-to-sinhala"
+                  className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
+                >
+                  {d.translate}
+                  <NewBadge label={d.new} />
+                </LocaleLink>
+                <LocaleLink
                   href="/qr-code-generator"
                   className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
                 >
@@ -329,6 +357,13 @@ export function Navbar() {
                   className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
                 >
                   {d.singlishTool}
+                  <NewBadge label={d.new} />
+                </LocaleLink>
+                <LocaleLink
+                  href="/english-to-sinhala"
+                  className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
+                >
+                  {d.translate}
                   <NewBadge label={d.new} />
                 </LocaleLink>
                 <LocaleLink

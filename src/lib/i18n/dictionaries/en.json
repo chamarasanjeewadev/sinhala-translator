@@ -15,7 +15,8 @@
     "qrGenerator": "QR Generator",
     "new": "NEW",
     "getStarted": "Get Started",
-    "singlishTool": "Sinhala Typing"
+    "singlishTool": "Sinhala Typing",
+    "translate": "Translate"
   },
   "landing": {
     "badge": "AI-Powered Sinhala Transcription",
@@ -163,7 +164,9 @@
         "a": "HelaVoice accepts MP3, WAV, WebM, OGG, FLAC, and M4A files, up to 25MB per upload. You can also record directly in your browser without installing anything."
       }
     ],
-    "footerSinglishTool": "Singlish to Sinhala"
+    "footerSinglishTool": "Singlish to Sinhala",
+    "footerEnSi": "English to Sinhala",
+    "footerSiEn": "Sinhala to English"
   },
   "auth": {
     "logInTitle": "Log In",
@@ -810,5 +813,137 @@
     "supportTitle": "Chat with us on WhatsApp",
     "supportBody": "The fastest way to reach us. Send a WhatsApp message to {number} — messages only, no phone calls.",
     "pricingQuestion": "or WhatsApp"
+  },
+  "translatorTool": {
+    "ui": {
+      "english": "English",
+      "sinhala": "Sinhala (සිංහල)",
+      "swap": "Swap languages",
+      "sourcePlaceholderEn": "Type or paste English text…",
+      "sourcePlaceholderSi": "සිංහලෙන් ලියන්න — or type Singlish (ayubowan → ආයුබෝවන්)…",
+      "resultPlaceholder": "Your translation appears here",
+      "translate": "Translate",
+      "translating": "Translating…",
+      "copy": "Copy",
+      "copied": "Copied",
+      "clear": "Clear",
+      "listen": "Listen",
+      "listenFailed": "Couldn't play audio. Please try again.",
+      "chars": "{count} / {limit}",
+      "limitHint": "Free: up to 500 characters per translation. Sign in for 5,000.",
+      "limitHintSignedIn": "Signed in: up to 5,000 characters per translation.",
+      "tooLong": "Text is too long — the limit is {limit} characters.",
+      "rateLimited": "Too many translations in a minute. Please wait a moment.",
+      "failed": "Translation failed. Please try again.",
+      "serviceBusy": "Our service is busy right now. Please try again in a few minutes.",
+      "singlishOn": "Singlish typing on",
+      "singlishOff": "Singlish typing off",
+      "previewIdle": "Type Singlish — it turns into Sinhala as you type",
+      "speak": "Speak",
+      "stopRecording": "Stop & translate",
+      "uploadAudio": "Upload audio",
+      "processingAudio": "Listening and translating…",
+      "audioHint": "Speak English or Sinhala — we detect it, translate it and read it aloud. 1 credit per clip (max 2 min).",
+      "audioLoginTitle": "Sign in to translate speech",
+      "audioLoginBody": "Voice translation uses credits. New accounts get free credits — text translation stays free without an account.",
+      "signUp": "Sign up free",
+      "logIn": "Log in",
+      "noCredits": "You're out of credits for voice translation.",
+      "buyCredits": "Buy credits",
+      "micDenied": "Microphone access was blocked. Allow it in your browser and try again.",
+      "noSpeech": "We couldn't hear any speech. Try again a little closer to the mic.",
+      "audioTooLong": "Only the first {seconds} seconds were translated.",
+      "heard": "We heard:"
+    },
+    "enSi": {
+      "metaTitle": "English to Sinhala Translation — Free Online Translator",
+      "metaDescription": "Translate English to Sinhala free online. Natural AI translation into Sinhala Unicode, listen to the Sinhala pronunciation, or speak English and hear it in Sinhala.",
+      "heroBadge": "Free English → Sinhala translator",
+      "heroTitle": "English to Sinhala translation",
+      "heroSubtitle": "Type or paste English and get natural Sinhala in seconds. Tap Listen to hear it, or just speak English and hear the Sinhala translation."
+    },
+    "siEn": {
+      "metaTitle": "Sinhala to English Translation — Free Online Translator",
+      "metaDescription": "Translate Sinhala to English free online. Type Sinhala or Singlish, paste Unicode text, or speak Sinhala and get an accurate English translation you can listen to.",
+      "heroBadge": "Free Sinhala → English translator",
+      "heroTitle": "Sinhala to English translation",
+      "heroSubtitle": "Type Sinhala (or Singlish — it converts as you type), paste Unicode text, or speak Sinhala. Get a natural English translation in seconds."
+    },
+    "howEyebrow": "How it works",
+    "howTitle": "Translate in three steps",
+    "howSteps": [
+      {
+        "title": "Type, paste or speak",
+        "desc": "Enter English or Sinhala text — Singlish works too — or press Speak and talk in either language."
+      },
+      {
+        "title": "Get a natural translation",
+        "desc": "Our AI translates the meaning, not word-for-word, and keeps your paragraphs, names and numbers."
+      },
+      {
+        "title": "Copy or listen",
+        "desc": "Copy the result into WhatsApp, email or a document, or press Listen to hear it read aloud."
+      }
+    ],
+    "featuresEyebrow": "Why HelaVoice",
+    "featuresTitle": "Built for Sinhala, not bolted on",
+    "features": [
+      {
+        "title": "Both directions",
+        "desc": "English to Sinhala and Sinhala to English in one tool — swap with a single tap."
+      },
+      {
+        "title": "Voice translation",
+        "desc": "Speak English or Sinhala; we detect the language, translate it and read the translation aloud."
+      },
+      {
+        "title": "Hear the pronunciation",
+        "desc": "Listen to any Sinhala or English text with natural text-to-speech."
+      },
+      {
+        "title": "Singlish typing",
+        "desc": "No Sinhala keyboard? Type Singlish and it turns into Sinhala Unicode as you go."
+      },
+      {
+        "title": "Free text translation",
+        "desc": "Translate up to 500 characters at a time with no account, or 5,000 when signed in."
+      },
+      {
+        "title": "Private by default",
+        "desc": "We translate your text and don't save it. Nothing is added to a public database."
+      }
+    ],
+    "faqEyebrow": "FAQ",
+    "faqTitle": "Questions about translation",
+    "faqItems": [
+      {
+        "q": "Is the English to Sinhala translator free?",
+        "a": "Yes. Text translation is free in both directions — up to 500 characters at a time without an account, or 5,000 characters when you sign in. Voice translation uses 1 credit per clip, and new accounts get free credits."
+      },
+      {
+        "q": "Can I translate Sinhala to English?",
+        "a": "Yes. Tap the swap button or open the Sinhala to English page. You can type Sinhala Unicode, paste text, type Singlish (it converts as you type) or speak Sinhala."
+      },
+      {
+        "q": "How accurate is the translation?",
+        "a": "It uses a modern AI model that translates meaning rather than word by word, so everyday text reads naturally. For legal, medical or official documents, have a fluent speaker check the result."
+      },
+      {
+        "q": "Can I hear how the Sinhala is pronounced?",
+        "a": "Yes. Press Listen under either box to hear the text read aloud in Sinhala or English."
+      },
+      {
+        "q": "How does voice translation work?",
+        "a": "Sign in, press Speak (or upload a short audio clip) and talk in English or Sinhala. We detect which one you spoke, show the transcript and translation, and play the translation aloud. Clips can be up to 2 minutes."
+      },
+      {
+        "q": "Do you store what I translate?",
+        "a": "No. Text you translate here isn't saved to your account or a public database. It's sent to our AI provider only to produce the translation."
+      }
+    ],
+    "ctaTitle": "Need a full Sinhala transcript?",
+    "ctaSubtitle": "Turn Sinhala recordings, meetings and voice notes into text — then translate them to English in one click.",
+    "ctaButton": "Try Sinhala voice to text",
+    "otherDirection": "Translate the other way"
   }
 }
