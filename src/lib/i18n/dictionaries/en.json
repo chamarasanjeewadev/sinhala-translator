@@ -797,5 +797,18 @@
     "ctaTitle": "Tired of typing? Just speak.",
     "ctaSubtitle": "HelaVoice turns Sinhala recordings and voice notes into editable text with AI. Start with free minutes.",
     "ctaButton": "Try Sinhala voice to text"
+  },
+  "whatsapp": {
+    "buttonLabel": "Chat with HelaVoice on WhatsApp",
+    "popupTitle": "HelaVoice Support",
+    "popupBody": "Hi! 👋 Have a question about transcription, subtitles, credits or payments? Message us on WhatsApp and we will help you.",
+    "messagesOnly": "WhatsApp messages only — this number does not take phone calls.",
+    "startChat": "Chat on WhatsApp",
+    "close": "Close",
+    "prefill": "Hi HelaVoice, I need help with ",
+    "footerLabel": "WhatsApp (messages only):",
+    "supportTitle": "Chat with us on WhatsApp",
+    "supportBody": "The fastest way to reach us. Send a WhatsApp message to {number} — messages only, no phone calls.",
+    "pricingQuestion": "or WhatsApp"
   }
 }

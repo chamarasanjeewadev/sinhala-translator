@@ -8,6 +8,7 @@ import {
   Plus_Jakarta_Sans,
 } from "next/font/google";
 import "./globals.css";
+import { SUPPORT_EMAIL, whatsappLink } from "@/lib/contact";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -44,6 +45,13 @@ const organizationJsonLd = {
   description:
     "HelaVoice.lk — AI-powered Sinhala audio transcription tool for Sri Lankan creators, students, journalists, and businesses.",
   sameAs: ["https://grittech.lk"],
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer support",
+    email: SUPPORT_EMAIL,
+    url: whatsappLink(),
+    availableLanguage: ["English", "Sinhala"],
+  },
   parentOrganization: {
     "@type": "Organization",
     name: "GritTech",

@@ -797,5 +797,18 @@
     "ctaTitle": "ටයිප් කිරීමට මහන්සිද? කතා කරන්න.",
     "ctaSubtitle": "HelaVoice AI මඟින් සිංහල පටිගත කිරීම් සහ හඬ පණිවිඩ සංස්කරණය කළ හැකි පෙළ බවට හරවයි. නොමිලේ විනාඩි වලින් ආරම්භ කරන්න.",
     "ctaButton": "සිංහල හඬ පෙළට උත්සාහ කරන්න"
+  },
+  "whatsapp": {
+    "buttonLabel": "HelaVoice සමඟ WhatsApp හරහා කතා කරන්න",
+    "popupTitle": "HelaVoice සහාය",
+    "popupBody": "ආයුබෝවන්! 👋 පරිවර්තනය, උපසිරැසි, ක්‍රෙඩිට් හෝ ගෙවීම් ගැන ප්‍රශ්නයක් තිබේද? WhatsApp හරහා අපට පණිවිඩයක් එවන්න, අපි උදව් කරන්නෙමු.",
+    "messagesOnly": "WhatsApp පණිවිඩ පමණි — මෙම අංකයට දුරකථන ඇමතුම් ගත නොහැක.",
+    "startChat": "WhatsApp හරහා කතා කරන්න",
+    "close": "වසන්න",
+    "prefill": "ආයුබෝවන් HelaVoice, මට උදව් අවශ්‍යයි: ",
+    "footerLabel": "WhatsApp (පණිවිඩ පමණි):",
+    "supportTitle": "WhatsApp හරහා අප හා කතා කරන්න",
+    "supportBody": "අප අමතන වේගවත්ම ක්‍රමය. {number} වෙත WhatsApp පණිවිඩයක් එවන්න — පණිවිඩ පමණි, දුරකථන ඇමතුම් නොවේ.",
+    "pricingQuestion": "හෝ WhatsApp"
   }
 }

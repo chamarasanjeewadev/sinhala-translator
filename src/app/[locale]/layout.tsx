@@ -3,6 +3,7 @@ import { ViewTransitions } from "next-view-transitions";
 import { Toaster } from "@/components/ui/sonner";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { WhatsAppWidget } from "@/components/whatsapp-widget";
 import { DictionaryProvider } from "@/lib/i18n/dictionary-context";
 import { LocaleProvider } from "@/lib/i18n/locale-context";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
@@ -90,6 +91,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           <main>{children}</main>
         </ViewTransitions>
         <Footer locale={locale as Locale} dict={dict} />
+        <WhatsAppWidget />
         <Toaster />
       </DictionaryProvider>
     </LocaleProvider>

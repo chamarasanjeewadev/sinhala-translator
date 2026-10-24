@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { CREDIT_PACKAGES } from "@/lib/constants";
+import { WHATSAPP_NUMBER_DISPLAY, whatsappLink } from "@/lib/contact";
 import { useDictionary } from "@/lib/i18n/dictionary-context";
 import { useLocale } from "@/lib/i18n/locale-context";
 import { localePath } from "@/lib/i18n/utils";
@@ -386,6 +387,15 @@ export function PricingContent({
               className="text-violet-300 hover:text-violet-200 transition-colors"
             >
               hi@helavoice.lk
+            </a>{" "}
+            {dict.whatsapp.pricingQuestion}{" "}
+            <a
+              href={whatsappLink()}
+              target="_blank"
+              rel="noopener"
+              className="whitespace-nowrap text-[#4ade80] hover:text-[#86efac] transition-colors"
+            >
+              {WHATSAPP_NUMBER_DISPLAY}
             </a>
           </p>
           <Link

@@ -3,6 +3,8 @@ import { AudioWaveform } from "lucide-react";
 import { localePath } from "@/lib/i18n/utils";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/get-dictionary";
+import { WhatsAppIcon } from "@/components/whatsapp-icon";
+import { SUPPORT_EMAIL, WHATSAPP_NUMBER_DISPLAY, whatsappLink } from "@/lib/contact";
 
 type FooterProps = {
   locale: Locale;
@@ -39,10 +41,22 @@ export function Footer({ locale, dict }: FooterProps) {
             <p className="mt-4 text-sm font-medium text-[#a99fc4]">
               {d.footerContact}{" "}
               <a
-                href="mailto:hi@helavoice.lk"
+                href={`mailto:${SUPPORT_EMAIL}`}
                 className="text-violet-300 transition-colors hover:text-fuchsia-300"
               >
-                hi@helavoice.lk
+                {SUPPORT_EMAIL}
+              </a>
+            </p>
+            <p className="mt-2 text-sm font-medium text-[#a99fc4]">
+              {dict.whatsapp.footerLabel}{" "}
+              <a
+                href={whatsappLink()}
+                target="_blank"
+                rel="noopener"
+                className="inline-flex items-center gap-1.5 whitespace-nowrap text-[#4ade80] transition-colors hover:text-[#86efac]"
+              >
+                <WhatsAppIcon className="h-3.5 w-3.5" />
+                {WHATSAPP_NUMBER_DISPLAY}
               </a>
             </p>
           </div>
