@@ -28,11 +28,14 @@ export function ExportMenu({
   source,
   labels,
   compact = false,
+  onExported,
 }: {
   source: () => ExportSource;
   labels: ExportMenuLabels;
   /** Hide the text label on small screens (list rows). */
   compact?: boolean;
+  /** Called after a successful export (analytics hook). */
+  onExported?: (format: ExportFormat) => void;
 }) {
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState<ExportFormat | null>(null);
@@ -74,6 +77,7 @@ export function ExportMenu({
     setBusy(format);
     try {
       await exportTranscript(source(), format);
+      onExported?.(format);
       if (format === "pdf") toast.info(labels.pdfHint);
       setOpen(false);
     } catch {

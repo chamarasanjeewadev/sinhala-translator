@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Check, Copy, Mic, Square, Trash2, Wand2 } from "lucide-react";
+import { Check, Copy, Mic, Square, Trash2, Wand2, X } from "lucide-react";
 import { toast } from "sonner";
 import { useSinglishTyping } from "@/components/singlish/use-singlish-typing";
 import { SinglishWordPreview } from "@/components/singlish/singlish-word-preview";
@@ -9,13 +9,16 @@ import { ExportMenu } from "@/components/export-menu";
 import { singlishToSinhala } from "@/lib/singlish";
 import { sinhalaToSinglish } from "@/lib/sinhala-to-singlish";
 import { unicodeToFmAbhaya } from "@/lib/sinhala-legacy";
-import { useSinhalaVoiceTyping } from "./use-sinhala-voice-typing";
+import { trackEvent } from "@/lib/analytics";
+import { detectVoicePlatform, useSinhalaVoiceTyping, type VoicePlatform } from "./use-sinhala-voice-typing";
 
 const STORAGE_KEY = "hv-singlish-tool-text";
 
 export type SinglishToolLabels = Record<
   | "editorLabel" | "placeholder" | "singlishOn" | "singlishOff" | "previewIdle" | "listeningHint"
   | "voiceStart" | "voiceStop" | "voiceUnsupported" | "voiceDenied" | "voiceError"
+  | "voiceHelpTitle" | "voiceHelpIosChrome" | "voiceHelpIosSafari" | "voiceHelpIosOther"
+  | "voiceHelpAndroid" | "voiceHelpDesktop" | "voiceHelpService" | "voiceHelpPrivate" | "voiceHelpClose"
   | "convertPasted" | "convertedToast" | "nothingToConvert" | "copy" | "copied" | "clear"
   | "clearConfirm" | "words" | "chars" | "savedLocally" | "outputsTitle" | "tabLegacy"
   | "tabSinglish" | "legacyHint" | "singlishHint" | "outputEmpty" | "download" | "exportPdf"
@@ -30,6 +33,7 @@ function useCopy(copiedLabel: string) {
   const copy = async (key: string, text: string) => {
     try {
       await navigator.clipboard.writeText(text);
+      trackEvent("singlish_copy", { target: key, chars: text.length });
       setCopiedKey(key);
       toast.success(copiedLabel);
       setTimeout(() => setCopiedKey((k) => (k === key ? null : k)), 1800);
@@ -44,6 +48,8 @@ export function SinglishTool({ labels: l }: { labels: SinglishToolLabels }) {
   const [text, setText] = useState("");
   const [singlishOn, setSinglishOn] = useState(true);
   const [tab, setTab] = useState<OutputTab>("legacy");
+  const [voiceHelp, setVoiceHelp] = useState<{ kind: "denied" | "service"; platform: VoicePlatform } | null>(null);
+  const usedRef = useRef(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { copiedKey, copy } = useCopy(l.copied);
 
@@ -68,6 +74,14 @@ export function SinglishTool({ labels: l }: { labels: SinglishToolLabels }) {
     return () => clearTimeout(id);
   }, [text]);
 
+  // One "tool_used" per visit, on the first keystroke or paste — separates real use from bounces.
+  useEffect(() => {
+    if (text && !usedRef.current) {
+      usedRef.current = true;
+      trackEvent("singlish_tool_used", { singlish_on: singlishOn, platform: detectVoicePlatform() });
+    }
+  }, [text, singlishOn]);
+
   const { pending } = useSinglishTyping({ textareaRef, value: text, onChange: setText, enabled: singlishOn });
 
   // Insert recognised speech at the caret.
@@ -84,8 +98,24 @@ export function SinglishTool({ labels: l }: { labels: SinglishToolLabels }) {
   };
   const voice = useSinhalaVoiceTyping({
     onFinal: insertAtCaret,
-    onError: (kind) => toast.error(kind === "denied" ? l.voiceDenied : l.voiceError),
+    onError: (kind) => {
+      if (kind === "other") return void toast.error(l.voiceError);
+      const platform = detectVoicePlatform();
+      setVoiceHelp({ kind, platform });
+      trackEvent("voice_help_shown", { kind, platform });
+    },
   });
+
+  const voiceHelpSteps = (h: NonNullable<typeof voiceHelp>) => {
+    if (h.kind === "service") return l.voiceHelpService;
+    switch (h.platform) {
+      case "ios-chrome": return l.voiceHelpIosChrome;
+      case "ios-safari": return l.voiceHelpIosSafari;
+      case "ios-other": return l.voiceHelpIosOther;
+      case "android": return l.voiceHelpAndroid;
+      default: return l.voiceHelpDesktop;
+    }
+  };
 
   const convertPasted = () => {
     if (!/[A-Za-z]/.test(text)) {
@@ -93,6 +123,7 @@ export function SinglishTool({ labels: l }: { labels: SinglishToolLabels }) {
       return;
     }
     setText(singlishToSinhala(text));
+    trackEvent("singlish_convert_pasted", { chars: text.length });
     toast.success(l.convertedToast);
   };
 
@@ -120,6 +151,7 @@ export function SinglishTool({ labels: l }: { labels: SinglishToolLabels }) {
             role="switch"
             aria-checked={singlishOn}
             onClick={() => {
+              trackEvent("singlish_toggle", { enabled: !singlishOn });
               setSinglishOn((v) => !v);
               textareaRef.current?.focus();
             }}
@@ -144,7 +176,10 @@ export function SinglishTool({ labels: l }: { labels: SinglishToolLabels }) {
           {voice.supported ? (
             <button
               type="button"
-              onClick={voice.listening ? voice.stop : voice.start}
+              onClick={() => {
+                setVoiceHelp(null);
+                (voice.listening ? voice.stop : voice.start)();
+              }}
               className={`${pill} ${
                 voice.listening
                   ? "bg-[#ba1a1a] text-white hover:bg-[#93000a]"
@@ -158,6 +193,20 @@ export function SinglishTool({ labels: l }: { labels: SinglishToolLabels }) {
             <span className="text-xs text-[#4a4452]">{l.voiceUnsupported}</span>
           )}
         </div>
+
+        {voiceHelp && (
+          <div role="alert" className="mx-4 mt-3 rounded-2xl border border-[#ba1a1a]/25 bg-[#ffdad6]/50 p-3.5 text-xs leading-relaxed text-[#410002]">
+            <div className="flex items-start justify-between gap-2">
+              <p className="font-semibold">{voiceHelp.kind === "service" ? l.voiceError : l.voiceDenied}</p>
+              <button type="button" onClick={() => setVoiceHelp(null)} aria-label={l.voiceHelpClose} className="shrink-0 rounded-full p-0.5 hover:bg-black/10">
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+            <p className="mt-2 font-semibold">{l.voiceHelpTitle}</p>
+            <p className="mt-1">{voiceHelpSteps(voiceHelp)}</p>
+            <p className="mt-2 opacity-80">{l.voiceHelpPrivate}</p>
+          </div>
+        )}
 
         <label htmlFor="singlish-editor" className="sr-only">
           {l.editorLabel}
@@ -192,6 +241,7 @@ export function SinglishTool({ labels: l }: { labels: SinglishToolLabels }) {
             {l.convertPasted}
           </button>
           <ExportMenu
+            onExported={(format) => trackEvent("singlish_export", { format, chars: text.length })}
             source={() => ({
               id: "sinhala-text",
               title: l.docTitle,
@@ -235,7 +285,10 @@ export function SinglishTool({ labels: l }: { labels: SinglishToolLabels }) {
               role="tab"
               type="button"
               aria-selected={tab === key}
-              onClick={() => setTab(key)}
+              onClick={() => {
+                setTab(key);
+                trackEvent("singlish_output_tab", { tab: key });
+              }}
               className={`flex-1 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
                 tab === key ? "bg-white text-[#340075]" : "text-white/60 hover:text-white"
               }`}
