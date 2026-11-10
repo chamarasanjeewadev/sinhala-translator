@@ -166,7 +166,8 @@
     ],
     "footerSinglishTool": "Singlish to Sinhala",
     "footerEnSi": "English to Sinhala",
-    "footerSiEn": "Sinhala to English"
+    "footerSiEn": "Sinhala to English",
+    "footerTts": "Sinhala Text to Speech"
   },
   "auth": {
     "logInTitle": "Log In",
@@ -945,5 +946,76 @@
     "ctaSubtitle": "Turn Sinhala recordings, meetings and voice notes into text — then translate them to English in one click.",
     "ctaButton": "Try Sinhala voice to text",
     "otherDirection": "Translate the other way"
+  },
+  "textToSpeech": {
+    "metaTitle": "Sinhala Text to Speech – Free Online Sinhala Voice Generator | HelaVoice",
+    "metaDescription": "Type Sinhala or Singlish and turn it into natural-sounding speech. Pick a voice, listen instantly and download the audio. Your first minute is free.",
+    "heroBadge": "Sinhala Text to Speech",
+    "heroTitle": "Turn Sinhala text into natural speech",
+    "heroSubtitle": "Type or paste Sinhala — or type in Singlish — pick a voice and listen in seconds. Your first minute of audio is free.",
+    "ui": {
+      "placeholder": "Type or paste Sinhala text here…",
+      "voice": "Voice",
+      "generate": "Generate audio",
+      "generating": "Generating…",
+      "download": "Download WAV",
+      "chars": "{count} / {limit}",
+      "hintAnon": "Sign up free — your first minute of audio (about 700 characters) costs nothing.",
+      "hintFree": "{count} free characters left (about 1 minute).",
+      "hintPaid": "Free minute used. From now on it's 1 credit per 700 characters · {credits} credits left.",
+      "cost": "This text uses {credits} credit(s).",
+      "resultFree": "Done — free, no credits used.",
+      "resultCharged": "Done — {credits} credit(s) used, {left} left.",
+      "loginTitle": "Sign up to generate audio",
+      "loginBody": "Create a free account to get your first minute of Sinhala audio free.",
+      "noCredits": "You need more credits for this text.",
+      "tooLong": "Text is too long — the limit is {limit} characters.",
+      "rateLimited": "Too many requests in a minute. Please wait a moment.",
+      "failed": "Could not generate audio. Please try again.",
+      "singlishOn": "Singlish typing on",
+      "singlishOff": "Singlish typing off",
+      "previewIdle": "Type Singlish — it turns into Sinhala as you type",
+      "signUp": "Sign up free",
+      "logIn": "Log in",
+      "buyCredits": "Buy credits",
+      "serviceBusy": "Our service is busy right now. Please try again in a few minutes."
+    },
+    "voiceStyles": {
+      "Kore": "Firm",
+      "Aoede": "Breezy",
+      "Leda": "Youthful",
+      "Sulafat": "Warm",
+      "Puck": "Upbeat",
+      "Charon": "Informative",
+      "Orus": "Firm",
+      "Achird": "Friendly"
+    },
+    "faqEyebrow": "FAQ",
+    "faqTitle": "Sinhala text to speech — common questions",
+    "faqItems": [
+      {
+        "q": "Is Sinhala text to speech free?",
+        "a": "Your first minute of audio (about 700 characters) is free with a free HelaVoice account. After that it costs 1 credit per 700 characters, using the same credits as transcription and subtitles."
+      },
+      {
+        "q": "Can I type in English letters?",
+        "a": "Yes. Turn on Singlish typing and type words like “ayubowan” — they turn into Sinhala as you type. Then generate the audio."
+      },
+      {
+        "q": "How long can the text be?",
+        "a": "Up to 1,400 characters per audio clip, which is roughly two minutes of speech. For longer text, generate it in parts."
+      },
+      {
+        "q": "Can I download the audio?",
+        "a": "Yes. Every clip plays in your browser and can be downloaded as a WAV file."
+      },
+      {
+        "q": "Which voices are available?",
+        "a": "Eight voices with different characters — firm, breezy, youthful, warm, upbeat and more. Pick one before you generate."
+      }
+    ],
+    "ctaTitle": "Need Sinhala speech turned into text?",
+    "ctaSubtitle": "Transcribe Sinhala recordings, meetings and voice notes into text in minutes.",
+    "ctaButton": "Try Sinhala voice to text"
   }
 }
