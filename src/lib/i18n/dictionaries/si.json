@@ -16,7 +16,9 @@
     "new": "අලුත්",
     "getStarted": "ආරම්භ කරන්න",
     "singlishTool": "සිංහල ටයිප්",
-    "translate": "පරිවර්තනය"
+    "translate": "පරිවර්තනය",
+    "textToSpeech": "ටෙක්ස්ට් ටු ස්පීච්",
+    "tools": "මෙවලම්"
   },
   "landing": {
     "badge": "AI මඟින් බලගැන්වෙන සිංහල පරිවර්තනය",

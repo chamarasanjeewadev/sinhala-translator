@@ -3,7 +3,7 @@
 import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
-import { Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { CreditBalance } from "@/components/credit-balance";
 import { LocaleLink } from "@/components/locale-link";
 import { LanguageSwitcher } from "@/components/language-switcher";
@@ -18,6 +18,76 @@ function NewBadge({ label }: { label: string }) {
     <span className="ml-1.5 inline-flex items-center rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] font-bold uppercase leading-none tracking-wide text-white shadow-[0_0_10px_rgba(239,68,68,0.7)] animate-pulse">
       {label}
     </span>
+  );
+}
+
+// Desktop-only dropdown: six flat links no longer fit the bar, so the tool pages live here.
+function ToolsMenu({
+  label,
+  newLabel,
+  items,
+}: {
+  label: string;
+  newLabel: string;
+  items: { href: string; label: string; isNew: boolean }[];
+}) {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => setOpen(false), [pathname]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      if (!ref.current?.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        aria-haspopup="menu"
+        className="inline-flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
+      >
+        {label}
+        <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
+        <NewBadge label={newLabel} />
+      </button>
+      {open && (
+        <div
+          role="menu"
+          className="absolute left-0 top-full mt-2 min-w-[230px] rounded-2xl border border-white/10 p-1.5 shadow-xl"
+          style={{
+            background: "rgba(7,0,15,0.96)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+          }}
+        >
+          {items.map((i) => (
+            <LocaleLink
+              key={i.href}
+              href={i.href}
+              role="menuitem"
+              className="flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
+            >
+              {i.label}
+              {i.isNew && <NewBadge label={newLabel} />}
+            </LocaleLink>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -89,6 +159,12 @@ export function Navbar() {
   }
 
   const d = dict.navbar;
+  const tools = [
+    { href: "/singlish-to-sinhala", label: d.singlishTool, isNew: true },
+    { href: "/english-to-sinhala", label: d.translate, isNew: true },
+    { href: "/sinhala-text-to-speech", label: d.textToSpeech, isNew: true },
+    { href: "/qr-code-generator", label: d.qrGenerator, isNew: false },
+  ];
 
   return (
     <div className="sticky top-0 z-50 w-screen max-w-[100vw] overflow-x-clip">
@@ -120,7 +196,7 @@ export function Navbar() {
           </LocaleLink>
 
           {/* ── Desktop nav ───────────────────────────────────────────── */}
-          <div className="hidden md:flex items-center gap-2">
+          <div className="hidden lg:flex items-center gap-2 whitespace-nowrap">
             <LanguageSwitcher />
 
             {user ? (
@@ -139,33 +215,7 @@ export function Navbar() {
                   {d.subtitles}
                 </LocaleLink>
 
-                <LocaleLink
-                  href="/singlish-to-sinhala"
-                  className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
-                >
-                  {d.singlishTool}
-                  <NewBadge label={d.new} />
-                </LocaleLink>
-
-                <LocaleLink
-
-                  href="/english-to-sinhala"
-
-                  className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
-
-                >
-
-                  {d.translate}
-
-                  <NewBadge label={d.new} />
-
-                </LocaleLink>
-                <LocaleLink
-                  href="/qr-code-generator"
-                  className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
-                >
-                  {d.qrGenerator}
-                </LocaleLink>
+                <ToolsMenu label={d.tools} newLabel={d.new} items={tools} />
 
                 <LocaleLink href="/pricing">
                   <button className="hero-primary-button inline-flex items-center gap-1.5 rounded-2xl px-5 py-2 text-sm font-semibold text-white hover:opacity-90 transition-opacity">
@@ -175,7 +225,7 @@ export function Navbar() {
 
                 {credits !== null && <CreditBalance credits={credits} />}
 
-                <div className="flex flex-col items-end">
+                <div className="hidden xl:flex flex-col items-end">
                   <span className="text-[11px] font-medium text-white/35 leading-none mb-0.5">
                     Logged in as
                   </span>
@@ -200,26 +250,7 @@ export function Navbar() {
                   >
                     {d.subtitles}
                   </LocaleLink>
-                  <LocaleLink
-                    href="/singlish-to-sinhala"
-                    className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
-                  >
-                    {d.singlishTool}
-                    <NewBadge label={d.new} />
-                  </LocaleLink>
-                  <LocaleLink
-                    href="/english-to-sinhala"
-                    className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
-                  >
-                    {d.translate}
-                    <NewBadge label={d.new} />
-                  </LocaleLink>
-                  <LocaleLink
-                    href="/qr-code-generator"
-                    className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
-                  >
-                    {d.qrGenerator}
-                  </LocaleLink>
+                  <ToolsMenu label={d.tools} newLabel={d.new} items={tools} />
                   <LocaleLink
                     href="/pricing"
                     className="px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/8 transition-colors"
@@ -251,7 +282,7 @@ export function Navbar() {
           </div>
 
           {/* ── Mobile right side ─────────────────────────────────────── */}
-          <div className="flex md:hidden items-center gap-2">
+          <div className="flex lg:hidden items-center gap-2">
             {user && (
               <>
                 {/* Buy Credits — primary CTA always visible on mobile */}
@@ -279,7 +310,7 @@ export function Navbar() {
       {/* ── Mobile dropdown ───────────────────────────────────────────── */}
       {mobileMenuOpen && (
         <div
-          className="md:hidden border-b border-white/8 px-5 pb-5 pt-3"
+          className="lg:hidden border-b border-white/8 px-5 pb-5 pt-3"
           style={{
             background: "rgba(7,0,15,0.95)",
             backdropFilter: "blur(20px)",
@@ -324,6 +355,13 @@ export function Navbar() {
                   <NewBadge label={d.new} />
                 </LocaleLink>
                 <LocaleLink
+                  href="/sinhala-text-to-speech"
+                  className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
+                >
+                  {d.textToSpeech}
+                  <NewBadge label={d.new} />
+                </LocaleLink>
+                <LocaleLink
                   href="/qr-code-generator"
                   className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
                 >
@@ -364,6 +402,13 @@ export function Navbar() {
                   className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
                 >
                   {d.translate}
+                  <NewBadge label={d.new} />
+                </LocaleLink>
+                <LocaleLink
+                  href="/sinhala-text-to-speech"
+                  className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/8 transition-colors"
+                >
+                  {d.textToSpeech}
                   <NewBadge label={d.new} />
                 </LocaleLink>
                 <LocaleLink

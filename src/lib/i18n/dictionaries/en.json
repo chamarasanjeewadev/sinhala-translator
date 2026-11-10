@@ -16,7 +16,9 @@
     "new": "NEW",
     "getStarted": "Get Started",
     "singlishTool": "Sinhala Typing",
-    "translate": "Translate"
+    "translate": "Translate",
+    "textToSpeech": "Text to Speech",
+    "tools": "Tools"
   },
   "landing": {
     "badge": "AI-Powered Sinhala Transcription",
