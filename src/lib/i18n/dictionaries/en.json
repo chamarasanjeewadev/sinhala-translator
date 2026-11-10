@@ -989,7 +989,14 @@
       "signUp": "Sign up free",
       "logIn": "Log in",
       "buyCredits": "Buy credits",
-      "serviceBusy": "Our service is busy right now. Please try again in a few minutes."
+      "serviceBusy": "Our service is busy right now. Please try again in a few minutes.",
+      "tryExample": "Try an example",
+      "voiceHint": "Press play to hear each voice before you choose.",
+      "previewVoice": "Hear {voice}",
+      "stopPreview": "Stop preview",
+      "play": "Play",
+      "pause": "Pause",
+      "seek": "Seek"
     },
     "voiceStyles": {
       "Kore": "Firm",
