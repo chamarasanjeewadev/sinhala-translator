@@ -88,6 +88,13 @@ export function useSinhalaVoiceTyping({
     rec.lang = "si-LK";
     rec.continuous = true;
     rec.interimResults = true;
+    const reset = () => {
+      if (recRef.current !== rec) return;
+      session.current.startedAt = 0;
+      recRef.current = null;
+      setListening(false);
+      setInterim("");
+    };
     rec.onresult = (e) => {
       let pendingText = "";
       for (let i = e.resultIndex; i < e.results.length; i++) {
@@ -113,8 +120,10 @@ export function useSinhalaVoiceTyping({
         trackEvent("voice_typing_error", { error: e.error, kind, permission, platform: detectVoicePlatform() }),
       );
       handlers.current.onError(kind);
+      reset(); // iOS never fires onend after an error, which left the button stuck on "Stop"
     };
     rec.onend = () => {
+      if (recRef.current !== rec) return; // already reset by onerror (or a stale recognizer)
       const { startedAt, segments, chars, errored } = session.current;
       if (startedAt && !errored) {
         trackEvent("voice_typing_session", {
@@ -124,10 +133,7 @@ export function useSinhalaVoiceTyping({
           platform: detectVoicePlatform(),
         });
       }
-      session.current.startedAt = 0;
-      recRef.current = null;
-      setListening(false);
-      setInterim("");
+      reset();
     };
     recRef.current = rec;
     session.current = { startedAt: Date.now(), segments: 0, chars: 0, errored: false };
