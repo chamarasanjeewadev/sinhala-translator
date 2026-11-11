@@ -71,14 +71,14 @@ function SubtitlePreview({ label, langLabel }: { label: string; langLabel: strin
 
   return (
     <div
-      className="w-full max-w-md rounded-[1.6rem] border border-white/10 bg-white/[0.04] p-2.5 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(124,58,237,0.45)]"
+      className="w-full max-w-md rounded-[1.6rem] border border-ink/10 bg-white/60 p-2.5 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(143,208,176,0.45)]"
       style={{ animation: "heroFadeUp .8s cubic-bezier(.22,1,.36,1) .3s both" }}
     >
       {/* The "video" frame */}
-      <div className="relative aspect-video overflow-hidden rounded-[1.2rem] bg-[radial-gradient(120%_120%_at_20%_0%,#3b1a78_0%,#1a0838_45%,#0b0118_100%)]">
+      <div className="relative aspect-video overflow-hidden rounded-[1.2rem] bg-[radial-gradient(120%_120%_at_20%_0%,#3a4a42_0%,#1f2a24_45%,#15201b_100%)]">
         {/* Ambient scene light */}
-        <div className="pointer-events-none absolute -left-10 -top-10 h-48 w-48 rounded-full bg-[radial-gradient(circle,rgba(232,121,249,0.35),transparent_65%)] blur-xl" />
-        <div className="pointer-events-none absolute bottom-0 right-0 h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(124,58,237,0.4),transparent_60%)] blur-xl" />
+        <div className="pointer-events-none absolute -left-10 -top-10 h-48 w-48 rounded-full bg-[radial-gradient(circle,rgba(244,176,143,0.35),transparent_65%)] blur-xl" />
+        <div className="pointer-events-none absolute bottom-0 right-0 h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(143,208,176,0.4),transparent_60%)] blur-xl" />
 
         {/* Top chrome: language + CC */}
         <div className="absolute inset-x-0 top-0 flex items-center gap-2 p-3">
@@ -93,8 +93,8 @@ function SubtitlePreview({ label, langLabel }: { label: string; langLabel: strin
 
         {/* Center play control */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="flex h-14 w-14 items-center justify-center rounded-full border border-white/25 bg-white/10 backdrop-blur-md sub-play-pulse">
-            <Play className="ml-0.5 h-5 w-5 fill-white text-white" />
+          <span className="flex h-14 w-14 items-center justify-center rounded-full border border-ink/10 bg-white/60 backdrop-blur-md sub-play-pulse">
+            <Play className="ml-0.5 h-5 w-5 fill-white text-ink" />
           </span>
         </div>
 
@@ -124,7 +124,7 @@ function SubtitlePreview({ label, langLabel }: { label: string; langLabel: strin
             <span className="hero-live-dot absolute inset-0 rounded-full bg-emerald-400" />
             <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-400" />
           </span>
-          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/40">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-ink/55">
             {label}
           </span>
         </div>
@@ -132,7 +132,7 @@ function SubtitlePreview({ label, langLabel }: { label: string; langLabel: strin
           {TIMELINE_BLOCKS.map((width, i) => (
             <span
               key={i}
-              className="h-full rounded-[5px] border border-violet-400/30 bg-gradient-to-b from-violet-500/40 to-violet-700/40"
+              className="h-full rounded-[5px] border border-leaf/30 bg-gradient-to-b from-leaf/40 to-leaf/40"
               style={{ flexGrow: width }}
             />
           ))}
@@ -151,26 +151,26 @@ function SubtitlePreview({ label, langLabel }: { label: string; langLabel: strin
 
 export function SubtitlesHero({ locale, copy, creditRate }: SubtitlesHeroProps) {
   return (
-    <section className="hero-noise relative overflow-hidden bg-[linear-gradient(155deg,#07000f_0%,#0d0020_52%,#150033_100%)] text-white">
-      <div className="pointer-events-none absolute -right-24 -top-24 h-[40rem] w-[40rem] rounded-full bg-[radial-gradient(circle,rgba(124,58,237,0.22)_0%,transparent_60%)] hero-glow-slow" />
-      <div className="pointer-events-none absolute -bottom-24 left-0 h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(circle,rgba(232,121,249,0.12)_0%,transparent_65%)] hero-glow-delayed" />
-      <div className="pointer-events-none absolute left-0 right-0 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(124,58,237,.5)_30%,rgba(232,121,249,.4)_70%,transparent)]" />
+    <section className="hero-noise relative overflow-hidden bg-transparent text-ink">
+      <div className="pointer-events-none absolute -right-24 -top-24 h-[40rem] w-[40rem] rounded-full bg-[radial-gradient(circle,rgba(143,208,176,0.22)_0%,transparent_60%)] hero-glow-slow" />
+      <div className="pointer-events-none absolute -bottom-24 left-0 h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(circle,rgba(244,176,143,0.12)_0%,transparent_65%)] hero-glow-delayed" />
+      <div className="pointer-events-none absolute left-0 right-0 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(143,208,176,.5)_30%,rgba(244,176,143,.4)_70%,transparent)]" />
 
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-14 px-4 py-16 sm:px-6 lg:flex-row lg:items-center lg:gap-12 lg:px-8 lg:py-24">
         {/* Copy column */}
         <div className="lg:w-[52%]">
           <div
-            className="inline-flex items-center gap-2 self-start rounded-full border border-violet-400/25 bg-violet-500/12 px-3 py-1.5"
+            className="inline-flex items-center gap-2 self-start rounded-full border border-leaf/25 bg-mint/70 px-3 py-1.5"
             style={{ animation: "heroFadeUp .55s cubic-bezier(.22,1,.36,1) both" }}
           >
-            <Sparkles className="h-3.5 w-3.5 text-violet-300" />
-            <span className="text-xs font-semibold uppercase tracking-[0.16em] text-violet-200">
+            <Sparkles className="h-3.5 w-3.5 text-leaf" />
+            <span className="text-xs font-semibold uppercase tracking-[0.16em] text-leaf">
               {copy.heroBadge}
             </span>
           </div>
 
           <p
-            className="mt-6 text-xs font-semibold uppercase tracking-[0.22em] text-violet-300/90 sm:text-[13px]"
+            className="mt-6 text-xs font-semibold uppercase tracking-[0.22em] text-leaf/90 sm:text-[13px]"
             style={{ animation: "heroFadeUp .55s cubic-bezier(.22,1,.36,1) .05s both" }}
           >
             {copy.heroEyebrow}
@@ -186,7 +186,7 @@ export function SubtitlesHero({ locale, copy, creditRate }: SubtitlesHeroProps) 
           </h1>
 
           <p
-            className="mt-6 max-w-[46ch] text-[clamp(.95rem,1.5vw,1.08rem)] leading-relaxed text-white/60"
+            className="mt-6 max-w-[46ch] text-[clamp(.95rem,1.5vw,1.08rem)] leading-relaxed text-ink/65"
             style={{ animation: "heroFadeUp .6s cubic-bezier(.22,1,.36,1) .15s both" }}
           >
             {copy.heroSubtitle}
@@ -206,7 +206,7 @@ export function SubtitlesHero({ locale, copy, creditRate }: SubtitlesHeroProps) 
             </Link>
             <a
               href="#how-it-works"
-              className="inline-flex items-center rounded-2xl border border-white/10 bg-white/[0.06] px-5 py-3.5 text-sm font-semibold text-white/65 transition-colors hover:text-white"
+              className="inline-flex items-center rounded-2xl border border-ink/10 bg-white/60 px-5 py-3.5 text-sm font-semibold text-ink/70 transition-colors hover:text-ink"
             >
               {copy.ctaSecondary} <span className="ml-1">↓</span>
             </a>
@@ -217,15 +217,15 @@ export function SubtitlesHero({ locale, copy, creditRate }: SubtitlesHeroProps) 
             className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3"
             style={{ animation: "heroFadeUp .6s cubic-bezier(.22,1,.36,1) .27s both" }}
           >
-            <span className="inline-flex items-center gap-2 text-xs text-white/50">
+            <span className="inline-flex items-center gap-2 text-xs text-ink/55">
               <span className="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-400/15">
                 <Lock className="h-2.5 w-2.5 text-emerald-300" />
               </span>
-              <span className="font-medium text-white/75">{copy.privacyBadge}</span>
+              <span className="font-medium text-ink/80">{copy.privacyBadge}</span>
             </span>
-            <span className="inline-flex items-center gap-2 text-xs text-white/50">
+            <span className="inline-flex items-center gap-2 text-xs text-ink/55">
               <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
-              <span className="font-medium text-white/75">
+              <span className="font-medium text-ink/80">
                 {t(copy.rateBadge, { rate: creditRate })}
               </span>
             </span>
@@ -236,14 +236,14 @@ export function SubtitlesHero({ locale, copy, creditRate }: SubtitlesHeroProps) 
             className="mt-10"
             style={{ animation: "heroFadeUp .6s cubic-bezier(.22,1,.36,1) .33s both" }}
           >
-            <p className="mb-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/35">
+            <p className="mb-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-ink/55">
               {copy.exportsIntro}
             </p>
             <div className="flex flex-wrap gap-2">
               {EXPORT_TARGETS.map((target) => (
                 <span
                   key={target}
-                  className="rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-1 font-mono text-[11px] font-medium text-white/60"
+                  className="rounded-lg border border-ink/10 bg-white/60 px-2.5 py-1 font-mono text-[11px] font-medium text-ink/65"
                 >
                   {target}
                 </span>

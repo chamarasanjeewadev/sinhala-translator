@@ -138,7 +138,7 @@ export function DesignPanel({
                 className={cn(
                   "rounded-xl border px-2 py-2 text-center transition-colors",
                   active && !locked
-                    ? "border-violet-500 bg-violet-50"
+                    ? "border-leaf bg-mint/50"
                     : "border-slate-200 hover:border-slate-300",
                   locked && "opacity-50 cursor-not-allowed"
                 )}
@@ -152,7 +152,7 @@ export function DesignPanel({
           })}
         </div>
         {design.logoDataUrl && (
-          <p className="text-[11px] text-violet-600 mt-2">
+          <p className="text-[11px] text-leaf mt-2">
             {copy.logoForcesHigh}
           </p>
         )}
@@ -188,7 +188,7 @@ export function DesignPanel({
           <button
             type="button"
             onClick={() => fileRef.current?.click()}
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 px-4 py-6 text-sm font-medium text-slate-500 hover:border-violet-400 hover:text-violet-600"
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 px-4 py-6 text-sm font-medium text-slate-500 hover:border-leaf hover:text-leaf"
           >
             <ImagePlus className="h-5 w-5" />
             {copy.logoUpload}
@@ -206,7 +206,7 @@ export function DesignPanel({
               onChange={(e) =>
                 onChange({ logoSize: parseFloat(e.target.value) })
               }
-              className="w-full accent-violet-600"
+              className="w-full accent-leaf"
             />
           </div>
         )}
@@ -220,7 +220,7 @@ export function DesignPanel({
           value={design.caption}
           onChange={(e) => onChange({ caption: e.target.value })}
           placeholder={copy.captionPlaceholder}
-          className="h-9 w-full rounded-md border border-slate-300 bg-transparent px-3 text-sm text-slate-900 placeholder:text-slate-400 shadow-xs outline-none focus-visible:border-violet-500 focus-visible:ring-[3px] focus-visible:ring-violet-500/30"
+          className="h-9 w-full rounded-md border border-slate-300 bg-transparent px-3 text-sm text-slate-900 placeholder:text-slate-400 shadow-xs outline-none focus-visible:border-leaf focus-visible:ring-[3px] focus-visible:ring-leaf/30"
         />
       </Section>
     </div>
@@ -239,7 +239,7 @@ function Section({
   return (
     <details open className="group rounded-2xl border border-slate-200 bg-white">
       <summary className="flex cursor-pointer list-none items-center gap-2.5 px-4 py-3.5 text-sm font-semibold text-slate-900">
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-50 text-violet-600">
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-mint/50 text-leaf">
           <Icon className="h-4 w-4" />
         </span>
         {title}
@@ -277,7 +277,7 @@ function PillGroup<T extends string>({
           className={cn(
             "rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors",
             value === o.value
-              ? "border-violet-500 bg-violet-50 text-violet-700"
+              ? "border-leaf bg-mint/50 text-leaf"
               : "border-slate-200 text-slate-600 hover:border-slate-300"
           )}
         >
@@ -340,7 +340,7 @@ function Toggle({
       <span
         className={cn(
           "relative h-5 w-9 rounded-full transition-colors",
-          checked ? "bg-violet-600" : "bg-slate-300"
+          checked ? "bg-ink" : "bg-slate-300"
         )}
       >
         <span

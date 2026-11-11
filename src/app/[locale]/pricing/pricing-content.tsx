@@ -122,18 +122,18 @@ export function PricingContent({
   };
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(155deg,#07000f_0%,#0d0020_50%,#130030_100%)] text-white">
+    <div className="min-h-screen bg-transparent text-ink">
       {/* Ambient glows */}
-      <div className="pointer-events-none fixed -right-20 -top-20 h-[42rem] w-[42rem] rounded-full bg-[radial-gradient(circle,rgba(124,58,237,0.18)_0%,transparent_60%)]" />
-      <div className="pointer-events-none fixed bottom-0 left-0 h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgba(52,0,117,0.14)_0%,transparent_65%)]" />
+      <div className="pointer-events-none fixed -right-20 -top-20 h-[42rem] w-[42rem] rounded-full bg-[radial-gradient(circle,rgba(143,208,176,0.18)_0%,transparent_60%)]" />
+      <div className="pointer-events-none fixed bottom-0 left-0 h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgba(124,195,221,0.14)_0%,transparent_65%)]" />
 
       <div className="relative z-10 mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-12">
 
         {/* ── Hero header ─────────────────────────────────────────────── */}
         <div className="mb-20 text-center">
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-violet-400/25 bg-violet-500/12 px-3.5 py-1.5">
-            <Sparkles className="h-3.5 w-3.5 text-violet-300" />
-            <span className="text-xs font-semibold uppercase tracking-[0.18em] text-violet-200">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-leaf/25 bg-mint/70 px-3.5 py-1.5">
+            <Sparkles className="h-3.5 w-3.5 text-leaf" />
+            <span className="text-xs font-semibold uppercase tracking-[0.18em] text-leaf">
               Transparent Pricing
             </span>
           </div>
@@ -142,7 +142,7 @@ export function PricingContent({
             Simple,{" "}
             <span
               style={{
-                background: "linear-gradient(130deg,#b78eff 0%,#e879f9 55%,#f9a8d4 100%)",
+                background: "linear-gradient(130deg,#c2643a 0%,#2f7d5b 55%,#2f7fa0 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -151,9 +151,9 @@ export function PricingContent({
               flexible pricing
             </span>
           </h1>
-          <p className="mx-auto max-w-[42ch] text-[1.05rem] leading-relaxed text-white/55">
+          <p className="mx-auto max-w-[42ch] text-[1.05rem] leading-relaxed text-ink/60">
             Buy credits once, use them anytime.{" "}
-            <span className="font-medium text-white/80">No subscriptions, no commitments.</span>
+            <span className="font-medium text-ink/85">No subscriptions, no commitments.</span>
           </p>
 
           {/* Credit model pills */}
@@ -177,7 +177,7 @@ export function PricingContent({
                     ? "border-emerald-400/25 bg-emerald-500/10 text-emerald-300"
                     : color === "sky"
                     ? "border-sky-400/25 bg-sky-500/10 text-sky-300"
-                    : "border-violet-400/25 bg-violet-500/10 text-violet-200"
+                    : "border-leaf/25 bg-mint/70 text-leaf"
                 }`}
               >
                 <Check className="h-3 w-3" />
@@ -196,15 +196,15 @@ export function PricingContent({
 
           {/* Free tier — hidden while the free tier is disabled. */}
           {freeTier && (
-          <div className="relative flex flex-col overflow-hidden rounded-[1.35rem] border border-white/8 bg-white/4 p-7 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-white/15 hover:bg-white/6 lg:col-span-1">
+          <div className="relative flex flex-col overflow-hidden rounded-[1.35rem] border border-ink/10 bg-white/60 p-7 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-ink/10 hover:bg-white/80 lg:col-span-1">
             <div className="mb-6">
-              <div className="mb-1 text-xs font-bold uppercase tracking-widest text-white/40">
+              <div className="mb-1 text-xs font-bold uppercase tracking-widest text-ink/55">
                 Free
               </div>
               <div className="mb-1 flex items-end gap-1.5">
-                <span className="font-display text-5xl font-extrabold text-white">$0</span>
+                <span className="font-display text-5xl font-extrabold text-ink">$0</span>
               </div>
-              <p className="text-sm text-white/45">Free forever · {freeCredits} credits</p>
+              <p className="text-sm text-ink/55">Free forever · {freeCredits} credits</p>
             </div>
 
             <ul className="mb-8 flex-1 space-y-2.5">
@@ -214,7 +214,7 @@ export function PricingContent({
                 "Up to 25 MB per file",
                 "No credit card required",
               ].map((item) => (
-                <li key={item} className="flex items-start gap-2 text-sm text-white/70">
+                <li key={item} className="flex items-start gap-2 text-sm text-ink/75">
                   <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-emerald-400" />
                   <span>{item}</span>
                 </li>
@@ -223,7 +223,7 @@ export function PricingContent({
 
             <Link
               href={localePath("/signup", locale)}
-              className="block w-full rounded-2xl border border-white/12 bg-white/8 py-3 text-center text-sm font-bold text-white/80 transition-all hover:bg-white/14 hover:text-white"
+              className="block w-full rounded-2xl border border-ink/10 bg-white/60 py-3 text-center text-sm font-bold text-ink/85 transition-all hover:bg-white/80 hover:text-ink"
             >
               Get started free
             </Link>
@@ -248,9 +248,9 @@ export function PricingContent({
               return (
                 <div
                   key={pkg.id}
-                  className="relative flex flex-col rounded-[1.35rem] p-7 shadow-[0_28px_70px_rgba(124,58,237,0.45)] sm:col-span-2 lg:col-span-1"
+                  className="relative flex flex-col rounded-[1.35rem] p-7 border border-white/80 shadow-[0_28px_70px_rgba(143,208,176,0.45)] sm:col-span-2 lg:col-span-1"
                   style={{
-                    background: "linear-gradient(145deg,#4c0095 0%,#7c3aed 100%)",
+                    background: "linear-gradient(145deg,#ffd8c2 0%,#d9efcf 50%,#c6e6f0 100%)",
                   }}
                 >
                   {/* Shimmer overlay */}
@@ -258,13 +258,13 @@ export function PricingContent({
                     className="pointer-events-none absolute inset-0 rounded-[1.35rem]"
                     style={{
                       background:
-                        "linear-gradient(135deg,rgba(255,255,255,0.07) 0%,transparent 60%)",
+                        "linear-gradient(135deg,rgba(255,255,255,0.35) 0%,transparent 60%)",
                     }}
                   />
 
                   {/* Popular badge */}
                   <div className="absolute -top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <span className="inline-flex items-center gap-1 rounded-full bg-white px-3.5 py-1 text-[11px] font-black uppercase tracking-wider text-[#340075] shadow-lg">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-white px-3.5 py-1 text-[11px] font-black uppercase tracking-wider text-[#15201b] shadow-lg">
                       <Zap className="h-3 w-3" />
                       Most Popular
                     </span>
@@ -272,20 +272,20 @@ export function PricingContent({
 
                   <div className="relative mb-6 mt-5">
                     <div className="mb-1 flex items-end gap-1.5">
-                      <span className="font-display text-5xl font-extrabold text-white">
+                      <span className="font-display text-5xl font-extrabold text-ink">
                         {pkg.priceDisplay}
                       </span>
-                      <span className="mb-1.5 text-sm font-semibold text-white/50">one-time</span>
+                      <span className="mb-1.5 text-sm font-semibold text-ink/55">one-time</span>
                     </div>
-                    <p className="text-sm text-white/50">
+                    <p className="text-sm text-ink/55">
                       ${pricePerCredit}/min · {minutes} credits
                     </p>
                   </div>
 
                   <ul className="relative mb-8 flex-1 space-y-2.5">
                     {features.map((item) => (
-                      <li key={item} className="flex items-start gap-2 text-sm text-white/85">
-                        <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-white/70" />
+                      <li key={item} className="flex items-start gap-2 text-sm text-ink/90">
+                        <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-ink/75" />
                         <span className="font-medium">{item}</span>
                       </li>
                     ))}
@@ -294,7 +294,7 @@ export function PricingContent({
                   <button
                     onClick={() => handleBuy(pkg.id)}
                     disabled={isLoading || !authLoaded}
-                    className="relative block w-full rounded-2xl bg-white py-3.5 text-center text-sm font-black text-[#340075] shadow-[0_4px_16px_rgba(255,255,255,0.25)] transition-all hover:-translate-y-0.5 hover:bg-[#f0f3ff] hover:shadow-[0_8px_24px_rgba(255,255,255,0.35)] disabled:opacity-60"
+                    className="relative block w-full rounded-2xl bg-ink py-3.5 text-center text-sm font-black text-white shadow-[0_4px_16px_rgba(21,32,27,0.2)] transition-all hover:-translate-y-0.5 hover:bg-[#2c3a33] hover:shadow-[0_8px_24px_rgba(21,32,27,0.25)] disabled:opacity-60"
                   >
                     {isLoading ? "Redirecting…" : `Buy ${pkg.priceDisplay}`}
                   </button>
@@ -305,27 +305,27 @@ export function PricingContent({
             return (
               <div
                 key={pkg.id}
-                className="relative flex flex-col overflow-hidden rounded-[1.35rem] border border-white/8 bg-white/4 p-7 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-white/15 hover:bg-white/6 lg:col-span-1"
+                className="relative flex flex-col overflow-hidden rounded-[1.35rem] border border-ink/10 bg-white/60 p-7 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-ink/10 hover:bg-white/80 lg:col-span-1"
               >
                 <div className="mb-6">
-                  <div className="mb-1 text-xs font-bold uppercase tracking-widest text-white/40">
+                  <div className="mb-1 text-xs font-bold uppercase tracking-widest text-ink/55">
                     {pkg.name}
                   </div>
                   <div className="mb-1 flex items-end gap-1.5">
-                    <span className="font-display text-5xl font-extrabold text-white">
+                    <span className="font-display text-5xl font-extrabold text-ink">
                       {pkg.priceDisplay}
                     </span>
-                    <span className="mb-1.5 text-sm font-semibold text-white/40">one-time</span>
+                    <span className="mb-1.5 text-sm font-semibold text-ink/55">one-time</span>
                   </div>
-                  <p className="text-sm text-white/40">
+                  <p className="text-sm text-ink/55">
                     ${pricePerCredit}/min · {minutes} credits
                   </p>
                 </div>
 
                 <ul className="mb-8 flex-1 space-y-2.5">
                   {features.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm text-white/60">
-                      <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-violet-400" />
+                    <li key={item} className="flex items-start gap-2 text-sm text-ink/65">
+                      <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-leaf" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -334,7 +334,7 @@ export function PricingContent({
                 <button
                   onClick={() => handleBuy(pkg.id)}
                   disabled={isLoading || !authLoaded}
-                  className="block w-full rounded-2xl border border-white/12 bg-white/8 py-3 text-center text-sm font-bold text-white/80 transition-all hover:bg-white/14 hover:text-white disabled:opacity-60"
+                  className="block w-full rounded-2xl border border-ink/10 bg-white/60 py-3 text-center text-sm font-bold text-ink/85 transition-all hover:bg-white/80 hover:text-ink disabled:opacity-60"
                 >
                   {isLoading ? "Redirecting…" : `Buy ${pkg.priceDisplay}`}
                 </button>
@@ -343,7 +343,7 @@ export function PricingContent({
           })}
         </div>
 
-        <p className="mt-6 text-center text-xs text-white/35">
+        <p className="mt-6 text-center text-xs text-ink/55">
           Have a promo code? Enter it at checkout.
         </p>
 
@@ -370,21 +370,21 @@ export function PricingContent({
           ].map(({ q, a }) => (
             <div
               key={q}
-              className="rounded-[1.15rem] border border-white/8 bg-white/4 p-6 backdrop-blur-sm"
+              className="rounded-[1.15rem] border border-ink/10 bg-white/60 p-6 backdrop-blur-sm"
             >
-              <p className="mb-2 text-sm font-bold text-white/85">{q}</p>
-              <p className="text-sm leading-relaxed text-white/45">{a}</p>
+              <p className="mb-2 text-sm font-bold text-ink/90">{q}</p>
+              <p className="text-sm leading-relaxed text-ink/55">{a}</p>
             </div>
           ))}
         </div>
 
         {/* ── Bottom CTA ──────────────────────────────────────────────── */}
         <div className="mt-16 text-center">
-          <p className="mb-4 text-sm text-white/40">
+          <p className="mb-4 text-sm text-ink/55">
             Have questions? Contact us at{" "}
             <a
               href="mailto:hi@helavoice.lk"
-              className="text-violet-300 hover:text-violet-200 transition-colors"
+              className="text-leaf hover:text-leaf transition-colors"
             >
               hi@helavoice.lk
             </a>{" "}
@@ -400,7 +400,7 @@ export function PricingContent({
           </p>
           <Link
             href={localePath("/signup", locale)}
-            className="group inline-flex items-center gap-2 rounded-2xl border border-violet-400/25 bg-violet-500/12 px-6 py-3 text-sm font-semibold text-violet-200 transition-all hover:bg-violet-500/20 hover:text-white"
+            className="group inline-flex items-center gap-2 rounded-2xl border border-leaf/25 bg-mint/70 px-6 py-3 text-sm font-semibold text-leaf transition-all hover:bg-mint/70 hover:text-ink"
           >
             {freeTier ? `Start with ${freeCredits} free credits` : "Get started"}
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

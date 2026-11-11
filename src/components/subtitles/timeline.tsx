@@ -144,11 +144,11 @@ export function Timeline({
   };
 
   return (
-    <div className="rounded-xl bg-white/5 border border-white/10 p-3">
+    <div className="rounded-xl bg-white/60 border border-ink/10 p-3">
       <div className="flex items-center justify-end mb-1">
         <button
           onClick={() => setZoomed((z) => !z)}
-          className="p-1 text-white/40 hover:text-white transition-colors"
+          className="p-1 text-ink/55 hover:text-ink transition-colors"
           aria-label={zoomed ? "Zoom out" : "Zoom in"}
         >
           {zoomed ? (
@@ -175,11 +175,11 @@ export function Timeline({
           onPointerCancel={endDrag}
         >
           {/* Ruler */}
-          <div className="relative h-5 border-b border-white/10">
+          <div className="relative h-5 border-b border-ink/10">
             {ticks.map((t) => (
               <span
                 key={t}
-                className="absolute top-0 text-[10px] text-white/35 font-mono"
+                className="absolute top-0 text-[10px] text-ink/55 font-mono"
                 style={{ left: `${t * pxPerSec + 2}px` }}
               >
                 {formatRulerTime(t)}
@@ -200,28 +200,28 @@ export function Timeline({
                   onClick={(e) => e.stopPropagation()}
                   className={`absolute top-0 h-full rounded-md border px-1.5 py-1 overflow-hidden cursor-grab active:cursor-grabbing ${
                     seg.id === selectedId
-                      ? "bg-violet-600/60 border-violet-400"
-                      : "bg-[#1e3a8a]/60 border-blue-700/60 hover:bg-[#1e3a8a]/80"
+                      ? "bg-mint/70 border-leaf"
+                      : "bg-sky/80 border-[#2f7fa0]/40 hover:bg-sky"
                   }`}
                   style={{
                     left: `${start * pxPerSec}px`,
                     width: `${Math.max((end - start) * pxPerSec, 8)}px`,
                   }}
                 >
-                  <span className="block text-[10px] text-white/60 font-mono leading-none mb-0.5">
+                  <span className="block text-[10px] text-ink/65 font-mono leading-none mb-0.5">
                     {i + 1}
                   </span>
-                  <span className="block text-[11px] text-white/90 leading-tight line-clamp-2 break-all">
+                  <span className="block text-[11px] text-ink/95 leading-tight line-clamp-2 break-all">
                     {seg.text}
                   </span>
                   {/* Resize handles */}
                   <div
                     onPointerDown={(e) => beginDrag(e, seg, "resize-start")}
-                    className="absolute left-0 top-0 h-full w-1.5 cursor-ew-resize bg-white/20 opacity-0 hover:opacity-100"
+                    className="absolute left-0 top-0 h-full w-1.5 cursor-ew-resize bg-white/60 opacity-0 hover:opacity-100"
                   />
                   <div
                     onPointerDown={(e) => beginDrag(e, seg, "resize-end")}
-                    className="absolute right-0 top-0 h-full w-1.5 cursor-ew-resize bg-white/20 opacity-0 hover:opacity-100"
+                    className="absolute right-0 top-0 h-full w-1.5 cursor-ew-resize bg-white/60 opacity-0 hover:opacity-100"
                   />
                 </div>
               );

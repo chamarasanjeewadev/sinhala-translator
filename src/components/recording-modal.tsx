@@ -225,50 +225,50 @@ export function RecordingModal({
   const noCredits = credits <= 0;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-      <div className="bg-[#1a1a2e] border border-white/10 rounded-3xl w-full max-w-2xl mx-4 overflow-hidden shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/30 backdrop-blur-sm">
+      <div className="bg-white border border-ink/10 rounded-3xl w-full max-w-2xl mx-4 overflow-hidden shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-white/10">
+        <div className="flex items-center justify-between p-6 border-b border-ink/10">
           <div>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-ink">
               {d.transcribeTitle}
             </h2>
-            <p className="text-sm text-gray-400 mt-1">{d.transcribeDesc}</p>
+            <p className="text-sm text-ink/55 mt-1">{d.transcribeDesc}</p>
           </div>
           <button
             onClick={handleClose}
-            className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all"
+            className="w-10 h-10 bg-white/60 hover:bg-white/80 rounded-full flex items-center justify-center transition-all"
           >
-            <X className="w-5 h-5 text-white" />
+            <X className="w-5 h-5 text-ink" />
           </button>
         </div>
 
         {/* Confirmation State */}
         {modalState === "ready" && analyzeResult && (
           <div className="p-6">
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4">
+            <div className="bg-white/60 border border-ink/10 rounded-2xl p-6 space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-gray-400">{d.audioDuration}</span>
-                <span className="text-white font-mono font-bold">
+                <span className="text-ink/55">{d.audioDuration}</span>
+                <span className="text-ink font-mono font-bold">
                   {formatDuration(analyzeResult.durationSeconds)}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-gray-400">
+                <span className="text-ink/55">
                   {d.creditsRequired} ({d.perMinute})
                 </span>
-                <span className="text-white font-bold">
+                <span className="text-ink font-bold">
                   {analyzeResult.requiredCredits}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-gray-400">{d.creditsAvailable}</span>
-                <span className="text-white font-bold">
+                <span className="text-ink/55">{d.creditsAvailable}</span>
+                <span className="text-ink font-bold">
                   {analyzeResult.currentCredits}
                 </span>
               </div>
 
-              <div className="border-t border-white/10 pt-4 space-y-3">
+              <div className="border-t border-ink/10 pt-4 space-y-3">
                 <ToggleRow
                   label={d.conversationMode}
                   description={d.conversationModeDesc}
@@ -298,14 +298,14 @@ export function RecordingModal({
                   setAudioSource(null);
                   setAnalyzeResult(null);
                 }}
-                className="flex-1 py-4 rounded-xl font-bold bg-white/5 text-gray-400 hover:bg-white/10 transition-all"
+                className="flex-1 py-4 rounded-xl font-bold bg-white/60 text-ink/55 hover:bg-white/80 transition-all"
               >
                 {d.cancel}
               </button>
               <button
                 onClick={handleConfirmTranscribe}
                 disabled={!analyzeResult.canProceed}
-                className="flex-1 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white py-4 rounded-xl font-bold transition-all shadow-lg shadow-violet-500/25"
+                className="flex-1 bg-gradient-to-r from-[#15201b] to-[#2c3a33] hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-white py-4 rounded-xl font-bold transition-all shadow-lg shadow-leaf/25"
               >
                 {d.confirmTranscription}
               </button>
@@ -320,21 +320,21 @@ export function RecordingModal({
               {/* Progress bar */}
               <div>
                 <div className="flex items-center justify-between text-sm mb-2">
-                  <span className="text-gray-400">
+                  <span className="text-ink/55">
                     {d.processingChunk
                       .replace("{current}", String(currentChunk))
                       .replace("{total}", String(totalChunks))}
                   </span>
-                  <span className="text-gray-400">
+                  <span className="text-ink/55">
                     {totalChunks > 0
                       ? Math.round((currentChunk / totalChunks) * 100)
                       : 0}
                     %
                   </span>
                 </div>
-                <div className="w-full bg-white/10 rounded-full h-2">
+                <div className="w-full bg-white/60 rounded-full h-2">
                   <div
-                    className="bg-gradient-to-r from-violet-500 to-blue-500 h-2 rounded-full transition-all duration-500"
+                    className="bg-gradient-to-r from-leaf to-[#8fd0b0] h-2 rounded-full transition-all duration-500"
                     style={{
                       width: `${totalChunks > 0 ? (currentChunk / totalChunks) * 100 : 0}%`,
                     }}
@@ -344,14 +344,14 @@ export function RecordingModal({
 
               {/* Accumulated transcript preview */}
               {accumulatedText && (
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-4 max-h-48 overflow-y-auto">
-                  <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-wrap">
+                <div className="bg-white/60 border border-ink/10 rounded-2xl p-4 max-h-48 overflow-y-auto">
+                  <p className="text-sm text-ink/55 leading-relaxed whitespace-pre-wrap">
                     {accumulatedText}
                   </p>
                 </div>
               )}
 
-              <div className="flex items-center justify-center gap-2 text-gray-400">
+              <div className="flex items-center justify-center gap-2 text-ink/55">
                 <Loader2 className="w-5 h-5 animate-spin" />
                 <span>{d.transcribing}</span>
               </div>
@@ -362,7 +362,7 @@ export function RecordingModal({
         {/* Analyzing State */}
         {modalState === "analyzing" && (
           <div className="p-6">
-            <div className="flex items-center justify-center gap-2 text-gray-400 py-8">
+            <div className="flex items-center justify-center gap-2 text-ink/55 py-8">
               <Loader2 className="w-5 h-5 animate-spin" />
               <span>{d.analyzing}</span>
             </div>
@@ -374,15 +374,15 @@ export function RecordingModal({
           <>
             {/* Mode Tabs */}
             <div className="px-6 pt-6 pb-4">
-              <div className="flex gap-1 p-1 rounded-xl bg-white/5" role="tablist">
+              <div className="flex gap-1 p-1 rounded-xl bg-white/60" role="tablist">
                 <button
                   role="tab"
                   aria-selected={mode === "record"}
                   onClick={() => setMode("record")}
                   className={`flex-1 py-2.5 px-4 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 ${
                     mode === "record"
-                      ? "bg-gradient-to-r from-violet-600 to-blue-600 text-white shadow-sm"
-                      : "text-gray-400 hover:text-white"
+                      ? "bg-gradient-to-r from-[#15201b] to-[#2c3a33] text-white shadow-sm"
+                      : "text-ink/55 hover:text-ink"
                   }`}
                 >
                   <Mic className="w-4 h-4" />
@@ -394,8 +394,8 @@ export function RecordingModal({
                   onClick={() => setMode("upload")}
                   className={`flex-1 py-2.5 px-4 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 ${
                     mode === "upload"
-                      ? "bg-gradient-to-r from-violet-600 to-blue-600 text-white shadow-sm"
-                      : "text-gray-400 hover:text-white"
+                      ? "bg-gradient-to-r from-[#15201b] to-[#2c3a33] text-white shadow-sm"
+                      : "text-ink/55 hover:text-ink"
                   }`}
                 >
                   <Upload className="w-4 h-4" />
@@ -439,8 +439,8 @@ function ToggleRow({
   return (
     <div className="flex items-center justify-between gap-4">
       <div>
-        <p className="text-white text-sm font-semibold">{label}</p>
-        <p className="text-gray-400 text-xs mt-0.5">{description}</p>
+        <p className="text-ink text-sm font-semibold">{label}</p>
+        <p className="text-ink/55 text-xs mt-0.5">{description}</p>
       </div>
       <button
         type="button"
@@ -450,8 +450,8 @@ function ToggleRow({
         onClick={() => onChange(!checked)}
         className={`relative w-11 h-6 rounded-full transition-all shrink-0 ${
           checked
-            ? "bg-gradient-to-r from-violet-600 to-blue-600"
-            : "bg-white/10"
+            ? "bg-gradient-to-r from-[#15201b] to-[#2c3a33]"
+            : "bg-white/60"
         }`}
       >
         <span

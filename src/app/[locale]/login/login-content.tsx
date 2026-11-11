@@ -15,20 +15,20 @@ export default function LoginContent() {
 
   if (pkg) {
     return (
-      <div className="min-h-screen bg-[linear-gradient(155deg,#07000f_0%,#0d0020_50%,#130030_100%)] flex items-center justify-center px-4 py-16">
+      <div className="min-h-screen bg-transparent flex items-center justify-center px-4 py-16">
         <div className="w-full max-w-md space-y-5">
-          <div className="rounded-2xl border border-violet-400/25 bg-violet-500/12 px-6 py-5 backdrop-blur-sm">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-violet-300">
+          <div className="rounded-2xl border border-leaf/25 bg-mint/70 px-6 py-5 backdrop-blur-sm">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-leaf">
               You&apos;re purchasing
             </p>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xl font-bold text-white">{pkg.name} Pack</p>
-                <p className="mt-0.5 text-sm text-white/55">{pkg.credits} transcription credits</p>
+                <p className="text-xl font-bold text-ink">{pkg.name} Pack</p>
+                <p className="mt-0.5 text-sm text-ink/60">{pkg.credits} transcription credits</p>
               </div>
-              <span className="text-4xl font-extrabold text-white">{pkg.priceDisplay}</span>
+              <span className="text-4xl font-extrabold text-ink">{pkg.priceDisplay}</span>
             </div>
-            <div className="mt-4 flex items-center gap-2 text-xs text-white/45">
+            <div className="mt-4 flex items-center gap-2 text-xs text-ink/55">
               <Check className="h-3 w-3 flex-shrink-0 text-emerald-400" />
               <span>Credits never expire &middot; one-time payment &middot; no subscription</span>
             </div>
@@ -36,11 +36,11 @@ export default function LoginContent() {
 
           <AuthForm mode="login" packageId={packageId} />
 
-          <p className="text-center text-sm text-white/45">
+          <p className="text-center text-sm text-ink/55">
             {dict.auth.noAccount}{" "}
             <LocaleLink
               href={`/signup?package=${packageId}`}
-              className="text-violet-300 underline hover:text-violet-200 transition-colors"
+              className="text-leaf underline hover:text-leaf transition-colors"
             >
               {dict.auth.signUpLink}
             </LocaleLink>

@@ -23,7 +23,7 @@ function WaveConnector({ vertical = false }: { vertical?: boolean }) {
         aria-hidden
       >
         <span className="flow-line h-10 w-px rounded-full" />
-        <ArrowDown className="h-4 w-4 text-fuchsia-300/70" />
+        <ArrowDown className="h-4 w-4 text-ember/70" />
       </div>
     );
   }
@@ -43,7 +43,7 @@ function WaveConnector({ vertical = false }: { vertical?: boolean }) {
         ))}
       </div>
       <span className="flow-line h-px w-6 rounded-full" />
-      <ArrowRight className="h-4 w-4 text-fuchsia-300/70" />
+      <ArrowRight className="h-4 w-4 text-ember/70" />
     </div>
   );
 }
@@ -54,25 +54,25 @@ export function HowItWorks({ copy }: { copy: HowItWorksCopy }) {
   return (
     <section
       id="how-it-works"
-      className="relative overflow-hidden bg-[#07000f] px-6 py-24 sm:py-28 lg:px-8"
+      className="relative overflow-hidden bg-transparent px-6 py-24 sm:py-28 lg:px-8"
     >
       {/* Ambient glow, carried from the hero */}
-      <div className="pointer-events-none absolute -top-24 right-[12%] h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(124,58,237,0.16)_0%,transparent_65%)]" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(124,58,237,.4)_30%,rgba(232,121,249,.35)_70%,transparent)]" />
+      <div className="pointer-events-none absolute -top-24 right-[12%] h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(143,208,176,0.16)_0%,transparent_65%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(143,208,176,.4)_30%,rgba(244,176,143,.35)_70%,transparent)]" />
 
       <div className="relative z-10 mx-auto max-w-6xl">
         {/* Header — left-aligned editorial, mono eyebrow with a flow tick */}
         <div className="max-w-2xl">
           <div className="flex items-center gap-3">
             <span className="flow-line h-px w-8 rounded-full" />
-            <span className="section-eyebrow text-violet-300">
+            <span className="section-eyebrow text-leaf">
               {copy.eyebrow}
             </span>
           </div>
-          <h2 className="mt-5 font-display text-[clamp(2rem,4vw,3.25rem)] font-black leading-[1.05] tracking-tight text-white">
+          <h2 className="mt-5 font-display text-[clamp(2rem,4vw,3.25rem)] font-black leading-[1.05] tracking-tight text-ink">
             {copy.title}
           </h2>
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-[#a99fc4]">
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-[#8f9a94]">
             {copy.subtitle}
           </p>
         </div>
@@ -99,18 +99,18 @@ export function HowItWorks({ copy }: { copy: HowItWorksCopy }) {
                   </span>
 
                   <div className="relative z-10 flex items-center gap-3">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-violet-400/25 bg-violet-500/12">
-                      <Icon className="h-5 w-5 text-violet-200" />
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-leaf/25 bg-mint/70">
+                      <Icon className="h-5 w-5 text-leaf" />
                     </span>
-                    <span className="section-eyebrow text-fuchsia-300/80">
+                    <span className="section-eyebrow text-ember/80">
                       {numeral}
                     </span>
                   </div>
 
-                  <h3 className="relative z-10 mt-6 font-display text-xl font-bold text-white">
+                  <h3 className="relative z-10 mt-6 font-display text-xl font-bold text-ink">
                     {step.title}
                   </h3>
-                  <p className="relative z-10 mt-2.5 text-sm leading-relaxed text-[#a99fc4]">
+                  <p className="relative z-10 mt-2.5 text-sm leading-relaxed text-[#8f9a94]">
                     {step.desc}
                   </p>
                 </div>

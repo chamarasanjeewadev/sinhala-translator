@@ -79,32 +79,32 @@ export function SubtitlesContent({
   );
 
   return (
-    <div className="min-h-screen bg-[#0f0f1e] text-white">
+    <div className="min-h-screen bg-transparent text-ink">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10">
         <div className="mb-8">
           <h1 className="text-2xl font-bold mb-1">{d.title}</h1>
-          <p className="text-sm text-white/60">{d.subtitle}</p>
-          <p className="text-xs text-white/40 mt-1">
+          <p className="text-sm text-ink/65">{d.subtitle}</p>
+          <p className="text-xs text-ink/55 mt-1">
             {t(d.creditsLeft, { credits: initialCredits })} ·{" "}
             {t(d.rateNote, { rate: SUBTITLE_CREDITS_PER_MINUTE })}
           </p>
         </div>
 
         {/* New project */}
-        <div className="rounded-2xl bg-white/5 border border-white/10 p-6 mb-10">
+        <div className="rounded-2xl bg-white/60 border border-ink/10 p-6 mb-10">
           <h2 className="text-base font-semibold mb-1">{d.newProject}</h2>
-          <p className="text-xs text-white/50 mb-4">{d.privacyNote}</p>
+          <p className="text-xs text-ink/55 mb-4">{d.privacyNote}</p>
 
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs text-white/50">{d.audioLanguage}</span>
+            <span className="text-xs text-ink/55">{d.audioLanguage}</span>
             {(["si", "en"] as const).map((lang) => (
               <button
                 key={lang}
                 onClick={() => setLanguage(lang)}
                 className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
                   language === lang
-                    ? "bg-violet-600 border-violet-500 text-white"
-                    : "bg-white/5 border-white/15 text-white/60 hover:text-white"
+                    ? "bg-ink border-leaf text-white"
+                    : "bg-white/60 border-ink/10 text-ink/65 hover:text-ink"
                 }`}
               >
                 {lang === "si" ? d.sinhala : d.english}
@@ -114,8 +114,8 @@ export function SubtitlesContent({
 
           {creating ? (
             <div className="flex items-center justify-center gap-3 py-12">
-              <Loader2 className="w-5 h-5 text-violet-400 animate-spin" />
-              <span className="text-sm text-white/70">{d.creatingProject}</span>
+              <Loader2 className="w-5 h-5 text-leaf animate-spin" />
+              <span className="text-sm text-ink/75">{d.creatingProject}</span>
             </div>
           ) : (
             <VideoUploader onFileSelected={handleFileSelected} />
@@ -125,7 +125,7 @@ export function SubtitlesContent({
         {/* Project list */}
         <h2 className="text-base font-semibold mb-3">{d.yourProjects}</h2>
         {projects.length === 0 ? (
-          <p className="text-sm text-white/40">{d.noProjects}</p>
+          <p className="text-sm text-ink/55">{d.noProjects}</p>
         ) : (
           <div className="flex flex-col gap-2">
             {projects.map((project) => (
@@ -136,16 +136,16 @@ export function SubtitlesContent({
                     localePath(`/dashboard/subtitles/${project.id}`, locale)
                   )
                 }
-                className="group flex items-center gap-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 p-4 cursor-pointer transition-colors"
+                className="group flex items-center gap-4 rounded-xl bg-white/60 hover:bg-white/80 border border-ink/10 p-4 cursor-pointer transition-colors"
               >
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#340075] to-[#4c1d95] flex items-center justify-center shrink-0">
-                  <Clapperboard className="w-5 h-5 text-white" />
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#15201b] to-[#2c3a33] flex items-center justify-center shrink-0">
+                  <Clapperboard className="w-5 h-5 text-ink" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium truncate">
                     {project.title || project.video_filename}
                   </p>
-                  <p className="text-xs text-white/40">
+                  <p className="text-xs text-ink/55">
                     {formatDuration(project.video_duration_seconds)} ·{" "}
                     {t(d.segmentCount, { count: project.segments.length })}
                     {project.is_partial ? ` · ${d.partial}` : ""}
@@ -156,7 +156,7 @@ export function SubtitlesContent({
                     e.stopPropagation();
                     handleDelete(project.id);
                   }}
-                  className="p-2 text-white/30 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
+                  className="p-2 text-ink/55 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
                   aria-label={d.deleteProject}
                 >
                   <Trash2 className="w-4 h-4" />

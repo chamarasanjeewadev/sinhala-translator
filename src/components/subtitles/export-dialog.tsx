@@ -79,16 +79,16 @@ export function ExportDialog({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4">
-      <div className="rounded-2xl bg-[#1a1a2e] border border-white/10 p-6 max-w-md w-full">
+    <div className="fixed inset-0 z-50 bg-ink/30 flex items-center justify-center p-4">
+      <div className="rounded-2xl bg-white border border-ink/10 p-6 max-w-md w-full">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-white">{d.exportTitle}</h2>
+          <h2 className="text-lg font-semibold text-ink">{d.exportTitle}</h2>
           <button
             onClick={() => {
               abortRef.current?.abort();
               onClose();
             }}
-            className="p-1.5 text-white/50 hover:text-white transition-colors"
+            className="p-1.5 text-ink/55 hover:text-ink transition-colors"
             aria-label={d.cancel}
           >
             <X className="w-4 h-4" />
@@ -98,21 +98,21 @@ export function ExportDialog({
         {exporting ? (
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
-              <Loader2 className="w-5 h-5 text-violet-400 animate-spin" />
-              <p className="text-sm text-white/80">
+              <Loader2 className="w-5 h-5 text-leaf animate-spin" />
+              <p className="text-sm text-ink/85">
                 {d.exportingVideo} ({Math.round(progress * 100)}%)
               </p>
             </div>
-            <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+            <div className="h-2 rounded-full bg-white/60 overflow-hidden">
               <div
-                className="h-full bg-violet-500 transition-all"
+                className="h-full bg-ink transition-all"
                 style={{ width: `${progress * 100}%` }}
               />
             </div>
-            <p className="text-xs text-white/40">{d.keepTabOpen}</p>
+            <p className="text-xs text-ink/55">{d.keepTabOpen}</p>
             <button
               onClick={() => abortRef.current?.abort()}
-              className="self-start text-sm text-white/60 hover:text-white transition-colors"
+              className="self-start text-sm text-ink/65 hover:text-ink transition-colors"
             >
               {d.cancel}
             </button>
@@ -124,12 +124,12 @@ export function ExportDialog({
                 onExportSrt();
                 toast.success(d.exportDone);
               }}
-              className="flex items-center gap-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 p-4 text-left transition-colors"
+              className="flex items-center gap-3 rounded-xl bg-white/60 hover:bg-white/80 border border-ink/10 p-4 text-left transition-colors"
             >
-              <FileText className="w-5 h-5 text-violet-400 shrink-0" />
+              <FileText className="w-5 h-5 text-leaf shrink-0" />
               <div>
-                <p className="text-sm font-medium text-white">{d.exportSrt}</p>
-                <p className="text-xs text-white/50">{d.exportSrtDesc}</p>
+                <p className="text-sm font-medium text-ink">{d.exportSrt}</p>
+                <p className="text-xs text-ink/55">{d.exportSrtDesc}</p>
               </div>
             </button>
             <button
@@ -137,27 +137,27 @@ export function ExportDialog({
                 onExportVtt();
                 toast.success(d.exportDone);
               }}
-              className="flex items-center gap-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 p-4 text-left transition-colors"
+              className="flex items-center gap-3 rounded-xl bg-white/60 hover:bg-white/80 border border-ink/10 p-4 text-left transition-colors"
             >
-              <FileText className="w-5 h-5 text-violet-400 shrink-0" />
+              <FileText className="w-5 h-5 text-leaf shrink-0" />
               <div>
-                <p className="text-sm font-medium text-white">{d.exportVtt}</p>
-                <p className="text-xs text-white/50">{d.exportVttDesc}</p>
+                <p className="text-sm font-medium text-ink">{d.exportVtt}</p>
+                <p className="text-xs text-ink/55">{d.exportVttDesc}</p>
               </div>
             </button>
             {canExportVideo && videoFile ? (
               <button
                 onClick={handleExportMp4}
-                className="flex items-center gap-3 rounded-xl bg-violet-600/20 hover:bg-violet-600/30 border border-violet-500/40 p-4 text-left transition-colors"
+                className="flex items-center gap-3 rounded-xl bg-mint/70 hover:bg-mint/70 border border-leaf/40 p-4 text-left transition-colors"
               >
-                <FileVideo className="w-5 h-5 text-violet-300 shrink-0" />
+                <FileVideo className="w-5 h-5 text-leaf shrink-0" />
                 <div>
-                  <p className="text-sm font-medium text-white">{d.exportMp4}</p>
-                  <p className="text-xs text-white/50">{d.exportMp4Desc}</p>
+                  <p className="text-sm font-medium text-ink">{d.exportMp4}</p>
+                  <p className="text-xs text-ink/55">{d.exportMp4Desc}</p>
                 </div>
               </button>
             ) : (
-              <p className="text-xs text-white/40 px-1 pt-1">
+              <p className="text-xs text-ink/55 px-1 pt-1">
                 {!videoFile ? d.exportMp4NeedsVideo : d.exportMp4Unsupported}
               </p>
             )}

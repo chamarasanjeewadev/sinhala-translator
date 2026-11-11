@@ -54,53 +54,61 @@
 	--color-surface-container: var(--ds-surface-container);
 	--color-surface-high: var(--ds-surface-high);
 	--color-surface-highest: var(--ds-surface-highest);
+
+	/* Brand: soft pastel glass (mint / peach / sky on ink) */
+	--color-ink: #15201b;
+	--color-leaf: #2f7d5b;
+	--color-ember: #c2643a;
+	--color-mint: #cfe9d3;
+	--color-peach: #ffd8c2;
+	--color-sky: #c6e6f0;
 }
 
 :root {
 	--radius: 0.625rem;
 
-	/* Design System: "The Ethereal Scribe" — Purple-centric palette */
-	--background: #f9f9ff;
-	--foreground: #111c2d;
+	/* Design System: soft pastel glass — ink on mint/peach/sky */
+	--background: #f3f7f2;
+	--foreground: #15201b;
 	--card: #ffffff;
-	--card-foreground: #111c2d;
+	--card-foreground: #15201b;
 	--popover: #ffffff;
-	--popover-foreground: #111c2d;
-	--primary: #340075;
+	--popover-foreground: #15201b;
+	--primary: #15201b;
 	--primary-foreground: #ffffff;
-	--secondary: #0051d5;
+	--secondary: #2f7d5b;
 	--secondary-foreground: #ffffff;
-	--muted: #f0f3ff;
-	--muted-foreground: #4a4452;
-	--accent: #e7eeff;
-	--accent-foreground: #111c2d;
+	--muted: #eef3ec;
+	--muted-foreground: #5b6660;
+	--accent: #e6efe6;
+	--accent-foreground: #15201b;
 	--destructive: #ba1a1a;
-	--border: #ccc3d4;
-	--input: #f0f3ff;
-	--ring: #340075;
-	--chart-1: #4c1d95;
-	--chart-2: #0051d5;
-	--chart-3: #047857;
-	--chart-4: #d3bbff;
-	--chart-5: #b4c5ff;
+	--border: #d3dcd4;
+	--input: #eef3ec;
+	--ring: #2f7d5b;
+	--chart-1: #2f7d5b;
+	--chart-2: #2f7fa0;
+	--chart-3: #c2643a;
+	--chart-4: #cfe9d3;
+	--chart-5: #c6e6f0;
 
 	/* Surface hierarchy tokens */
-	--ds-surface: #f9f9ff;
-	--ds-surface-low: #f0f3ff;
+	--ds-surface: #f6f8f3;
+	--ds-surface-low: #eef3ec;
 	--ds-surface-lowest: #ffffff;
-	--ds-surface-container: #e7eeff;
-	--ds-surface-high: #dee8ff;
-	--ds-surface-highest: #d8e3fb;
+	--ds-surface-container: #e6efe6;
+	--ds-surface-high: #e1ece0;
+	--ds-surface-highest: #dbe7dc;
 
 	/* Sidebar */
-	--sidebar: #f0f3ff;
-	--sidebar-foreground: #111c2d;
-	--sidebar-primary: #340075;
+	--sidebar: #eef3ec;
+	--sidebar-foreground: #15201b;
+	--sidebar-primary: #15201b;
 	--sidebar-primary-foreground: #ffffff;
-	--sidebar-accent: #e7eeff;
-	--sidebar-accent-foreground: #111c2d;
-	--sidebar-border: #ccc3d4;
-	--sidebar-ring: #340075;
+	--sidebar-accent: #e6efe6;
+	--sidebar-accent-foreground: #15201b;
+	--sidebar-border: #d3dcd4;
+	--sidebar-ring: #2f7d5b;
 }
 
 .dark {
@@ -150,6 +158,12 @@
 	body {
 		@apply bg-background text-foreground font-sans;
 		overflow-x: clip;
+		/* Ambient pastel wash from the brand reference: peach top-left, mint centre, sky right */
+		background-image:
+			radial-gradient(60rem 40rem at 0% 0%, rgba(255, 216, 194, 0.55), transparent 60%),
+			radial-gradient(50rem 40rem at 100% 10%, rgba(198, 230, 240, 0.6), transparent 60%),
+			radial-gradient(60rem 50rem at 50% 100%, rgba(207, 233, 211, 0.6), transparent 60%);
+		background-attachment: fixed;
 	}
 }
 
@@ -157,20 +171,25 @@
 
 /* Glassmorphism panel — per DESIGN.md §2 "Glass & Gradient" rule */
 .glass-panel {
-	background: rgba(249, 249, 255, 0.7);
+	background: rgba(255, 255, 255, 0.6);
 	backdrop-filter: blur(20px);
 	-webkit-backdrop-filter: blur(20px);
-	border: 1px solid rgba(204, 195, 212, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.75);
 }
 
-/* Primary gradient — primary (#340075) to primary-container (#4c1d95) */
+/* Primary gradient — ink to soft ink */
 .bg-gradient-primary {
-	background: linear-gradient(135deg, #340075, #4c1d95);
+	background: linear-gradient(135deg, #15201b, #2c3a33);
+}
+
+/* Pastel iridescent fill (the reference's "AI" chip / orb) */
+.bg-gradient-pastel {
+	background: linear-gradient(135deg, #ffd8c2 0%, #d9efcf 50%, #c6e6f0 100%);
 }
 
 /* Text gradient helper */
 .text-gradient-primary {
-	background: linear-gradient(135deg, #340075, #4c1d95);
+	background: linear-gradient(135deg, #15201b, #2f7d5b);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	background-clip: text;
@@ -178,12 +197,12 @@
 
 /* Ambient shadow — per DESIGN.md §4 "Ambient Shadows" */
 .shadow-ambient {
-	box-shadow: 0 10px 30px rgba(17, 28, 45, 0.06);
+	box-shadow: 0 10px 30px rgba(21, 32, 27, 0.06);
 }
 
 /* Ghost border — per DESIGN.md §4 */
 .border-ghost {
-	border: 1px solid rgba(204, 195, 212, 0.15);
+	border: 1px solid rgba(21, 32, 27, 0.08);
 }
 
 /* Sinhala text needs extra line-height — per DESIGN.md §3 */
@@ -198,13 +217,13 @@
 	inset: 0;
 	pointer-events: none;
 	z-index: 1;
-	opacity: 0.04;
+	opacity: 0.025;
 	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 	background-size: 160px;
 }
 
 .hero-gradient-text {
-	background: linear-gradient(130deg, #b78eff 0%, #e879f9 55%, #f9a8d4 100%);
+	background: linear-gradient(130deg, #c2643a 0%, #2f7d5b 55%, #2f7fa0 100%);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	background-clip: text;
@@ -219,8 +238,9 @@
 .hero-primary-button {
 	position: relative;
 	overflow: hidden;
-	background: linear-gradient(135deg, #4c0095 0%, #7c3aed 100%);
-	box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.45), 0 8px 28px rgba(124, 58, 237, 0.35);
+	background: linear-gradient(135deg, #15201b 0%, #2c3a33 100%);
+	color: #ffffff;
+	box-shadow: 0 0 0 1px rgba(21, 32, 27, 0.9), 0 8px 24px rgba(21, 32, 27, 0.18);
 	transition: transform 0.15s, box-shadow 0.15s;
 }
 
@@ -229,19 +249,19 @@
 	position: absolute;
 	inset: 0;
 	border-radius: inherit;
-	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.13), transparent);
+	background: linear-gradient(90deg, transparent, rgba(255, 216, 194, 0.22), rgba(198, 230, 240, 0.22), transparent);
 	background-size: 200%;
 	animation: heroShimmer 2.4s ease-in-out infinite;
 }
 
 .hero-primary-button:hover {
 	transform: translateY(-1px);
-	box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.6), 0 12px 36px rgba(124, 58, 237, 0.5);
+	box-shadow: 0 0 0 1px rgba(21, 32, 27, 1), 0 12px 32px rgba(21, 32, 27, 0.25);
 }
 
 .hero-wave-bar {
 	transform-origin: bottom;
-	background: linear-gradient(to top, #7c3aed, #e879f9);
+	background: linear-gradient(to top, #8fd0b0, #f4b08f);
 	opacity: 0.88;
 	animation: heroBar 0.9s ease-in-out infinite alternate;
 }
@@ -251,13 +271,13 @@
 	position: absolute;
 	inset: -3px;
 	border-radius: 9999px;
-	border: 1.5px solid #34d399;
+	border: 1.5px solid #2f7d5b;
 	animation: heroDotPulse 1.8s ease-in-out infinite;
 	opacity: 0.5;
 }
 
 .hero-caret {
-	background: #c084fc;
+	background: #2f7d5b;
 	animation: heroCaret 1s step-end infinite;
 }
 
@@ -272,8 +292,8 @@
 
 .hero-stat-card:hover {
 	transform: translateY(-2px);
-	background: rgba(124, 58, 237, 0.12);
-	border-color: rgba(124, 58, 237, 0.25);
+	background: rgba(255, 255, 255, 0.85);
+	border-color: rgba(47, 125, 91, 0.25);
 }
 
 .hero-glow-fast {
@@ -407,7 +427,7 @@
 	}
 }
 
-/* ── Landing sections (unified dark editorial) ─────────────────── */
+/* ── Landing sections (soft pastel glass) ─────────────────── */
 
 /* Mono eyebrow label reused across every section */
 .section-eyebrow {
@@ -418,17 +438,20 @@
 	text-transform: uppercase;
 }
 
-/* Dark surface card — replaces the repeated light rounded-2xl blocks */
+/* Frosted glass card (class name kept from the old dark theme) */
 .dark-card {
-	background: rgba(255, 255, 255, 0.03);
-	border: 1px solid rgba(255, 255, 255, 0.08);
+	background: rgba(255, 255, 255, 0.55);
+	border: 1px solid rgba(255, 255, 255, 0.85);
+	box-shadow: 0 10px 30px rgba(21, 32, 27, 0.05);
+	backdrop-filter: blur(16px);
+	-webkit-backdrop-filter: blur(16px);
 	transition: transform 0.2s, border-color 0.2s, background 0.2s;
 }
 
 .dark-card:hover {
 	transform: translateY(-3px);
-	border-color: rgba(124, 58, 237, 0.35);
-	background: rgba(124, 58, 237, 0.06);
+	border-color: rgba(47, 125, 91, 0.25);
+	background: rgba(255, 255, 255, 0.8);
 }
 
 /* Signature: the voice→text throughline. A flowing gradient hairline
@@ -436,10 +459,10 @@
 .flow-line {
 	background: linear-gradient(
 		90deg,
-		rgba(124, 58, 237, 0) 0%,
-		rgba(124, 58, 237, 0.55) 30%,
-		rgba(232, 121, 249, 0.55) 70%,
-		rgba(232, 121, 249, 0) 100%
+		rgba(244, 176, 143, 0) 0%,
+		rgba(244, 176, 143, 0.8) 30%,
+		rgba(143, 208, 176, 0.8) 60%,
+		rgba(124, 195, 221, 0) 100%
 	);
 	background-size: 200% 100%;
 	animation: flowShift 3.2s linear infinite;
@@ -456,14 +479,14 @@
 
 /* Static waveform bar (rendered inline for connectors/dividers) */
 .wave-tick {
-	background: linear-gradient(to top, #7c3aed, #e879f9);
+	background: linear-gradient(to top, #8fd0b0, #f4b08f);
 	border-radius: 9999px;
 }
 
 /* Big step numeral */
 .step-numeral {
 	font-family: var(--font-mono);
-	background: linear-gradient(130deg, #b78eff 0%, #e879f9 60%, #f9a8d4 100%);
+	background: linear-gradient(130deg, #c2643a 0%, #2f7d5b 60%, #2f7fa0 100%);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	background-clip: text;
@@ -471,7 +494,7 @@
 
 /* Visible keyboard focus across interactive landing elements */
 .focus-ring:focus-visible {
-	outline: 2px solid #c084fc;
+	outline: 2px solid #2f7d5b;
 	outline-offset: 3px;
 	border-radius: 0.5rem;
 }

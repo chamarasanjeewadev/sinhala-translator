@@ -142,7 +142,7 @@ export function SinglishTool({ labels: l }: { labels: SinglishToolLabels }) {
     "inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold transition-colors disabled:opacity-50";
 
   return (
-    <div className="grid gap-5 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] text-[#111c2d]">
+    <div className="grid gap-5 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] text-[#15201b]">
       {/* ── Editor ── */}
       <div className="rounded-3xl bg-white shadow-[0_24px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col">
         <div className="flex flex-wrap items-center justify-between gap-2 px-4 pt-4">
@@ -159,7 +159,7 @@ export function SinglishTool({ labels: l }: { labels: SinglishToolLabels }) {
           >
             <span
               className={`relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors ${
-                singlishOn ? "bg-[#340075]" : "bg-[#c9c3d3]"
+                singlishOn ? "bg-[#15201b]" : "bg-[#cdd6ce]"
               }`}
             >
               <span
@@ -182,15 +182,15 @@ export function SinglishTool({ labels: l }: { labels: SinglishToolLabels }) {
               }}
               className={`${pill} ${
                 voice.listening
-                  ? "bg-[#ba1a1a] text-white hover:bg-[#93000a]"
-                  : "bg-[#e7eeff] text-[#340075] hover:bg-[#d8e3fb]"
+                  ? "bg-[#ba1a1a] text-ink hover:bg-[#93000a]"
+                  : "bg-[#e6efe6] text-[#15201b] hover:bg-[#dbe7dc]"
               }`}
             >
               {voice.listening ? <Square className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
               {voice.listening ? l.voiceStop : l.voiceStart}
             </button>
           ) : (
-            <span className="text-xs text-[#4a4452]">{l.voiceUnsupported}</span>
+            <span className="text-xs text-[#5b6660]">{l.voiceUnsupported}</span>
           )}
         </div>
 
@@ -211,7 +211,7 @@ export function SinglishTool({ labels: l }: { labels: SinglishToolLabels }) {
         <label htmlFor="singlish-editor" className="sr-only">
           {l.editorLabel}
         </label>
-        <div className="m-4 mb-0 flex flex-col rounded-2xl bg-[#f9f9ff] focus-within:bg-[#f0f3ff] focus-within:ring-2 focus-within:ring-[#340075]/15 transition">
+        <div className="m-4 mb-0 flex flex-col rounded-2xl bg-[#f6f8f3] focus-within:bg-[#eef3ec] focus-within:ring-2 focus-within:ring-[#15201b]/15 transition">
           <textarea
             id="singlish-editor"
             ref={textareaRef}
@@ -227,16 +227,16 @@ export function SinglishTool({ labels: l }: { labels: SinglishToolLabels }) {
           <SinglishWordPreview
             pending={voice.listening ? null : pending}
             idleHint={voice.listening ? voice.interim || l.listeningHint : singlishOn ? l.previewIdle : ""}
-            className="border-t border-[#e7eeff] py-1.5"
+            className="border-t border-[#e6efe6] py-1.5"
           />
         </div>
 
         <div className="flex flex-wrap items-center gap-2 px-4 py-4">
-          <button type="button" onClick={() => copy("editor", text)} disabled={!text} className={`${pill} bg-gradient-to-r from-[#340075] to-[#4c1d95] text-white hover:opacity-90`}>
+          <button type="button" onClick={() => copy("editor", text)} disabled={!text} className={`${pill} bg-gradient-to-r from-[#15201b] to-[#2c3a33] text-white hover:opacity-90`}>
             {copiedKey === "editor" ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
             {copiedKey === "editor" ? l.copied : l.copy}
           </button>
-          <button type="button" onClick={convertPasted} disabled={!text} className={`${pill} bg-[#e7eeff] text-[#340075] hover:bg-[#d8e3fb]`}>
+          <button type="button" onClick={convertPasted} disabled={!text} className={`${pill} bg-[#e6efe6] text-[#15201b] hover:bg-[#dbe7dc]`}>
             <Wand2 className="w-3.5 h-3.5" />
             {l.convertPasted}
           </button>
@@ -264,16 +264,16 @@ export function SinglishTool({ labels: l }: { labels: SinglishToolLabels }) {
             <Trash2 className="w-3.5 h-3.5" />
             {l.clear}
           </button>
-          <span className="ml-auto text-xs text-[#4a4452]">
+          <span className="ml-auto text-xs text-[#5b6660]">
             {l.words.replace("{count}", String(words))} · {l.chars.replace("{count}", String(text.length))}
           </span>
         </div>
       </div>
 
       {/* ── Other formats ── */}
-      <div className="rounded-3xl bg-white/[0.04] border border-white/10 p-4 flex flex-col text-white">
+      <div className="rounded-3xl bg-white/60 border border-ink/10 p-4 flex flex-col text-ink">
         <h2 className="text-sm font-semibold mb-3">{l.outputsTitle}</h2>
-        <div role="tablist" className="flex gap-1 rounded-full bg-white/[0.06] p-1 mb-3">
+        <div role="tablist" className="flex gap-1 rounded-full bg-white/60 p-1 mb-3">
           {(
             [
               ["legacy", l.tabLegacy],
@@ -290,29 +290,29 @@ export function SinglishTool({ labels: l }: { labels: SinglishToolLabels }) {
                 trackEvent("singlish_output_tab", { tab: key });
               }}
               className={`flex-1 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
-                tab === key ? "bg-white text-[#340075]" : "text-white/60 hover:text-white"
+                tab === key ? "bg-white text-[#15201b]" : "text-ink/65 hover:text-ink"
               }`}
             >
               {label}
             </button>
           ))}
         </div>
-        <p className="text-xs text-white/50 leading-relaxed mb-3">
+        <p className="text-xs text-ink/55 leading-relaxed mb-3">
           {tab === "legacy" ? l.legacyHint : l.singlishHint}
         </p>
-        <div className="flex-1 min-h-[160px] max-h-[360px] overflow-y-auto rounded-2xl bg-black/30 border border-white/10 px-4 py-3 font-mono text-sm text-white/85 whitespace-pre-wrap break-words">
-          {text ? output : <span className="font-sans text-white/40">{l.outputEmpty}</span>}
+        <div className="flex-1 min-h-[160px] max-h-[360px] overflow-y-auto rounded-2xl bg-white/60 border border-ink/10 px-4 py-3 font-mono text-sm text-ink/85 whitespace-pre-wrap break-words">
+          {text ? output : <span className="font-sans text-ink/55">{l.outputEmpty}</span>}
         </div>
         <button
           type="button"
           onClick={() => copy(tab, output)}
           disabled={!text}
-          className={`${pill} mt-3 self-start bg-white/10 text-white hover:bg-white/15`}
+          className={`${pill} mt-3 self-start bg-white/60 text-ink hover:bg-white/80`}
         >
           {copiedKey === tab ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
           {copiedKey === tab ? l.copied : l.copy}
         </button>
-        <p className="mt-auto pt-4 text-[11px] text-white/35">{l.savedLocally}</p>
+        <p className="mt-auto pt-4 text-[11px] text-ink/55">{l.savedLocally}</p>
       </div>
     </div>
   );

@@ -22,32 +22,32 @@ export function Footer({ locale, dict }: FooterProps) {
   const lp = (path: string) => localePath(path, locale);
 
   return (
-    <footer className="border-t border-white/8 bg-[#07000f] px-6 py-16 lg:px-8">
+    <footer className="border-t border-ink/10 bg-transparent px-6 py-16 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <div className="mb-14 grid gap-12 md:grid-cols-5">
           {/* Brand */}
           <div>
             <div className="mb-5 flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#4c0095] to-[#7c3aed] shadow-[0_4px_12px_rgba(124,58,237,0.35)]">
-                <AudioWaveform className="h-4 w-4 text-white" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#2c3a33] to-[#2f7d5b] shadow-[0_4px_12px_rgba(143,208,176,0.35)]">
+                <AudioWaveform className="h-4 w-4 text-ink" />
               </div>
-              <span className="font-display text-lg font-bold text-white">
+              <span className="font-display text-lg font-bold text-ink">
                 HelaVoice.lk
               </span>
             </div>
-            <p className="text-sm leading-relaxed text-[#a99fc4]">
+            <p className="text-sm leading-relaxed text-[#8f9a94]">
               {d.footerDesc}
             </p>
-            <p className="mt-4 text-sm font-medium text-[#a99fc4]">
+            <p className="mt-4 text-sm font-medium text-[#8f9a94]">
               {d.footerContact}{" "}
               <a
                 href={`mailto:${SUPPORT_EMAIL}`}
-                className="text-violet-300 transition-colors hover:text-fuchsia-300"
+                className="text-leaf transition-colors hover:text-ember"
               >
                 {SUPPORT_EMAIL}
               </a>
             </p>
-            <p className="mt-2 text-sm font-medium text-[#a99fc4]">
+            <p className="mt-2 text-sm font-medium text-[#8f9a94]">
               {dict.whatsapp.footerLabel}{" "}
               <a
                 href={whatsappLink()}
@@ -63,14 +63,14 @@ export function Footer({ locale, dict }: FooterProps) {
 
           {/* Product */}
           <div>
-            <h4 className="section-eyebrow mb-5 text-white/50">
+            <h4 className="section-eyebrow mb-5 text-ink/55">
               {d.footerProduct}
             </h4>
             <ul className="space-y-3">
               <li>
                 <Link
                   href={lp("/#features")}
-                  className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                 >
                   {d.footerFeatures}
                 </Link>
@@ -78,7 +78,7 @@ export function Footer({ locale, dict }: FooterProps) {
               <li>
                 <Link
                   href={lp("/subtitles")}
-                  className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                 >
                   {d.footerSubtitles}
                 </Link>
@@ -86,7 +86,7 @@ export function Footer({ locale, dict }: FooterProps) {
               <li>
                 <Link
                   href={lp("/singlish-to-sinhala")}
-                  className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                 >
                   {d.footerSinglishTool}
                 </Link>
@@ -94,7 +94,7 @@ export function Footer({ locale, dict }: FooterProps) {
               <li>
                 <Link
                   href={lp("/english-to-sinhala")}
-                  className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                 >
                   {d.footerEnSi}
                 </Link>
@@ -102,7 +102,7 @@ export function Footer({ locale, dict }: FooterProps) {
               <li>
                 <Link
                   href={lp("/sinhala-to-english")}
-                  className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                 >
                   {d.footerSiEn}
                 </Link>
@@ -110,7 +110,7 @@ export function Footer({ locale, dict }: FooterProps) {
               <li>
                 <Link
                   href={lp("/sinhala-text-to-speech")}
-                  className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                 >
                   {d.footerTts}
                 </Link>
@@ -118,7 +118,7 @@ export function Footer({ locale, dict }: FooterProps) {
               <li>
                 <Link
                   href={lp("/qr-code-generator")}
-                  className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                 >
                   {d.footerQrGenerator}
                 </Link>
@@ -126,7 +126,7 @@ export function Footer({ locale, dict }: FooterProps) {
               <li>
                 <Link
                   href={lp("/blog")}
-                  className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                 >
                   {d.footerBlog}
                 </Link>
@@ -134,7 +134,7 @@ export function Footer({ locale, dict }: FooterProps) {
               <li>
                 <Link
                   href={lp("/pricing")}
-                  className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                 >
                   {d.footerPricing}
                 </Link>
@@ -144,14 +144,14 @@ export function Footer({ locale, dict }: FooterProps) {
 
           {/* Account */}
           <div>
-            <h4 className="section-eyebrow mb-5 text-white/50">
+            <h4 className="section-eyebrow mb-5 text-ink/55">
               {d.footerAccount}
             </h4>
             <ul className="space-y-3">
               <li>
                 <Link
                   href={lp("/login")}
-                  className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                 >
                   {d.footerLogIn}
                 </Link>
@@ -159,7 +159,7 @@ export function Footer({ locale, dict }: FooterProps) {
               <li>
                 <Link
                   href={lp("/signup")}
-                  className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                 >
                   {d.footerSignUp}
                 </Link>
@@ -167,7 +167,7 @@ export function Footer({ locale, dict }: FooterProps) {
               <li>
                 <Link
                   href={lp("/dashboard")}
-                  className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                 >
                   {d.footerDashboard}
                 </Link>
@@ -177,14 +177,14 @@ export function Footer({ locale, dict }: FooterProps) {
 
           {/* Legal */}
           <div>
-            <h4 className="section-eyebrow mb-5 text-white/50">
+            <h4 className="section-eyebrow mb-5 text-ink/55">
               {d.footerLegal}
             </h4>
             <ul className="space-y-3">
               <li>
                 <Link
                   href={lp("/privacy")}
-                  className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                 >
                   {d.footerPrivacy}
                 </Link>
@@ -192,7 +192,7 @@ export function Footer({ locale, dict }: FooterProps) {
               <li>
                 <Link
                   href={lp("/terms")}
-                  className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                 >
                   {d.footerTerms}
                 </Link>
@@ -200,7 +200,7 @@ export function Footer({ locale, dict }: FooterProps) {
               <li>
                 <Link
                   href={lp("/support")}
-                  className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                 >
                   {d.footerSupport}
                 </Link>
@@ -210,7 +210,7 @@ export function Footer({ locale, dict }: FooterProps) {
 
           {/* GritTech network */}
           <div>
-            <h4 className="section-eyebrow mb-5 text-white/50">
+            <h4 className="section-eyebrow mb-5 text-ink/55">
               {d.footerGritTechNetwork}
             </h4>
             <ul className="space-y-3">
@@ -220,7 +220,7 @@ export function Footer({ locale, dict }: FooterProps) {
                     href={product.url}
                     target="_blank"
                     rel="noopener"
-                    className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+                    className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                   >
                     {product.name}
                   </a>
@@ -230,17 +230,17 @@ export function Footer({ locale, dict }: FooterProps) {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/8 pt-8 md:flex-row">
-          <p className="text-sm font-medium text-[#a99fc4]/70">
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-ink/10 pt-8 md:flex-row">
+          <p className="text-sm font-medium text-[#8f9a94]/70">
             {d.footerCopyright}
           </p>
-          <p className="text-sm font-medium text-[#a99fc4]/70">
+          <p className="text-sm font-medium text-[#8f9a94]/70">
             {d.footerBuiltBy}{" "}
             <a
               href="https://grittech.lk"
               target="_blank"
               rel="noopener"
-              className="text-sm font-medium text-[#a99fc4] transition-colors hover:text-white"
+              className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
             >
               GritTech
             </a>

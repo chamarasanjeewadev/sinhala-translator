@@ -106,7 +106,7 @@ export default async function SubtitlesLandingPage({ params }: Props) {
   };
 
   return (
-    <div className="bg-[#07000f] text-white">
+    <div className="bg-transparent text-ink">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -141,7 +141,7 @@ export default async function SubtitlesLandingPage({ params }: Props) {
         id="how-it-works"
         className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-20 scroll-mt-16"
       >
-        <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-violet-300/90 mb-3">
+        <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-leaf/90 mb-3">
           {d.howEyebrow}
         </p>
         <h2 className="text-center font-display text-3xl sm:text-4xl font-bold mb-14">
@@ -152,14 +152,14 @@ export default async function SubtitlesLandingPage({ params }: Props) {
             (step: { title: string; desc: string }, i: number) => (
               <div
                 key={step.title}
-                className="relative rounded-2xl bg-white/[0.04] border border-white/10 p-6 transition-colors hover:border-violet-400/30"
+                className="relative rounded-2xl bg-white/60 border border-ink/10 p-6 transition-colors hover:border-leaf/30"
               >
-                <div className="mb-5 font-mono text-sm font-semibold text-violet-300/80">
+                <div className="mb-5 font-mono text-sm font-semibold text-leaf/80">
                   {String(i + 1).padStart(2, "0")}
-                  <span className="text-white/20"> / 03</span>
+                  <span className="text-ink/55"> / 03</span>
                 </div>
                 <h3 className="text-base font-semibold mb-2">{step.title}</h3>
-                <p className="text-sm text-white/60 leading-relaxed">
+                <p className="text-sm text-ink/65 leading-relaxed">
                   {step.desc}
                 </p>
               </div>
@@ -170,7 +170,7 @@ export default async function SubtitlesLandingPage({ params }: Props) {
 
       {/* ── Features ── */}
       <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-20">
-        <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-violet-300/90 mb-3">
+        <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-leaf/90 mb-3">
           {d.featuresEyebrow}
         </p>
         <h2 className="text-center font-display text-3xl sm:text-4xl font-bold mb-14">
@@ -180,13 +180,13 @@ export default async function SubtitlesLandingPage({ params }: Props) {
           {features.map((feature) => (
             <div
               key={feature.title}
-              className="group rounded-2xl bg-white/[0.04] border border-white/10 p-6 transition-colors hover:border-violet-400/30 hover:bg-white/[0.06]"
+              className="group rounded-2xl bg-white/60 border border-ink/10 p-6 transition-colors hover:border-leaf/30 hover:bg-white/80"
             >
-              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-violet-500/12 border border-violet-400/20">
-                <feature.icon className="w-5 h-5 text-violet-300" />
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-mint/70 border border-leaf/20">
+                <feature.icon className="w-5 h-5 text-leaf" />
               </div>
               <h3 className="text-base font-semibold mb-2">{feature.title}</h3>
-              <p className="text-sm text-white/60 leading-relaxed">
+              <p className="text-sm text-ink/65 leading-relaxed">
                 {feature.desc}
               </p>
             </div>
@@ -196,7 +196,7 @@ export default async function SubtitlesLandingPage({ params }: Props) {
 
       {/* ── FAQ ── */}
       <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-20">
-        <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-violet-300/90 mb-3">
+        <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-leaf/90 mb-3">
           {d.faqEyebrow}
         </p>
         <h2 className="text-center font-display text-3xl sm:text-4xl font-bold mb-12">
@@ -206,15 +206,15 @@ export default async function SubtitlesLandingPage({ params }: Props) {
           {d.faqItems.map((item: { q: string; a: string }) => (
             <details
               key={item.q}
-              className="group rounded-2xl bg-white/[0.04] border border-white/10 p-5 open:border-violet-400/30 transition-colors"
+              className="group rounded-2xl bg-white/60 border border-ink/10 p-5 open:border-leaf/30 transition-colors"
             >
               <summary className="cursor-pointer text-sm font-semibold list-none flex items-center justify-between gap-4">
                 {item.q}
-                <span className="text-white/40 group-open:rotate-45 transition-transform text-xl leading-none shrink-0">
+                <span className="text-ink/55 group-open:rotate-45 transition-transform text-xl leading-none shrink-0">
                   +
                 </span>
               </summary>
-              <p className="text-sm text-white/60 leading-relaxed mt-3">
+              <p className="text-sm text-ink/65 leading-relaxed mt-3">
                 {item.a}
               </p>
             </details>
@@ -224,12 +224,12 @@ export default async function SubtitlesLandingPage({ params }: Props) {
 
       {/* ── CTA ── */}
       <section className="px-4 sm:px-6 lg:px-8 pb-24">
-        <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-violet-400/20 bg-[linear-gradient(135deg,rgba(76,0,149,0.4),rgba(19,0,48,0.4))] px-6 py-16 text-center">
-          <div className="pointer-events-none absolute -top-16 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(232,121,249,0.25),transparent_60%)] blur-2xl" />
+        <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-white/80 bg-gradient-pastel px-6 py-16 text-center">
+          <div className="pointer-events-none absolute -top-16 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(244,176,143,0.25),transparent_60%)] blur-2xl" />
           <h2 className="relative font-display text-3xl sm:text-4xl font-bold mb-3">
             {d.ctaTitle}
           </h2>
-          <p className="relative text-white/60 mb-8 max-w-xl mx-auto">
+          <p className="relative text-ink/65 mb-8 max-w-xl mx-auto">
             {d.ctaSubtitle}
           </p>
           <Link href={lp("/dashboard/subtitles")} className="relative inline-block">

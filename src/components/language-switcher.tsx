@@ -37,7 +37,7 @@ export function LanguageSwitcher() {
       variant="ghost"
       size="sm"
       onClick={handleSwitch}
-      className="gap-1.5 text-white/60 hover:text-white"
+      className="gap-1.5 text-ink/65 hover:text-ink"
     >
       <Globe className="h-4 w-4" />
       <span className="hidden sm:inline text-xs font-medium">{label}</span>

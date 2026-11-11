@@ -331,7 +331,7 @@ export function TranslatorTool({
       onClick={() => listen(side)}
       disabled={!text.trim()}
       aria-label={l.listen}
-      className={`${pill} bg-[#e7eeff] text-[#340075] hover:bg-[#d8e3fb]`}
+      className={`${pill} bg-[#e6efe6] text-[#15201b] hover:bg-[#dbe7dc]`}
     >
       {speaking === side ? <Square className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
       {l.listen}
@@ -339,25 +339,25 @@ export function TranslatorTool({
   );
 
   return (
-    <div className="rounded-3xl bg-white text-[#111c2d] shadow-[0_24px_64px_rgba(0,0,0,0.35)] overflow-hidden">
+    <div className="rounded-3xl bg-white text-[#15201b] shadow-[0_24px_64px_rgba(0,0,0,0.35)] overflow-hidden">
       {/* ── Language bar ── */}
-      <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 border-b border-[#e7eeff] px-4 py-3">
-        <span className="text-sm font-bold text-[#340075] text-center sm:text-left">{langName(sourceLang)}</span>
+      <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 border-b border-[#e6efe6] px-4 py-3">
+        <span className="text-sm font-bold text-[#15201b] text-center sm:text-left">{langName(sourceLang)}</span>
         <button
           type="button"
           onClick={swap}
           aria-label={l.swap}
           title={l.swap}
-          className="flex h-9 w-9 items-center justify-center rounded-full bg-[#e7eeff] text-[#340075] hover:bg-[#d8e3fb] transition-colors"
+          className="flex h-9 w-9 items-center justify-center rounded-full bg-[#e6efe6] text-[#15201b] hover:bg-[#dbe7dc] transition-colors"
         >
           <ArrowLeftRight className="w-4 h-4" />
         </button>
-        <span className="text-sm font-bold text-[#340075] text-center sm:text-right lg:text-left lg:pl-4">{langName(targetLang)}</span>
+        <span className="text-sm font-bold text-[#15201b] text-center sm:text-right lg:text-left lg:pl-4">{langName(targetLang)}</span>
       </div>
 
       <div className="grid lg:grid-cols-2">
         {/* ── Source ── */}
-        <div className="flex flex-col border-b lg:border-b-0 lg:border-r border-[#e7eeff]">
+        <div className="flex flex-col border-b lg:border-b-0 lg:border-r border-[#e6efe6]">
           {sourceLang === "si" && (
             <button
               type="button"
@@ -369,7 +369,7 @@ export function TranslatorTool({
               }}
               className="mx-4 mt-3 flex items-center gap-2 self-start text-left"
             >
-              <span className={`relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors ${singlishOn ? "bg-[#340075]" : "bg-[#c9c3d3]"}`}>
+              <span className={`relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors ${singlishOn ? "bg-[#15201b]" : "bg-[#cdd6ce]"}`}>
                 <span className={`absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-all ${singlishOn ? "left-[18px]" : "left-0.5"}`} />
               </span>
               <span className="text-xs font-semibold">
@@ -395,14 +395,14 @@ export function TranslatorTool({
             autoComplete="off"
           />
           {sourceLang === "si" && singlishOn && (
-            <SinglishWordPreview pending={pending} idleHint={l.previewIdle} className="border-t border-[#e7eeff] py-1.5" />
+            <SinglishWordPreview pending={pending} idleHint={l.previewIdle} className="border-t border-[#e6efe6] py-1.5" />
           )}
           <div className="flex flex-wrap items-center gap-2 px-4 py-3">
             <button
               type="button"
               onClick={translate}
               disabled={!source.trim() || busy !== null || overLimit}
-              className={`${pill} bg-gradient-to-r from-[#340075] to-[#4c1d95] text-white hover:opacity-90`}
+              className={`${pill} bg-gradient-to-r from-[#15201b] to-[#2c3a33] text-white hover:opacity-90`}
             >
               {busy === "text" ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Languages className="w-3.5 h-3.5" />}
               {busy === "text" ? l.translating : l.translate}
@@ -412,21 +412,21 @@ export function TranslatorTool({
               <Trash2 className="w-3.5 h-3.5" />
               {l.clear}
             </button>
-            <span className={`ml-auto text-xs ${overLimit ? "text-[#ba1a1a] font-semibold" : "text-[#4a4452]"}`}>
+            <span className={`ml-auto text-xs ${overLimit ? "text-[#ba1a1a] font-semibold" : "text-[#5b6660]"}`}>
               {l.chars.replace("{count}", String(source.trim().length)).replace("{limit}", String(limit))}
             </span>
           </div>
         </div>
 
         {/* ── Result ── */}
-        <div className="flex flex-col bg-[#f9f9ff]">
+        <div className="flex flex-col bg-[#f6f8f3]">
           <div
             lang={targetLang}
             aria-live="polite"
             className="sinhala-text min-h-[220px] sm:min-h-[260px] flex-1 px-4 py-3.5 text-lg leading-relaxed whitespace-pre-wrap break-words"
           >
             {busy ? (
-              <span className="inline-flex items-center gap-2 text-sm text-[#4a4452]">
+              <span className="inline-flex items-center gap-2 text-sm text-[#5b6660]">
                 <Loader2 className="w-4 h-4 animate-spin" />
                 {busy === "audio" ? l.processingAudio : l.translating}
               </span>
@@ -437,12 +437,12 @@ export function TranslatorTool({
             )}
           </div>
           {heard && !busy && (
-            <p className="px-4 pb-2 text-xs text-[#4a4452]">
+            <p className="px-4 pb-2 text-xs text-[#5b6660]">
               {l.heard} <span className="sinhala-text">“{heard}”</span>
             </p>
           )}
           <div className="flex flex-wrap items-center gap-2 px-4 py-3">
-            <button type="button" onClick={copy} disabled={!result} className={`${pill} bg-[#340075] text-white hover:opacity-90`}>
+            <button type="button" onClick={copy} disabled={!result} className={`${pill} bg-[#15201b] text-ink hover:opacity-90`}>
               {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
               {copied ? l.copied : l.copy}
             </button>
@@ -452,12 +452,12 @@ export function TranslatorTool({
       </div>
 
       {/* ── Audio ── */}
-      <div className="border-t border-[#e7eeff] px-4 py-4 flex flex-wrap items-center gap-2">
+      <div className="border-t border-[#e6efe6] px-4 py-4 flex flex-wrap items-center gap-2">
         <button
           type="button"
           onClick={recording ? stopRecording : startRecording}
           disabled={busy !== null}
-          className={`${pill} ${recording ? "bg-[#ba1a1a] text-white hover:bg-[#93000a]" : "bg-[#e7eeff] text-[#340075] hover:bg-[#d8e3fb]"}`}
+          className={`${pill} ${recording ? "bg-[#ba1a1a] text-ink hover:bg-[#93000a]" : "bg-[#e6efe6] text-[#15201b] hover:bg-[#dbe7dc]"}`}
         >
           {recording ? <Square className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
           {recording ? l.stopRecording : l.speak}
@@ -466,7 +466,7 @@ export function TranslatorTool({
           type="button"
           onClick={() => (ensureAudioAllowed() ? fileRef.current?.click() : undefined)}
           disabled={busy !== null || recording}
-          className={`${pill} bg-[#e7eeff] text-[#340075] hover:bg-[#d8e3fb]`}
+          className={`${pill} bg-[#e6efe6] text-[#15201b] hover:bg-[#dbe7dc]`}
         >
           <Upload className="w-3.5 h-3.5" />
           {l.uploadAudio}
@@ -481,23 +481,23 @@ export function TranslatorTool({
             e.target.value = "";
           }}
         />
-        <span className="text-xs text-[#4a4452] basis-full sm:basis-auto sm:ml-2">{l.audioHint}</span>
+        <span className="text-xs text-[#5b6660] basis-full sm:basis-auto sm:ml-2">{l.audioHint}</span>
         <span className="text-[11px] text-[#7b7485] basis-full sm:basis-auto sm:ml-auto">
           {auth === "signed-in" ? l.limitHintSignedIn : l.limitHint}
         </span>
       </div>
 
       {audioGate && (
-        <div role="alert" className="mx-4 mb-4 rounded-2xl border border-[#340075]/15 bg-[#f0f3ff] p-4 text-sm">
+        <div role="alert" className="mx-4 mb-4 rounded-2xl border border-[#15201b]/15 bg-[#eef3ec] p-4 text-sm">
           {audioGate === "login" ? (
             <>
               <p className="font-semibold">{l.audioLoginTitle}</p>
-              <p className="mt-1 text-[#4a4452]">{l.audioLoginBody}</p>
+              <p className="mt-1 text-[#5b6660]">{l.audioLoginBody}</p>
               <div className="mt-3 flex gap-2">
-                <Link href={signupHref} className={`${pill} bg-[#340075] text-white hover:opacity-90`}>
+                <Link href={signupHref} className={`${pill} bg-[#15201b] text-ink hover:opacity-90`}>
                   {l.signUp}
                 </Link>
-                <Link href={loginHref} className={`${pill} bg-white text-[#340075] hover:bg-[#e7eeff]`}>
+                <Link href={loginHref} className={`${pill} bg-white text-[#15201b] hover:bg-[#e6efe6]`}>
                   {l.logIn}
                 </Link>
               </div>
@@ -505,7 +505,7 @@ export function TranslatorTool({
           ) : (
             <>
               <p className="font-semibold">{l.noCredits}</p>
-              <Link href={pricingHref} className={`${pill} mt-3 bg-[#340075] text-white hover:opacity-90`}>
+              <Link href={pricingHref} className={`${pill} mt-3 bg-[#15201b] text-ink hover:opacity-90`}>
                 {l.buyCredits}
               </Link>
             </>

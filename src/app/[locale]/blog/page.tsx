@@ -86,7 +86,7 @@ export default async function BlogPage({ params }: Props) {
   };
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-b from-slate-100 via-white to-white">
+    <div className="relative overflow-hidden bg-transparent">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
@@ -96,7 +96,7 @@ export default async function BlogPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-20 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-blue-200/45 blur-3xl" />
+        <div className="absolute -top-20 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-sky/80 blur-3xl" />
         <div className="absolute top-32 -left-20 h-72 w-72 rounded-full bg-emerald-200/35 blur-3xl" />
         <div className="absolute top-48 -right-16 h-72 w-72 rounded-full bg-orange-200/35 blur-3xl" />
       </div>
@@ -142,7 +142,7 @@ export default async function BlogPage({ params }: Props) {
                   <div className="flex flex-col justify-between p-6 md:p-10">
                     <div>
                       <div className="mb-4 flex flex-wrap items-center gap-2.5 text-xs font-semibold uppercase tracking-wide text-slate-500">
-                        <span className="rounded-full bg-blue-100 px-3 py-1 text-blue-700">
+                        <span className="rounded-full bg-mint/60 px-3 py-1 text-leaf">
                           Featured
                         </span>
                         <span className="rounded-full bg-slate-100 px-3 py-1 text-slate-700">
@@ -154,7 +154,7 @@ export default async function BlogPage({ params }: Props) {
                         <Link
                           prefetch={true}
                           href={makePostPath(featuredPost.language || "en", featuredPost.slug)}
-                          className="transition-colors hover:text-blue-700"
+                          className="transition-colors hover:text-leaf"
                         >
                           {featuredPost.title}
                         </Link>
@@ -224,7 +224,7 @@ export default async function BlogPage({ params }: Props) {
                           <Link
                             prefetch={true}
                             href={makePostPath(post.language || "en", post.slug)}
-                            className="transition-colors hover:text-blue-700"
+                            className="transition-colors hover:text-leaf"
                           >
                             {post.title}
                           </Link>
@@ -238,7 +238,7 @@ export default async function BlogPage({ params }: Props) {
                           <Link
                             prefetch={true}
                             href={makePostPath(post.language || "en", post.slug)}
-                            className="inline-flex items-center text-sm font-semibold text-blue-700 transition hover:text-blue-800"
+                            className="inline-flex items-center text-sm font-semibold text-leaf transition hover:text-leaf"
                           >
                             Read more
                             <span className="ml-2 transition group-hover:translate-x-0.5">→</span>

@@ -114,17 +114,17 @@ export function MarkdownEditorPane({
   };
 
   const toolbarBtn =
-    "w-8 h-8 rounded-lg hover:bg-[#e7eeff] flex items-center justify-center text-[#4a4452] transition-colors";
+    "w-8 h-8 rounded-lg hover:bg-[#e6efe6] flex items-center justify-center text-[#5b6660] transition-colors";
   const tabBtn = (active: boolean) =>
     `flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold transition-colors ${
-      active ? "bg-[#340075] text-white" : "text-[#4a4452] hover:bg-[#e7eeff]"
+      active ? "bg-[#15201b] text-white" : "text-[#5b6660] hover:bg-[#e6efe6]"
     }`;
 
   return (
     <div className="flex flex-col flex-1 min-h-0 px-3 pb-3 pt-1">
       {/* Toggle + toolbar — wraps instead of overflowing in narrow panes */}
       <div className="flex flex-wrap items-center justify-between gap-2 mb-2 shrink-0">
-        <div className="flex items-center gap-1 bg-[#f9f9ff] rounded-full p-0.5">
+        <div className="flex items-center gap-1 bg-[#f6f8f3] rounded-full p-0.5">
           <button type="button" onClick={() => setMode("write")} className={tabBtn(mode === "write")}>
             <Pencil className="w-3.5 h-3.5" />
             Write
@@ -154,7 +154,7 @@ export function MarkdownEditorPane({
 
       {/* Singlish switch */}
       {singlish && singlishLabels && mode === "write" && (
-        <div className="flex items-center justify-between gap-2 mb-2 shrink-0 rounded-2xl bg-[#f0f3ff] pl-2 pr-1 py-1">
+        <div className="flex items-center justify-between gap-2 mb-2 shrink-0 rounded-2xl bg-[#eef3ec] pl-2 pr-1 py-1">
           <button
             type="button"
             role="switch"
@@ -165,7 +165,7 @@ export function MarkdownEditorPane({
           >
             <span
               className={`relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors ${
-                singlishOn ? "bg-[#340075]" : "bg-[#c9c3d3]"
+                singlishOn ? "bg-[#15201b]" : "bg-[#cdd6ce]"
               }`}
             >
               <span
@@ -174,14 +174,14 @@ export function MarkdownEditorPane({
                 }`}
               />
             </span>
-            <span className="text-xs font-semibold text-[#111c2d] truncate">
+            <span className="text-xs font-semibold text-[#15201b] truncate">
               <span className="sinhala-text">අ</span> {singlishOn ? singlishLabels.on : singlishLabels.off}
             </span>
           </button>
           <button
             type="button"
             onClick={() => setShowGuide((v) => !v)}
-            className="flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold text-[#340075] hover:bg-[#e7eeff] shrink-0"
+            className="flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold text-[#15201b] hover:bg-[#e6efe6] shrink-0"
           >
             {showGuide ? <X className="w-3.5 h-3.5" /> : <HelpCircle className="w-3.5 h-3.5" />}
             {singlishLabels.guideTitle}
@@ -190,18 +190,18 @@ export function MarkdownEditorPane({
       )}
 
       {showGuide && singlishLabels && mode === "write" && (
-        <div className="mb-2 shrink-0 max-h-48 overflow-y-auto rounded-2xl bg-[#f9f9ff] px-3 py-2.5 text-xs text-[#4a4452]">
+        <div className="mb-2 shrink-0 max-h-48 overflow-y-auto rounded-2xl bg-[#f6f8f3] px-3 py-2.5 text-xs text-[#5b6660]">
           <p className="mb-2">{singlishLabels.guideHint}</p>
           <SinglishGuideGrid
             compact
-            romanClassName="text-[#111c2d]"
-            sinhalaClassName="text-[#340075]"
+            romanClassName="text-[#15201b]"
+            sinhalaClassName="text-[#15201b]"
           />
         </div>
       )}
 
       {/* Editor / preview */}
-      <div className="flex-1 overflow-hidden min-h-0 flex flex-col rounded-2xl bg-[#f9f9ff] focus-within:bg-[#f0f3ff] transition-colors">
+      <div className="flex-1 overflow-hidden min-h-0 flex flex-col rounded-2xl bg-[#f6f8f3] focus-within:bg-[#eef3ec] transition-colors">
         {mode === "write" ? (
           <>
             <textarea
@@ -210,7 +210,7 @@ export function MarkdownEditorPane({
               onChange={(e) => onChange(e.target.value)}
               placeholder={placeholder}
               aria-label={ariaLabel}
-              className={`w-full flex-1 min-h-[220px] resize-none bg-transparent border-0 outline-none px-4 py-3 text-[#111c2d] text-base leading-relaxed ${textClassName}`}
+              className={`w-full flex-1 min-h-[220px] resize-none bg-transparent border-0 outline-none px-4 py-3 text-[#15201b] text-base leading-relaxed ${textClassName}`}
               spellCheck={false}
               autoComplete="off"
               autoCorrect="off"
@@ -221,7 +221,7 @@ export function MarkdownEditorPane({
               <SinglishWordPreview
                 pending={pending}
                 idleHint={singlishLabels.previewIdle}
-                className="shrink-0 border-t border-[#e7eeff] py-1"
+                className="shrink-0 border-t border-[#e6efe6] py-1"
               />
             )}
           </>
@@ -230,7 +230,7 @@ export function MarkdownEditorPane({
             {value.trim() ? (
               <MarkdownView className={textClassName}>{value}</MarkdownView>
             ) : (
-              <p className="text-sm text-[#4a4452]">Nothing to preview yet.</p>
+              <p className="text-sm text-[#5b6660]">Nothing to preview yet.</p>
             )}
           </div>
         )}

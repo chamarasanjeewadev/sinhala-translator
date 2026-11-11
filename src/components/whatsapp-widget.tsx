@@ -44,32 +44,32 @@ export function WhatsAppWidget() {
         <div
           role="dialog"
           aria-label={d.popupTitle}
-          className="w-[min(20rem,calc(100vw-2.5rem))] overflow-hidden rounded-2xl bg-white shadow-[0_12px_40px_rgba(17,28,45,0.25)] animate-in fade-in slide-in-from-bottom-2"
+          className="w-[min(20rem,calc(100vw-2.5rem))] overflow-hidden rounded-2xl bg-white shadow-[0_12px_40px_rgba(21,32,27,0.25)] animate-in fade-in slide-in-from-bottom-2"
         >
-          <div className="flex items-start justify-between gap-3 bg-[#075e54] px-4 py-3 text-white">
+          <div className="flex items-start justify-between gap-3 bg-[#075e54] px-4 py-3 text-ink">
             <div className="flex items-center gap-2.5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/60">
                 <WhatsAppIcon className="h-5 w-5" />
               </span>
               <div>
                 <p className="text-sm font-semibold">{d.popupTitle}</p>
-                <p className="text-xs text-white/75">{WHATSAPP_NUMBER_DISPLAY}</p>
+                <p className="text-xs text-ink/80">{WHATSAPP_NUMBER_DISPLAY}</p>
               </div>
             </div>
             <button
               type="button"
               onClick={close}
               aria-label={d.close}
-              className="rounded-full p-1 text-white/80 transition-colors hover:bg-white/15 hover:text-white"
+              className="rounded-full p-1 text-ink/85 transition-colors hover:bg-white/80 hover:text-ink"
             >
               <X className="h-4 w-4" />
             </button>
           </div>
           <div className="space-y-3 bg-[#efeae2] px-4 py-4">
-            <p className="rounded-xl rounded-tl-none bg-white px-3 py-2 text-sm leading-relaxed text-[#111c2d] shadow-sm">
+            <p className="rounded-xl rounded-tl-none bg-white px-3 py-2 text-sm leading-relaxed text-[#15201b] shadow-sm">
               {d.popupBody}
             </p>
-            <p className="text-xs text-[#4a4452]">{d.messagesOnly}</p>
+            <p className="text-xs text-[#5b6660]">{d.messagesOnly}</p>
             <a
               href={whatsappLink(d.prefill)}
               target="_blank"

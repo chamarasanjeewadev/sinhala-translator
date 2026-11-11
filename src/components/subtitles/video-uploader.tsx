@@ -74,12 +74,12 @@ export function VideoUploader({ onFileSelected, disabled }: VideoUploaderProps) 
   return (
     <div className="flex flex-col gap-4">
       <div
-        className={`rounded-2xl p-12 text-center transition-all border border-white/10 ${
-          dragOver ? "bg-white/10" : "bg-white/5"
+        className={`rounded-2xl p-12 text-center transition-all border border-ink/10 ${
+          dragOver ? "bg-white/60" : "bg-white/60"
         } ${
           disabled || checking
             ? "opacity-50 pointer-events-none"
-            : "cursor-pointer hover:bg-white/10"
+            : "cursor-pointer hover:bg-white/80"
         }`}
         onDragOver={(e) => {
           e.preventDefault();
@@ -90,14 +90,14 @@ export function VideoUploader({ onFileSelected, disabled }: VideoUploaderProps) 
         onClick={() => inputRef.current?.click()}
       >
         <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 bg-gradient-to-br from-[#340075] to-[#4c1d95] rounded-full flex items-center justify-center">
-            <Clapperboard className="h-8 w-8 text-white" />
+          <div className="w-16 h-16 bg-gradient-to-br from-[#15201b] to-[#2c3a33] rounded-full flex items-center justify-center">
+            <Clapperboard className="h-8 w-8 text-ink" />
           </div>
           <div>
-            <p className="text-sm text-white mb-1 font-medium">
+            <p className="text-sm text-ink mb-1 font-medium">
               {checking ? d.analyzing : d.uploadHint}
             </p>
-            <p className="text-xs text-white/50">
+            <p className="text-xs text-ink/55">
               {t(d.uploadFormats, {
                 size: MAX_VIDEO_SIZE_MB,
                 minutes: MAX_VIDEO_DURATION_SECONDS / 60,
@@ -120,8 +120,8 @@ export function VideoUploader({ onFileSelected, disabled }: VideoUploaderProps) 
       />
 
       {fileName && (
-        <div className="flex items-center justify-between rounded-xl bg-white/10 p-4">
-          <span className="text-sm text-white font-medium truncate">
+        <div className="flex items-center justify-between rounded-xl bg-white/60 p-4">
+          <span className="text-sm text-ink font-medium truncate">
             {fileName}
           </span>
           <button

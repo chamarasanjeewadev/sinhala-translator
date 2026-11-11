@@ -194,13 +194,13 @@ function LiveCard({ locale }: { locale: Locale }) {
   }, [charIndex, line.sinhala.length, lineIndex, lines.length, phase]);
 
   return (
-    <div className="overflow-hidden rounded-[1.35rem] border border-white/10 bg-white/6 backdrop-blur-2xl">
-      <div className="flex items-center gap-2 border-b border-white/8 px-4 py-2.5">
+    <div className="overflow-hidden rounded-[1.35rem] border border-ink/10 bg-white/60 backdrop-blur-2xl">
+      <div className="flex items-center gap-2 border-b border-ink/10 px-4 py-2.5">
         <span className="relative flex h-2 w-2 shrink-0">
           <span className="hero-live-dot absolute inset-0 rounded-full bg-emerald-400" />
           <span className="relative h-2 w-2 rounded-full bg-emerald-400" />
         </span>
-        <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/45">
+        <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-ink/55">
           {locale === "si" ? "සජීවී පරිවර්තනය" : "Live transcription"}
         </span>
         <div className="ml-auto flex gap-1">
@@ -216,7 +216,7 @@ function LiveCard({ locale }: { locale: Locale }) {
 
       <div className="px-4 pb-4 pt-3">
         <WaveBars />
-        <p className="mt-3 font-sans text-[0.95rem] font-semibold leading-8 text-white sm:text-base">
+        <p className="mt-3 font-sans text-[0.95rem] font-semibold leading-8 text-ink sm:text-base">
           <span style={{ fontFamily: "var(--font-noto-sinhala)" }}>
             {line.sinhala.slice(0, charIndex)}
           </span>
@@ -224,16 +224,16 @@ function LiveCard({ locale }: { locale: Locale }) {
         </p>
         {progress > 0.4 ? (
           <p
-            className="mt-1 text-xs font-medium text-fuchsia-300/85 transition-opacity duration-300"
+            className="mt-1 text-xs font-medium text-ember/85 transition-opacity duration-300"
             style={{ opacity: Math.min(1, (progress - 0.4) / 0.3) }}
           >
             {line.english}
           </p>
         ) : null}
 
-        <div className="mt-3 h-px overflow-hidden rounded-full bg-white/10">
+        <div className="mt-3 h-px overflow-hidden rounded-full bg-white/60">
           <div
-            className="h-full rounded-full bg-[linear-gradient(90deg,#7c3aed,#e879f9)] transition-all"
+            className="h-full rounded-full bg-[linear-gradient(90deg,#2f7d5b,#f4b08f)] transition-all"
             style={{ width: `${progress * 100}%`, transitionDuration: "60ms" }}
           />
         </div>
@@ -241,10 +241,10 @@ function LiveCard({ locale }: { locale: Locale }) {
         <div className="mt-3 flex gap-4">
           {statLabels.map(([value, label]) => (
             <div key={label}>
-              <div className="font-display text-sm font-bold text-white">
+              <div className="font-display text-sm font-bold text-ink">
                 {value}
               </div>
-              <div className="text-[10px] text-white/35">{label}</div>
+              <div className="text-[10px] text-ink/55">{label}</div>
             </div>
           ))}
         </div>
@@ -266,13 +266,13 @@ function Ticker({ locale }: { locale: Locale }) {
             className="flex shrink-0 items-center gap-2.5 pr-8"
           >
             <span
-              className="text-sm font-medium text-violet-200"
+              className="text-sm font-medium text-leaf"
               style={{ fontFamily: "var(--font-noto-sinhala)" }}
             >
               {sinhala}
             </span>
-            <span className="text-xs text-violet-500">.</span>
-            <span className="text-xs font-medium text-violet-300/50">
+            <span className="text-xs text-leaf">.</span>
+            <span className="text-xs font-medium text-leaf/50">
               {english}
             </span>
           </span>
@@ -314,28 +314,28 @@ export function LandingHero({
         ];
 
   return (
-    <section className="hero-noise relative overflow-hidden bg-[linear-gradient(155deg,#07000f_0%,#0d0020_50%,#130030_100%)] text-white">
-      <div className="pointer-events-none absolute -right-20 -top-20 h-[42rem] w-[42rem] rounded-full bg-[radial-gradient(circle,rgba(124,58,237,0.2)_0%,transparent_60%)] hero-glow-slow" />
-      <div className="pointer-events-none absolute bottom-[-6rem] left-0 h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgba(52,0,117,0.16)_0%,transparent_65%)] hero-glow-delayed" />
-      <div className="pointer-events-none absolute left-0 right-0 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(124,58,237,.5)_30%,rgba(232,121,249,.4)_70%,transparent)]" />
+    <section className="hero-noise relative overflow-hidden bg-transparent text-ink">
+      <div className="pointer-events-none absolute -right-20 -top-20 h-[42rem] w-[42rem] rounded-full bg-[radial-gradient(circle,rgba(143,208,176,0.2)_0%,transparent_60%)] hero-glow-slow" />
+      <div className="pointer-events-none absolute bottom-[-6rem] left-0 h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgba(124,195,221,0.16)_0%,transparent_65%)] hero-glow-delayed" />
+      <div className="pointer-events-none absolute left-0 right-0 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(143,208,176,.5)_30%,rgba(244,176,143,.4)_70%,transparent)]" />
 
       <div className="relative z-10 flex min-h-[calc(100vh-4rem)] flex-col pt-2">
         <div className="flex flex-1 flex-col lg:min-h-[calc(100vh-4rem)] lg:flex-row lg:items-stretch">
           <div className="order-2 flex flex-col justify-center px-6 py-12 sm:px-10 lg:order-1 lg:w-[52%] lg:px-16 lg:py-0 xl:w-[48%] xl:px-24">
             <div
-              className="inline-flex self-start rounded-full border border-violet-400/25 bg-violet-500/12 px-3 py-1.5"
+              className="inline-flex self-start rounded-full border border-leaf/25 bg-mint/70 px-3 py-1.5"
               style={{
                 animation: "heroFadeUp .55s cubic-bezier(.22,1,.36,1) both",
               }}
             >
               <span className="mr-2 mt-[7px] h-1.5 w-1.5 rounded-full bg-violet-300 hero-glow-fast" />
-              <span className="text-xs font-semibold uppercase tracking-[0.18em] text-violet-200">
+              <span className="text-xs font-semibold uppercase tracking-[0.18em] text-leaf">
                 {copy.badge}
               </span>
             </div>
 
             <p
-              className="mt-6 text-xs font-semibold uppercase tracking-[0.22em] text-violet-300/90 sm:text-[13px]"
+              className="mt-6 text-xs font-semibold uppercase tracking-[0.22em] text-leaf/90 sm:text-[13px]"
               style={{
                 animation: "heroFadeUp .55s cubic-bezier(.22,1,.36,1) .04s both",
               }}
@@ -344,7 +344,7 @@ export function LandingHero({
             </p>
 
             <h1
-              className="mb-5 mt-3 font-display text-[clamp(2.4rem,5vw,4.6rem)] font-black leading-[1.04] tracking-tight text-white md:mb-6"
+              className="mb-5 mt-3 font-display text-[clamp(2.4rem,5vw,4.6rem)] font-black leading-[1.04] tracking-tight text-ink md:mb-6"
               style={{
                 animation: "heroFadeUp .6s cubic-bezier(.22,1,.36,1) .07s both",
               }}
@@ -360,12 +360,12 @@ export function LandingHero({
                     <CyclingWord locale={locale} />
                   </>
                 )}
-                <span className="text-white">.</span>
+                <span className="text-ink">.</span>
               </span>
             </h1>
 
             <p
-              className="mb-8 max-w-[38ch] text-[clamp(.95rem,1.5vw,1.05rem)] leading-relaxed text-white/55 md:mb-10"
+              className="mb-8 max-w-[38ch] text-[clamp(.95rem,1.5vw,1.05rem)] leading-relaxed text-ink/60 md:mb-10"
               style={{
                 animation: "heroFadeUp .6s cubic-bezier(.22,1,.36,1) .14s both",
               }}
@@ -389,7 +389,7 @@ export function LandingHero({
               </Link>
               <Link
                 href={localePath("/pricing", locale)}
-                className="inline-flex items-center rounded-2xl border border-white/10 bg-white/6 px-5 py-3.5 text-sm font-semibold text-white/65 transition-colors hover:text-white"
+                className="inline-flex items-center rounded-2xl border border-ink/10 bg-white/60 px-5 py-3.5 text-sm font-semibold text-ink/70 transition-colors hover:text-ink"
               >
                 {copy.viewPricing} <span className="ml-1">→</span>
               </Link>
@@ -406,11 +406,11 @@ export function LandingHero({
                 copy.noSubscription,
               ].filter((label): label is string => Boolean(label)).map((label) => (
                 <div key={label} className="flex items-center gap-2">
-                  <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-violet-400/20">
-                    <Check className="h-2.5 w-2.5 text-violet-300" />
+                  <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-mint/70">
+                    <Check className="h-2.5 w-2.5 text-leaf" />
                   </span>
-                  <span className="text-xs text-white/45">
-                    <span className="font-medium text-white/75">{label}</span>
+                  <span className="text-xs text-ink/55">
+                    <span className="font-medium text-ink/80">{label}</span>
                   </span>
                 </div>
               ))}
@@ -425,13 +425,13 @@ export function LandingHero({
               {statCards.map(([value, label, sublabel]) => (
                 <div
                   key={label}
-                  className="hero-stat-card rounded-2xl border border-white/8 bg-white/4 p-4"
+                  className="hero-stat-card rounded-2xl border border-ink/10 bg-white/60 p-4"
                 >
-                  <div className="font-display text-xl font-bold leading-none text-white">
+                  <div className="font-display text-xl font-bold leading-none text-ink">
                     {value}
                   </div>
-                  <div className="mt-1 text-xs text-white/40">{label}</div>
-                  <div className="mt-1.5 text-xs font-medium text-violet-300">
+                  <div className="mt-1 text-xs text-ink/55">{label}</div>
+                  <div className="mt-1.5 text-xs font-medium text-leaf">
                     {sublabel}
                   </div>
                 </div>
@@ -449,8 +449,8 @@ export function LandingHero({
                 className="hero-image-fade object-cover object-[30%_center] lg:object-[38%_center]"
                 sizes="(min-width: 1024px) 52vw, 100vw"
               />
-              <div className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(to_bottom,transparent_55%,#07000f_100%)] lg:block" />
-              <div className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(to_right,#07000f_0%,transparent_6%)] lg:block" />
+              <div className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(to_bottom,transparent_55%,#f3f7f2_100%)] lg:block" />
+              <div className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(to_right,#f3f7f2_0%,transparent_6%)] lg:block" />
 
               <div
                 className="absolute bottom-8 left-8 hidden w-72 lg:block"
@@ -472,17 +472,17 @@ export function LandingHero({
           {mobileStats.map(([value, label]) => (
             <div
               key={label}
-              className="hero-stat-card rounded-2xl border border-white/8 bg-white/4 p-3 text-center"
+              className="hero-stat-card rounded-2xl border border-ink/10 bg-white/60 p-3 text-center"
             >
-              <div className="font-display text-lg font-bold text-white">
+              <div className="font-display text-lg font-bold text-ink">
                 {value}
               </div>
-              <div className="mt-1 text-[11px] text-white/40">{label}</div>
+              <div className="mt-1 text-[11px] text-ink/55">{label}</div>
             </div>
           ))}
         </div>
 
-        <div className="border-t border-white/8 px-4 sm:px-6 lg:px-8">
+        <div className="border-t border-ink/10 px-4 sm:px-6 lg:px-8">
           <Ticker locale={locale} />
         </div>
       </div>

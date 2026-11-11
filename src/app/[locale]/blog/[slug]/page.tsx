@@ -169,9 +169,9 @@ export default async function BlogPost({ params }: Props) {
       : null;
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-b from-slate-100 via-white to-white">
+    <div className="relative overflow-hidden bg-transparent">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-24 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-blue-200/45 blur-3xl" />
+        <div className="absolute -top-24 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-sky/80 blur-3xl" />
         <div className="absolute top-28 -left-20 h-72 w-72 rounded-full bg-teal-200/35 blur-3xl" />
         <div className="absolute top-44 -right-16 h-72 w-72 rounded-full bg-orange-200/30 blur-3xl" />
       </div>
@@ -217,7 +217,7 @@ export default async function BlogPost({ params }: Props) {
               {post.categories.map((category) => (
                 <span
                   key={category}
-                  className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700"
+                  className="rounded-full border border-mint bg-mint/40 px-3 py-1 text-xs font-semibold text-leaf"
                 >
                   {category}
                 </span>
@@ -251,7 +251,7 @@ export default async function BlogPost({ params }: Props) {
           </div>
         )}
 
-        <div className="prose prose-lg max-w-none rounded-3xl border border-slate-200/70 bg-white/75 p-7 text-slate-700 shadow-[0_16px_36px_-28px_rgba(15,23,42,0.75)] prose-headings:font-bold prose-headings:text-slate-900 prose-p:text-slate-700 prose-a:text-blue-700 hover:prose-a:text-blue-800 prose-img:rounded-xl md:p-10">
+        <div className="prose prose-lg max-w-none rounded-3xl border border-slate-200/70 bg-white/75 p-7 text-slate-700 shadow-[0_16px_36px_-28px_rgba(15,23,42,0.75)] prose-headings:font-bold prose-headings:text-slate-900 prose-p:text-slate-700 prose-a:text-leaf hover:prose-a:text-leaf prose-img:rounded-xl md:p-10">
           <Content />
         </div>
       </article>

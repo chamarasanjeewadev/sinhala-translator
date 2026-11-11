@@ -271,10 +271,10 @@ export function buildPrintHtml(src: ExportSource): string {
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
 <style>
   @page { size: A4; margin: 18mm 16mm; }
-  body { font-family: "Inter", "Noto Sans Sinhala", sans-serif; color: #111c2d; font-size: 12pt; line-height: 1.9; }
+  body { font-family: "Inter", "Noto Sans Sinhala", sans-serif; color: #15201b; font-size: 12pt; line-height: 1.9; }
   h1 { font-size: 20pt; margin: 0 0 2pt; }
   .meta { color: #666; font-size: 9.5pt; margin-bottom: 14pt; }
-  h2.label { font-size: 13pt; color: #340075; border-bottom: 1px solid #e7eeff; padding-bottom: 3pt; margin-top: 18pt; }
+  h2.label { font-size: 13pt; color: #15201b; border-bottom: 1px solid #e6efe6; padding-bottom: 3pt; margin-top: 18pt; }
   h2, h3, h4 { margin: 12pt 0 4pt; }
   p { margin: 0 0 8pt; white-space: pre-wrap; }
   footer { margin-top: 24pt; color: #999; font-size: 8.5pt; }

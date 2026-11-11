@@ -30,9 +30,9 @@ type Status = { signedIn: boolean; freeCharsLeft: number; credits: number };
 
 // One colour pair per voice so each one is recognisable at a glance.
 const VOICE_HUE: Record<TtsVoice, [string, string]> = {
-  Kore: ["#7c3aed", "#c084fc"],
+  Kore: ["#2f7d5b", "#7cc3dd"],
   Aoede: ["#0284c7", "#67e8f9"],
-  Leda: ["#db2777", "#f9a8d4"],
+  Leda: ["#db2777", "#ffd8c2"],
   Sulafat: ["#d97706", "#fcd34d"],
   Puck: ["#059669", "#6ee7b7"],
   Charon: ["#4338ca", "#a5b4fc"],
@@ -48,7 +48,7 @@ const EXAMPLES = [
 ];
 
 const BARS = 56;
-const focus = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c084fc]";
+const focus = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7cc3dd]";
 
 // Loudness of BARS equal slices of the clip, 0–1, so the player can draw the real waveform.
 async function waveformOf(blob: Blob): Promise<number[] | null> {
@@ -215,11 +215,11 @@ export function TtsTool({
       {/* soft violet glow so the card lifts off the page */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-x-6 -top-10 bottom-0 -z-0 bg-[radial-gradient(ellipse_60%_55%_at_50%_30%,rgba(124,58,237,0.32),transparent_70%)] blur-2xl"
+        className="pointer-events-none absolute -inset-x-6 -top-10 bottom-0 -z-0 bg-[radial-gradient(ellipse_60%_55%_at_50%_30%,rgba(143,208,176,0.32),transparent_70%)] blur-2xl"
       />
-      <div className="relative rounded-[28px] bg-[#130a26] p-2 text-white shadow-[0_30px_80px_rgba(0,0,0,0.5)] ring-1 ring-white/10 sm:p-3">
+      <div className="relative rounded-[28px] bg-white/50 p-2 text-ink shadow-[0_30px_80px_rgba(21,32,27,0.10)] ring-1 ring-white/80 backdrop-blur-xl sm:p-3">
         {/* writing paper */}
-        <div className="overflow-hidden rounded-[20px] bg-[#faf7ff] text-[#1b1130]">
+        <div className="overflow-hidden rounded-[20px] bg-white text-ink">
           <div className="flex items-center gap-3 px-4 pt-3.5">
             <button
               type="button"
@@ -231,7 +231,7 @@ export function TtsTool({
               }}
               className={`flex items-center gap-2 rounded-full text-left ${focus}`}
             >
-              <span className={`relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors ${singlishOn ? "bg-[#4c0095]" : "bg-[#c9c3d3]"}`}>
+              <span className={`relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors ${singlishOn ? "bg-[#2c3a33]" : "bg-[#cdd6ce]"}`}>
                 <span className={`absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-all ${singlishOn ? "left-[18px]" : "left-0.5"}`} />
               </span>
               <span className="text-xs font-semibold">
@@ -271,7 +271,7 @@ export function TtsTool({
                     setText(ex);
                     textareaRef.current?.focus();
                   }}
-                  className={`sinhala-text max-w-full truncate rounded-full bg-[#efe8fb] px-3.5 py-1 text-sm text-[#4c0095] transition-colors hover:bg-[#e3d7f7] ${focus}`}
+                  className={`sinhala-text max-w-full truncate rounded-full bg-mint/50 px-3.5 py-1 text-sm text-[#2c3a33] transition-colors hover:bg-mint ${focus}`}
                 >
                   {ex}
                 </button>
@@ -279,10 +279,10 @@ export function TtsTool({
             </div>
           )}
 
-          {singlishOn && <SinglishWordPreview pending={pending} idleHint={l.previewIdle} className="border-t border-[#ece6f7] py-1.5" />}
-          <div className="h-1 bg-[#ece6f7]" aria-hidden>
+          {singlishOn && <SinglishWordPreview pending={pending} idleHint={l.previewIdle} className="border-t border-[#e6efe6] py-1.5" />}
+          <div className="h-1 bg-[#e6efe6]" aria-hidden>
             <div
-              className={`h-full transition-[width] duration-200 ${overLimit ? "bg-[#ba1a1a]" : "bg-gradient-to-r from-[#7c3aed] to-[#e879f9]"}`}
+              className={`h-full transition-[width] duration-200 ${overLimit ? "bg-[#ba1a1a]" : "bg-gradient-to-r from-[#2f7d5b] to-[#f4b08f]"}`}
               style={{ width: `${Math.min(100, (count / TTS_MAX_CHARS) * 100)}%` }}
             />
           </div>
@@ -294,7 +294,7 @@ export function TtsTool({
             <p id="tts-voice-label" className="text-sm font-semibold">
               {l.voice}
             </p>
-            <p className="text-xs text-white/50">{l.voiceHint}</p>
+            <p className="text-xs text-ink/55">{l.voiceHint}</p>
           </div>
           <div role="radiogroup" aria-labelledby="tts-voice-label" className="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
             {TTS_VOICES.map((v) => {
@@ -306,8 +306,8 @@ export function TtsTool({
                   key={v}
                   className={`relative rounded-2xl transition-all ${
                     on
-                      ? "bg-white/[0.12] ring-2 ring-[#c084fc] shadow-[0_0_28px_rgba(192,132,252,0.25)]"
-                      : "bg-white/[0.05] ring-1 ring-white/10 hover:bg-white/[0.09]"
+                      ? "bg-white/60 ring-2 ring-[#7cc3dd] shadow-[0_0_28px_rgba(192,132,252,0.25)]"
+                      : "bg-white/60 ring-1 ring-ink/10 hover:bg-white/80"
                   }`}
                 >
                   <button
@@ -319,7 +319,7 @@ export function TtsTool({
                   >
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-sm font-semibold">{v}</span>
-                      <span className="block truncate text-xs text-white/55">{voiceStyles[v]}</span>
+                      <span className="block truncate text-xs text-ink/60">{voiceStyles[v]}</span>
                     </span>
                     {on && <Check className="ml-1 h-4 w-4 shrink-0 text-[#e0b9ff]" aria-hidden />}
                   </button>
@@ -328,7 +328,7 @@ export function TtsTool({
                     onClick={() => togglePreview(v)}
                     aria-label={live ? l.stopPreview : l.previewVoice.replace("{voice}", v)}
                     aria-pressed={live}
-                    className={`absolute left-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full text-white shadow-lg transition-transform hover:scale-105 ${focus} ${live ? "ring-4 ring-white/25" : ""}`}
+                    className={`absolute left-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full text-ink shadow-lg transition-transform hover:scale-105 ${focus} ${live ? "ring-4 ring-ink/10" : ""}`}
                     style={{ background: `linear-gradient(135deg, ${from}, ${to})` }}
                   >
                     {live ? (
@@ -359,19 +359,19 @@ export function TtsTool({
             {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Volume2 className="h-4 w-4" />}
             {busy ? l.generating : l.generate}
           </button>
-          <span className="min-w-[12rem] flex-1 text-xs leading-relaxed text-white/60">
+          <span className="min-w-[12rem] flex-1 text-xs leading-relaxed text-ink/65">
             {charge && charge.credits > 0 && count > 0 ? l.cost.replace("{credits}", String(charge.credits)) : hint}
           </span>
         </div>
 
         {audioUrl && (
-          <div className="mx-2 mb-2 mt-3 rounded-2xl bg-white/[0.06] p-4 ring-1 ring-white/10 sm:mx-3" aria-live="polite">
+          <div className="mx-2 mb-2 mt-3 rounded-2xl bg-white/60 p-4 ring-1 ring-ink/10 sm:mx-3" aria-live="polite">
             <div className="flex items-center gap-4">
               <button
                 type="button"
                 onClick={togglePlay}
                 aria-label={playing ? l.pause : l.play}
-                className={`grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#7c3aed] to-[#e879f9] text-white shadow-[0_6px_20px_rgba(124,58,237,0.5)] transition-transform hover:scale-105 ${focus}`}
+                className={`grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#15201b] to-[#2c3a33] text-white shadow-[0_6px_20px_rgba(143,208,176,0.5)] transition-transform hover:scale-105 ${focus}`}
               >
                 {playing ? <Pause className="h-5 w-5 fill-current" /> : <Play className="ml-0.5 h-5 w-5 fill-current" />}
               </button>
@@ -395,7 +395,7 @@ export function TtsTool({
                 {(peaks ?? Array.from({ length: BARS }, () => 0.12)).map((p, i) => (
                   <span
                     key={i}
-                    className={`min-w-px flex-1 rounded-full transition-colors ${i / BARS < progress ? "bg-[#e879f9]" : "bg-white/25"}`}
+                    className={`min-w-px flex-1 rounded-full transition-colors ${i / BARS < progress ? "bg-[#f4b08f]" : "bg-white/60"}`}
                     style={{ height: `${12 + p * 88}%` }}
                   />
                 ))}
@@ -416,12 +416,12 @@ export function TtsTool({
               className="hidden"
             />
             <div className="mt-4 flex flex-wrap items-center gap-3">
-              <a href={audioUrl} download="helavoice-sinhala.wav" className={`${pill} bg-white/10 text-white hover:bg-white/[0.16]`}>
+              <a href={audioUrl} download="helavoice-sinhala.wav" className={`${pill} bg-white/60 text-ink hover:bg-white/80`}>
                 <Download className="h-3.5 w-3.5" />
                 {l.download}
               </a>
-              <span className="text-xs text-white/60">{note}</span>
-              <span className="ml-auto text-xs tabular-nums text-white/60">
+              <span className="text-xs text-ink/65">{note}</span>
+              <span className="ml-auto text-xs tabular-nums text-ink/65">
                 {clock(time.cur)} / {clock(time.dur)}
               </span>
             </div>
@@ -429,16 +429,16 @@ export function TtsTool({
         )}
 
         {gate && (
-          <div role="alert" className="mx-2 mb-2 mt-3 rounded-2xl border border-violet-300/25 bg-violet-500/10 p-4 text-sm sm:mx-3">
+          <div role="alert" className="mx-2 mb-2 mt-3 rounded-2xl border border-leaf/25 bg-mint/70 p-4 text-sm sm:mx-3">
             {gate === "login" ? (
               <>
                 <p className="font-semibold">{l.loginTitle}</p>
-                <p className="mt-1 text-white/65">{l.loginBody}</p>
+                <p className="mt-1 text-ink/70">{l.loginBody}</p>
                 <div className="mt-3 flex gap-2">
                   <Link href={signupHref} className={`${pill} hero-primary-button text-white`}>
                     {l.signUp}
                   </Link>
-                  <Link href={loginHref} className={`${pill} bg-white/10 text-white hover:bg-white/[0.16]`}>
+                  <Link href={loginHref} className={`${pill} bg-white/60 text-ink hover:bg-white/80`}>
                     {l.logIn}
                   </Link>
                 </div>

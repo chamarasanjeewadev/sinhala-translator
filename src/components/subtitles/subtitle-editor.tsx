@@ -457,12 +457,12 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
   // ── Render ───────────────────────────────────────────────────────────
 
   return (
-    <div className="flex min-h-[100dvh] flex-col bg-[#0f0f1e] text-white lg:h-[100dvh] lg:overflow-hidden">
+    <div className="flex min-h-[100dvh] flex-col bg-transparent text-ink lg:h-[100dvh] lg:overflow-hidden">
       {/* ── Toolbar ── */}
-      <header className="flex shrink-0 items-center gap-2 border-b border-white/10 bg-[#12121f] px-3 py-2 sm:px-4">
+      <header className="flex shrink-0 items-center gap-2 border-b border-ink/10 bg-white/70 px-3 py-2 sm:px-4">
         <LocaleLink
           href="/dashboard/subtitles"
-          className="rounded-full p-2 text-white/60 transition-colors hover:bg-white/8 hover:text-white"
+          className="rounded-full p-2 text-ink/65 transition-colors hover:bg-white/80 hover:text-ink"
           aria-label={d.backToProjects}
         >
           <ArrowLeft className="h-5 w-5" />
@@ -470,13 +470,13 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="min-w-0 flex-1 border-b border-transparent bg-transparent text-sm font-semibold outline-none focus:border-violet-500 sm:text-base"
+          className="min-w-0 flex-1 border-b border-transparent bg-transparent text-sm font-semibold outline-none focus:border-leaf sm:text-base"
           aria-label={d.projectTitle}
         />
-        <span className="hidden text-xs text-white/40 sm:inline">
+        <span className="hidden text-xs text-ink/55 sm:inline">
           {saving ? d.saving : ""}
         </span>
-        <span className="hidden rounded-full bg-white/8 px-3 py-1 text-xs font-medium text-white/70 sm:inline">
+        <span className="hidden rounded-full bg-white/60 px-3 py-1 text-xs font-medium text-ink/75 sm:inline">
           {t(d.creditsLeft, { credits })}
         </span>
         {segments.length > 0 && (
@@ -484,7 +484,7 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
             <button
               onClick={() => setShowTranslateConfirm(true)}
               disabled={busy}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-white/8 px-3 py-2 text-sm font-medium transition-colors hover:bg-white/15 disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-white/60 px-3 py-2 text-sm font-medium transition-colors hover:bg-white/80 disabled:opacity-50"
             >
               <Languages className="h-4 w-4" />
               <span className="hidden md:inline">
@@ -505,8 +505,8 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
 
       {/* ── Generation / translation status bar ── */}
       {(genState === "extracting" || genState === "generating") && (
-        <div className="flex shrink-0 items-center gap-3 border-b border-violet-500/30 bg-violet-500/10 px-4 py-2">
-          <Loader2 className="h-4 w-4 shrink-0 animate-spin text-violet-400" />
+        <div className="flex shrink-0 items-center gap-3 border-b border-leaf/30 bg-mint/70 px-4 py-2">
+          <Loader2 className="h-4 w-4 shrink-0 animate-spin text-leaf" />
           <p className="flex-1 truncate text-sm font-medium">
             {genState === "extracting"
               ? d.extracting
@@ -514,13 +514,13 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
                   current: chunkProgress.current,
                   total: chunkProgress.total,
                 })}
-            <span className="ml-2 text-white/40">{d.keepTabOpen}</span>
+            <span className="ml-2 text-ink/55">{d.keepTabOpen}</span>
           </p>
           <button
             onClick={() => {
               cancelledRef.current = true;
             }}
-            className="p-1.5 text-white/50 transition-colors hover:text-white"
+            className="p-1.5 text-ink/55 transition-colors hover:text-ink"
             aria-label={d.cancel}
           >
             <X className="h-4 w-4" />
@@ -528,8 +528,8 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
         </div>
       )}
       {genState === "translating" && (
-        <div className="flex shrink-0 items-center gap-3 border-b border-violet-500/30 bg-violet-500/10 px-4 py-2">
-          <Loader2 className="h-4 w-4 shrink-0 animate-spin text-violet-400" />
+        <div className="flex shrink-0 items-center gap-3 border-b border-leaf/30 bg-mint/70 px-4 py-2">
+          <Loader2 className="h-4 w-4 shrink-0 animate-spin text-leaf" />
           <p className="text-sm font-medium">{d.translating}</p>
         </div>
       )}
@@ -537,8 +537,8 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
       {/* ── Middle: subtitles | preview | style (CapCut-style, fills height) ── */}
       <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
         {/* Subtitle list */}
-        <div className="flex max-h-[38vh] shrink-0 flex-col border-white/10 lg:max-h-none lg:min-h-0 lg:w-80 lg:border-r xl:w-96">
-          <div className="shrink-0 px-4 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/40">
+        <div className="flex max-h-[38vh] shrink-0 flex-col border-ink/10 lg:max-h-none lg:min-h-0 lg:w-80 lg:border-r xl:w-96">
+          <div className="shrink-0 px-4 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-ink/55">
             {d.title}
           </div>
           <div className="min-h-0 flex-1 overflow-hidden px-3 pb-3">
@@ -555,7 +555,7 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
         </div>
 
         {/* Preview */}
-        <div className="flex min-h-[240px] flex-1 items-center justify-center bg-black/40 p-3 lg:min-h-0 sm:p-5">
+        <div className="flex min-h-[240px] flex-1 items-center justify-center bg-ink/5 p-3 lg:min-h-0 sm:p-5">
           {videoUrl ? (
             <VideoPreview
               videoRef={videoRef}
@@ -565,9 +565,9 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
               onTimeUpdate={setCurrentTime}
             />
           ) : (
-            <div className="max-w-sm rounded-2xl border border-white/10 bg-white/5 p-8 text-center">
-              <p className="mb-1 text-sm text-white/70">{d.reselectPrompt}</p>
-              <p className="mb-4 truncate text-xs text-white/40">
+            <div className="max-w-sm rounded-2xl border border-ink/10 bg-white/60 p-8 text-center">
+              <p className="mb-1 text-sm text-ink/75">{d.reselectPrompt}</p>
+              <p className="mb-4 truncate text-xs text-ink/55">
                 {project.video_filename}
               </p>
               <button
@@ -591,7 +591,7 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
         </div>
 
         {/* Style panel */}
-        <div className="max-h-[38vh] shrink-0 overflow-y-auto border-t border-white/10 p-3 lg:max-h-none lg:w-80 lg:border-l lg:border-t-0">
+        <div className="max-h-[38vh] shrink-0 overflow-y-auto border-t border-ink/10 p-3 lg:max-h-none lg:w-80 lg:border-l lg:border-t-0">
           <StylePanel
             style={style}
             onChange={(updates) => setStyle((s) => ({ ...s, ...updates }))}
@@ -600,7 +600,7 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
       </div>
 
       {/* ── Timeline (always visible) ── */}
-      <div className="shrink-0 border-t border-white/10 bg-[#12121f] p-3">
+      <div className="shrink-0 border-t border-ink/10 bg-white/70 p-3">
         <Timeline
           segments={segments}
           durationSeconds={project.video_duration_seconds}
@@ -614,16 +614,16 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
 
       {/* Cost confirmation modal */}
       {genState === "confirm" && analyzeResult && (
-        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4">
-          <div className="rounded-2xl bg-[#1a1a2e] border border-white/10 p-6 max-w-md w-full">
+        <div className="fixed inset-0 z-50 bg-ink/30 flex items-center justify-center p-4">
+          <div className="rounded-2xl bg-white border border-ink/10 p-6 max-w-md w-full">
             <h2 className="text-lg font-semibold mb-2">{d.confirmTitle}</h2>
-            <p className="text-sm text-white/70 mb-1">
+            <p className="text-sm text-ink/75 mb-1">
               {t(d.confirmCost, {
                 credits: analyzeResult.requiredCredits,
                 rate: SUBTITLE_CREDITS_PER_MINUTE,
               })}
             </p>
-            <p className="text-sm text-white/50 mb-5">
+            <p className="text-sm text-ink/55 mb-5">
               {t(d.creditsLeft, { credits: analyzeResult.currentCredits })}
             </p>
             {analyzeResult.canProceed ? (
@@ -636,7 +636,7 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
                 </button>
                 <button
                   onClick={() => setGenState("idle")}
-                  className="flex-1 rounded-xl px-4 py-2.5 text-sm font-medium bg-white/8 hover:bg-white/15 transition-colors"
+                  className="flex-1 rounded-xl px-4 py-2.5 text-sm font-medium bg-white/60 hover:bg-white/80 transition-colors"
                 >
                   {d.cancel}
                 </button>
@@ -651,7 +651,7 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
                 </LocaleLink>
                 <button
                   onClick={() => setGenState("idle")}
-                  className="flex-1 rounded-xl px-4 py-2.5 text-sm font-medium bg-white/8 hover:bg-white/15 transition-colors"
+                  className="flex-1 rounded-xl px-4 py-2.5 text-sm font-medium bg-white/60 hover:bg-white/80 transition-colors"
                 >
                   {d.cancel}
                 </button>
@@ -663,12 +663,12 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
 
       {/* Translate confirmation modal */}
       {showTranslateConfirm && (
-        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4">
-          <div className="rounded-2xl bg-[#1a1a2e] border border-white/10 p-6 max-w-md w-full">
+        <div className="fixed inset-0 z-50 bg-ink/30 flex items-center justify-center p-4">
+          <div className="rounded-2xl bg-white border border-ink/10 p-6 max-w-md w-full">
             <h2 className="text-lg font-semibold mb-2">
               {project.language === "en" ? d.translateToSinhala : d.translateToEnglish}
             </h2>
-            <p className="text-sm text-white/70 mb-5">
+            <p className="text-sm text-ink/75 mb-5">
               {t(d.translateCost, { credits: translateCost })}
             </p>
             <div className="flex gap-3">
@@ -680,7 +680,7 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
               </button>
               <button
                 onClick={() => setShowTranslateConfirm(false)}
-                className="flex-1 rounded-xl px-4 py-2.5 text-sm font-medium bg-white/8 hover:bg-white/15 transition-colors"
+                className="flex-1 rounded-xl px-4 py-2.5 text-sm font-medium bg-white/60 hover:bg-white/80 transition-colors"
               >
                 {d.cancel}
               </button>

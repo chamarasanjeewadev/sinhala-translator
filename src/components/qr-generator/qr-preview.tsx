@@ -129,7 +129,7 @@ export function QrPreview({
               onClick={() => download(f)}
               className={cn(
                 "inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors",
-                "bg-violet-600 text-white hover:bg-violet-700",
+                "bg-ink text-white hover:bg-ink",
                 "disabled:cursor-not-allowed disabled:opacity-40"
               )}
             >

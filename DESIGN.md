@@ -11,7 +11,7 @@ The **Creative North Star** is **"The Ethereal Scribe."** This concept combines 
 
 ## 2. Colors: Tonal Depth & Soul
 
-We move beyond flat hex codes to create a color ecosystem that feels alive. Our palette utilizes the deep purples of authority and the soft pinks/blues of modern tech.
+We move beyond flat hex codes to create a color ecosystem that feels alive. Since 2026-11-12 the palette is soft pastel glass: near-black ink (#15201b) for text and primary buttons, on an ambient wash of peach (#ffd8c2), mint (#cfe9d3) and sky (#c6e6f0). Deep accent text uses leaf (#2f7d5b) and ember (#c2643a). Tokens live in src/app/globals.css (`ink`, `leaf`, `ember`, `mint`, `peach`, `sky`); every page is light — there is no dark landing any more.
 
 ### The "No-Line" Rule
 **Strict Mandate:** 1px solid borders are prohibited for sectioning. Boundaries must be defined solely through background color shifts. 
@@ -20,15 +20,15 @@ We move beyond flat hex codes to create a color ecosystem that feels alive. Our 
 
 ### Surface Hierarchy & Nesting
 Treat the UI as a physical stack of frosted glass.
-- **Base Layer:** `surface` (#f9f9ff)
+- **Base Layer:** `surface` (#f6f8f3)
 - **Primary Content Areas:** `surface-container-lowest` (#ffffff) for maximum "pop."
-- **Recessed Areas:** `surface-container-low` (#f0f3ff) for search bars or secondary backgrounds.
-- **Active Floating Elements:** `surface-container-highest` (#d8e3fb) to signal importance.
+- **Recessed Areas:** `surface-container-low` (#eef3ec) for search bars or secondary backgrounds.
+- **Active Floating Elements:** `surface-container-highest` (#dbe7dc) to signal importance.
 
 ### The "Glass & Gradient" Rule
 To achieve a signature look, floating navigations and key action panels must use **Glassmorphism**. 
 - **Recipe:** Semi-transparent `surface` + 20px Backdrop Blur + 10% opacity `outline-variant` "Ghost Border."
-- **Signature Textures:** Use a linear gradient from `primary` (#340075) to `primary-container` (#4c1d95) for primary CTAs and hero section highlights to give the brand "visual soul."
+- **Signature Textures:** Primary CTAs are solid ink (#15201b → #2c3a33, `.hero-primary-button`). Hero highlights and featured cards use the pastel gradient (`.bg-gradient-pastel`: peach → mint → sky); headline accents use `.hero-gradient-text` (ember → leaf → sky-deep).
 
 ---
 

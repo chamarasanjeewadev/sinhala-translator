@@ -57,7 +57,7 @@ function TimecodeInput({
           (e.target as HTMLInputElement).blur();
         }
       }}
-      className="w-[84px] bg-transparent text-xs text-white/60 font-mono border border-transparent hover:border-white/15 focus:border-violet-500 focus:text-white rounded px-1 py-0.5 outline-none transition-colors"
+      className="w-[84px] bg-transparent text-xs text-ink/65 font-mono border border-transparent hover:border-ink/10 focus:border-leaf focus:text-ink rounded px-1 py-0.5 outline-none transition-colors"
     />
   );
 }
@@ -87,10 +87,10 @@ export function SegmentList({
   if (segments.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-full gap-3 text-center p-6">
-        <p className="text-sm text-white/50">{d.noSegments}</p>
+        <p className="text-sm text-ink/55">{d.noSegments}</p>
         <button
           onClick={() => onAddBelow(null)}
-          className="inline-flex items-center gap-1.5 text-sm text-violet-400 hover:text-violet-300 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm text-leaf hover:text-leaf transition-colors"
         >
           <Plus className="w-4 h-4" />
           {d.addSegment}
@@ -108,12 +108,12 @@ export function SegmentList({
           onClick={() => onSelect(seg.id)}
           className={`group rounded-xl p-3 mb-2 border transition-colors cursor-pointer ${
             seg.id === selectedId
-              ? "bg-violet-500/15 border-violet-500/50"
-              : "bg-white/5 border-transparent hover:bg-white/10"
+              ? "bg-mint/70 border-leaf/50"
+              : "bg-white/60 border-transparent hover:bg-white/80"
           }`}
         >
           <div className="flex items-center gap-2 mb-1.5">
-            <span className="text-[11px] text-white/35 font-mono w-6 shrink-0">
+            <span className="text-[11px] text-ink/55 font-mono w-6 shrink-0">
               {i + 1}
             </span>
             <TimecodeInput
@@ -121,7 +121,7 @@ export function SegmentList({
               label={d.startTime}
               onCommit={(sec) => onUpdateTiming(seg.id, sec, seg.end)}
             />
-            <span className="text-white/30 text-xs">→</span>
+            <span className="text-ink/55 text-xs">→</span>
             <TimecodeInput
               value={seg.end}
               label={d.endTime}
@@ -133,7 +133,7 @@ export function SegmentList({
                   e.stopPropagation();
                   onAddBelow(seg.id);
                 }}
-                className="p-1 text-white/40 hover:text-white transition-colors"
+                className="p-1 text-ink/55 hover:text-ink transition-colors"
                 aria-label={d.addSegment}
                 title={d.addSegment}
               >
@@ -144,7 +144,7 @@ export function SegmentList({
                   e.stopPropagation();
                   onDelete(seg.id);
                 }}
-                className="p-1 text-white/40 hover:text-red-400 transition-colors"
+                className="p-1 text-ink/55 hover:text-red-400 transition-colors"
                 aria-label={d.deleteSegment}
                 title={d.deleteSegment}
               >
@@ -158,14 +158,14 @@ export function SegmentList({
             onClick={(e) => e.stopPropagation()}
             onFocus={() => onSelect(seg.id)}
             onChange={(e) => onUpdateText(seg.id, e.target.value)}
-            className="w-full bg-transparent text-sm text-white resize-none outline-none placeholder:text-white/30"
+            className="w-full bg-transparent text-sm text-ink resize-none outline-none placeholder:text-ink/40"
             placeholder={d.segmentPlaceholder}
           />
         </div>
       ))}
       <button
         onClick={() => onAddBelow(segments[segments.length - 1].id)}
-        className="w-full flex items-center justify-center gap-1.5 py-2 text-sm text-white/40 hover:text-violet-300 transition-colors"
+        className="w-full flex items-center justify-center gap-1.5 py-2 text-sm text-ink/55 hover:text-leaf transition-colors"
       >
         <Plus className="w-4 h-4" />
         {d.addSegment}

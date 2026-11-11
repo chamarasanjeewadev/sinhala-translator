@@ -66,7 +66,7 @@ const TYPE_ORDER: QrContentType[] = [
 ];
 
 const field =
-  "block text-slate-900 placeholder:text-slate-400 border-slate-300 focus-visible:border-violet-500 focus-visible:ring-violet-500/30";
+  "block text-slate-900 placeholder:text-slate-400 border-slate-300 focus-visible:border-leaf focus-visible:ring-leaf/30";
 
 export function ContentForms({
   copy,
@@ -140,7 +140,7 @@ export function ContentForms({
               className={cn(
                 "flex flex-col items-center gap-1 rounded-xl border px-1 py-2.5 text-[11px] font-medium transition-colors",
                 active
-                  ? "border-violet-500 bg-violet-50 text-violet-700"
+                  ? "border-leaf bg-mint/50 text-leaf"
                   : "border-slate-200 text-slate-500 hover:border-slate-300 hover:bg-slate-50"
               )}
             >
@@ -224,7 +224,7 @@ export function ContentForms({
             <label className="flex items-center gap-2 text-sm text-slate-600">
               <input
                 type="checkbox"
-                className="h-4 w-4 accent-violet-600"
+                className="h-4 w-4 accent-leaf"
                 checked={wifi.hidden}
                 onChange={(e) => setWifi({ ...wifi, hidden: e.target.checked })}
               />

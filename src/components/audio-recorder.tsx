@@ -199,18 +199,18 @@ export function AudioRecorder({
             disabled={disabled}
             aria-label={d.startRecording}
             className={cn(
-              "group relative flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-[#340075] to-[#4c1d95] text-white shadow-[0_10px_30px_rgba(52,0,117,0.25)] transition-transform",
+              "group relative flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-[#15201b] to-[#2c3a33] text-white shadow-[0_10px_30px_rgba(124,195,221,0.25)] transition-transform",
               disabled
                 ? "opacity-50 cursor-not-allowed"
                 : "hover:scale-105 active:scale-95"
             )}
           >
             {!disabled && (
-              <span className="absolute inset-0 rounded-full bg-[#340075]/30 animate-ping" />
+              <span className="absolute inset-0 rounded-full bg-[#15201b]/30 animate-ping" />
             )}
             <Mic className="relative w-9 h-9" />
           </button>
-          <p className="text-sm text-[#4a4452]">{d.hint}</p>
+          <p className="text-sm text-[#5b6660]">{d.hint}</p>
         </>
       ) : (
         <>
@@ -220,7 +220,7 @@ export function AudioRecorder({
               <div
                 key={i}
                 className={cn(
-                  "w-1 rounded-full bg-gradient-to-t from-[#340075] to-[#4c1d95] transition-[height,opacity] duration-100",
+                  "w-1 rounded-full bg-gradient-to-t from-[#15201b] to-[#2c3a33] transition-[height,opacity] duration-100",
                   state === "paused" && "opacity-30"
                 )}
                 style={{
@@ -233,7 +233,7 @@ export function AudioRecorder({
           {/* Timer */}
           <span
             className={cn(
-              "font-mono text-2xl font-semibold text-[#111c2d] tabular-nums",
+              "font-mono text-2xl font-semibold text-[#15201b] tabular-nums",
               state === "paused" && "opacity-50"
             )}
           >
@@ -246,7 +246,7 @@ export function AudioRecorder({
               <button
                 type="button"
                 onClick={pauseRecording}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#e7eeff] text-[#4a4452] font-semibold text-sm hover:bg-[#d8e3fb] transition-colors"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#e6efe6] text-[#5b6660] font-semibold text-sm hover:bg-[#dbe7dc] transition-colors"
               >
                 <Pause className="w-4 h-4" />
                 {d.pauseRecording}
@@ -255,7 +255,7 @@ export function AudioRecorder({
               <button
                 type="button"
                 onClick={resumeRecording}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#e7eeff] text-[#4a4452] font-semibold text-sm hover:bg-[#d8e3fb] transition-colors"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#e6efe6] text-[#5b6660] font-semibold text-sm hover:bg-[#dbe7dc] transition-colors"
               >
                 <Play className="w-4 h-4" />
                 {d.resumeRecording}
