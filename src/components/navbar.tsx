@@ -3,7 +3,8 @@
 import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X, type LucideIcon } from "lucide-react";
+import { TOOLS, IconTile, type Tone } from "@/components/tool-catalog";
 import { CreditBalance } from "@/components/credit-balance";
 import { LocaleLink } from "@/components/locale-link";
 import { LanguageSwitcher } from "@/components/language-switcher";
@@ -21,12 +22,8 @@ function NewBadge({ label }: { label: string }) {
   );
 }
 
-export const TOOL_LINKS = [
-  { href: "/singlish-to-sinhala", key: "singlishTool", isNew: true },
-  { href: "/english-to-sinhala", key: "translate", isNew: true },
-  { href: "/sinhala-text-to-speech", key: "textToSpeech", isNew: true },
-  { href: "/qr-code-generator", key: "qrGenerator", isNew: false },
-] as const;
+export const TOOL_LINKS = TOOLS.filter((t) => t.inMenu);
+type MenuItem = { href: string; label: string; isNew: boolean; icon: LucideIcon; tone: Tone };
 
 // Desktop-only dropdown: six flat links no longer fit the bar, so the tool pages live here.
 export function ToolsMenu({
@@ -37,7 +34,7 @@ export function ToolsMenu({
 }: {
   label: string;
   newLabel: string;
-  items: { href: string; label: string; isNew: boolean }[];
+  items: MenuItem[];
   light?: boolean;
 }) {
   const pathname = usePathname();
@@ -92,8 +89,9 @@ export function ToolsMenu({
               key={i.href}
               href={i.href}
               role="menuitem"
-              className={`flex items-center px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${light ? "text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6]" : "text-ink/75 hover:text-ink hover:bg-white/80"}`}
+              className={`flex items-center gap-3 px-2.5 py-2 rounded-xl text-sm font-medium transition-colors ${light ? "text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6]" : "text-ink/75 hover:text-ink hover:bg-white/80"}`}
             >
+              <IconTile icon={i.icon} tone={i.tone} size="sm" />
               {i.label}
               {i.isNew && <NewBadge label={newLabel} />}
             </LocaleLink>
@@ -172,7 +170,7 @@ export function Navbar() {
   }
 
   const d = dict.navbar;
-  const tools = TOOL_LINKS.map((t) => ({ href: t.href, label: d[t.key], isNew: t.isNew }));
+  const tools = TOOL_LINKS.map((t) => ({ href: t.href, label: d[t.key], isNew: t.isNew, icon: t.icon, tone: t.tone }));
 
   return (
     <div className="sticky top-0 z-50 w-screen max-w-[100vw] overflow-x-clip">
@@ -192,7 +190,7 @@ export function Navbar() {
           {/* Logo */}
           <LocaleLink href="/" className="flex shrink-0 items-center gap-2.5">
             <Image
-              src="/logo.jpeg"
+              src="/logo.png"
               alt="HelaVoice.lk"
               width={36}
               height={36}
@@ -348,33 +346,17 @@ export function Navbar() {
                 >
                   {d.subtitles}
                 </LocaleLink>
-                <LocaleLink
-                  href="/singlish-to-sinhala"
-                  className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"
-                >
-                  {d.singlishTool}
-                  <NewBadge label={d.new} />
-                </LocaleLink>
-                <LocaleLink
-                  href="/english-to-sinhala"
-                  className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"
-                >
-                  {d.translate}
-                  <NewBadge label={d.new} />
-                </LocaleLink>
-                <LocaleLink
-                  href="/sinhala-text-to-speech"
-                  className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"
-                >
-                  {d.textToSpeech}
-                  <NewBadge label={d.new} />
-                </LocaleLink>
-                <LocaleLink
-                  href="/qr-code-generator"
-                  className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"
-                >
-                  {d.qrGenerator}
-                </LocaleLink>
+                {tools.map((i) => (
+                  <LocaleLink
+                    key={i.href}
+                    href={i.href}
+                    className="inline-flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"
+                  >
+                    <IconTile icon={i.icon} tone={i.tone} size="sm" />
+                    {i.label}
+                    {i.isNew && <NewBadge label={d.new} />}
+                  </LocaleLink>
+                ))}
                 <button
                   onClick={handleSignOut}
                   className="text-left px-3 py-2.5 rounded-xl text-sm font-medium text-ink/55 hover:text-ink hover:bg-white/80 transition-colors"
@@ -398,33 +380,17 @@ export function Navbar() {
                 >
                   {d.subtitles}
                 </LocaleLink>
-                <LocaleLink
-                  href="/singlish-to-sinhala"
-                  className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"
-                >
-                  {d.singlishTool}
-                  <NewBadge label={d.new} />
-                </LocaleLink>
-                <LocaleLink
-                  href="/english-to-sinhala"
-                  className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"
-                >
-                  {d.translate}
-                  <NewBadge label={d.new} />
-                </LocaleLink>
-                <LocaleLink
-                  href="/sinhala-text-to-speech"
-                  className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"
-                >
-                  {d.textToSpeech}
-                  <NewBadge label={d.new} />
-                </LocaleLink>
-                <LocaleLink
-                  href="/qr-code-generator"
-                  className="inline-flex items-center px-3 py-2.5 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"
-                >
-                  {d.qrGenerator}
-                </LocaleLink>
+                {tools.map((i) => (
+                  <LocaleLink
+                    key={i.href}
+                    href={i.href}
+                    className="inline-flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"
+                  >
+                    <IconTile icon={i.icon} tone={i.tone} size="sm" />
+                    {i.label}
+                    {i.isNew && <NewBadge label={d.new} />}
+                  </LocaleLink>
+                ))}
                 <LocaleLink
                   href="/pricing"
                   className="px-3 py-2.5 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"

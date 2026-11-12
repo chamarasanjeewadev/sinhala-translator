@@ -290,7 +290,40 @@
     "feedbackThanks": "Thanks for your feedback!",
     "feedbackSubmitFailed": "Could not submit feedback. Please try again.",
     "feedbackValidation": "Please add a rating and recommendation before submitting.",
-    "feedbackWhyRequired": "Please tell us why you would not recommend the service."
+    "feedbackWhyRequired": "Please tell us why you would not recommend the service.",
+    "yourTools": "Your tools",
+    "yourToolsDesc": "Everything HelaVoice can do, one tap away.",
+    "takeTour": "Take the tour",
+    "toolDesc": {
+      "subtitles": "Auto-generate Sinhala subtitles for a video, edit them, then export SRT or a video with burned-in captions.",
+      "singlishTool": "Type Sinhala with English letters (mama → මම) and copy it anywhere.",
+      "translate": "Translate between English and Sinhala, and listen to the result.",
+      "textToSpeech": "Turn Sinhala text into natural speech and download the audio.",
+      "qrGenerator": "Make a QR code with your logo and colours, free."
+    },
+    "tour": {
+      "next": "Next",
+      "back": "Back",
+      "skip": "Skip tour",
+      "done": "Get started",
+      "stepOf": "{n} of {total}",
+      "welcomeTitle": "Welcome to HelaVoice 👋",
+      "welcomeBody": "A quick tour of your workspace and tools. It takes under a minute, and you can replay it any time from the ? button.",
+      "creditsTitle": "Your credits",
+      "creditsBody": "Credits pay for transcription and the other paid tools. Each tool shows the cost before anything is charged.",
+      "buyTitle": "Top up",
+      "buyBody": "Buy more credits here. They never expire.",
+      "modeTitle": "Record or upload",
+      "modeBody": "Record your voice live in the browser, or switch to Upload to send an audio or video file.",
+      "recordTitle": "Start transcribing",
+      "recordBody": "Tap the mic and speak Sinhala. When you stop, we show the length and credit cost; confirm and your transcript appears below.",
+      "listTitle": "Your transcripts",
+      "listBody": "Every transcript is saved here. View it, Edit the text, Translate it to English, Copy it, Download as PDF, Word or text, or Delete it. Filter by day or search.",
+      "toolsTitle": "Your tools",
+      "toolsBody": "Beyond transcription, HelaVoice has five more tools. Let's look at each one.",
+      "helpTitle": "Need this again?",
+      "helpBody": "Press this button any time to replay the tour. Questions? Message us on WhatsApp from the green button."
+    }
   },
   "pricing": {
     "title": "Buy Credits",

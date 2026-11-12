@@ -19,9 +19,21 @@ import {
   Pencil,
   Globe,
   Star,
+  House,
+  Captions,
+  BookOpen,
+  Tag,
+  CircleHelp,
+  ArrowUpRight,
+  Sparkles,
+  Wallet,
+  ListMusic,
+  LayoutGrid,
 } from "lucide-react";
 import { toast } from "sonner";
 import { ToolsMenu, TOOL_LINKS } from "@/components/navbar";
+import { TOOLS, IconTile } from "@/components/tool-catalog";
+import { OnboardingTour, tourSeen, type TourStep } from "@/components/onboarding-tour";
 import { LocaleLink } from "@/components/locale-link";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { MarkdownView } from "@/components/markdown-view";
@@ -99,6 +111,55 @@ export function DashboardContent({
   // ── Core data state ──
   const [credits, setCredits] = useState(initialCredits);
   const [transcriptions, setTranscriptions] = useState(initialTranscriptions);
+
+  // ── Tools hub + onboarding tour ──
+  const hubTools = TOOLS.filter((t) => t.key !== "transcribe");
+  const [tourOpen, setTourOpen] = useState(false);
+  const tourUserRef = useRef<string | null>(null);
+  const tour = d.tour;
+  const tourSteps: TourStep[] = [
+    { title: tour.welcomeTitle, body: tour.welcomeBody, icon: Sparkles, tone: "lilac" },
+    { target: "credits", title: tour.creditsTitle, body: tour.creditsBody, icon: Wallet, tone: "mint" },
+    { target: "buy", title: tour.buyTitle, body: tour.buyBody, icon: Wallet, tone: "peach" },
+    { target: "mode", title: tour.modeTitle, body: tour.modeBody, icon: Upload, tone: "sky" },
+    { target: "record", title: tour.recordTitle, body: tour.recordBody, icon: Mic, tone: "mint" },
+    { target: "tools", title: tour.toolsTitle, body: tour.toolsBody, icon: LayoutGrid, tone: "lilac" },
+    ...hubTools.map((t) => ({
+      target: `tool-${t.key}`,
+      title: nav[t.key],
+      body: d.toolDesc[t.key],
+      icon: t.icon,
+      tone: t.tone,
+    })),
+    { target: "list", title: tour.listTitle, body: tour.listBody, icon: ListMusic, tone: "sky" },
+    { target: "help", title: tour.helpTitle, body: tour.helpBody, icon: CircleHelp, tone: "pink" },
+  ];
+
+  // Auto-start once per user, only for new accounts (created in the last 7 days)
+  // or anyone who hasn't transcribed anything yet.
+  useEffect(() => {
+    let cancelled = false;
+    getSupabase()
+      .auth.getUser()
+      .then(({ data: { user } }) => {
+        if (cancelled || !user) return;
+        tourUserRef.current = user.id;
+        if (tourSeen.get(user.id)) return;
+        const isNew = Date.now() - new Date(user.created_at).getTime() < 7 * 24 * 3600 * 1000;
+        if (isNew || initialTranscriptions.length === 0) {
+          window.setTimeout(() => !cancelled && setTourOpen(true), 700);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- run once on mount
+  }, []);
+
+  const closeTour = useCallback(() => {
+    setTourOpen(false);
+    if (tourUserRef.current) tourSeen.set(tourUserRef.current);
+  }, []);
 
   // ── UI state ──
   const [filter, setFilter] = useState<"all" | "today" | "week">("all");
@@ -669,7 +730,7 @@ export function DashboardContent({
           <div className="flex items-center gap-6">
             <LocaleLink href="/" className="flex items-center gap-2.5">
               <Image
-                src="/logo.jpeg"
+                src="/logo.png"
                 alt="HelaVoice.lk"
                 width={32}
                 height={32}
@@ -683,32 +744,36 @@ export function DashboardContent({
             <nav className="hidden sm:flex items-center gap-1">
               <LocaleLink
                 href="/"
-                className="px-3 py-1.5 rounded-full text-sm font-medium text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
               >
+                <House className="w-4 h-4" />
                 {d.home}
               </LocaleLink>
               <LocaleLink
                 href="/dashboard/subtitles"
-                className="px-3 py-1.5 rounded-full text-sm font-medium text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
               >
+                <Captions className="w-4 h-4" />
                 {nav.subtitles}
               </LocaleLink>
               <ToolsMenu
                 light
                 label={nav.tools}
                 newLabel={nav.new}
-                items={TOOL_LINKS.map((t) => ({ href: t.href, label: nav[t.key], isNew: t.isNew }))}
+                items={TOOL_LINKS.map((t) => ({ href: t.href, label: nav[t.key], isNew: t.isNew, icon: t.icon, tone: t.tone }))}
               />
               <LocaleLink
                 href="/blog"
-                className="px-3 py-1.5 rounded-full text-sm font-medium text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
               >
+                <BookOpen className="w-4 h-4" />
                 {nav.blog}
               </LocaleLink>
               <LocaleLink
                 href="/pricing"
-                className="px-3 py-1.5 rounded-full text-sm font-medium text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
               >
+                <Tag className="w-4 h-4" />
                 {nav.pricing}
               </LocaleLink>
             </nav>
@@ -717,7 +782,7 @@ export function DashboardContent({
           {/* Right: Credits + Language + Sign Out */}
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Credits pill */}
-            <div className="bg-[#ffffff] rounded-full px-3 py-1.5 flex items-center gap-2 shadow-[0_10px_30px_rgba(21,32,27,0.06)]">
+            <div data-tour="credits" className="bg-[#ffffff] rounded-full px-3 py-1.5 flex items-center gap-2 shadow-[0_10px_30px_rgba(21,32,27,0.06)]">
               <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-[#15201b] to-[#2c3a33] flex items-center justify-center shrink-0">
                 <FileText className="w-3 h-3 text-white" />
               </div>
@@ -729,6 +794,7 @@ export function DashboardContent({
 
             <LocaleLink
               href="/pricing"
+              data-tour="buy"
               className="hidden sm:inline-flex items-center bg-gradient-to-r from-[#15201b] to-[#2c3a33] text-white px-4 py-2 rounded-full text-sm font-semibold transition-opacity hover:opacity-90"
             >
               {d.buyCredits}
@@ -737,6 +803,17 @@ export function DashboardContent({
             <div className="[&_button]:text-[#5b6660] [&_button]:hover:text-[#15201b]">
               <LanguageSwitcher />
             </div>
+
+            <button
+              type="button"
+              data-tour="help"
+              onClick={() => setTourOpen(true)}
+              title={d.takeTour}
+              aria-label={d.takeTour}
+              className="w-9 h-9 flex items-center justify-center rounded-full text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
+            >
+              <CircleHelp className="w-5 h-5" />
+            </button>
 
             <button
               onClick={handleSignOut}
@@ -774,36 +851,38 @@ export function DashboardContent({
               <div
                 role="tablist"
                 aria-label={d.inputMethod}
-                className="flex gap-1 p-1 mb-6 max-w-xs mx-auto rounded-full bg-[#e6efe6]"
+                data-tour="mode"
+                className="flex gap-1 p-1 mb-6 max-w-sm mx-auto rounded-full bg-[#e6efe6]"
               >
                 <button
                   role="tab"
                   aria-selected={mode === "record"}
                   onClick={() => setMode("record")}
-                  className={`flex-1 flex items-center justify-center gap-2 py-2 px-5 rounded-full text-sm font-semibold transition-all ${
+                  className={`flex-1 flex items-center justify-center gap-2 py-1.5 px-4 rounded-full text-sm font-semibold transition-all ${
                     mode === "record"
                       ? "bg-white text-[#15201b] shadow-sm"
                       : "text-[#5b6660] hover:text-[#15201b]"
                   }`}
                 >
-                  <Mic className="w-4 h-4" />
+                  <IconTile icon={Mic} tone="mint" size="sm" className="rounded-full" />
                   {d.record}
                 </button>
                 <button
                   role="tab"
                   aria-selected={mode === "upload"}
                   onClick={() => setMode("upload")}
-                  className={`flex-1 flex items-center justify-center gap-2 py-2 px-5 rounded-full text-sm font-semibold transition-all ${
+                  className={`flex-1 flex items-center justify-center gap-2 py-1.5 px-4 rounded-full text-sm font-semibold transition-all ${
                     mode === "upload"
                       ? "bg-white text-[#15201b] shadow-sm"
                       : "text-[#5b6660] hover:text-[#15201b]"
                   }`}
                 >
-                  <Upload className="w-4 h-4" />
+                  <IconTile icon={Upload} tone="sky" size="sm" className="rounded-full" />
                   {d.upload}
                 </button>
               </div>
 
+              <div data-tour="record">
               {mode === "record" ? (
                 <AudioRecorder
                   onRecordingComplete={handleRecordingComplete}
@@ -815,6 +894,7 @@ export function DashboardContent({
                   disabled={noCredits}
                 />
               )}
+              </div>
 
               {noCredits && (
                 <div className="mt-6 flex items-center justify-center">
@@ -974,11 +1054,49 @@ export function DashboardContent({
         </div>
       </section>
 
+      {/* ── Tools hub ── */}
+      <section data-tour="tools" className="max-w-5xl mx-auto px-4 sm:px-6 pt-10">
+        <div className="flex items-end justify-between gap-4 mb-4">
+          <div>
+            <h2 className="font-display text-lg font-bold text-[#15201b] flex items-center gap-2">
+              <LayoutGrid className="w-5 h-5 text-[#7c3aed]" />
+              {d.yourTools}
+            </h2>
+            <p className="text-sm text-[#5b6660]">{d.yourToolsDesc}</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          {hubTools.map((t) => (
+            <LocaleLink
+              key={t.key}
+              href={t.appHref ?? t.href}
+              data-tour={`tool-${t.key}`}
+              className="group relative flex lg:flex-col items-start gap-3 rounded-2xl bg-white/80 border border-white p-4 shadow-[0_10px_30px_rgba(21,32,27,0.05)] transition-all hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_16px_40px_rgba(21,32,27,0.09)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2f7d5b]"
+            >
+              <IconTile icon={t.icon} tone={t.tone} size="lg" />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-1.5 font-semibold text-sm text-[#15201b]">
+                  {nav[t.key]}
+                  {t.isNew && (
+                    <span className="rounded-full bg-red-500 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none text-white">
+                      {nav.new}
+                    </span>
+                  )}
+                </div>
+                <p className="mt-1 text-xs leading-relaxed text-[#5b6660] line-clamp-3">{d.toolDesc[t.key]}</p>
+              </div>
+              <ArrowUpRight className="absolute right-3 top-3 w-4 h-4 text-[#8f9a94] transition-colors group-hover:text-[#15201b]" />
+            </LocaleLink>
+          ))}
+        </div>
+      </section>
+
       {/* ── Recording List ── */}
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
         <div className="flex items-center justify-between mb-6 gap-4">
           <div className="flex items-center gap-3">
-            <h2 className="font-display text-lg font-bold text-[#15201b]">
+            <h2 data-tour="list" className="font-display text-lg font-bold text-[#15201b] flex items-center gap-2">
+              <ListMusic className="w-5 h-5 text-[#0891b2]" />
               {d.recordingList}
             </h2>
 
@@ -1119,7 +1237,7 @@ export function DashboardContent({
                           title={d.view}
                           className="flex items-center gap-1.5 bg-[#e6efe6] hover:bg-[#dbe7dc] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                         >
-                          <Eye className="w-3.5 h-3.5" />
+                          <Eye className="w-4 h-4 text-[#0891b2]" />
                           <span className="hidden sm:inline">{d.view}</span>
                         </button>
 
@@ -1128,7 +1246,7 @@ export function DashboardContent({
                           title={d.edit}
                           className="flex items-center gap-1.5 bg-[#e6efe6] hover:bg-[#dbe7dc] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                         >
-                          <Pencil className="w-3.5 h-3.5" />
+                          <Pencil className="w-4 h-4 text-[#7c3aed]" />
                           <span className="hidden sm:inline">{d.edit}</span>
                         </button>
 
@@ -1147,7 +1265,7 @@ export function DashboardContent({
                             title={t.english_translation ? d.retranslate : d.translate}
                             className="flex items-center gap-1.5 bg-[#e6efe6] hover:bg-[#dbe7dc] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                           >
-                            <Globe className="w-3.5 h-3.5" />
+                            <Globe className="w-4 h-4 text-[#ea8a00]" />
                             <span className="hidden sm:inline">
                               {t.english_translation ? d.retranslate : d.translate}
                             </span>
@@ -1162,7 +1280,7 @@ export function DashboardContent({
                           {copiedId === t.id ? (
                             <Check className="w-3.5 h-3.5 text-green-600" />
                           ) : (
-                            <Copy className="w-3.5 h-3.5" />
+                            <Copy className="w-4 h-4 text-[#16a34a]" />
                           )}
                           <span className="hidden sm:inline">{d.copy}</span>
                         </button>
@@ -1178,7 +1296,7 @@ export function DashboardContent({
                           title={d.delete}
                           className="flex items-center gap-1.5 bg-[#ffdad6] hover:bg-[#ffb4ab] text-[#ba1a1a] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                         >
-                          <Trash2 className="w-3.5 h-3.5" />
+                          <Trash2 className="w-4 h-4" />
                           <span className="hidden sm:inline">{d.delete}</span>
                         </button>
                       </div>
@@ -1260,7 +1378,7 @@ export function DashboardContent({
                     {copiedId === viewTranscription.id + "-si" ? (
                       <Check className="w-3.5 h-3.5 text-green-600" />
                     ) : (
-                      <Copy className="w-3.5 h-3.5" />
+                      <Copy className="w-4 h-4 text-[#16a34a]" />
                     )}
                     {d.copy}
                   </button>
@@ -1290,7 +1408,7 @@ export function DashboardContent({
                       {copiedId === viewTranscription.id + "-en" ? (
                         <Check className="w-3.5 h-3.5 text-green-600" />
                       ) : (
-                        <Copy className="w-3.5 h-3.5" />
+                        <Copy className="w-4 h-4 text-[#16a34a]" />
                       )}
                       {d.copy}
                     </button>
@@ -1658,6 +1776,12 @@ export function DashboardContent({
           </div>
         </div>
       )}
+      <OnboardingTour
+        steps={tourSteps}
+        open={tourOpen}
+        onClose={closeTour}
+        labels={{ next: tour.next, back: tour.back, skip: tour.skip, done: tour.done, stepOf: tour.stepOf }}
+      />
     </div>
   );
 }

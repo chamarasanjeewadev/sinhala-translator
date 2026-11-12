@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { AudioWaveform } from "lucide-react";
 import { localePath } from "@/lib/i18n/utils";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/get-dictionary";
@@ -28,9 +27,8 @@ export function Footer({ locale, dict }: FooterProps) {
           {/* Brand */}
           <div>
             <div className="mb-5 flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#2c3a33] to-[#2f7d5b] shadow-[0_4px_12px_rgba(143,208,176,0.35)]">
-                <AudioWaveform className="h-4 w-4 text-ink" />
-              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element -- server footer, tiny static asset */}
+              <img src="/logo.png" alt="" width={36} height={36} className="h-9 w-9 rounded-xl" />
               <span className="font-display text-lg font-bold text-ink">
                 HelaVoice.lk
               </span>

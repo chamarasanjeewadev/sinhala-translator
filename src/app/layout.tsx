@@ -41,7 +41,7 @@ const organizationJsonLd = {
   "@type": "Organization",
   name: "HelaVoice",
   url: siteUrl,
-  logo: `${siteUrl}/logo.jpeg`,
+  logo: `${siteUrl}/logo.png`,
   description:
     "HelaVoice.lk — AI-powered Sinhala audio transcription tool for Sri Lankan creators, students, journalists, and businesses.",
   sameAs: ["https://grittech.lk"],
@@ -79,7 +79,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml"></link>
+        <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <script
           type="application/ld+json"
