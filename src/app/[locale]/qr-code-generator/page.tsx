@@ -14,6 +14,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { QrGenerator } from "@/components/qr-generator/qr-generator";
+import { ogImages } from "@/lib/og-image";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -28,6 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     alternates: generateAlternates(locale as Locale, "/qr-code-generator"),
     openGraph: {
+      images: ogImages,
       url:
         locale === "en"
           ? "https://helavoice.lk/qr-code-generator"

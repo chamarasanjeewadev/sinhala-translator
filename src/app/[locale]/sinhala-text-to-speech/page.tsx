@@ -6,6 +6,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { locales, type Locale } from "@/lib/i18n/config";
 import { localePath, generateAlternates } from "@/lib/i18n/utils";
 import { TtsTool } from "@/components/tts-tool/tts-tool";
+import { ogImages } from "@/lib/og-image";
 
 const PATH = "/sinhala-text-to-speech";
 
@@ -20,6 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     alternates: generateAlternates(locale as Locale, PATH),
     openGraph: {
+      images: ogImages,
       url: locale === "en" ? `https://helavoice.lk${PATH}` : `https://helavoice.lk/${locale}${PATH}`,
     },
     title: d.metaTitle,

@@ -22,6 +22,7 @@ import type { Metadata } from "next";
 import { LandingHero } from "@/components/landing-hero";
 import { HowItWorks } from "@/components/how-it-works";
 import { PricingBuyButton } from "@/components/pricing-buy-button";
+import { ogImages } from "@/lib/og-image";
 
 const waveformBars = [
   { height: 65, duration: 0.7 },
@@ -54,6 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     alternates: generateAlternates(locale as Locale, "/"),
     openGraph: {
+      images: ogImages,
       url:
         locale === "en"
           ? "https://helavoice.lk"

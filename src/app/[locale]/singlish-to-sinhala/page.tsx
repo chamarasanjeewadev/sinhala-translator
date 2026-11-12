@@ -18,6 +18,7 @@ import {
   SinglishGuideGrid,
   SINGLISH_EXAMPLES,
 } from "@/components/singlish/singlish-guide";
+import { ogImages } from "@/lib/og-image";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -32,6 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     alternates: generateAlternates(locale as Locale, "/singlish-to-sinhala"),
     openGraph: {
+      images: ogImages,
       url:
         locale === "en"
           ? "https://helavoice.lk/singlish-to-sinhala"

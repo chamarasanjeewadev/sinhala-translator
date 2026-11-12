@@ -14,6 +14,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import type { Locale } from "@/lib/i18n/config";
 import { localePath, generateAlternates } from "@/lib/i18n/utils";
 import { TranslatorTool, type TranslatorDirection } from "./translator-tool";
+import { ogImages } from "@/lib/og-image";
 
 const PAGES = {
   "en-si": {
@@ -58,6 +59,7 @@ export async function translatorMetadata(
   return {
     alternates: generateAlternates(locale, page.path),
     openGraph: {
+      images: ogImages,
       url:
         locale === "en"
           ? `https://helavoice.lk${page.path}`
