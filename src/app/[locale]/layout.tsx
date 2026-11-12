@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'website',
       images: [
         {
-          url: '/opengraph-image',
+          url: '/og-image.png',
           width: 1200,
           height: 630,
           alt: 'HelaVoice — Sinhala voice transcriber',
@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title: dict.metadata.title,
       description: dict.metadata.description,
-      images: ['/opengraph-image'],
+      images: ['/og-image.png'],
     },
     robots: {
       index: true,
