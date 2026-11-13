@@ -22,6 +22,7 @@ import type { Metadata } from "next";
 import { LandingHero } from "@/components/landing-hero";
 import { HowItWorks } from "@/components/how-it-works";
 import { PricingBuyButton } from "@/components/pricing-buy-button";
+import { RelatedTools } from "@/components/related-tools";
 import { ogImages } from "@/lib/og-image";
 
 const waveformBars = [
@@ -68,7 +69,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       "sinhala transcribe",
       "convert sinhala voice to text",
       "sinhala transcript",
-      "sinhala voice typing",
+      "sinhala audio to text converter",
       "sinhala voice transcriber",
       "sinhala speech to text",
       "sinhala audio to text",
@@ -132,7 +133,7 @@ export default async function LandingPage({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: "HelaVoice.lk",
-    alternateName: ["Sinhala Voice to Text", "Sinhala Voice Transcriber"],
+    alternateName: ["Sinhala Voice to Text", "Sinhala Audio to Text Converter", "Sinhala Voice Transcriber"],
     url: siteUrl,
     description: d.heroSubtitle,
     applicationCategory: "UtilitiesApplication",
@@ -173,7 +174,10 @@ export default async function LandingPage({ params }: Props) {
     ],
   };
 
-  const faqItems = (d.faqItems ?? []) as { q: string; a: string }[];
+  // Prices in FAQ answers come from CREDIT_PACKAGES, never from the copy.
+  const starter = CREDIT_PACKAGES.reduce((a, b) => (b.price < a.price ? b : a));
+  const faqVars = { starterPrice: starter.priceDisplay, starterCredits: starter.credits };
+  const faqItems = ((d.faqItems ?? []) as { q: string; a: string }[]).map((item) => ({ q: item.q, a: t(item.a, faqVars) }));
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -669,6 +673,10 @@ export default async function LandingPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      <div className="pt-24">
+        <RelatedTools locale={locale as Locale} copy={dict.relatedTools} current="transcribe" />
+      </div>
 
       {/* ── CTA ───────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-transparent px-6 py-24 sm:py-28 lg:px-8">

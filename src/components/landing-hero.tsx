@@ -148,13 +148,13 @@ function LiveCard({ locale }: { locale: Locale }) {
   const statLabels =
     locale === "si"
       ? [
-          ["99.2%", "නිවැරදිභාවය"],
-          ["0.4s", "ප්‍රමාදය"],
+          ["සිං", "සිංහල"],
+          ["Live", "සජීවී"],
           ["1 cr", "පිරිවැය"],
         ]
       : [
-          ["99.2%", "Accuracy"],
-          ["0.4s", "Latency"],
+          ["සිං", "Sinhala"],
+          ["Live", "Transcript"],
           ["1 cr", "Cost"],
         ];
 
@@ -290,27 +290,27 @@ export function LandingHero({
   const statCards =
     locale === "si"
       ? [
-          ["99.2%", "නිවැරදිභාවය", "ඉහළම ප්‍රමිතිය"],
-          ["0.4s", "ප්‍රමාදය", "සාමාන්‍ය ප්‍රතිචාරය"],
-          ["30+", "භාෂා රටා", "සහාය දක්වයි"],
+          ["නොමිලේ", "ආරම්භය", "කාඩ්පතක් අවශ්‍ය නැත"],
+          ["ශ්‍රව්‍ය", "+ වීඩියෝ", "උපසිරැසි ද ඇත"],
+          ["∞", "ක්‍රෙඩිට්", "කල් ඉකුත් නොවේ"],
         ]
       : [
-          ["99.2%", "Accuracy", "industry best"],
-          ["0.4s", "Latency", "avg response"],
-          ["30+", "Dialects", "supported"],
+          ["Free", "to start", "no card needed"],
+          ["Audio", "+ video", "subtitles too"],
+          ["∞", "Credits", "never expire"],
         ];
 
   const mobileStats =
     locale === "si"
       ? [
-          ["99.2%", "නිවැරදිභාවය"],
-          ["0.4s", "ප්‍රමාදය"],
-          ["30+", "භාෂා රටා"],
+          ["නොමිලේ", "ආරම්භය"],
+          ["ශ්‍රව්‍ය", "+ වීඩියෝ"],
+          ["∞", "ක්‍රෙඩිට්"],
         ]
       : [
-          ["99.2%", "Accuracy"],
-          ["0.4s", "Latency"],
-          ["30+", "Dialects"],
+          ["Free", "to start"],
+          ["Audio", "+ video"],
+          ["∞", "Credits"],
         ];
 
   return (

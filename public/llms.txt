@@ -1,0 +1,21 @@
+# HelaVoice
+
+> HelaVoice (helavoice.lk) is a Sri Lankan web app for Sinhala speech and text: Sinhala voice to text (audio transcription), video subtitles, English ↔ Sinhala translation with voice, Sinhala text to speech, and free Sinhala voice typing. The site is in English and Sinhala (Sinhala pages are under /si).
+
+Transcription and subtitles are paid with prepaid credits that never expire: 1 credit = 1 minute of audio transcription, and subtitles cost 2 credits per minute of video. Current credit packs and prices: https://helavoice.lk/pricing
+
+## Tools
+
+- [Sinhala voice to text / audio to text converter](https://helavoice.lk/): record in the browser or upload an audio file (MP3, M4A, WAV, OGG, FLAC, WebM) and get an editable Sinhala transcript.
+- [Sinhala subtitle generator](https://helavoice.lk/subtitles): timed Sinhala or English subtitles and captions for a video; export SRT, WebVTT or an MP4 with captions burned in. The video stays on the user's device; only audio is processed.
+- [Sinhala voice typing](https://helavoice.lk/sinhala-voice-typing): free live dictation in the browser; speak Sinhala and it is typed as Sinhala Unicode.
+- [Sinhala to English voice translator](https://helavoice.lk/sinhala-to-english): free text translation; voice translation (speak Sinhala, get English text and audio) uses 1 credit per clip of up to 2 minutes.
+- [English to Sinhala voice translator](https://helavoice.lk/english-to-sinhala): the same tool in the other direction, with Sinhala audio output.
+- [Sinhala text to speech](https://helavoice.lk/sinhala-text-to-speech): type Sinhala or Singlish, choose one of eight voices, download a WAV file.
+- [Singlish to Sinhala](https://helavoice.lk/singlish-to-sinhala): type Sinhala with English letters (e.g. "ayubowan" → ආයුබෝවන්).
+
+## More
+
+- [Pricing](https://helavoice.lk/pricing)
+- [Blog: Sinhala transcription guides](https://helavoice.lk/blog)
+- [Support](https://helavoice.lk/support)

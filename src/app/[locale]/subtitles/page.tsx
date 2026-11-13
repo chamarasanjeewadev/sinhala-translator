@@ -15,6 +15,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SubtitlesHero } from "@/components/subtitles/subtitles-hero";
+import { RelatedTools } from "@/components/related-tools";
 import { ogImages } from "@/lib/og-image";
 
 type Props = {
@@ -40,6 +41,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: d.metaDescription,
     keywords: [
       "sinhala subtitle generator",
+      "sinhala captions",
+      "sinhala captions lk",
       "sinhala subtitles for video",
       "auto subtitles sinhala",
       "srt generator sinhala",
@@ -58,6 +61,9 @@ export default async function SubtitlesLandingPage({ params }: Props) {
   if (!locales.includes(locale as Locale)) notFound();
   const dict = await getDictionary(locale as Locale);
   const d = dict.subtitlesLanding;
+  type Faq = { q: string; a: string };
+  // Google answers "sinhala subtitle generator" with a Sinhala-language AI Overview, so the English page carries the Sinhala Q&A too.
+  const siCopy = locale === "si" ? null : (await getDictionary("si")).subtitlesLanding;
 
   const lp = (path: string) => localePath(path, locale as Locale);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://helavoice.lk";
@@ -100,7 +106,7 @@ export default async function SubtitlesLandingPage({ params }: Props) {
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: d.faqItems.map((item: { q: string; a: string }) => ({
+    mainEntity: [...d.faqItems, ...(siCopy?.faqItems ?? [])].map((item: Faq) => ({
       "@type": "Question",
       name: item.q,
       acceptedAnswer: { "@type": "Answer", text: item.a },
@@ -223,6 +229,23 @@ export default async function SubtitlesLandingPage({ params }: Props) {
           ))}
         </div>
       </section>
+
+      {siCopy && (
+        <section lang="si" className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 pb-20">
+          <h2 className="text-center font-display text-2xl sm:text-3xl font-bold mb-4">{siCopy.faqTitle}</h2>
+          <p className="text-center text-sm text-ink/65 leading-relaxed mb-8">{siCopy.metaDescription}</p>
+          <div className="flex flex-col gap-3">
+            {siCopy.faqItems.map((item: Faq) => (
+              <div key={item.q} className="rounded-2xl bg-white/60 border border-ink/10 p-5">
+                <h3 className="text-sm font-semibold">{item.q}</h3>
+                <p className="text-sm text-ink/65 leading-relaxed mt-2">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <RelatedTools locale={locale as Locale} copy={dict.relatedTools} current="subtitles" />
 
       {/* ── CTA ── */}
       <section className="px-4 sm:px-6 lg:px-8 pb-24">

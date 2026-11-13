@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { privateJson } from "@/lib/api-response";
+import { CHUNK_DURATION_SECONDS } from "@/lib/constants";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -28,7 +29,8 @@ export async function POST(request: Request) {
     );
   }
 
-  const requiredCredits = Math.ceil(durationSeconds / 60);
+  // Must match billing: transcribe/chunk deducts 1 credit per CHUNK_DURATION_SECONDS chunk.
+  const requiredCredits = Math.ceil(durationSeconds / CHUNK_DURATION_SECONDS);
 
   const { data: profile, error: profileError } = await supabase
     .from("profiles")

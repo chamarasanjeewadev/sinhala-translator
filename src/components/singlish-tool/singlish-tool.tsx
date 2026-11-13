@@ -10,6 +10,7 @@ import { singlishToSinhala } from "@/lib/singlish";
 import { sinhalaToSinglish } from "@/lib/sinhala-to-singlish";
 import { unicodeToFmAbhaya } from "@/lib/sinhala-legacy";
 import { trackEvent } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 import { detectVoicePlatform, useSinhalaVoiceTyping, type VoicePlatform } from "./use-sinhala-voice-typing";
 
 const STORAGE_KEY = "hv-singlish-tool-text";
@@ -44,7 +45,7 @@ function useCopy(copiedLabel: string) {
   return { copiedKey, copy };
 }
 
-export function SinglishTool({ labels: l }: { labels: SinglishToolLabels }) {
+export function SinglishTool({ labels: l, voiceFirst = false }: { labels: SinglishToolLabels; voiceFirst?: boolean }) {
   const [text, setText] = useState("");
   const [singlishOn, setSinglishOn] = useState(true);
   const [tab, setTab] = useState<OutputTab>("legacy");
@@ -180,11 +181,15 @@ export function SinglishTool({ labels: l }: { labels: SinglishToolLabels }) {
                 setVoiceHelp(null);
                 (voice.listening ? voice.stop : voice.start)();
               }}
-              className={`${pill} ${
+              className={cn(
+                pill,
+                voiceFirst && "px-5 py-2.5 text-sm",
                 voice.listening
-                  ? "bg-[#ba1a1a] text-ink hover:bg-[#93000a]"
-                  : "bg-[#e6efe6] text-[#15201b] hover:bg-[#dbe7dc]"
-              }`}
+                  ? "bg-[#ba1a1a] text-white hover:bg-[#93000a]"
+                  : voiceFirst
+                    ? "bg-[#2f7d5b] text-white hover:opacity-90"
+                    : "bg-[#e6efe6] text-[#15201b] hover:bg-[#dbe7dc]",
+              )}
             >
               {voice.listening ? <Square className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
               {voice.listening ? l.voiceStop : l.voiceStart}

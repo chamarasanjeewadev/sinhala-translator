@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { X, Mic, Upload, Loader2, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useDictionary } from "@/lib/i18n/dictionary-context";
+import { LocaleLink } from "@/components/locale-link";
 import { apiErrorMessage } from "@/lib/client-error";
 import { AudioRecorder } from "./audio-recorder";
 import { AudioUploader } from "./audio-uploader";
@@ -286,7 +287,10 @@ export function RecordingModal({
               {!analyzeResult.canProceed && (
                 <div className="flex items-center gap-2 text-red-400 text-sm bg-red-500/10 border border-red-500/20 rounded-xl p-3">
                   <AlertCircle className="w-4 h-4 shrink-0" />
-                  {d.insufficientCredits}
+                  <span className="flex-1">{d.insufficientCredits}</span>
+                  <LocaleLink href="/pricing" className="font-semibold underline whitespace-nowrap hover:opacity-80">
+                    {d.buyCredits}
+                  </LocaleLink>
                 </div>
               )}
             </div>

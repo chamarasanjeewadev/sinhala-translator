@@ -14,6 +14,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import type { Locale } from "@/lib/i18n/config";
 import { localePath, generateAlternates } from "@/lib/i18n/utils";
 import { TranslatorTool, type TranslatorDirection } from "./translator-tool";
+import { RelatedTools } from "@/components/related-tools";
 import { ogImages } from "@/lib/og-image";
 
 const PAGES = {
@@ -21,14 +22,14 @@ const PAGES = {
     path: "/english-to-sinhala",
     otherPath: "/sinhala-to-english",
     dictKey: "enSi",
-    appName: "HelaVoice English to Sinhala Translator",
+    appName: "HelaVoice English to Sinhala Voice Translator",
     keywords: [
+      "english to sinhala voice translator",
       "english to sinhala",
       "english to sinhala translation",
       "english to sinhala translator",
       "translate english to sinhala",
       "english sinhala translator online",
-      "english to sinhala voice translator",
       "ඉංග්‍රීසි සිංහල පරිවර්තනය",
     ],
   },
@@ -36,8 +37,10 @@ const PAGES = {
     path: "/sinhala-to-english",
     otherPath: "/english-to-sinhala",
     dictKey: "siEn",
-    appName: "HelaVoice Sinhala to English Translator",
+    appName: "HelaVoice Sinhala to English Voice Translator",
     keywords: [
+      "sinhala to english voice translator",
+      "sinhala voice translator",
       "sinhala to english",
       "sinhala to english translation",
       "sinhala to english translator",
@@ -86,6 +89,8 @@ export async function TranslatorPage({
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://helavoice.lk";
 
   const featureIcons = [ArrowLeftRight, Mic, Volume2, Keyboard, Sparkles, ShieldCheck];
+  // Direction-specific voice questions first, then the shared ones.
+  const faqItems: { q: string; a: string }[] = [...d.faqItems, ...t.faqItems];
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -109,7 +114,7 @@ export async function TranslatorPage({
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: t.faqItems.map((item: { q: string; a: string }) => ({
+    mainEntity: faqItems.map((item) => ({
       "@type": "Question",
       name: item.q,
       acceptedAnswer: { "@type": "Answer", text: item.a },
@@ -190,7 +195,7 @@ export async function TranslatorPage({
         <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-leaf/90 mb-3">{t.faqEyebrow}</p>
         <h2 className="text-center font-display text-3xl sm:text-4xl font-bold mb-12">{t.faqTitle}</h2>
         <div className="flex flex-col gap-3">
-          {t.faqItems.map((item: { q: string; a: string }) => (
+          {faqItems.map((item) => (
             <details key={item.q} className="group rounded-2xl bg-white/60 border border-ink/10 p-5 open:border-leaf/30 transition-colors">
               <summary className="cursor-pointer text-sm font-semibold list-none flex items-center justify-between gap-4">
                 {item.q}
@@ -201,6 +206,8 @@ export async function TranslatorPage({
           ))}
         </div>
       </section>
+
+      <RelatedTools locale={locale} copy={dict.relatedTools} current={page.dictKey} />
 
       {/* ── CTA (cross-link to the core product) ── */}
       <section className="px-4 sm:px-6 lg:px-8 pb-24">

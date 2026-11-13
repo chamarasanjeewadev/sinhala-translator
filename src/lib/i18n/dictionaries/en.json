@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "title": "Sinhala Voice to Text — Transcribe Audio Free in Seconds | HelaVoice.lk",
-    "description": "HelaVoice converts Sinhala voice to text with AI. Record or upload audio and transcribe Sinhala speech into accurate text in seconds — free credits on signup."
+    "title": "Sinhala Voice to Text & Audio to Text Converter | HelaVoice.lk",
+    "description": "Convert Sinhala voice and audio files to text with AI. Record or upload a voice note, meeting or interview and get an accurate Sinhala transcript in seconds."
   },
   "navbar": {
     "dashboard": "Dashboard",
@@ -18,14 +18,15 @@
     "singlishTool": "Sinhala Typing",
     "translate": "Translate",
     "textToSpeech": "Text to Speech",
-    "tools": "Tools"
+    "tools": "Tools",
+    "voiceTyping": "Voice Typing"
   },
   "landing": {
     "badge": "AI-Powered Sinhala Transcription",
-    "heroEyebrow": "Sinhala voice to text — built for Sri Lanka",
+    "heroEyebrow": "Sinhala speech to text — built for Sri Lanka",
     "heroTitle1": "Sinhala voice to text,",
     "heroTitle2": "perfectly transcribed",
-    "heroSubtitle": "The AI-powered way to convert Sinhala voice to text. Record or upload audio and transcribe Sinhala speech into accurate text in seconds — pay only for the minutes you use.",
+    "heroSubtitle": "The AI-powered Sinhala audio to text converter. Record in your browser or upload an audio file, and turn Sinhala speech into accurate text in seconds — pay only for the minutes you use.",
     "startTranscribing": "Start transcribing",
     "viewPricing": "View pricing",
     "freeCredits": "{count} free credits on signup",
@@ -143,7 +144,19 @@
       },
       {
         "q": "How do I transcribe Sinhala audio to text?",
-        "a": "Sign up for a free HelaVoice account, then either record audio directly in your browser or upload an existing audio file (MP3, WAV, WebM, OGG, FLAC, or M4A). HelaVoice processes the audio in 60-second chunks and returns the Sinhala transcript, which you can copy, edit, or download."
+        "a": "Sign up for a free HelaVoice account, then either record audio directly in your browser or upload an existing audio file (MP3, WAV, WebM, OGG, FLAC, or M4A). HelaVoice transcribes it and returns the Sinhala transcript, which you can copy, edit, or download."
+      },
+      {
+        "q": "Is there an online Sinhala audio to text converter?",
+        "a": "Yes. HelaVoice is an online Sinhala audio to text converter. Upload an audio file (MP3, M4A, WAV, OGG, FLAC or WebM) or record in your browser, and you get an editable Sinhala transcript. There is nothing to install, and 1 minute of audio uses 1 credit."
+      },
+      {
+        "q": "What is the difference between Sinhala voice typing and transcription?",
+        "a": "Voice typing writes your words live while you speak into the microphone, and it is free on our Sinhala voice typing page. Transcription turns a recording you already have, such as a voice note, meeting or interview, into text, and uses 1 credit per minute of audio."
+      },
+      {
+        "q": "Can HelaVoice turn Sinhala text into speech?",
+        "a": "Yes, with a separate tool. Our Sinhala text to speech tool reads typed Sinhala aloud in a choice of eight voices, and you can download the audio as a WAV file."
       },
       {
         "q": "How accurate is HelaVoice for Sinhala speech-to-text?",
@@ -159,7 +172,7 @@
       },
       {
         "q": "How much does HelaVoice cost?",
-        "a": "HelaVoice is simple: 1 minute of audio uses 1 credit. New accounts get 10 free credits on signup with no credit card required. Credit packages start small and never expire — you only pay for the credits you use."
+        "a": "HelaVoice charges by the minute: 1 minute of audio uses 1 credit, and credits never expire. Credit packs start at {starterPrice} for {starterCredits} credits, with no subscription."
       },
       {
         "q": "What audio formats and file sizes are supported?",
@@ -169,13 +182,15 @@
     "footerSinglishTool": "Singlish to Sinhala",
     "footerEnSi": "English to Sinhala",
     "footerSiEn": "Sinhala to English",
-    "footerTts": "Sinhala Text to Speech"
+    "footerTts": "Sinhala Text to Speech",
+    "footerVoiceTyping": "Sinhala Voice Typing"
   },
   "auth": {
     "logInTitle": "Log In",
     "createAccountTitle": "Create Account",
     "logInDesc": "Sign in to your account to continue",
-    "signUpDesc": "Sign up to get 10 free recording credits",
+    "signUpDesc": "Sign up to get {count} free credits",
+    "signUpDescNoBonus": "Sign up to start transcribing Sinhala audio",
     "continueWithGoogle": "Continue with Google",
     "or": "or",
     "email": "Email",
@@ -189,12 +204,32 @@
     "noAccount": "Don’t have an account?",
     "signUpLink": "Sign up",
     "hasAccount": "Already have an account?",
-    "logInLink": "Log in"
+    "logInLink": "Log in",
+    "authLinkFailed": "That link didn't sign you in on this device. If you just confirmed your email, log in with your password below.",
+    "forgotPassword": "Forgot password?",
+    "resetTitle": "Reset password",
+    "resetDesc": "Enter your email and we'll send you a link to set a new password.",
+    "sendResetLink": "Send reset link",
+    "resetEmailSent": "If an account exists for that email, we've sent a reset link. Open it on this device.",
+    "backToLogin": "Back to log in",
+    "newPasswordTitle": "Set a new password",
+    "newPasswordDesc": "Choose a new password for your account.",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "passwordsDontMatch": "The passwords don't match.",
+    "savePassword": "Save password",
+    "passwordUpdated": "Password updated. Taking you to your dashboard…",
+    "resetLinkExpired": "This reset link has expired or was opened on another device. Request a new one."
   },
   "dashboard": {
     "title": "Dashboard",
     "outOfCredits": "You’re out of recording credits. Purchase more to continue transcribing.",
     "buyCredits": "Buy Credits",
+    "promoHave": "Have a promo code?",
+    "promoPlaceholder": "Promo code",
+    "promoApply": "Apply",
+    "promoApplied": "Code applied. You now have {credits} credits.",
+    "promoFailed": "Could not apply that code. Please try again.",
     "transcribeTitle": "Transcribe Sinhala Audio",
     "transcribeDesc": "Record or upload audio to get a Sinhala transcription",
     "record": "Record",
@@ -213,7 +248,7 @@
     "confirmTranscription": "Transcribe",
     "processingChunk": "Processing chunk {current} of {total}...",
     "insufficientCredits": "Not enough credits. Please purchase more.",
-    "perMinute": "1 per minute",
+    "perMinute": "1 per 2 minutes",
     "conversationMode": "Conversation mode",
     "conversationModeDesc": "Label each speaker (Speaker 1, Speaker 2, …)",
     "timestampsToggle": "Timestamps",
@@ -299,7 +334,8 @@
       "singlishTool": "Type Sinhala with English letters (mama → මම) and copy it anywhere.",
       "translate": "Translate between English and Sinhala, and listen to the result.",
       "textToSpeech": "Turn Sinhala text into natural speech and download the audio.",
-      "qrGenerator": "Make a QR code with your logo and colours, free."
+      "qrGenerator": "Make a QR code with your logo and colours, free.",
+      "voiceTyping": "Speak in Sinhala and watch your words appear as text, free."
     },
     "tour": {
       "next": "Next",
@@ -367,13 +403,13 @@
     "si": "සිං"
   },
   "subtitlesLanding": {
-    "metaTitle": "Sinhala Subtitle Generator — Auto Subtitles for Video | HelaVoice.lk",
-    "metaDescription": "Generate Sinhala subtitles for any video with AI. Upload a video, auto-generate timed subtitles, edit and style them, then export SRT/VTT files or a subtitled MP4 — your video never leaves your device.",
+    "metaTitle": "Sinhala Subtitle Generator & Sinhala Captions",
+    "metaDescription": "Generate Sinhala subtitles and captions for any video with AI. Upload a video, get timed Sinhala captions, edit and style them, then export SRT/VTT files or an MP4 with captions burned in. Your video never leaves your device.",
     "heroBadge": "New — Video Subtitles",
     "heroEyebrow": "Sinhala subtitle generator — built for Sri Lanka",
-    "heroTitle1": "Sinhala subtitles,",
-    "heroTitle2": "burned right into your video",
-    "heroSubtitle": "Upload a clip and AI writes accurate, perfectly timed Sinhala subtitles. Edit the words, style the look, and export an SRT file or a ready-to-post video — all in your browser, nothing uploaded.",
+    "heroTitle1": "Sinhala subtitle generator,",
+    "heroTitle2": "captions burned into your video",
+    "heroSubtitle": "Upload a clip and AI writes accurate, timed Sinhala subtitles and captions. Edit the words, style the look, and export an SRT file or a ready-to-post video — all in your browser, nothing uploaded.",
     "ctaPrimary": "Generate subtitles free",
     "ctaSecondary": "See how it works",
     "previewLabel": "Live preview",
@@ -417,6 +453,14 @@
       {
         "q": "How do I generate Sinhala subtitles for a video?",
         "a": "Sign in to HelaVoice, open Video Subtitles, and upload your video (MP4, WebM, or MOV). The AI transcribes the audio into timed Sinhala subtitle segments in minutes. You can then edit the text, adjust timings on a timeline, style the subtitles, and export an SRT/VTT file or an MP4 with the subtitles burned in."
+      },
+      {
+        "q": "How do I add Sinhala captions to a TikTok, Reel or YouTube video?",
+        "a": "Upload the video to our Sinhala subtitle generator, let the AI write timed Sinhala captions, and fix any words. Then export an MP4 with the captions burned in for TikTok, Instagram Reels or Facebook, or an SRT file to upload to YouTube."
+      },
+      {
+        "q": "Is a subtitle generator the same as a caption generator?",
+        "a": "For most creators, yes: both put the spoken words on screen as timed text. HelaVoice writes that text once and you choose how to use it: an SRT or VTT file that viewers can switch on and off, or captions burned into the video so they always show."
       },
       {
         "q": "Is my video uploaded to your servers?",
@@ -901,18 +945,38 @@
       "heard": "We heard:"
     },
     "enSi": {
-      "metaTitle": "English to Sinhala Translation — Free Online Translator",
-      "metaDescription": "Translate English to Sinhala free online. Natural AI translation into Sinhala Unicode, listen to the Sinhala pronunciation, or speak English and hear it in Sinhala.",
-      "heroBadge": "Free English → Sinhala translator",
-      "heroTitle": "English to Sinhala translation",
-      "heroSubtitle": "Type or paste English and get natural Sinhala in seconds. Tap Listen to hear it, or just speak English and hear the Sinhala translation."
+      "metaTitle": "English to Sinhala Voice Translator — Speak or Type",
+      "metaDescription": "Speak English and hear it in Sinhala: our English to Sinhala voice translator writes the Sinhala and reads it aloud. Typing English is free, with no account needed.",
+      "heroBadge": "English → Sinhala voice translator",
+      "heroTitle": "English to Sinhala voice translator",
+      "heroSubtitle": "Press Speak and talk in English — we write the Sinhala translation and read it aloud in a Sinhala voice. Prefer typing? Type or paste English for a free text translation.",
+      "faqItems": [
+        {
+          "q": "Can I speak English and hear it in Sinhala?",
+          "a": "Yes. Sign in, press Speak and talk in English. HelaVoice translates what you said into Sinhala, shows it in Sinhala Unicode and reads it aloud in a Sinhala voice. Each clip of up to 2 minutes uses 1 credit."
+        },
+        {
+          "q": "Can I use it to talk with someone who only speaks Sinhala?",
+          "a": "Yes, for short exchanges. Say a sentence in English and let the Sinhala play aloud, then they press Speak and answer in Sinhala. We detect the language each time and translate it the other way. Each clip uses 1 credit."
+        }
+      ]
     },
     "siEn": {
-      "metaTitle": "Sinhala to English Translation — Free Online Translator",
-      "metaDescription": "Translate Sinhala to English free online. Type Sinhala or Singlish, paste Unicode text, or speak Sinhala and get an accurate English translation you can listen to.",
-      "heroBadge": "Free Sinhala → English translator",
-      "heroTitle": "Sinhala to English translation",
-      "heroSubtitle": "Type Sinhala (or Singlish — it converts as you type), paste Unicode text, or speak Sinhala. Get a natural English translation in seconds."
+      "metaTitle": "Sinhala to English Voice Translator — Speak or Type",
+      "metaDescription": "Speak Sinhala and get English: our Sinhala to English voice translator writes the translation and reads it aloud. Typing Sinhala or Singlish is free, with no account needed.",
+      "heroBadge": "Sinhala → English voice translator",
+      "heroTitle": "Sinhala to English voice translator",
+      "heroSubtitle": "Press Speak and talk in Sinhala — we write the English translation and read it aloud. Prefer typing? Type Sinhala or Singlish (it converts as you type) for a free text translation.",
+      "faqItems": [
+        {
+          "q": "Can I speak Sinhala and get English?",
+          "a": "Yes. Sign in, press Speak and talk in Sinhala. HelaVoice writes down what you said, translates it into English and reads the English aloud. Each clip of up to 2 minutes uses 1 credit."
+        },
+        {
+          "q": "Can I translate a Sinhala voice note to English?",
+          "a": "Yes. Press Upload audio and choose a Sinhala recording, such as a voice note. You get the Sinhala transcript and the English translation, read aloud. Only the first 2 minutes of a file are translated, so transcribe longer recordings with our Sinhala audio to text converter first."
+        }
+      ]
     },
     "howEyebrow": "How it works",
     "howTitle": "Translate in three steps",
@@ -962,7 +1026,7 @@
     "faqTitle": "Questions about translation",
     "faqItems": [
       {
-        "q": "Is the English to Sinhala translator free?",
+        "q": "Is the HelaVoice translator free?",
         "a": "Yes. Text translation is free in both directions — up to 500 characters at a time without an account, or 5,000 characters when you sign in. Voice translation uses 1 credit per clip, and new accounts get free credits."
       },
       {
@@ -992,7 +1056,7 @@
     "otherDirection": "Translate the other way"
   },
   "textToSpeech": {
-    "metaTitle": "Sinhala Text to Speech – Free Online Sinhala Voice Generator | HelaVoice",
+    "metaTitle": "Sinhala Text to Speech – Free Online Sinhala Voice Generator",
     "metaDescription": "Type Sinhala or Singlish and turn it into natural-sounding speech. Pick a voice, listen instantly and download the audio. Your first minute is free.",
     "heroBadge": "Sinhala Text to Speech",
     "heroTitle": "Turn Sinhala text into natural speech",
@@ -1045,6 +1109,10 @@
     "faqTitle": "Sinhala text to speech — common questions",
     "faqItems": [
       {
+        "q": "What is a Sinhala voice generator?",
+        "a": "A Sinhala voice generator turns written Sinhala into spoken audio. Our Sinhala text to speech tool does this with AI voices: type or paste Sinhala (or type Singlish), pick one of eight voices and download the result as a WAV file."
+      },
+      {
         "q": "Is Sinhala text to speech free?",
         "a": "Your first minute of audio (about 700 characters) is free with a free HelaVoice account. After that it costs 1 credit per 700 characters, using the same credits as transcription and subtitles."
       },
@@ -1068,5 +1136,103 @@
     "ctaTitle": "Need Sinhala speech turned into text?",
     "ctaSubtitle": "Transcribe Sinhala recordings, meetings and voice notes into text in minutes.",
     "ctaButton": "Try Sinhala voice to text"
+  },
+  "voiceTyping": {
+    "metaTitle": "Sinhala Voice Typing Online — Free Speech to Text",
+    "metaDescription": "Free Sinhala voice typing online. Press Speak, talk in Sinhala and your words appear as Sinhala Unicode text. Works in Chrome and Edge. No app, no sign-up.",
+    "heroBadge": "Free tool · No sign-up",
+    "heroTitle": "Sinhala Voice Typing",
+    "heroSubtitle": "Press Speak and talk in Sinhala. Your words appear as Sinhala Unicode text you can edit, copy and download. Free, online, nothing to install.",
+    "ui": {
+      "placeholder": "Press Speak and talk in Sinhala — your words appear here. You can also type or paste."
+    },
+    "howEyebrow": "How it works",
+    "howTitle": "Type Sinhala by voice in three steps",
+    "howSteps": [
+      {
+        "title": "Press Speak",
+        "desc": "Open this page in Chrome or Edge, press Speak and allow the microphone when your browser asks."
+      },
+      {
+        "title": "Talk in Sinhala",
+        "desc": "Speak naturally. Your words appear in the editor as Sinhala Unicode. Press Stop when you are done."
+      },
+      {
+        "title": "Fix, copy or download",
+        "desc": "Correct any word by typing, then copy the text to WhatsApp, Facebook or Word, or download it as PDF, Word or text."
+      }
+    ],
+    "faqEyebrow": "FAQ",
+    "faqTitle": "Sinhala voice typing questions",
+    "faqItems": [
+      {
+        "q": "How do I do Sinhala voice typing online?",
+        "a": "Open this page in Chrome or Edge, press Speak, allow the microphone and talk in Sinhala. Your speech is turned into Sinhala Unicode text in the editor, ready to copy."
+      },
+      {
+        "q": "Is Sinhala voice typing free?",
+        "a": "Yes. It is free and there is no sign-up. It uses the speech recognition built into your browser."
+      },
+      {
+        "q": "Which browsers does it work in?",
+        "a": "It works best in Google Chrome and Microsoft Edge, on computers and Android phones. On iPhone, use Chrome or Safari. If you do not see the Speak button, your browser does not support speech recognition."
+      },
+      {
+        "q": "Can I use it for WhatsApp, Facebook or Word?",
+        "a": "Yes. The text is standard Sinhala Unicode. Press Copy and paste it into WhatsApp, Facebook, Gmail, Word or Google Docs."
+      },
+      {
+        "q": "The microphone is not working. What should I do?",
+        "a": "Allow microphone access for this site in your browser settings, then reload the page. Voice typing is often blocked in private or incognito tabs, so use a normal tab."
+      },
+      {
+        "q": "Does HelaVoice record my voice?",
+        "a": "No. HelaVoice does not record or store your voice. Recognition is done by your browser's speech service (in Chrome, that is a Google service), and the text stays in your browser."
+      },
+      {
+        "q": "Can I turn a recording or a WhatsApp voice note into Sinhala text?",
+        "a": "Voice typing listens while you speak. For recordings, voice notes and videos, use HelaVoice transcription: upload the file and get the text."
+      },
+      {
+        "q": "Can I also type Sinhala with the keyboard here?",
+        "a": "Yes. Type in English letters (Singlish) and the editor turns each word into Sinhala, so you can fix any word the microphone got wrong."
+      }
+    ],
+    "ctaTitle": "Have a recording instead?",
+    "ctaSubtitle": "HelaVoice turns Sinhala recordings, voice notes and videos into editable text with AI. Start with free minutes.",
+    "ctaButton": "Transcribe a Sinhala recording"
+  },
+  "blog": {
+    "ctaText": "Have a Sinhala recording to turn into text?",
+    "ctaLink": "Try our Sinhala audio to text converter"
+  },
+  "relatedTools": {
+    "title": "More Sinhala tools from HelaVoice",
+    "items": {
+      "transcribe": {
+        "label": "Sinhala audio to text converter",
+        "desc": "Upload a recording or voice note and get an editable Sinhala transcript."
+      },
+      "voiceTyping": {
+        "label": "Sinhala voice typing",
+        "desc": "Speak into your mic and your words appear as Sinhala text. Free."
+      },
+      "siEn": {
+        "label": "Sinhala to English voice translator",
+        "desc": "Speak or type Sinhala and get an English translation you can listen to."
+      },
+      "enSi": {
+        "label": "English to Sinhala voice translator",
+        "desc": "Speak or type English and hear it in Sinhala."
+      },
+      "subtitles": {
+        "label": "Sinhala subtitle generator",
+        "desc": "Auto-generate timed Sinhala captions for any video."
+      },
+      "textToSpeech": {
+        "label": "Sinhala text to speech",
+        "desc": "A Sinhala voice generator: type Sinhala and download natural speech."
+      }
+    }
   }
 }

@@ -7,7 +7,7 @@ import { useDictionary } from "@/lib/i18n/dictionary-context";
 import { CREDIT_PACKAGES } from "@/lib/constants";
 import { Check } from "lucide-react";
 
-export default function SignupContent() {
+export default function SignupContent({ freeCredits }: { freeCredits: number | null }) {
   const dict = useDictionary();
   const searchParams = useSearchParams();
   const packageId = searchParams.get("package") ?? undefined;
@@ -34,7 +34,7 @@ export default function SignupContent() {
             </div>
           </div>
 
-          <AuthForm mode="signup" packageId={packageId} />
+          <AuthForm mode="signup" packageId={packageId} freeCredits={freeCredits} />
 
           <p className="text-center text-sm text-ink/55">
             {dict.auth.hasAccount}{" "}
@@ -53,7 +53,7 @@ export default function SignupContent() {
   return (
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4">
       <div className="w-full max-w-md space-y-4">
-        <AuthForm mode="signup" />
+        <AuthForm mode="signup" freeCredits={freeCredits} />
         <p className="text-center text-sm text-muted-foreground">
           {dict.auth.hasAccount}{" "}
           <LocaleLink href="/login" className="underline hover:text-foreground">

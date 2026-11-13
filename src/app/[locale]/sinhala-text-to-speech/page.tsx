@@ -6,6 +6,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { locales, type Locale } from "@/lib/i18n/config";
 import { localePath, generateAlternates } from "@/lib/i18n/utils";
 import { TtsTool } from "@/components/tts-tool/tts-tool";
+import { RelatedTools } from "@/components/related-tools";
 import { ogImages } from "@/lib/og-image";
 
 const PATH = "/sinhala-text-to-speech";
@@ -109,6 +110,8 @@ export default async function SinhalaTextToSpeechPage({ params }: Props) {
           ))}
         </div>
       </section>
+
+      <RelatedTools locale={locale as Locale} copy={dict.relatedTools} current="textToSpeech" />
 
       <section className="px-4 sm:px-6 lg:px-8 pb-24">
         <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-white/80 bg-gradient-pastel px-6 py-16 text-center">

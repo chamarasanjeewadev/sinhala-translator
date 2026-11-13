@@ -5,13 +5,14 @@ import { format } from "date-fns";
 import { Metadata } from "next";
 import { defaultLocale, locales, type Locale } from "@/lib/i18n/config";
 import { generateAlternates } from "@/lib/i18n/utils";
+import { getDictionary } from "@/lib/i18n/get-dictionary";
 
 type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   return {
-    title: "Blog - Latest Updates & Translation Tips | HelaVoice.lk",
+    title: "Blog - Latest Updates & Translation Tips",
     description:
       "Read the latest news, updates, and translation tips from the HelaVoice.lk team.",
     alternates: locales.includes(locale as Locale)
@@ -47,6 +48,7 @@ export default async function BlogPage({ params }: Props) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://helavoice.lk";
   const blogPath = locale === defaultLocale ? "/blog" : `/${locale}/blog`;
   const homePath = locale === defaultLocale ? "/" : `/${locale}`;
+  const blogCopy = (await getDictionary(locales.includes(locale as Locale) ? (locale as Locale) : defaultLocale)).blog;
 
   const collectionJsonLd = {
     "@context": "https://schema.org",
@@ -111,6 +113,12 @@ export default async function BlogPage({ params }: Props) {
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-600 md:text-lg">
             Field-tested guides for Sri Lankan creators, students, and teams using Sinhala transcription in real workflows.
+          </p>
+          <p className="mt-4 text-sm text-slate-600">
+            {blogCopy.ctaText}{" "}
+            <Link href={homePath} className="font-semibold text-leaf underline underline-offset-4 hover:text-slate-900">
+              {blogCopy.ctaLink} →
+            </Link>
           </p>
         </header>
 

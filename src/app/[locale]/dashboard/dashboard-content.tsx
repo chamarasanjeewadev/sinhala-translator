@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
+import { PromoCodeForm } from "@/components/promo-code-form";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import {
@@ -795,7 +796,7 @@ export function DashboardContent({
             <LocaleLink
               href="/pricing"
               data-tour="buy"
-              className="hidden sm:inline-flex items-center bg-gradient-to-r from-[#15201b] to-[#2c3a33] text-white px-4 py-2 rounded-full text-sm font-semibold transition-opacity hover:opacity-90"
+              className="inline-flex items-center whitespace-nowrap bg-gradient-to-r from-[#15201b] to-[#2c3a33] text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-opacity hover:opacity-90"
             >
               {d.buyCredits}
             </LocaleLink>
@@ -909,6 +910,10 @@ export function DashboardContent({
                   </div>
                 </div>
               )}
+
+              <div className="mt-4 flex justify-center">
+                <PromoCodeForm onRedeemed={setCredits} />
+              </div>
             </>
           )}
 
@@ -988,7 +993,10 @@ export function DashboardContent({
                 {!analyzeResult.canProceed && (
                   <div className="flex items-center gap-2 text-sm bg-[#ffdad6] text-[#ba1a1a] rounded-xl px-4 py-3">
                     <AlertCircle className="w-4 h-4 shrink-0" />
-                    {d.insufficientCredits}
+                    <span className="flex-1">{d.insufficientCredits}</span>
+                    <LocaleLink href="/pricing" className="font-semibold underline whitespace-nowrap hover:opacity-80">
+                      {d.buyCredits}
+                    </LocaleLink>
                   </div>
                 )}
               </div>
@@ -1627,9 +1635,14 @@ export function DashboardContent({
                 {!canAfford && (
                   <div className="flex items-center gap-2 text-sm bg-[#ffdad6] text-[#ba1a1a] rounded-xl px-4 py-3">
                     <AlertCircle className="w-4 h-4 shrink-0" />
-                    {d.insufficientCreditsForTranslation
-                      .replace("{needed}", String(creditsNeeded))
-                      .replace("{available}", String(credits))}
+                    <span className="flex-1">
+                      {d.insufficientCreditsForTranslation
+                        .replace("{needed}", String(creditsNeeded))
+                        .replace("{available}", String(credits))}
+                    </span>
+                    <LocaleLink href="/pricing" className="font-semibold underline whitespace-nowrap hover:opacity-80">
+                      {d.buyCredits}
+                    </LocaleLink>
                   </div>
                 )}
               </div>

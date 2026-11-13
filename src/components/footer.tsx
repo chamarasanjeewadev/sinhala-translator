@@ -91,6 +91,14 @@ export function Footer({ locale, dict }: FooterProps) {
               </li>
               <li>
                 <Link
+                  href={lp("/sinhala-voice-typing")}
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
+                >
+                  {d.footerVoiceTyping}
+                </Link>
+              </li>
+              <li>
+                <Link
                   href={lp("/english-to-sinhala")}
                   className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                 >

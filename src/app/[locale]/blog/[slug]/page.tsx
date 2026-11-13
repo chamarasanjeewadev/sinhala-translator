@@ -7,6 +7,7 @@ import { Link } from "next-view-transitions";
 import { Metadata } from "next";
 import { defaultLocale, locales, type Locale } from "@/lib/i18n/config";
 import { ogImages } from "@/lib/og-image";
+import { getDictionary } from "@/lib/i18n/get-dictionary";
 
 type Props = {
   params: Promise<{ slug: string; locale: string }>;
@@ -47,7 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     return {
-      title: `${post.title} | HelaVoice.lk Blog`,
+      title: post.title, // the [locale] layout template adds " | HelaVoice.lk"
       description: post.excerpt,
       keywords: post.keywords,
       alternates: { canonical: canonicalUrl },
@@ -105,6 +106,7 @@ export default async function BlogPost({ params }: Props) {
   const blogPath = postLocale === defaultLocale ? "/blog" : `/${postLocale}/blog`;
   const blogUrl = `${siteUrl}${blogPath}`;
   const homePath = postLocale === defaultLocale ? "/" : `/${postLocale}`;
+  const blogCopy = (await getDictionary(postLocale)).blog;
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -255,6 +257,14 @@ export default async function BlogPost({ params }: Props) {
         <div className="prose prose-lg max-w-none rounded-3xl border border-slate-200/70 bg-white/75 p-7 text-slate-700 shadow-[0_16px_36px_-28px_rgba(15,23,42,0.75)] prose-headings:font-bold prose-headings:text-slate-900 prose-p:text-slate-700 prose-a:text-leaf hover:prose-a:text-leaf prose-img:rounded-xl md:p-10">
           <Content />
         </div>
+
+        {/* Every post links to the transcription landing page (the homepage) so it, not the blog, ranks for the product searches. */}
+        <p className="mt-10 rounded-3xl border border-slate-200/70 bg-white/85 p-6 text-center text-base text-slate-700">
+          {blogCopy.ctaText}{" "}
+          <Link href={homePath} className="font-semibold text-leaf underline underline-offset-4 hover:text-slate-900">
+            {blogCopy.ctaLink} →
+          </Link>
+        </p>
       </article>
     </div>
   );

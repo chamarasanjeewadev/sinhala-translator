@@ -5,6 +5,7 @@ import {
   Languages,
   Mic,
   QrCode,
+  Speech,
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -21,7 +22,7 @@ export const TONES = {
 } as const;
 export type Tone = keyof typeof TONES;
 
-export type ToolKey = "transcribe" | "subtitles" | "singlishTool" | "translate" | "textToSpeech" | "qrGenerator";
+export type ToolKey = "transcribe" | "subtitles" | "singlishTool" | "voiceTyping" | "translate" | "textToSpeech" | "qrGenerator";
 
 export const TOOLS: {
   key: ToolKey;
@@ -37,6 +38,7 @@ export const TOOLS: {
   { key: "transcribe", href: "/dashboard", icon: Mic, tone: "mint", isNew: false, inMenu: false },
   { key: "subtitles", href: "/subtitles", appHref: "/dashboard/subtitles", icon: Captions, tone: "pink", isNew: false, inMenu: false },
   { key: "singlishTool", href: "/singlish-to-sinhala", icon: Keyboard, tone: "lilac", isNew: true, inMenu: true },
+  { key: "voiceTyping", href: "/sinhala-voice-typing", icon: Speech, tone: "red", isNew: true, inMenu: true },
   { key: "translate", href: "/english-to-sinhala", icon: Languages, tone: "peach", isNew: true, inMenu: true },
   { key: "textToSpeech", href: "/sinhala-text-to-speech", icon: AudioLines, tone: "sky", isNew: true, inMenu: true },
   { key: "qrGenerator", href: "/qr-code-generator", icon: QrCode, tone: "blue", isNew: false, inMenu: true },
