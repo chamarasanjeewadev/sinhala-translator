@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { PromoCodeForm } from "@/components/promo-code-form";
+import { trackEvent } from "@/lib/analytics";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import {
@@ -65,6 +66,45 @@ type TranscribeState =
   | "processing"
   | "done"
   | "partial";
+
+// GA4 purchase from the Stripe success redirect, once per checkout session
+// (GA4 also dedupes on transaction_id). $0 promo checkouts are tracked apart.
+type PurchaseStatus = {
+  status?: string;
+  amountTotal?: number | null;
+  currency?: string | null;
+  packageId?: string | null;
+};
+
+function trackPurchase(sessionId: string | null) {
+  if (!sessionId) return;
+  const key = `hv_purchase_tracked_${sessionId}`;
+  try {
+    if (sessionStorage.getItem(key)) return;
+    sessionStorage.setItem(key, "1");
+  } catch {
+    // storage blocked: GA4's transaction_id dedupe still applies
+  }
+  fetch(`/api/stripe/session-status?session_id=${encodeURIComponent(sessionId)}`)
+    .then((res) => (res.ok ? (res.json() as Promise<PurchaseStatus>) : null))
+    .then(
+      (data: PurchaseStatus | null) => {
+        if (!data) return;
+        const value = (data.amountTotal ?? 0) / 100;
+        if (data.status === "paid" && value > 0) {
+          trackEvent("purchase", {
+            transaction_id: sessionId,
+            value,
+            currency: (data.currency ?? "usd").toUpperCase(),
+            package_id: data.packageId,
+          });
+        } else if (data.status === "paid" || data.status === "no_payment_required") {
+          trackEvent("promo_checkout", { package_id: data.packageId });
+        }
+      }
+    )
+    .catch(() => {});
+}
 
 function formatDuration(seconds: number | null): string {
   if (!seconds) return "—";
@@ -218,6 +258,7 @@ export function DashboardContent({
   useEffect(() => {
     if (searchParams.get("payment") !== "success") return;
     toast.success(d.paymentSuccess);
+    trackPurchase(searchParams.get("session_id"));
     // Stripe webhooks are async — the credits DB update arrives seconds after
     // the checkout redirect. Poll a few times so the UI catches up.
     fetchCredits();
@@ -371,6 +412,14 @@ export function DashboardContent({
         }
 
         const result: AnalyzeResponse = await res.json();
+        if (!result.canProceed) {
+          trackEvent("credits_blocked", {
+            feature: "transcription",
+            stage: "analyze",
+            needed: result.requiredCredits,
+            available: result.currentCredits,
+          });
+        }
         setAnalyzeResult(result);
         setTranscribeState("ready");
       } catch {
@@ -449,6 +498,7 @@ export function DashboardContent({
 
         if (res.status === 402) {
           isPartial = true;
+          trackEvent("credits_blocked", { feature: "transcription", stage: "mid_run" });
           toast.error(d.insufficientCredits);
           break;
         }
@@ -497,6 +547,11 @@ export function DashboardContent({
         const saveData: { transcriptionId: string } = await saveRes.json();
 
         setTranscribeState(isPartial ? "partial" : "done");
+        trackEvent("transcription_complete", {
+          seconds: Math.round(analyzeResult.durationSeconds),
+          partial: isPartial,
+          source: audioSource instanceof File ? "upload" : "record",
+        });
         handleTranscriptionComplete(
           fullText,
           lastCreditsRemaining,

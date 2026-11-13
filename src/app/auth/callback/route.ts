@@ -18,15 +18,27 @@ export async function GET(request: Request) {
 
   if (code) {
     const supabase = await createClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      return noStoreRedirect(`${origin}${localePath(next, locale)}`);
+      const res = noStoreRedirect(`${origin}${localePath(next, locale)}`);
+      const user = data.user;
+      const provider = user?.app_metadata?.provider ?? "email";
+      // New account = created just now (Google) or email confirmed just now.
+      // Read once by <SignupTracker> to fire the GA4 sign_up event.
+      if (user && (isRecent(user.created_at) || (provider === "email" && isRecent(user.email_confirmed_at)))) {
+        res.cookies.set("hv_signup", provider, { path: "/", maxAge: 900, sameSite: "lax" });
+      }
+      return res;
     }
   }
 
   return noStoreRedirect(
     `${origin}${localePath("/login", locale)}?error=auth_failed`
   );
+}
+
+function isRecent(iso: string | undefined): boolean {
+  return !!iso && Date.now() - Date.parse(iso) < 10 * 60 * 1000;
 }
 
 // The callback response carries session Set-Cookie headers — it must never

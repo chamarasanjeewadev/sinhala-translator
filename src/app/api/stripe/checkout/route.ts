@@ -160,7 +160,7 @@ export async function POST(request: Request) {
       // payment failed (declined card vs. user simply backing out).
       success_url: isMobile
         ? `${appUrl}/payment-complete?status=success`
-        : `${appUrl}${localePath("/dashboard", locale)}?payment=success`,
+        : `${appUrl}${localePath("/dashboard", locale)}?payment=success&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: isMobile
         ? `${appUrl}/payment-complete?status=cancelled&session_id={CHECKOUT_SESSION_ID}`
         : `${appUrl}${localePath("/pricing", locale)}?payment=cancelled&session_id={CHECKOUT_SESSION_ID}`,

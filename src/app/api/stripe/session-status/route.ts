@@ -25,13 +25,21 @@ export async function GET(request: Request) {
     const paymentIntent = session.payment_intent as Stripe.PaymentIntent | null;
     const lastError = paymentIntent?.last_payment_error;
 
+    // Amount and pack feed the GA4 purchase event on the success page.
+    const purchase = {
+      amountTotal: session.amount_total,
+      currency: session.currency,
+      packageId: session.metadata?.package_id ?? null,
+    };
+
     if (!lastError) {
-      return privateJson({ status: session.payment_status, errorKey: null });
+      return privateJson({ status: session.payment_status, errorKey: null, ...purchase });
     }
 
     const info = describePaymentError(lastError.code, lastError.decline_code);
     return privateJson({
       status: session.payment_status,
+      ...purchase,
       errorKey: info.key,
       errorCode: info.code,
       message: info.message,

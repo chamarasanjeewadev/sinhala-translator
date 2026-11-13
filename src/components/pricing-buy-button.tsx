@@ -6,6 +6,7 @@ import { useDictionary } from "@/lib/i18n/dictionary-context";
 import { useLocale } from "@/lib/i18n/locale-context";
 import { localePath } from "@/lib/i18n/utils";
 import { createClient } from "@/lib/supabase/client";
+import { trackBeginCheckout } from "@/lib/analytics";
 import type { User } from "@supabase/supabase-js";
 
 type PricingBuyButtonProps = {
@@ -53,6 +54,7 @@ export function PricingBuyButton({ packageId, label, className }: PricingBuyButt
       return;
     }
     setLoading(true);
+    trackBeginCheckout(packageId);
     try {
       const res = await fetch("/api/stripe/checkout", {
         method: "POST",

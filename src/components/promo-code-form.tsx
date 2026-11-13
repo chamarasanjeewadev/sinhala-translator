@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useDictionary } from "@/lib/i18n/dictionary-context";
 import { t } from "@/lib/i18n/utils";
+import { trackEvent } from "@/lib/analytics";
 
 // Redeems database promo codes (redeem_promo_code RPC) on the web; Stripe
 // promotion codes are still entered at checkout.
@@ -40,6 +41,7 @@ export function PromoCodeForm({ onRedeemed }: { onRedeemed: (credits: number) =>
         toast.error(data.error ?? d.promoFailed);
         return;
       }
+      trackEvent("promo_redeemed", {});
       onRedeemed(data.credits);
       setCode("");
       setOpen(false);

@@ -1,6 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { trackBeginCheckout, trackEvent } from "@/lib/analytics";
 import { useEffect, useRef, useState } from "react";
 import { CREDIT_PACKAGES } from "@/lib/constants";
 import { WHATSAPP_NUMBER_DISPLAY, whatsappLink } from "@/lib/contact";
@@ -63,6 +64,7 @@ export function PricingContent({
     if (searchParams.get("payment") !== "cancelled") return;
     const sessionId = searchParams.get("session_id");
     if (!sessionId) {
+      trackEvent("checkout_cancelled", { reason: "unknown" });
       toast.info(d.paymentCancelled);
       return;
     }
@@ -76,6 +78,11 @@ export function PricingContent({
       )
       .then((data) => {
         if (stale) return;
+        // reason = Stripe decline key (e.g. do_not_honor) or "abandoned"
+        trackEvent("checkout_cancelled", {
+          reason: data.errorKey ?? "abandoned",
+          error_code: data.errorCode,
+        });
         const message = stripeErrorText(data.errorKey, data.errorCode, data.message);
         if (data.errorKey && message) {
           toast.error(message, { duration: 12000 });
@@ -98,6 +105,7 @@ export function PricingContent({
       return;
     }
     setLoadingId(packageId);
+    trackBeginCheckout(packageId);
     try {
       const res = await fetch("/api/stripe/checkout", {
         method: "POST",

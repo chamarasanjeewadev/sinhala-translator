@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import Script from "next/script";
 import { GoogleTagManager } from "@next/third-parties/google";
+import { SignupTracker } from "@/components/signup-tracker";
 import {
   Inter,
   JetBrains_Mono,
@@ -108,6 +109,7 @@ export default async function RootLayout({
           />
         </noscript>
         {children}
+        <SignupTracker />
         <GoogleTagManager gtmId={googleTagManagerId} />
       </body>
     </html>

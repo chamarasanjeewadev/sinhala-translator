@@ -18,6 +18,7 @@ import { useDictionary } from "@/lib/i18n/dictionary-context";
 import { useLocale } from "@/lib/i18n/locale-context";
 import { localePath, t } from "@/lib/i18n/utils";
 import { CREDIT_PACKAGES } from "@/lib/constants";
+import { trackEvent } from "@/lib/analytics";
 
 interface AuthFormProps {
   mode: "login" | "signup";
@@ -81,6 +82,7 @@ export function AuthForm({
           options: { emailRedirectTo: callbackUrl },
         });
         if (error) throw error;
+        trackEvent("sign_up_submitted", { method: "email" });
         setMessage(d.checkEmail);
       } else {
         const { error } = await supabase.auth.signInWithPassword({
