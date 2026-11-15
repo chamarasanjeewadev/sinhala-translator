@@ -559,7 +559,6 @@ export default async function LandingPage({ params }: Props) {
                 d.allAudioFormats,
                 d.upTo25MB,
               ];
-              if (isPopular) tierFeatures.push(d.bestValue);
 
               if (isPopular) {
                 return (

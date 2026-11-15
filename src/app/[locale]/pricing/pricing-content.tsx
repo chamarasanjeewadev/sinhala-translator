@@ -249,7 +249,6 @@ export function PricingContent({
               `${minutes} transcription credits`,
               "All audio formats",
               "Up to 25 MB per file",
-              ...(isPopular ? ["Best $/min value", "Priority processing"] : []),
             ];
 
             if (isPopular) {
