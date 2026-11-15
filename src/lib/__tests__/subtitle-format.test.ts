@@ -162,3 +162,20 @@ describe("parseTimecode / formatTimecode", () => {
     expect(formatTimecode(3665.5)).toBe("1:01:05.500");
   });
 });
+
+import { regroupSegments, segmentsToTxt } from "../subtitle-format";
+
+describe("regroupSegments", () => {
+  it("splits by word count, keeps span, never overlaps", () => {
+    const out = regroupSegments([seg(0, 6, "a b c d e f g")], "short");
+    expect(out.map((s) => s.text)).toEqual(["a b c", "d e f", "g"]);
+    expect(out[0].start).toBe(0);
+    expect(out[2].end).toBe(6);
+    out.slice(1).forEach((s, i) => expect(s.start).toBe(out[i].end));
+  });
+  it("normal returns input; txt is one line per cue", () => {
+    const s = [seg(0, 1, "a\nb")];
+    expect(regroupSegments(s, "normal")).toBe(s);
+    expect(segmentsToTxt(s)).toBe("a b\n");
+  });
+});
