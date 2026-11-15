@@ -6,6 +6,7 @@ import type { Locale } from "@/lib/i18n/config";
 // Crawlable links between the public tool pages: the navbar's Tools menu only renders its links once opened.
 const LINKS: { id: string; href: string; tool: ToolKey }[] = [
   { id: "transcribe", href: "/", tool: "transcribe" },
+  { id: "audioToText", href: "/sinhala-audio-to-text", tool: "transcribe" },
   { id: "voiceTyping", href: "/sinhala-voice-typing", tool: "voiceTyping" },
   { id: "siEn", href: "/sinhala-to-english", tool: "translate" },
   { id: "enSi", href: "/english-to-sinhala", tool: "translate" },

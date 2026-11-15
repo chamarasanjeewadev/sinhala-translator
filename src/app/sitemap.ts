@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/subtitles',          priority: 0.9, changeFrequency: 'weekly'  },
     { path: '/singlish-to-sinhala', priority: 0.9, changeFrequency: 'weekly'  },
     { path: '/sinhala-voice-typing', priority: 0.9, changeFrequency: 'weekly' },
+    { path: '/sinhala-audio-to-text', priority: 0.9, changeFrequency: 'weekly' },
     { path: '/english-to-sinhala',  priority: 0.9, changeFrequency: 'weekly'  },
     { path: '/sinhala-to-english',  priority: 0.9, changeFrequency: 'weekly'  },
     { path: '/sinhala-text-to-speech', priority: 0.9, changeFrequency: 'weekly' },

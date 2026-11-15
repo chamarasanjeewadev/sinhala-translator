@@ -106,6 +106,7 @@ export default async function BlogPost({ params }: Props) {
   const blogPath = postLocale === defaultLocale ? "/blog" : `/${postLocale}/blog`;
   const blogUrl = `${siteUrl}${blogPath}`;
   const homePath = postLocale === defaultLocale ? "/" : `/${postLocale}`;
+  const audioToTextPath = postLocale === defaultLocale ? "/sinhala-audio-to-text" : `/${postLocale}/sinhala-audio-to-text`;
   const blogCopy = (await getDictionary(postLocale)).blog;
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -258,10 +259,10 @@ export default async function BlogPost({ params }: Props) {
           <Content />
         </div>
 
-        {/* Every post links to the transcription landing page (the homepage) so it, not the blog, ranks for the product searches. */}
+        {/* Every post links to the audio to text landing page so it, not the blog, ranks for the product searches. */}
         <p className="mt-10 rounded-3xl border border-slate-200/70 bg-white/85 p-6 text-center text-base text-slate-700">
           {blogCopy.ctaText}{" "}
-          <Link href={homePath} className="font-semibold text-leaf underline underline-offset-4 hover:text-slate-900">
+          <Link href={audioToTextPath}className="font-semibold text-leaf underline underline-offset-4 hover:text-slate-900">
             {blogCopy.ctaLink} →
           </Link>
         </p>
