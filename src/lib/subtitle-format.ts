@@ -131,6 +131,40 @@ export function segmentsToVtt(segments: SubtitleSegment[]): string {
   return `WEBVTT\n\n${cues}`;
 }
 
+export type CueGrouping = "normal" | "one" | "short" | "reels";
+const MAX_WORDS: Record<CueGrouping, number> = { normal: Infinity, one: 1, short: 3, reels: 6 };
+
+/**
+ * Split cues into shorter ones (CapCut/Reels style). The model gives no word
+ * timings, so a cue's time is shared by character count.
+ * shortcut: even-ish timing, upgrade if the provider returns word timestamps.
+ */
+export function regroupSegments(
+  segments: SubtitleSegment[],
+  mode: CueGrouping
+): SubtitleSegment[] {
+  const max = MAX_WORDS[mode];
+  if (max === Infinity) return segments;
+  return segments.flatMap((seg) => {
+    const words = seg.text.split(/\s+/).filter(Boolean);
+    if (words.length <= max) return [seg];
+    const groups: string[][] = [];
+    for (let i = 0; i < words.length; i += max) groups.push(words.slice(i, i + max));
+    const total = groups.reduce((n, g) => n + g.join(" ").length, 0);
+    let t = seg.start;
+    return groups.map((g, i) => {
+      const end = i === groups.length - 1 ? seg.end : t + ((seg.end - seg.start) * g.join(" ").length) / total;
+      const out = { id: `${seg.id}-${i}`, start: roundTime(t), end: roundTime(end), text: g.join(" ") };
+      t = end;
+      return out;
+    });
+  });
+}
+
+export function segmentsToTxt(segments: SubtitleSegment[]): string {
+  return segments.map((s) => s.text.replace(/\n/g, " ")).join("\n") + "\n";
+}
+
 /** "01:23.450" | "1:23" | "83.45" → seconds, or null if unparseable */
 export function parseTimecode(input: string): number | null {
   const trimmed = input.trim();

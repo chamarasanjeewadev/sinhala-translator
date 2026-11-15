@@ -21,7 +21,7 @@ import { t } from "@/lib/i18n/utils";
 import { takePendingVideo } from "@/lib/pending-video";
 import { extractAudioChunks } from "@/lib/video-audio";
 import { blobToBase64 } from "@/lib/audio-utils";
-import { mergeChunkSegments, segmentsToSrt, segmentsToVtt } from "@/lib/subtitle-format";
+import { mergeChunkSegments } from "@/lib/subtitle-format";
 import { mergeStyle } from "@/lib/subtitle-style";
 import {
   SUBTITLE_CREDITS_PER_MINUTE,
@@ -413,29 +413,6 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
     }
   }, [segments, project.language, d.translateFailed, d.translated]);
 
-  // ── Export ───────────────────────────────────────────────────────────
-
-  const downloadTextFile = useCallback(
-    (content: string, extension: string, mimeType: string) => {
-      const blob = new Blob([content], { type: mimeType });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${title || "subtitles"}.${extension}`;
-      a.click();
-      URL.revokeObjectURL(url);
-    },
-    [title]
-  );
-
-  const handleExportSrt = useCallback(() => {
-    downloadTextFile(segmentsToSrt(segments), "srt", "text/plain;charset=utf-8");
-  }, [segments, downloadTextFile]);
-
-  const handleExportVtt = useCallback(() => {
-    downloadTextFile(segmentsToVtt(segments), "vtt", "text/vtt");
-  }, [segments, downloadTextFile]);
-
   // ── Derived ──────────────────────────────────────────────────────────
 
   const activeSegment = useMemo(
@@ -696,8 +673,6 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
           segments={segments}
           style={style}
           title={title}
-          onExportSrt={handleExportSrt}
-          onExportVtt={handleExportVtt}
           onClose={() => setShowExport(false)}
         />
       )}
