@@ -69,12 +69,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       "sinhala transcribe",
       "convert sinhala voice to text",
       "sinhala transcript",
-      "sinhala audio to text converter",
       "sinhala voice transcriber",
       "sinhala speech to text",
-      "sinhala audio to text",
       "sinhala transcription",
-      "audio to text sinhala",
       "sri lanka transcription",
       "voice note transcription sinhala",
     ],
@@ -133,7 +130,7 @@ export default async function LandingPage({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: "HelaVoice.lk",
-    alternateName: ["Sinhala Voice to Text", "Sinhala Audio to Text Converter", "Sinhala Voice Transcriber"],
+    alternateName: ["Sinhala Voice to Text", "Sinhala Speech to Text", "Sinhala Voice Transcriber"],
     url: siteUrl,
     description: d.heroSubtitle,
     applicationCategory: "UtilitiesApplication",
@@ -237,6 +234,17 @@ export default async function LandingPage({ params }: Props) {
         }}
         freeCreditsLabel={freeTier ? t(d.freeCredits, { count: freeCredits }) : null}
       />
+
+      {/* Audio files get their own landing page, so the two pages do not chase the same phrase. */}
+      <p className="px-6 pt-8 text-center text-sm text-ink/60">
+        {d.audioPageIntro}{" "}
+        <Link
+          href={lp("/sinhala-audio-to-text")}
+          className="font-semibold text-leaf underline underline-offset-4 transition-colors hover:text-ink"
+        >
+          {d.audioPageLink} →
+        </Link>
+      </p>
 
       {/* ── How it works (numbered, arrowed step-by-step) ─────────────── */}
       <HowItWorks

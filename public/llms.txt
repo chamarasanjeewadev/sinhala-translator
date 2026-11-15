@@ -6,7 +6,8 @@ Transcription and subtitles are paid with prepaid credits that never expire: 1 c
 
 ## Tools
 
-- [Sinhala voice to text / audio to text converter](https://helavoice.lk/): record in the browser or upload an audio file (MP3, M4A, WAV, OGG, FLAC, WebM) and get an editable Sinhala transcript.
+- [Sinhala voice to text / speech to text](https://helavoice.lk/): record in the browser or upload an audio file (MP3, M4A, WAV, OGG, FLAC, WebM) and get an editable Sinhala transcript.
+- [Sinhala audio to text converter](https://helavoice.lk/sinhala-audio-to-text): turn an audio file (recording, voice note, lecture, interview, meeting) into editable Sinhala text; needs a HelaVoice account, and the credits a file needs are shown before it is transcribed.
 - [Sinhala subtitle generator](https://helavoice.lk/subtitles): timed Sinhala or English subtitles and captions for a video; export SRT, WebVTT or an MP4 with captions burned in. The video stays on the user's device; only audio is processed.
 - [Sinhala voice typing](https://helavoice.lk/sinhala-voice-typing): free live dictation in the browser; speak Sinhala and it is typed as Sinhala Unicode.
 - [Sinhala to English voice translator](https://helavoice.lk/sinhala-to-english): free text translation; voice translation (speak Sinhala, get English text and audio) uses 1 credit per clip of up to 2 minutes.

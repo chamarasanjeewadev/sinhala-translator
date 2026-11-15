@@ -75,6 +75,14 @@ export function Footer({ locale, dict }: FooterProps) {
               </li>
               <li>
                 <Link
+                  href={lp("/sinhala-audio-to-text")}
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
+                >
+                  {d.footerAudioToText}
+                </Link>
+              </li>
+              <li>
+                <Link
                   href={lp("/subtitles")}
                   className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                 >

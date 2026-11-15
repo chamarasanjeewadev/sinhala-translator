@@ -48,6 +48,7 @@ export default async function BlogPage({ params }: Props) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://helavoice.lk";
   const blogPath = locale === defaultLocale ? "/blog" : `/${locale}/blog`;
   const homePath = locale === defaultLocale ? "/" : `/${locale}`;
+  const audioToTextPath = locale === defaultLocale ? "/sinhala-audio-to-text" : `/${locale}/sinhala-audio-to-text`;
   const blogCopy = (await getDictionary(locales.includes(locale as Locale) ? (locale as Locale) : defaultLocale)).blog;
 
   const collectionJsonLd = {
@@ -116,7 +117,7 @@ export default async function BlogPage({ params }: Props) {
           </p>
           <p className="mt-4 text-sm text-slate-600">
             {blogCopy.ctaText}{" "}
-            <Link href={homePath} className="font-semibold text-leaf underline underline-offset-4 hover:text-slate-900">
+            <Link href={audioToTextPath} className="font-semibold text-leaf underline underline-offset-4 hover:text-slate-900">
               {blogCopy.ctaLink} →
             </Link>
           </p>

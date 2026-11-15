@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "title": "Sinhala Voice to Text & Audio to Text Converter | HelaVoice.lk",
-    "description": "Convert Sinhala voice and audio files to text with AI. Record or upload a voice note, meeting or interview and get an accurate Sinhala transcript in seconds."
+    "title": "Sinhala Voice to Text & Speech to Text | HelaVoice.lk",
+    "description": "Sinhala voice to text and speech to text with AI. Record or upload a voice note, meeting or interview and get an accurate Sinhala transcript in seconds."
   },
   "navbar": {
     "dashboard": "Dashboard",
@@ -26,7 +26,7 @@
     "heroEyebrow": "Sinhala speech to text — built for Sri Lanka",
     "heroTitle1": "Sinhala voice to text,",
     "heroTitle2": "perfectly transcribed",
-    "heroSubtitle": "The AI-powered Sinhala audio to text converter. Record in your browser or upload an audio file, and turn Sinhala speech into accurate text in seconds — pay only for the minutes you use.",
+    "heroSubtitle": "The AI-powered Sinhala voice to text tool. Record in your browser or upload a recording, and turn Sinhala speech into accurate text in seconds — pay only for the minutes you use.",
     "startTranscribing": "Start transcribing",
     "viewPricing": "View pricing",
     "freeCredits": "{count} free credits on signup",
@@ -184,7 +184,10 @@
     "footerEnSi": "English to Sinhala",
     "footerSiEn": "Sinhala to English",
     "footerTts": "Sinhala Text to Speech",
-    "footerVoiceTyping": "Sinhala Voice Typing"
+    "footerVoiceTyping": "Sinhala Voice Typing",
+    "footerAudioToText": "Sinhala Audio to Text",
+    "audioPageIntro": "Have a recording or voice note instead?",
+    "audioPageLink": "Use our Sinhala audio to text converter"
   },
   "auth": {
     "logInTitle": "Log In",
@@ -1231,8 +1234,12 @@
     "title": "More Sinhala tools from HelaVoice",
     "items": {
       "transcribe": {
+        "label": "Sinhala voice to text",
+        "desc": "Record in your browser or upload a file and get an editable Sinhala transcript."
+      },
+      "audioToText": {
         "label": "Sinhala audio to text converter",
-        "desc": "Upload a recording or voice note and get an editable Sinhala transcript."
+        "desc": "Upload a recording, lecture, interview or voice note and get it back as Sinhala text."
       },
       "voiceTyping": {
         "label": "Sinhala voice typing",
@@ -1255,5 +1262,151 @@
         "desc": "A Sinhala voice generator: type Sinhala and download natural speech."
       }
     }
+  },
+  "audioToText": {
+    "metaTitle": "Sinhala Audio to Text Converter — Upload Audio, Get Text",
+    "metaDescription": "Sinhala audio to text converter: upload a recording, voice note, lecture, interview or meeting and get an editable Sinhala transcript you can copy or download.",
+    "heroBadge": "Audio file to Sinhala text",
+    "heroTitle": "Sinhala audio to text converter",
+    "heroSubtitle": "Upload a recording, a voice note, a lecture or an interview and get it back as editable Sinhala text. Log in, choose Upload, pick your file, then copy or download the transcript.",
+    "ctaPrimary": "Sign up and upload audio",
+    "ctaSecondary": "Log in and upload",
+    "heroNote": "You need a HelaVoice account to convert audio files. Creating one is free.",
+    "liveText": "Want to dictate live instead?",
+    "liveLink": "Try free Sinhala voice typing",
+    "facts": [
+      {
+        "label": "File types",
+        "value": "MP3, M4A, WAV, OGG, FLAC, WebM"
+      },
+      {
+        "label": "File size",
+        "value": "Up to {maxMb} MB per file"
+      },
+      {
+        "label": "Cost",
+        "value": "1 credit per {chunkMin} minutes of audio"
+      },
+      {
+        "label": "Account",
+        "value": "Sign-in needed"
+      }
+    ],
+    "howEyebrow": "How it works",
+    "howTitle": "Convert Sinhala audio to text in three steps",
+    "howSteps": [
+      {
+        "title": "Log in and open Upload",
+        "desc": "Log in or create a free account, open your dashboard and choose Upload next to Record."
+      },
+      {
+        "title": "Choose your audio file",
+        "desc": "Pick an MP3, M4A, WAV, OGG, FLAC or WebM file of up to {maxMb} MB. We show its length and the credits it needs; switch on speaker labels or timestamps if you want them, then confirm."
+      },
+      {
+        "title": "Edit, copy or download",
+        "desc": "Read the Sinhala text, fix any word, then copy it or download it as PDF, Word, plain text or Markdown."
+      }
+    ],
+    "useEyebrow": "What it is for",
+    "useTitle": "Audio you can turn into Sinhala text",
+    "useItems": [
+      {
+        "title": "Voice notes",
+        "desc": "Turn a WhatsApp or phone voice note into text you can search, copy and forward."
+      },
+      {
+        "title": "Lectures and classes",
+        "desc": "Keep a written copy of a lecture or tuition class to read again later."
+      },
+      {
+        "title": "Interviews",
+        "desc": "Get a transcript of an interview or a conversation, with each speaker labelled."
+      },
+      {
+        "title": "Meetings",
+        "desc": "Write up a recorded meeting, with [mm:ss] time markers to find any moment."
+      }
+    ],
+    "getEyebrow": "What you get",
+    "getTitle": "More than a plain transcript",
+    "getItems": [
+      {
+        "title": "Editable Sinhala text",
+        "desc": "Correct any word before you use the text."
+      },
+      {
+        "title": "Speaker labels",
+        "desc": "Switch on Conversation mode to label each speaker (Speaker 1, Speaker 2, …)."
+      },
+      {
+        "title": "Timestamps",
+        "desc": "Switch on Timestamps to add [mm:ss] markers to the transcript."
+      },
+      {
+        "title": "Copy and export",
+        "desc": "Copy the text, or download it as PDF, Word (.docx), plain text (.txt) or Markdown (.md). Your transcripts stay in your account until you delete them."
+      }
+    ],
+    "freeYes": "Yes. New accounts get {freeCredits} free credits, enough for a recording of up to {freeMinutes} minutes.",
+    "freeNo": "There are no free credits at the moment, but creating an account is free.",
+    "faqEyebrow": "FAQ",
+    "faqTitle": "Sinhala audio to text questions",
+    "faqItems": [
+      {
+        "q": "How do I convert Sinhala audio to text?",
+        "a": "Log in to HelaVoice, open your dashboard, choose Upload and select your audio file. We show the length of the audio and the credits it needs, you confirm, and the Sinhala text appears for you to edit, copy or download."
+      },
+      {
+        "q": "Can I try Sinhala audio to text for free?",
+        "a": "{freeNote} There is no subscription."
+      },
+      {
+        "q": "Do I need to sign in to convert audio?",
+        "a": "Yes. Converting a file uses your credits, so you log in with a HelaVoice account first, and creating one is free. If you only want to dictate live, our free Sinhala voice typing page needs no account."
+      },
+      {
+        "q": "Which audio formats can I upload?",
+        "a": "MP3, M4A, WAV, OGG, FLAC and WebM files. If you have a video, use our Sinhala subtitle generator, which reads the audio track of the video."
+      },
+      {
+        "q": "How big can the audio file be?",
+        "a": "Up to {maxMb} MB per file. Longer recordings use more credits."
+      },
+      {
+        "q": "How many credits does a recording use?",
+        "a": "1 credit covers up to {chunkMin} minutes of audio. We split your recording into {chunkMin}-minute parts and each part uses 1 credit, so a {exampleMinutes}-minute file uses {exampleCredits} credits. We show the exact number before you confirm."
+      },
+      {
+        "q": "How much does Sinhala audio to text cost?",
+        "a": "You pay with credits, not a subscription: packs start at {starterPrice} for {starterCredits} credits, and credits do not expire. Each credit covers up to {chunkMin} minutes of audio."
+      },
+      {
+        "q": "Can I convert a WhatsApp voice note to Sinhala text?",
+        "a": "Yes, if the voice note is saved as a file in one of the supported formats. Save it from WhatsApp to your phone or computer and upload it like any other audio. If the uploader says the format is not supported, convert the file to MP3 or M4A first."
+      },
+      {
+        "q": "Can it label speakers or add timestamps?",
+        "a": "Yes. After you choose a file, switch on Conversation mode to label each speaker (Speaker 1, Speaker 2, …) or Timestamps to add [mm:ss] markers, then confirm."
+      },
+      {
+        "q": "Can I edit and download the Sinhala text?",
+        "a": "Yes. You can edit the transcript, copy it, or download it as PDF, Word (.docx), plain text (.txt) or Markdown (.md). Transcripts stay in your account until you delete them."
+      },
+      {
+        "q": "Which language does it transcribe?",
+        "a": "Sinhala. The converter writes Sinhala speech as Sinhala text. Once a transcript is ready, a Translate button can turn it into English; that uses extra credits, shown before you confirm."
+      },
+      {
+        "q": "What is the difference between this and Sinhala voice typing?",
+        "a": "Voice typing writes your words live while you speak into the microphone, and it is free. This converter turns an audio file you already have into text and uses credits."
+      },
+      {
+        "q": "How accurate is the Sinhala transcript?",
+        "a": "It depends on the recording. We give no accuracy figure, because results change with audio quality, background noise, overlapping speakers and accent. A clear recording of one speaker gives the cleanest text, and you should check names, numbers and places before you use the transcript."
+      }
+    ],
+    "ctaTitle": "Have a recording to turn into text?",
+    "ctaSubtitle": "Create an account, open Upload and get your Sinhala transcript."
   }
 }
