@@ -11371,7 +11371,7 @@ __metadata:
     remark-frontmatter: "npm:^5.0.0"
     remark-gfm: "npm:^4.0.1"
     sonner: "npm:^2.0.7"
-    stripe: "npm:^20.3.0"
+    stripe: "npm:20.3.0"
     tailwind-merge: "npm:^3.4.0"
     tailwindcss: "npm:^4"
     tw-animate-css: "npm:^1.4.0"
@@ -11667,15 +11667,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stripe@npm:^20.3.0":
-  version: 20.4.1
-  resolution: "stripe@npm:20.4.1"
+"stripe@npm:20.3.0":
+  version: 20.3.0
+  resolution: "stripe@npm:20.3.0"
   peerDependencies:
     "@types/node": ">=16"
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 10c0/c4ca1099d70afd175b27ec1fc83f72230c46a95868b85d615a141a806e63dd6d1896fa239f593aca7ad110bb8a14a5fb136b8091453c1c5db663b07529e0f94b
+  checksum: 10c0/f895b9674ed5e192868b569873392aa8e6a3f03cf7e3a4de2a126da6b28e9dd4432ca7d8fe9782dc2b9cccbcfc8ccefc998565a1ccf8ed263873aa018d864657
   languageName: node
   linkType: hard
 
