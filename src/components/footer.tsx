@@ -137,6 +137,14 @@ export function Footer({ locale, dict }: FooterProps) {
                   {d.footerPricing}
                 </Link>
               </li>
+              <li>
+                <Link
+                  href={lp("/reviews")}
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
+                >
+                  {d.footerReviews}
+                </Link>
+              </li>
             </ul>
           </div>
 

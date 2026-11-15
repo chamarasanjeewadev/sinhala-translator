@@ -24,6 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/sinhala-text-to-speech', priority: 0.9, changeFrequency: 'weekly' },
     { path: '/qr-code-generator',  priority: 0.9, changeFrequency: 'weekly'  },
     { path: '/pricing',        priority: 0.9, changeFrequency: 'weekly'  },
+    { path: '/reviews',        priority: 0.6, changeFrequency: 'monthly' },
     { path: '/blog',           priority: 0.8, changeFrequency: 'daily'   },
     { path: '/privacy',        priority: 0.3, changeFrequency: 'monthly' },
     { path: '/terms',          priority: 0.3, changeFrequency: 'monthly' },
