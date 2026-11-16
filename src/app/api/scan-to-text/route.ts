@@ -12,6 +12,9 @@ import {
   scanCharge,
 } from "@/lib/scan-to-text";
 
+// Base64 inflates ~1.33x; allow 1.5x plus JSON overhead before we parse the body.
+const SCAN_MAX_BODY_BYTES = Math.ceil(SCAN_MAX_IMAGE_BYTES * 1.5) + 4096;
+
 // Sinhala page image → text. Signed-in only: each account gets SCAN_FREE_PAGES free
 // pages (lifetime), then SCAN_CREDITS_PER_PAGE credit per page. Credits are
 // deducted AFTER a successful read, like the other pipelines.
@@ -51,6 +54,13 @@ export async function POST(request: Request) {
     return privateJson(
       { error: "Too many requests. Please wait a minute and try again.", code: "RATE_LIMITED" },
       { status: 429 }
+    );
+  }
+
+  if (Number(request.headers.get("content-length")) > SCAN_MAX_BODY_BYTES) {
+    return privateJson(
+      { error: "Image is too large. Please use a smaller photo.", code: "TOO_LARGE", limit: SCAN_MAX_IMAGE_BYTES },
+      { status: 413 }
     );
   }
 

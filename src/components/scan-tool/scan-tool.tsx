@@ -59,6 +59,10 @@ export function ScanTool({
   const [copied, setCopied] = useState(false);
   const pagesRef = useRef(pages);
   pagesRef.current = pages;
+  const abortRef = useRef<AbortController | null>(null);
+
+  // Leaving the page must stop a running scan, or it keeps billing pages nobody sees.
+  useEffect(() => () => abortRef.current?.abort(), []);
 
   useEffect(() => {
     fetch("/api/scan-to-text")
@@ -104,19 +108,23 @@ export function ScanTool({
     setGate(null);
     setSummary("");
     const todo = pagesRef.current.filter((p) => p.state !== "done");
+    const { signal } = (abortRef.current = new AbortController());
     let charged = 0;
     let stopped = false;
     for (const [i, p] of todo.entries()) {
+      if (signal.aborted) return;
       setBusy({ n: i + 1, total: todo.length });
       try {
         const res = await fetch("/api/scan-to-text", {
           method: "POST",
+          signal,
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ image: p.base64, mimeType: "image/jpeg" }),
         });
         const data = (await res.json().catch(() => null)) as
           | ({ error?: string; code?: string } & Partial<{ text: string; freePagesLeft: number; charged: number; creditsRemaining: number }>)
           | null;
+        if (signal.aborted) return;
         if (res.ok && data?.text !== undefined) {
           charged += data.charged ?? 0;
           patch(p.id, { text: data.text, state: "done", error: undefined });
@@ -131,6 +139,7 @@ export function ScanTool({
           error: data?.code === "NO_TEXT_FOUND" ? l.noTextFound : apiErrorMessage(data, { serviceBusy: l.serviceBusy }, l.failed),
         });
       } catch {
+        if (signal.aborted) return;
         patch(p.id, { state: "error", error: l.failed });
       }
     }
@@ -307,11 +316,11 @@ export function ScanTool({
                   <Download className="h-3.5 w-3.5" />
                   {l.download}
                 </button>
-                <button type="button" onClick={listen} className={`${pill} hero-primary-button text-white`}>
+                <button type="button" onClick={listen} disabled={busy !== null} className={`${pill} hero-primary-button text-white`}>
                   <Volume2 className="h-3.5 w-3.5" />
                   {l.listen}
                 </button>
-                <button type="button" onClick={translate} className={`${pill} bg-mint/60 text-ink hover:bg-mint`}>
+                <button type="button" onClick={translate} disabled={busy !== null} className={`${pill} bg-mint/60 text-ink hover:bg-mint`}>
                   <Languages className="h-3.5 w-3.5" />
                   {l.translate}
                 </button>
