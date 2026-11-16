@@ -19,6 +19,18 @@ function blobToBase64(blob: Blob): Promise<string> {
   });
 }
 
+// JPEG has no alpha: paint white first so transparent PNG/WebP don't flatten to black.
+function draw(
+  ctx: OffscreenCanvasRenderingContext2D | CanvasRenderingContext2D,
+  bitmap: ImageBitmap,
+  width: number,
+  height: number,
+) {
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(0, 0, width, height);
+  ctx.drawImage(bitmap, 0, 0, width, height);
+}
+
 export async function prepareImage(
   file: File,
 ): Promise<{ base64: string; mimeType: "image/jpeg"; previewUrl: string }> {
@@ -33,13 +45,13 @@ export async function prepareImage(
     let blob: Blob;
     if (typeof OffscreenCanvas !== "undefined") {
       const canvas = new OffscreenCanvas(width, height);
-      canvas.getContext("2d")!.drawImage(bitmap, 0, 0, width, height);
+      draw(canvas.getContext("2d")!, bitmap, width, height);
       blob = await canvas.convertToBlob({ type: "image/jpeg", quality: SCAN_IMAGE_JPEG_QUALITY });
     } else {
       const canvas = document.createElement("canvas");
       canvas.width = width;
       canvas.height = height;
-      canvas.getContext("2d")!.drawImage(bitmap, 0, 0, width, height);
+      draw(canvas.getContext("2d")!, bitmap, width, height);
       blob = await new Promise<Blob>((resolve, reject) =>
         canvas.toBlob(
           (b) => (b ? resolve(b) : reject(new Error("UNSUPPORTED_IMAGE"))),
