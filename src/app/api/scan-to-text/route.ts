@@ -118,6 +118,7 @@ export async function POST(request: Request) {
   }
 
   let creditsRemaining = profile.credits;
+  let charged = charge.credits;
   if (charge.credits > 0) {
     const { data: rows, error } = await supabase.rpc("deduct_credits_typed", {
       p_user_id: user.id,
@@ -129,6 +130,7 @@ export async function POST(request: Request) {
     if (error || !deducted?.success) {
       // Text already exists — return it rather than lose the user's result.
       reportError(error ?? new Error("scan credit deduction failed"), { route: "scan-to-text:deduct", userId: user.id });
+      charged = 0;
     } else {
       creditsRemaining = deducted.credits_remaining;
     }
@@ -141,7 +143,7 @@ export async function POST(request: Request) {
     const { error } = await createAdminClient().from("scan_pages").insert({
       user_id: user.id,
       free_pages: charge.free,
-      credits: charge.credits,
+      credits: charged,
       chars: result.text.length,
       model: result.model,
     });
@@ -153,7 +155,7 @@ export async function POST(request: Request) {
   return privateJson({
     text: result.text,
     freePagesLeft: Math.max(0, SCAN_FREE_PAGES - used - charge.free),
-    charged: charge.credits,
+    charged,
     creditsRemaining,
   });
 }
