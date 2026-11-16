@@ -53,7 +53,7 @@ export function ScanTool({
   const router = useRouter();
   const [pages, setPages] = useState<Page[]>([]);
   const [status, setStatus] = useState<Status | null>(null);
-  const [busy, setBusy] = useState<number | null>(null); // 1-based index of page being read
+  const [busy, setBusy] = useState<{ n: number; total: number } | null>(null); // n: 1-based page being read
   const [gate, setGate] = useState<"login" | "credits" | null>(null);
   const [summary, setSummary] = useState("");
   const [copied, setCopied] = useState(false);
@@ -107,7 +107,7 @@ export function ScanTool({
     let charged = 0;
     let stopped = false;
     for (const [i, p] of todo.entries()) {
-      setBusy(i + 1);
+      setBusy({ n: i + 1, total: todo.length });
       try {
         const res = await fetch("/api/scan-to-text", {
           method: "POST",
@@ -235,7 +235,7 @@ export function ScanTool({
           >
             {busy !== null ? <Loader2 className="h-4 w-4 animate-spin" /> : <ScanText className="h-4 w-4" />}
             {busy !== null
-              ? l.extracting.replace("{n}", String(busy)).replace("{total}", String(pages.filter((p) => p.state !== "done").length || busy))
+              ? l.extracting.replace("{n}", String(busy.n)).replace("{total}", String(busy.total))
               : l.extract}
           </button>
           <span className="sinhala-text min-w-[12rem] flex-1 text-xs leading-relaxed text-ink/65" aria-live="polite">
