@@ -54,3 +54,22 @@ describe("trimForTts", () => {
     expect(out.text).toBe("a".repeat(1400));
   });
 });
+
+import { cleanScanText } from "../gemini-scan";
+
+describe("cleanScanText", () => {
+  it("unwraps a fenced block", () => {
+    expect(cleanScanText("```\nආයුබෝවන්\n```")).toBe("ආයුබෝවන්");
+    expect(cleanScanText("```text\nආයුබෝවන්\n```")).toBe("ආයුබෝවන්");
+  });
+  it("drops a leading preamble line", () => {
+    expect(cleanScanText("Here is the text:\nආයුබෝවන්")).toBe("ආයුබෝවන්");
+  });
+  it("returns empty for whitespace", () => {
+    expect(cleanScanText("  \n \n")).toBe("");
+  });
+  it("leaves plain Sinhala unchanged and keeps paragraph breaks", () => {
+    expect(cleanScanText("ආයුබෝවන්")).toBe("ආයුබෝවන්");
+    expect(cleanScanText("එක\n\nදෙක")).toBe("එක\n\nදෙක");
+  });
+});
