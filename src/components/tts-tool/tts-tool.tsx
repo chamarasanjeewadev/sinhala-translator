@@ -8,6 +8,7 @@ import { useSinglishTyping } from "@/components/singlish/use-singlish-typing";
 import { SinglishWordPreview } from "@/components/singlish/singlish-word-preview";
 import { apiErrorMessage } from "@/lib/client-error";
 import { trackEvent } from "@/lib/analytics";
+import { readHandoffText } from "@/lib/handoff";
 import {
   DEFAULT_TTS_VOICE,
   TTS_FREE_CHARS,
@@ -108,6 +109,12 @@ export function TtsTool({
   const progress = time.dur ? time.cur / time.dur : 0;
 
   const { pending } = useSinglishTyping({ textareaRef, value: text, onChange: setText, enabled: singlishOn });
+
+  // Text handed over from the scan page; the read clears it, so a StrictMode re-run gets null and is skipped.
+  useEffect(() => {
+    const t = readHandoffText();
+    if (t !== null) setText(t.slice(0, TTS_MAX_CHARS));
+  }, []);
 
   // Allowance + balance (also tells us whether the visitor is signed in).
   useEffect(() => {
