@@ -21,6 +21,7 @@ import { SinglishWordPreview } from "@/components/singlish/singlish-word-preview
 import { chunkAudio, blobToBase64 } from "@/lib/audio-utils";
 import { apiErrorMessage } from "@/lib/client-error";
 import { trackEvent } from "@/lib/analytics";
+import { readHandoffText } from "@/lib/handoff";
 import { textLimitFor, SPEECH_TEXT_LIMIT } from "@/lib/text-translate";
 
 export type TranslatorDirection = "en-si" | "si-en";
@@ -92,6 +93,12 @@ export function TranslatorTool({
   const targetLang = langOf(direction, "target");
   const limit = textLimitFor(auth === "signed-in");
   const overLimit = source.trim().length > limit;
+
+  // Text handed over from the scan page; the read clears it, so a StrictMode re-run gets null and is skipped.
+  useEffect(() => {
+    const t = readHandoffText();
+    if (t !== null) setSource(t);
+  }, []);
 
   useEffect(() => {
     const supabase = createClient();

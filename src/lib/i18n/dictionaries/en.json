@@ -1417,5 +1417,67 @@
     ],
     "ctaTitle": "Have a recording to turn into text?",
     "ctaSubtitle": "Create an account, open Upload and get your Sinhala transcript."
+  },
+  "scanToText": {
+    "metaTitle": "Sinhala Image to Text – Scan a Photo, Get Editable Text",
+    "metaDescription": "Turn a photo or scan of a Sinhala page into editable text with AI. Upload up to 10 pages, fix any mistakes, then copy, download, listen or translate. 3 pages free.",
+    "heroBadge": "AI scan to text",
+    "heroTitle": "Sinhala image to text, from any photo or scan",
+    "heroSubtitle": "Take a photo of a book page, a letter or a notice. Our AI reads the Sinhala and gives you text you can edit, copy, listen to or translate. Your first 3 pages are free.",
+    "ui": {
+      "drop": "Drop photos here or tap to choose",
+      "dropHint": "JPG, PNG or WebP · up to {max} pages at a time",
+      "addMore": "Add more pages",
+      "tooManyPages": "You can add up to {max} pages at a time.",
+      "unsupportedImage": "Only JPG, PNG and WebP photos can be used.",
+      "unreadableImage": "We could not open one of those images.",
+      "remove": "Remove page {n}",
+      "page": "Page {n}",
+      "extract": "Extract text",
+      "extracting": "Reading page {n} of {total}…",
+      "editPage": "Text from page {n}",
+      "combined": "All pages together",
+      "copy": "Copy text",
+      "copied": "Copied",
+      "download": "Download .txt",
+      "listen": "Listen",
+      "translate": "Translate to English",
+      "truncated": "Only the first {limit} characters fit in text to speech, so we sent the part up to the last full sentence.",
+      "hintAnon": "Sign up free. Your first 3 pages cost nothing.",
+      "hintFree": "{count} free page(s) left, then 1 credit a page.",
+      "hintPaid": "Free pages used. Each page is 1 credit · {credits} credits left.",
+      "loginTitle": "Sign up to extract text",
+      "loginBody": "Create a free account and your first 3 pages are on us.",
+      "signUp": "Sign up free",
+      "logIn": "Log in",
+      "noCredits": "You are out of credits for the remaining pages.",
+      "buyCredits": "Buy credits",
+      "noTextFound": "We could not find any text on this page.",
+      "rateLimited": "Too many requests in a minute. Please wait a moment and try again.",
+      "failed": "Could not read this page. Please try again.",
+      "serviceBusy": "Our service is busy right now. Please try again in a few minutes.",
+      "stopped": "Stopped early. Pages already read are kept below.",
+      "done": "Done. {charged} credit(s) used.",
+      "doneFree": "Done. No credits used."
+    },
+    "faqEyebrow": "FAQ",
+    "faqTitle": "Sinhala image to text, common questions",
+    "faqItems": [
+      {
+        "q": "How do I get text from a Sinhala photo?",
+        "a": "Upload a clear photo or scan, press Extract text, and the Sinhala appears in an editable box. You can fix any word, then copy it or download it as a .txt file."
+      },
+      {
+        "q": "How much does it cost?",
+        "a": "Your first 3 pages are free. After that each page is 1 credit, charged only when text was found. Pages with no readable text cost nothing."
+      },
+      {
+        "q": "How can I get the best result?",
+        "a": "Use good light, hold the camera straight above the page and keep the text sharp. Always check the result, because stylised fonts and blurry photos can cause mistakes."
+      }
+    ],
+    "ctaTitle": "Want to hear the text read aloud?",
+    "ctaSubtitle": "Send it to Sinhala text to speech in one tap.",
+    "ctaButton": "Try HelaVoice"
   }
 }
