@@ -1,4 +1,4 @@
-import { ArrowRight, AudioLines, Captions, Check, ChevronDown, Copy, Download, Gift, Mic, ScanText } from "lucide-react";
+import { ArrowRight, AudioLines, Captions, Check, ChevronDown, Gift, Mic, ScanText } from "lucide-react";
 import { CREDIT_PACKAGES } from "@/lib/constants";
 import { getSignupBonusConfig, getAudioUploadLimitMb } from "@/lib/app-settings";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { PricingBuyButton } from "@/components/pricing-buy-button";
+import { HeroSlider } from "@/components/home/hero-slider";
 import { CHUNK_MINUTES, FREE_TOOLS, costNote } from "@/components/tool-catalog";
 import "./home.css";
 import { ogImages } from "@/lib/og-image";
@@ -216,61 +217,107 @@ export default async function LandingPage({ params }: Props) {
             </ul>
           </div>
 
-          {/* A finished transcript as the dashboard makes it: one credit per part */}
-          <figure className="hv-bench" aria-hidden>
-            <div className="hv-bench__head">
-              <span className="hv-bench__file">{d.mockFile}</span>
-              <span className="hv-bench__time num">
-                {Math.floor(MOCK_SECONDS / 60)}:{String(MOCK_SECONDS % 60).padStart(2, "0")}
-              </span>
-            </div>
-            <span className="hv-bench__label">{d.mockAudio}</span>
-            <div className="hv-lane">
-              {MOCK_PARTS.map((sec, i) => (
-                <div
-                  key={i}
-                  className="hv-clip"
-                  style={{ flex: `${sec} 1 0`, minWidth: "3.5rem", ["--i" as string]: i }}
-                >
-                  {bars(Math.max(4, Math.round(sec / 5)), i * 7).map((h, j) => (
-                    <i key={j} className="hv-clip__bar" style={{ height: `${h}%` }} />
-                  ))}
-                  <span className="hv-clip__fill">
-                    {bars(Math.max(4, Math.round(sec / 5)), i * 7).map((h, j) => (
-                      <i key={j} className="hv-clip__bar" style={{ height: `${h}%` }} />
-                    ))}
-                  </span>
-                  <span className="hv-clip__credit">{d.mockCredit}</span>
-                </div>
-              ))}
-            </div>
-            <span className="hv-bench__label">{d.mockText}</span>
-            <ol className="hv-lines">
-              {MOCK_LINES.map((line, i) => (
-                <li key={line.at} style={{ ["--i" as string]: i }}>
-                  <time>{line.at}</time>
-                  <span className="sinhala">{line.text}</span>
-                </li>
-              ))}
-            </ol>
-            <div className="hv-bench__foot">
-              <span className="hv-bench__done">
-                <Check />
-                {d.mockDone}
-              </span>
-              <span className="hv-bench__cost">{t(d.mockCost, { count: MOCK_PARTS.length })}</span>
-              <span className="hv-bench__tools">
-                <span className="hv-chip">
-                  <Copy />
-                  {d.mockCopy}
-                </span>
-                <span className="hv-chip hv-chip--ink">
-                  <Download />
-                  {d.mockDownload}
-                </span>
-              </span>
-            </div>
-          </figure>
+          {/* Photos of the tools in use, each with the real product over it */}
+          <HeroSlider
+            labels={{
+              region: d.sliderLabel,
+              slideOf: d.slideOf,
+              pause: d.sliderPause,
+              play: d.sliderPlay,
+              goTo: d.sliderGoTo,
+            }}
+            slides={[
+              {
+                key: "voice",
+                href: lp("/sinhala-audio-to-text"),
+                name: nav.transcribe,
+                color: "var(--lane-voice)",
+                image: "/images/hero/voice-2026-11.webp",
+                card: (
+                  <>
+                    <span className="hv-lane" aria-hidden>
+                      {MOCK_PARTS.map((sec, i) => (
+                        <span key={i} className="hv-clip" style={{ flex: `${sec} 1 0`, minWidth: "4.5rem", ["--i" as string]: i }}>
+                          <span className="hv-clip__fill">
+                            {bars(Math.max(4, Math.round(sec / 6)), i * 7).map((h, j) => (
+                              <i key={j} className="hv-clip__bar" style={{ height: `${h}%` }} />
+                            ))}
+                          </span>
+                          <span className="hv-clip__credit">{d.mockCredit}</span>
+                        </span>
+                      ))}
+                    </span>
+                    <span className="hv-slide__line">
+                      <time>{MOCK_LINES[0].at}</time>
+                      <span className="sinhala">{MOCK_LINES[0].text}</span>
+                    </span>
+                    <span className="hv-slide__note">{costNote(nav, "transcribe")}</span>
+                  </>
+                ),
+              },
+              {
+                key: "speech",
+                href: lp("/sinhala-text-to-speech"),
+                name: nav.textToSpeech,
+                color: "var(--lane-speech)",
+                image: "/images/hero/speech-2026-11.webp",
+                card: (
+                  <>
+                    <span className="hv-lane" aria-hidden>
+                      <span className="hv-clip" style={{ flex: "1 1 0" }}>
+                        {bars(30, 11).map((h, j) => (
+                          <i key={j} className="hv-clip__bar" style={{ height: `${h}%`, background: "var(--c)" }} />
+                        ))}
+                      </span>
+                    </span>
+                    <span className="sinhala">{MOCK_LINES[0].text}</span>
+                    <span className="hv-slide__note">{costNote(nav, "textToSpeech")}</span>
+                  </>
+                ),
+              },
+              {
+                key: "subs",
+                href: lp("/subtitles"),
+                name: nav.subtitles,
+                color: "var(--lane-subs)",
+                image: "/images/hero/subs-2026-11.webp",
+                card: (
+                  <>
+                    <span className="hv-caption sinhala">{MOCK_LINES[1].text}</span>
+                    <span className="hv-slide__note">{costNote(nav, "subtitles")}</span>
+                  </>
+                ),
+              },
+              {
+                key: "scan",
+                href: lp("/sinhala-scan-to-text"),
+                name: nav.scanToText,
+                color: "var(--lane-scan)",
+                image: "/images/hero/scan-2026-11.webp",
+                card: (
+                  <>
+                    <span className="sinhala">{MOCK_LINES[2].text}</span>
+                    <span className="sinhala">{MOCK_LINES[3].text}</span>
+                    <span className="hv-slide__note">{costNote(nav, "scanToText")}</span>
+                  </>
+                ),
+              },
+              {
+                key: "translate",
+                href: lp("/sinhala-to-english"),
+                name: nav.translate,
+                color: "var(--color-ink-2)",
+                image: "/images/hero/notes-2026-11.webp",
+                card: (
+                  <>
+                    <span className="sinhala">{MOCK_LINES[0].text}</span>
+                    <span className="hv-slide__en">{d.mockEnglish}</span>
+                    <span className="hv-slide__note">{costNote(nav, "translate")}</span>
+                  </>
+                ),
+              },
+            ]}
+          />
         </div>
       </section>
 
