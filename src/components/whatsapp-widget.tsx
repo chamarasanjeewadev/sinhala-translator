@@ -11,7 +11,7 @@ import { WHATSAPP_NUMBER_DISPLAY, whatsappLink } from "@/lib/contact";
 const SEEN_KEY = "hv-whatsapp-popup-seen";
 const AUTO_OPEN_DELAY_MS = 5000;
 
-/** Floating WhatsApp chat button; the popup auto-opens once on the home page. */
+/** Floating WhatsApp chat button; the popup auto-opens once on the home page (not on phones). */
 export function WhatsAppWidget() {
   const d = useDictionary().whatsapp;
   const pathname = usePathname();
@@ -20,6 +20,8 @@ export function WhatsAppWidget() {
 
   useEffect(() => {
     if (!isHome) return;
+    // On phones the popup covers half the screen and the hero buttons; the round button stays.
+    if (window.matchMedia("(max-width: 639px)").matches) return;
     try {
       if (localStorage.getItem(SEEN_KEY)) return;
     } catch {

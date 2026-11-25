@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const dict = await getDictionary(locale as Locale);
 
   return {
-    title: `${dict.auth.newPasswordTitle} | ${dict.metadata.title}`,
+    title: dict.auth.newPasswordTitle,
     robots: { index: false, follow: false },
   };
 }

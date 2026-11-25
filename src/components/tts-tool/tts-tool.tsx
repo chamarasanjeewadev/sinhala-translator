@@ -9,8 +9,11 @@ import { SinglishWordPreview } from "@/components/singlish/singlish-word-preview
 import { apiErrorMessage } from "@/lib/client-error";
 import { trackEvent } from "@/lib/analytics";
 import { readHandoffText } from "@/lib/handoff";
+import { PricingBuyButton } from "@/components/pricing-buy-button";
+import { CREDIT_PACKAGES } from "@/lib/constants";
 import {
   DEFAULT_TTS_VOICE,
+  TTS_CHARS_PER_CREDIT,
   TTS_FREE_CHARS,
   TTS_MAX_CHARS,
   TTS_VOICES,
@@ -23,10 +26,14 @@ export type TtsToolLabels = Record<
   | "download" | "chars" | "hintAnon" | "hintFree" | "hintPaid" | "cost" | "resultFree" | "resultCharged"
   | "loginTitle" | "loginBody" | "signUp" | "logIn" | "noCredits" | "buyCredits" | "tooLong"
   | "rateLimited" | "failed" | "serviceBusy"
+  | "noCreditsBody" | "buyStarter" | "seeAllPrices"
   | "tryExample" | "voiceHint" | "previewVoice" | "stopPreview" | "play" | "pause" | "seek",
   string
 >;
 
+
+// Out-of-credits prompt offers the cheapest pack; price and size come from CREDIT_PACKAGES.
+const STARTER = CREDIT_PACKAGES.reduce((a, b) => (b.price < a.price ? b : a));
 type Status = { signedIn: boolean; freeCharsLeft: number; credits: number };
 
 // One colour pair per voice so each one is recognisable at a glance.
@@ -219,11 +226,6 @@ export function TtsTool({
 
   return (
     <div className="relative">
-      {/* soft violet glow so the card lifts off the page */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -inset-x-6 -top-10 bottom-0 -z-0 bg-[radial-gradient(ellipse_60%_55%_at_50%_30%,rgba(143,208,176,0.32),transparent_70%)] blur-2xl"
-      />
       <div className="relative rounded-[28px] bg-white/50 p-2 text-ink shadow-[0_30px_80px_rgba(21,32,27,0.10)] ring-1 ring-white/80 backdrop-blur-xl sm:p-3">
         {/* writing paper */}
         <div className="overflow-hidden rounded-[20px] bg-white text-ink">
@@ -453,9 +455,22 @@ export function TtsTool({
             ) : (
               <>
                 <p className="font-semibold">{l.noCredits}</p>
-                <Link href={pricingHref} className={`${pill} hero-primary-button mt-3 text-white`}>
-                  {l.buyCredits}
-                </Link>
+                <p className="mt-1 text-ink/70">
+                  {l.noCreditsBody
+                    .replace("{credits}", String(STARTER.credits))
+                    .replace("{price}", STARTER.priceDisplay)
+                    .replace("{chars}", (STARTER.credits * TTS_CHARS_PER_CREDIT).toLocaleString("en-US"))}
+                </p>
+                <div className="mt-3 flex flex-wrap items-center gap-3">
+                  <PricingBuyButton
+                    packageId={STARTER.id}
+                    label={l.buyStarter.replace("{credits}", String(STARTER.credits)).replace("{price}", STARTER.priceDisplay)}
+                    className={`${pill} hero-primary-button text-white disabled:opacity-60`}
+                  />
+                  <Link href={pricingHref} className="font-semibold text-ink underline underline-offset-4 hover:text-ink/70">
+                    {l.seeAllPrices}
+                  </Link>
+                </div>
               </>
             )}
           </div>

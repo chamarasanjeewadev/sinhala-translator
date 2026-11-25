@@ -93,7 +93,9 @@ export default async function LandingPage({ params }: Props) {
       "Sinhala speech-to-text",
       "Audio file upload",
       "Browser-based recording",
-      "Per-minute billing",
+      "Sinhala video subtitles",
+      "Sinhala text to speech",
+      "Pay-as-you-go credits, no subscription",
       "Bilingual UI (English & Sinhala)",
     ],
     audience: {
@@ -125,7 +127,7 @@ export default async function LandingPage({ params }: Props) {
 
   // Prices in FAQ answers come from CREDIT_PACKAGES, never from the copy.
   const starter = CREDIT_PACKAGES.reduce((a, b) => (b.price < a.price ? b : a));
-  const faqVars = { starterPrice: starter.priceDisplay, starterCredits: starter.credits, chunkMin: CHUNK_MINUTES };
+  const faqVars = { starterPrice: starter.priceDisplay, starterCredits: starter.credits, chunkMin: CHUNK_MINUTES, maxMb };
   const faqItems = ((d.faqItems ?? []) as { q: string; a: string }[]).map((item) => ({ q: item.q, a: t(item.a, faqVars) }));
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -140,7 +142,9 @@ export default async function LandingPage({ params }: Props) {
     })),
   };
 
-  const steps = (d.howSteps as { title: string; desc: string }[]).slice(0, 3);
+  const steps = (d.howSteps as { title: string; desc: string }[])
+    .slice(0, 3)
+    .map((step) => ({ ...step, desc: t(step.desc, { chunkMin: CHUNK_MINUTES, maxMb }) }));
 
   return (
     <div className="text-ink">

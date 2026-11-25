@@ -47,92 +47,28 @@
     "creditsShort": "{count} credits"
   },
   "landing": {
-    "badge": "AI-Powered Sinhala Transcription",
-    "heroEyebrow": "Sinhala speech to text — built for Sri Lanka",
-    "heroTitle1": "Sinhala voice to text,",
-    "heroTitle2": "perfectly transcribed",
-    "heroSubtitle": "The AI-powered Sinhala voice to text tool. Record in your browser or upload a recording, and turn Sinhala speech into accurate text in seconds — pay only for the minutes you use.",
-    "startTranscribing": "Start transcribing",
-    "viewPricing": "View pricing",
+    "heroSubtitle": "HelaVoice turns Sinhala speech into text you can edit and download. Record in your browser or upload an audio file, and pay with credits, with no subscription.",
     "freeCredits": "{count} free credits on signup",
     "noSubscription": "No subscription",
-    "poweredByGemini": "AI powered",
-    "recording": "Recording",
-    "demoTranscript": "ආයුබෝවන්, මෙය හෙළ හට පරීක්ෂණයකි...",
-    "demoTitle1": "Real-time transcription",
-    "demoTitle2": "that just works",
-    "demoDesc": "Record directly in your browser or upload audio files. Get instant, accurate transcriptions powered by advanced AI.",
-    "lightningFast": "Lightning fast",
-    "lightningFastDesc": "Process audio in seconds with our optimized AI engine",
-    "sinhalaOptimized": "Sinhala optimized",
-    "sinhalaOptimizedDesc": "Purpose-built for Sinhala language nuances and dialects",
-    "recordOrUpload": "Record or upload",
-    "recordOrUploadDesc": "Record in-browser or upload MP3, WAV, WebM and more",
-    "howEyebrow": "How it works",
-    "howTitle": "From voice to text, in three steps",
-    "howSubtitle": "No installs, no setup. Record or upload your Sinhala audio, let the AI do the listening, and read your transcript minutes later.",
     "howSteps": [
       {
         "title": "Record or upload",
-        "desc": "Record a Sinhala voice note right in your browser, or upload an existing audio file — MP3, WAV, M4A, and more."
+        "desc": "Record a voice note in your browser, or upload an audio file: MP3, M4A, WAV, OGG, FLAC or WebM, up to {maxMb} MB."
       },
       {
-        "title": "The AI transcribes",
-        "desc": "Our Sinhala speech-to-text engine listens and writes it down, minute by minute. You only pay for the minutes you use."
+        "title": "HelaVoice transcribes it",
+        "desc": "Your browser cuts the audio into {chunkMin}-minute parts and sends them one at a time. Each part comes back as Sinhala text and uses 1 credit."
       },
       {
-        "title": "Read your text",
-        "desc": "Get accurate Sinhala text in seconds — ready to read, edit, copy, or download wherever you need it."
+        "title": "Edit and export",
+        "desc": "Fix any word in the editor, then copy the text or download it as PDF, Word, TXT or Markdown. Every transcript is saved in your dashboard."
       }
     ],
-    "demoEyebrow": "Built for Sinhala",
-    "featureSecure": "Secure & private",
-    "featureSecureDesc": "Your audio is processed securely and never stored without your permission.",
-    "featuresEyebrow": "What you get",
-    "pricingEyebrow": "Credits, not subscriptions",
-    "ctaEyebrow": "Start free",
-    "featuresTitle1": "Everything you need for",
-    "featuresTitle2": "perfect transcription",
-    "featuresSubtitle": "Everything you need to convert Sinhala voice to text — professional features for content creators, journalists, researchers, and businesses.",
-    "featureRealtime": "Real-time processing",
-    "featureRealtimeDesc": "Get instant transcriptions as you speak with no delays",
-    "featureAnywhere": "Works anywhere",
-    "featureAnywhereDesc": "Cloud-based platform accessible from any device",
-    "featureCopy": "Copy & export",
-    "featureCopyDesc": "Copy transcription text instantly or download as needed",
-    "featureAI": "AI powered",
-    "featureAIDesc": "Powered by advanced AI for industry-leading accuracy",
-    "featureSinhala": "Sinhala optimized",
-    "featureSinhalaDesc": "Purpose-built for Sinhala language nuances and dialects",
-    "featureRecord": "Record or upload",
-    "featureRecordDesc": "Record directly in your browser or upload audio files up to 25MB",
-    "pricingTitle1": "Simple, ",
-    "pricingTitle2": "flexible pricing",
-    "pricingSubtitle": "Buy credits once, use them anytime. No subscriptions, no commitments.",
-    "oneCredit": "1 minute",
-    "oneTranscription": "of audio",
-    "freeCreditsCount": "{count}",
-    "freeCreditsOnSignup": "free credits on signup",
     "creditsNeverExpire": "credits never expire",
-    "infinity": "∞",
     "credits": "credits",
-    "mostPopular": "Most Popular",
-    "perCredit": "${price}/minute",
-    "transcriptions": "{count} credits",
+    "mostPopular": "Most popular",
     "allAudioFormats": "All audio formats",
-    "upTo25MB": "Up to 25MB per file",
-    "bestValue": "Best value",
-    "getStarted": "Get started",
-    "freeTier": "Free",
-    "freeForever": "Free forever",
-    "noCreditCard": "No credit card required",
     "startFree": "Start free",
-    "needMoreCredits": "Need more credits?",
-    "viewAllPackages": "View all credit packages",
-    "ctaTitle": "Try it free today",
-    "ctaTitlePaid": "Start transcribing today",
-    "ctaSubtitle": "Start with {count} free credits. No credit card required.",
-    "ctaButton": "Get your free credits",
     "guideIntro": "Prefer a step-by-step tutorial?",
     "guideLink": "How to transcribe Sinhala audio to text",
     "footerDesc": "Professional Sinhala speech-to-text powered by advanced AI.",
@@ -155,18 +91,15 @@
     "footerCopyright": "© {year} HelaVoice.lk. All rights reserved.",
     "footerGritTechNetwork": "GritTech network",
     "footerBuiltBy": "Built by",
-    "faqEyebrow": "Frequently asked questions",
-    "faqTitle1": "Sinhala voice transcription,",
-    "faqTitle2": "answered",
     "faqSubtitle": "Common questions about transcribing Sinhala audio with HelaVoice.",
     "faqItems": [
       {
         "q": "What is a Sinhala voice transcriber?",
-        "a": "A Sinhala voice transcriber converts spoken Sinhala audio into written Sinhala text. HelaVoice is an AI-powered Sinhala voice transcriber built for Sri Lankan creators, students, journalists, and businesses — it accepts recordings or audio files and returns an accurate transcript in seconds."
+        "a": "A Sinhala voice transcriber turns spoken Sinhala into written Sinhala text. HelaVoice is one: record in your browser or upload an audio file, and you get an editable Sinhala transcript to copy or download."
       },
       {
         "q": "How do I convert Sinhala voice to text?",
-        "a": "To convert Sinhala voice to text, sign in to HelaVoice, then record your voice directly in the browser or upload an audio file. The AI transcribes your Sinhala voice to text in seconds, and you can copy, edit, or download the transcript. It's the fastest way to turn Sinhala voice notes, meetings, and interviews into accurate text."
+        "a": "Sign in to HelaVoice, then record in your browser or upload an audio file. HelaVoice transcribes it in {chunkMin}-minute parts and shows the Sinhala text, which you can edit, copy, or download as PDF, Word, TXT or Markdown. It works for voice notes, meetings, lectures and interviews."
       },
       {
         "q": "How do I transcribe Sinhala audio to text?",
@@ -186,15 +119,15 @@
       },
       {
         "q": "How accurate is HelaVoice for Sinhala speech-to-text?",
-        "a": "HelaVoice is purpose-built for Sinhala speech-to-text and handles the nuances of Sinhala pronunciation and Sri Lankan dialects. Accuracy is highest when the audio is clear and free of heavy background noise; quiet single-speaker recordings typically transcribe with very high fidelity."
+        "a": "Accuracy depends mostly on the recording. Clear audio with one speaker and little background noise gives the best transcript. Music, people talking over each other and phone-call audio cause more mistakes. Every transcript opens in an editor, so you can fix words before you export. Test a short clip first: 1 credit covers {chunkMin} minutes."
       },
       {
         "q": "What does \"transcribe\" mean in Sinhala?",
-        "a": "In Sinhala, \"transcribe\" is commonly translated as \"පරිවර්තනය කිරීම\" or \"ලිවීම\" — converting spoken words into written text. HelaVoice is the Sinhala voice transcriber that does this automatically using AI."
+        "a": "In Sinhala, \"transcribe\" is usually translated as \"පරිවර්තනය කිරීම\" or \"ලිවීම\": writing spoken words down as text. HelaVoice does this for Sinhala audio."
       },
       {
         "q": "Can I transcribe Sinhala audio messages (WhatsApp or voice notes)?",
-        "a": "Yes. Save the audio message from WhatsApp or your messaging app, then upload it to HelaVoice. Common voice-note formats (M4A, OGG, MP3) are supported up to 25MB per file. HelaVoice is well suited as an audio message transcription service for Sinhala language voice notes."
+        "a": "Yes. Save the voice note from WhatsApp or your messaging app to your phone or computer, then upload it to HelaVoice. Voice-note formats such as M4A, OGG and MP3 work, up to {maxMb} MB per file."
       },
       {
         "q": "How much does HelaVoice cost?",
@@ -202,7 +135,7 @@
       },
       {
         "q": "What audio formats and file sizes are supported?",
-        "a": "HelaVoice accepts MP3, WAV, WebM, OGG, FLAC, and M4A files, up to 25MB per upload. You can also record directly in your browser without installing anything."
+        "a": "HelaVoice accepts MP3, WAV, WebM, OGG, FLAC and M4A files up to {maxMb} MB each. You can also record in your browser without installing anything."
       }
     ],
     "footerSinglishTool": "Singlish to Sinhala",
@@ -226,7 +159,7 @@
     "mockCopy": "Copy",
     "mockDownload": "Download",
     "toolsTitle": "Which HelaVoice tools are free",
-    "toolsLead": "The tools on the left cost nothing and work without signing up. The tools on the right are paid from your credit balance.",
+    "toolsLead": "The free tools need no account. The paid tools use your credit balance, and two of them let you try free first.",
     "toolsTranslateNote": "In the translator, typed text is free. Speaking into it uses 1 credit a clip and needs an account.",
     "toolsSiEn": "Sinhala to English",
     "howHeading": "How transcription works",
@@ -282,15 +215,15 @@
   },
   "dashboard": {
     "title": "Dashboard",
-    "outOfCredits": "You’re out of recording credits. Purchase more to continue transcribing.",
-    "buyCredits": "Buy Credits",
+    "outOfCredits": "You're out of credits",
+    "buyCredits": "Buy credits",
     "promoHave": "Have a promo code?",
     "promoPlaceholder": "Promo code",
     "promoApply": "Apply",
     "promoApplied": "Code applied. You now have {credits} credits.",
     "promoFailed": "Could not apply that code. Please try again.",
-    "transcribeTitle": "Transcribe Sinhala Audio",
-    "transcribeDesc": "Record or upload audio to get a Sinhala transcription",
+    "transcribeTitle": "Transcribe Sinhala audio",
+    "transcribeDesc": "Record in your browser or upload an audio file.",
     "record": "Record",
     "upload": "Upload",
     "inputMethod": "Choose input method",
@@ -317,7 +250,7 @@
     "cancel": "Cancel",
     "partialTranscript": "Partial transcription saved (ran out of credits)",
     "home": "Home",
-    "recordingList": "Recording List",
+    "recordingList": "Your transcripts",
     "filterAll": "All",
     "filterToday": "Today",
     "filterWeek": "This Week",
@@ -331,14 +264,14 @@
     "exportWord": "Word (.docx)",
     "exportText": "Plain text (.txt)",
     "exportMarkdown": "Markdown (.md)",
-    "exportPdfHint": "Choose “Save as PDF” in the print dialog.",
+    "exportPdfHint": "Choose \"Save as PDF\" in the print dialog.",
     "exportFailed": "Export failed. Please try again.",
     "singlishToggle": "Type Sinhala with English letters (Singlish), like Helakuru",
     "singlishOn": "Singlish typing on",
     "singlishOff": "Singlish typing off",
     "singlishGuideTitle": "Key guide",
-    "singlishPreviewIdle": "Type in English letters — e.g. mama → මම",
-    "singlishGuideHint": "Type Sinhala words in English letters and they turn into Sinhala as you type — e.g. “mama gedhara yanavaa” → මම ගෙදර යනවා. Turn Singlish off to type English.",
+    "singlishPreviewIdle": "Type in English letters, e.g. mama → මම",
+    "singlishGuideHint": "Type Sinhala words in English letters and they turn into Sinhala as you type, e.g. \"mama gedhara yanavaa\" → මම ගෙදර යනවා. Turn Singlish off to type English.",
     "delete": "Delete",
     "partial": "Partial",
     "creditsLabel": "Credits left",
@@ -368,7 +301,7 @@
     "sinhala": "Sinhala",
     "retranslate": "Re-translate",
     "resetEnglish": "Reset to saved",
-    "noTranslationYet": "Not yet translated — use the Translate button on the row.",
+    "noTranslationYet": "Not yet translated. Use the Translate button on the row.",
     "feedbackTitle": "Help us improve",
     "feedbackPrompt": "Please share honest feedback about this transcription experience.",
     "feedbackRatingLabel": "How would you rate this result?",
@@ -386,7 +319,7 @@
     "feedbackValidation": "Please add a rating and recommendation before submitting.",
     "feedbackWhyRequired": "Please tell us why you would not recommend the service.",
     "yourTools": "Your tools",
-    "yourToolsDesc": "Everything HelaVoice can do, one tap away.",
+    "yourToolsDesc": "Each card shows what the tool costs.",
     "takeTour": "Take the tour",
     "toolDesc": {
       "subtitles": "Auto-generate Sinhala subtitles for a video, edit them, then export SRT or a video with burned-in captions.",
@@ -419,7 +352,11 @@
       "toolsBody": "Beyond transcription, HelaVoice has five more tools. Let's look at each one.",
       "helpTitle": "Need this again?",
       "helpBody": "Press this button any time to replay the tour. Questions? Message us on WhatsApp from the green button."
-    }
+    },
+    "outOfCreditsBody": "{credits} credits for {price} cover up to {minutes} minutes of transcription. Credits never expire and work on every paid tool.",
+    "buyStarter": "Buy {credits} credits for {price}",
+    "seeAllPrices": "See all prices",
+    "clearSearch": "Clear search"
   },
   "pricing": {
     "title": "Buy Credits",
@@ -1183,7 +1120,7 @@
       "resultCharged": "Done — {credits} credit(s) used, {left} left.",
       "loginTitle": "Sign up to generate audio",
       "loginBody": "Create a free account to get your first minute of Sinhala audio free.",
-      "noCredits": "You need more credits for this text.",
+      "noCredits": "You're out of credits for this text",
       "tooLong": "Text is too long — the limit is {limit} characters.",
       "rateLimited": "Too many requests in a minute. Please wait a moment.",
       "failed": "Could not generate audio. Please try again.",
@@ -1202,7 +1139,10 @@
       "pause": "Pause",
       "seek": "Seek",
       "female": "Woman",
-      "male": "Man"
+      "male": "Man",
+      "noCreditsBody": "{credits} credits for {price} cover about {chars} characters of speech. Credits never expire.",
+      "buyStarter": "Buy {credits} credits for {price}",
+      "seeAllPrices": "See all prices"
     },
     "voiceStyles": {
       "Kore": "Firm",
