@@ -233,6 +233,7 @@ export default async function LandingPage({ params }: Props) {
                 name: nav.transcribe,
                 color: "var(--lane-voice)",
                 image: "/images/hero/voice-2026-11.webp",
+                focus: "50% 4%",
                 card: (
                   <>
                     <span className="hv-lane" aria-hidden>
@@ -261,6 +262,7 @@ export default async function LandingPage({ params }: Props) {
                 name: nav.textToSpeech,
                 color: "var(--lane-speech)",
                 image: "/images/hero/speech-2026-11.webp",
+                focus: "50% 0%",
                 card: (
                   <>
                     <span className="hv-lane" aria-hidden>
@@ -281,6 +283,7 @@ export default async function LandingPage({ params }: Props) {
                 name: nav.subtitles,
                 color: "var(--lane-subs)",
                 image: "/images/hero/subs-2026-11.webp",
+                focus: "50% 10%",
                 card: (
                   <>
                     <span className="hv-caption sinhala">{MOCK_LINES[1].text}</span>
@@ -294,6 +297,7 @@ export default async function LandingPage({ params }: Props) {
                 name: nav.scanToText,
                 color: "var(--lane-scan)",
                 image: "/images/hero/scan-2026-11.webp",
+                focus: "50% 35%",
                 card: (
                   <>
                     <span className="sinhala">{MOCK_LINES[2].text}</span>
@@ -308,6 +312,7 @@ export default async function LandingPage({ params }: Props) {
                 name: nav.translate,
                 color: "var(--color-ink-2)",
                 image: "/images/hero/notes-2026-11.webp",
+                focus: "50% 0%",
                 card: (
                   <>
                     <span className="sinhala">{MOCK_LINES[0].text}</span>

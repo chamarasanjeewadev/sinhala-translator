@@ -12,6 +12,8 @@ export type HeroSlide = {
   /** Tool colour from the logo, a CSS value such as var(--lane-voice). */
   color: string;
   image: string;
+  /** Where the subject sits (CSS object-position), so the crop keeps faces in frame. */
+  focus: string;
   /** The real product, set over the photo (server-rendered). */
   card: ReactNode;
 };
@@ -86,6 +88,7 @@ export function HeroSlider({ slides, labels }: { slides: HeroSlide[]; labels: La
               sizes="(max-width: 60rem) 100vw, 46vw"
               priority={i === 0}
               className="hv-slide__img"
+              style={{ objectPosition: s.focus }}
             />
             <Link href={s.href} className="hv-slide__card" tabIndex={i === active ? 0 : -1} onFocus={stop}>
               <span className="hv-slide__tool">
