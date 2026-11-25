@@ -143,7 +143,7 @@ export function SinglishTool({ labels: l, voiceFirst = false }: { labels: Singli
     "inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold transition-colors disabled:opacity-50";
 
   return (
-    <div className="grid gap-5 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] text-[#15201b]">
+    <div className="grid gap-5 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] text-ink">
       {/* ── Editor ── */}
       <div className="rounded-3xl bg-white shadow-[0_24px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col">
         <div className="flex flex-wrap items-center justify-between gap-2 px-4 pt-4">
@@ -160,7 +160,7 @@ export function SinglishTool({ labels: l, voiceFirst = false }: { labels: Singli
           >
             <span
               className={`relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors ${
-                singlishOn ? "bg-[#15201b]" : "bg-[#cdd6ce]"
+                singlishOn ? "bg-ink" : "bg-[#cdd6ce]"
               }`}
             >
               <span
@@ -187,15 +187,15 @@ export function SinglishTool({ labels: l, voiceFirst = false }: { labels: Singli
                 voice.listening
                   ? "bg-[#ba1a1a] text-white hover:bg-[#93000a]"
                   : voiceFirst
-                    ? "bg-[#2f7d5b] text-white hover:opacity-90"
-                    : "bg-[#e6efe6] text-[#15201b] hover:bg-[#dbe7dc]",
+                    ? "bg-violet-ink text-white hover:opacity-90"
+                    : "bg-lilac text-ink hover:bg-paper-3",
               )}
             >
               {voice.listening ? <Square className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
               {voice.listening ? l.voiceStop : l.voiceStart}
             </button>
           ) : (
-            <span className="text-xs text-[#5b6660]">{l.voiceUnsupported}</span>
+            <span className="text-xs text-muted-ink">{l.voiceUnsupported}</span>
           )}
         </div>
 
@@ -216,7 +216,7 @@ export function SinglishTool({ labels: l, voiceFirst = false }: { labels: Singli
         <label htmlFor="singlish-editor" className="sr-only">
           {l.editorLabel}
         </label>
-        <div className="m-4 mb-0 flex flex-col rounded-2xl bg-[#f6f8f3] focus-within:bg-[#eef3ec] focus-within:ring-2 focus-within:ring-[#15201b]/15 transition">
+        <div className="m-4 mb-0 flex flex-col rounded-2xl bg-paper focus-within:bg-paper-2 focus-within:ring-2 focus-within:ring-ink/15 transition">
           <textarea
             id="singlish-editor"
             ref={textareaRef}
@@ -232,16 +232,16 @@ export function SinglishTool({ labels: l, voiceFirst = false }: { labels: Singli
           <SinglishWordPreview
             pending={voice.listening ? null : pending}
             idleHint={voice.listening ? voice.interim || l.listeningHint : singlishOn ? l.previewIdle : ""}
-            className="border-t border-[#e6efe6] py-1.5"
+            className="border-t border-lilac py-1.5"
           />
         </div>
 
         <div className="flex flex-wrap items-center gap-2 px-4 py-4">
-          <button type="button" onClick={() => copy("editor", text)} disabled={!text} className={`${pill} bg-gradient-to-r from-[#15201b] to-[#2c3a33] text-white hover:opacity-90`}>
+          <button type="button" onClick={() => copy("editor", text)} disabled={!text} className={`${pill} bg-gradient-to-r from-ink to-ink-2 text-white hover:opacity-90`}>
             {copiedKey === "editor" ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
             {copiedKey === "editor" ? l.copied : l.copy}
           </button>
-          <button type="button" onClick={convertPasted} disabled={!text} className={`${pill} bg-[#e6efe6] text-[#15201b] hover:bg-[#dbe7dc]`}>
+          <button type="button" onClick={convertPasted} disabled={!text} className={`${pill} bg-lilac text-ink hover:bg-paper-3`}>
             <Wand2 className="w-3.5 h-3.5" />
             {l.convertPasted}
           </button>
@@ -269,7 +269,7 @@ export function SinglishTool({ labels: l, voiceFirst = false }: { labels: Singli
             <Trash2 className="w-3.5 h-3.5" />
             {l.clear}
           </button>
-          <span className="ml-auto text-xs text-[#5b6660]">
+          <span className="ml-auto text-xs text-muted-ink">
             {l.words.replace("{count}", String(words))} · {l.chars.replace("{count}", String(text.length))}
           </span>
         </div>
@@ -295,7 +295,7 @@ export function SinglishTool({ labels: l, voiceFirst = false }: { labels: Singli
                 trackEvent("singlish_output_tab", { tab: key });
               }}
               className={`flex-1 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
-                tab === key ? "bg-white text-[#15201b]" : "text-ink/65 hover:text-ink"
+                tab === key ? "bg-white text-ink" : "text-ink/65 hover:text-ink"
               }`}
             >
               {label}

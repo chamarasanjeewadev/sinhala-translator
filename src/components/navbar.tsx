@@ -11,15 +11,16 @@ import { useDictionary } from "@/lib/i18n/dictionary-context";
 import { useLocale } from "@/lib/i18n/locale-context";
 import { localePath, parsePathname, t } from "@/lib/i18n/utils";
 import { createClient } from "@/lib/supabase/client";
+import { TTS_FREE_CHARS } from "@/lib/text-to-speech";
 import type { User, SupabaseClient } from "@supabase/supabase-js";
 
 /** dict.navbar; dictionaries are untyped JSON. */
 type NavDict = ReturnType<typeof useDictionary>["navbar"];
 
 const LINK =
-  "inline-flex h-10 items-center rounded-lg px-3 text-sm font-medium text-ink/70 transition-colors hover:bg-ink/[0.05] hover:text-ink";
+  "inline-flex h-10 items-center rounded-lg px-3 text-sm text-ink/75 transition-colors hover:bg-ink/[0.05] hover:text-ink";
 const PRIMARY =
-  "inline-flex h-10 items-center rounded-lg bg-ink px-4 text-sm font-semibold text-white transition-[background-color,transform] hover:bg-[#2c3a33] active:translate-y-px";
+  "inline-flex h-10 items-center rounded-full bg-ink px-5 text-sm font-semibold text-on-night transition-[background-color,transform] hover:bg-ink-2 active:translate-y-px";
 
 /** Open state that closes on outside click, Escape and route change. */
 function useDisclosure() {
@@ -74,7 +75,7 @@ export function ToolGroups({ signedIn, d, stacked = false }: { signedIn: boolean
         { title: d.paidGroup, tools: PAID_TOOLS },
       ].map((g) => (
         <div key={g.title}>
-          <p className="px-2.5 pb-1.5 text-xs font-semibold uppercase tracking-wider text-ink/50">{g.title}</p>
+          <p className="px-2.5 pb-1.5 text-sm font-semibold text-muted-ink">{g.title}</p>
           <div className="grid gap-0.5">
             {g.tools.map((tool) => (
               <ToolRow key={tool.key} k={tool.key} signedIn={signedIn} d={d} />
@@ -106,12 +107,12 @@ export function ToolsMenu({ signedIn, align = "left" }: { signedIn: boolean; ali
       {open && (
         <div
           id="tools-panel"
-          className={`absolute top-full z-50 mt-2 w-[620px] rounded-xl border border-ink/10 bg-white p-3 text-left shadow-[0_18px_50px_rgba(21,32,27,0.12)] ${align === "right" ? "right-0" : "left-0"}`}
+          className={`absolute top-full z-50 mt-2 w-[620px] rounded-2xl border border-ink/10 bg-sheet p-3 text-left shadow-[var(--shadow-lift)] ${align === "right" ? "right-0" : "left-0"}`}
         >
           <ToolGroups signedIn={signedIn} d={d} />
-          <div className="mt-3 flex justify-end rounded-lg bg-[#f3f7f2] px-3 py-2.5 text-[13px]">
-            <LocaleLink href="/pricing" className="font-semibold text-ink underline-offset-4 hover:underline">
-              {d.seePrices} →
+          <div className="mt-3 flex justify-end rounded-xl bg-paper-2 px-3 py-2.5 text-sm">
+            <LocaleLink href="/pricing" className="font-semibold text-violet-ink underline-offset-4 hover:underline">
+              {d.seePrices}
             </LocaleLink>
           </div>
         </div>
@@ -130,12 +131,12 @@ function AccountMenu({ email, onSignOut, d }: { email: string; onSignOut: () => 
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-label={d.account}
-        className="flex h-10 w-10 items-center justify-center rounded-full bg-[#e3f3e8] text-sm font-bold uppercase text-[#1d6b47] transition-colors hover:bg-[#d3ecdb]"
+        className="flex h-10 w-10 items-center justify-center rounded-full bg-lilac text-sm font-bold text-violet-ink transition-colors hover:bg-paper-3"
       >
         {email.charAt(0)}
       </button>
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-64 rounded-xl border border-ink/10 bg-white p-1.5 shadow-[0_18px_50px_rgba(21,32,27,0.12)]">
+        <div className="absolute right-0 top-full z-50 mt-2 w-64 rounded-2xl border border-ink/10 bg-sheet p-1.5 shadow-[var(--shadow-lift)]">
           <div className="px-3 py-2">
             <p className="text-xs text-ink/55">{d.signedInAs}</p>
             <p className="truncate text-sm font-semibold text-ink">{email}</p>
@@ -161,12 +162,12 @@ export function CreditsChip({ credits, d }: { credits: number; d: NavDict }) {
   return (
     <LocaleLink
       href="/pricing"
-      className="inline-flex h-10 items-center gap-2 whitespace-nowrap rounded-lg border border-ink/10 bg-white pl-3 pr-1 text-sm transition-colors hover:border-ink/25"
+      className="inline-flex h-10 items-center gap-2 whitespace-nowrap rounded-full border border-ink/10 bg-sheet pl-3 pr-1 text-sm transition-colors hover:border-ink/25"
     >
-      <span className={`font-semibold ${credits > 0 ? "text-ink" : "text-[#ba1a1a]"}`}>
+      <span className={`font-semibold ${credits > 0 ? "text-ink" : "text-destructive"}`}>
         {t(d.creditsShort, { count: credits })}
       </span>
-      <span className="rounded-md bg-ink px-2 py-1.5 text-xs font-semibold leading-none text-white">{d.buyCredits}</span>
+      <span className="rounded-full bg-violet px-3 py-1.5 text-xs font-semibold leading-none text-on-violet">{d.buyCredits}</span>
     </LocaleLink>
   );
 }
@@ -238,11 +239,23 @@ export function Navbar() {
   }
 
   const signedIn = Boolean(user);
+  // The banner points at text to speech, so that page goes without it.
+  const showBanner = rest !== "/sinhala-text-to-speech";
 
   return (
-    <div className="sticky top-0 z-50 w-full">
-      <header className="border-b border-ink/10 bg-[#f3f7f2]/95 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-4 sm:px-6 lg:px-8">
+    // The banner scrolls away (top: -its height); the bar under it stays pinned. No script.
+    <div className={`sticky z-50 w-full ${showBanner ? "top-[-2.5rem]" : "top-0"}`}>
+      {showBanner && (
+        <div className="flex h-10 items-center justify-center gap-3 bg-night px-4 text-sm text-on-night">
+          <span className="hidden truncate sm:inline">{t(d.banner, { chars: TTS_FREE_CHARS })}</span>
+          <span className="truncate sm:hidden">{t(d.bannerShort, { chars: TTS_FREE_CHARS })}</span>
+          <LocaleLink href="/sinhala-text-to-speech" className="shrink-0 rounded font-semibold underline underline-offset-4 hover:no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-on-night">
+            {d.bannerLink}
+          </LocaleLink>
+        </div>
+      )}
+      <header className="border-b border-ink/10 bg-paper/90 backdrop-blur">
+        <div className="mx-auto flex h-16 max-w-[1440px] items-center gap-6 px-4 sm:px-6 lg:px-16">
           <LocaleLink href="/" aria-label="HelaVoice.lk" className="flex shrink-0 items-center gap-2.5">
             <Image src="/logo.png" alt="" width={32} height={32} className="h-8 w-8 rounded-lg object-cover" />
             {/* Signed in, the credits chip needs the room on small phones; the logo stays. */}
@@ -304,7 +317,7 @@ export function Navbar() {
       {mobileMenuOpen && (
         <div
           id="mobile-menu"
-          className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-ink/10 bg-[#f3f7f2] px-4 pb-6 pt-4 lg:hidden"
+          className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-ink/10 bg-paper px-4 pb-6 pt-4 lg:hidden"
         >
           {user && (
             <div className="mb-4 rounded-lg bg-white px-3 py-2.5">

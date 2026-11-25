@@ -68,10 +68,10 @@ export function WhatsAppWidget() {
             </button>
           </div>
           <div className="space-y-3 bg-[#efeae2] px-4 py-4">
-            <p className="rounded-xl rounded-tl-none bg-white px-3 py-2 text-sm leading-relaxed text-[#15201b] shadow-sm">
+            <p className="rounded-xl rounded-tl-none bg-white px-3 py-2 text-sm leading-relaxed text-ink shadow-sm">
               {d.popupBody}
             </p>
-            <p className="text-xs text-[#5b6660]">{d.messagesOnly}</p>
+            <p className="text-xs text-muted-ink">{d.messagesOnly}</p>
             <a
               href={whatsappLink(d.prefill)}
               target="_blank"

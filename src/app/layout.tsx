@@ -2,23 +2,17 @@ import { headers } from "next/headers";
 import Script from "next/script";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { SignupTracker } from "@/components/signup-tracker";
-import {
-  Inter,
-  JetBrains_Mono,
-  Noto_Sans_Sinhala,
-  Plus_Jakarta_Sans,
-} from "next/font/google";
+import { JetBrains_Mono, Noto_Sans_Sinhala, Poppins } from "next/font/google";
 import "./globals.css";
 import { SUPPORT_EMAIL, whatsappLink } from "@/lib/contact";
 
-const inter = Inter({
-  variable: "--font-inter",
+// Poppins is the brand face (logo pack 2026-11): 400 body, 600 controls, 700 heads;
+// 500 because 24 older files use font-medium and would otherwise render at 400.
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
-});
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta",
-  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 const notoSansSinhala = Noto_Sans_Sinhala({
@@ -97,7 +91,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${plusJakartaSans.variable} ${notoSansSinhala.variable} ${jetBrainsMono.variable} antialiased`}
+        className={`${poppins.variable} ${notoSansSinhala.variable} ${jetBrainsMono.variable} antialiased`}
       >
         <noscript>
           <iframe

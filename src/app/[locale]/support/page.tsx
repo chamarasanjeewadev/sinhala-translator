@@ -35,10 +35,10 @@ export default async function SupportPage({ params }: Props) {
   return (
     <div className="min-h-screen bg-[#f7faf5]">
       <div className="mx-auto max-w-2xl px-6 py-16 md:py-24">
-        <h1 className="mb-3 font-sans text-3xl font-bold text-[#15201b] md:text-4xl">
+        <h1 className="mb-3 font-sans text-3xl font-bold text-ink md:text-4xl">
           {dict.support.title}
         </h1>
-        <p className="mb-10 font-sans text-base leading-relaxed text-[#5b6660]">
+        <p className="mb-10 font-sans text-base leading-relaxed text-muted-ink">
           {dict.support.subtitle}
         </p>
         <a
@@ -51,10 +51,10 @@ export default async function SupportPage({ params }: Props) {
             <WhatsAppIcon className="h-6 w-6" />
           </span>
           <span>
-            <span className="block font-sans text-base font-semibold text-[#15201b]">
+            <span className="block font-sans text-base font-semibold text-ink">
               {dict.whatsapp.supportTitle}
             </span>
-            <span className="block font-sans text-sm leading-relaxed text-[#5b6660]">
+            <span className="block font-sans text-sm leading-relaxed text-muted-ink">
               {dict.whatsapp.supportBody.replace("{number}", WHATSAPP_NUMBER_DISPLAY)}
             </span>
           </span>

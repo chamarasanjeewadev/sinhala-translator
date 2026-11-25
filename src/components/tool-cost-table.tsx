@@ -41,7 +41,7 @@ export function ToolCostTable({
                 <li key={tool.key} className="border-t border-ink/[0.07] first:border-t-0">
                   <Link
                     href={lp(tool.href)}
-                    className="group flex items-center gap-3 rounded-xl px-3 py-3 transition-colors hover:bg-[#f3f7f2]"
+                    className="group flex items-center gap-3 rounded-xl px-3 py-3 transition-colors hover:bg-paper"
                   >
                     <IconTile icon={tool.icon} tone={tool.tone} />
                     <span className="min-w-0 flex-1">

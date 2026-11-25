@@ -1,3 +1,7 @@
+/* Hallmark · shape: Stat-Led (home) · genre: atmospheric · theme: brand (HelaVoice logo pack 2026-11, Bloom material) · redesign: full · draw: 9c7f35
+ * paper: oklch(98.6% 0.006 300) · accent: oklch(54.1% 0.247 293) · display: Poppins 700 · body: Poppins 400 · hero: Settled · nav: banner over a retracting bar · footer: statement · signature: Sinhala audio turning into Sinhala text on one lane, live in the hero
+ * axes: light/geometric-sans/chromatic-violet · posture: full palette (paper, violet signal, four tool lanes from the logo, indigo ink) · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H5 E4 S4 R4 V4 · weakest: S (P), a voice tool could show any waveform; the hero shows our real flow (2-minute parts, Sinhala lines, credits used) and the tools wear the logo's four colours */
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -6,8 +10,8 @@
 @theme inline {
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
-	--font-sans: var(--font-inter);
-	--font-display: var(--font-plus-jakarta);
+	--font-sans: var(--font-poppins), var(--font-noto-sinhala), ui-sans-serif, system-ui, sans-serif;
+	--font-display: var(--font-poppins), var(--font-noto-sinhala), ui-sans-serif, system-ui, sans-serif;
 	--font-sinhala: var(--font-noto-sinhala);
 	--font-mono: var(--font-jetbrains-mono);
 	--color-sidebar-ring: var(--sidebar-ring);
@@ -55,60 +59,109 @@
 	--color-surface-high: var(--ds-surface-high);
 	--color-surface-highest: var(--ds-surface-highest);
 
-	/* Brand: soft pastel glass (mint / peach / sky on ink) */
-	--color-ink: #15201b;
-	--color-leaf: #2f7d5b;
-	--color-ember: #c2643a;
-	--color-mint: #cfe9d3;
-	--color-peach: #ffd8c2;
-	--color-sky: #c6e6f0;
+}
+
+/* Brand tokens: @theme static so they are always emitted as CSS variables (plain CSS reads them too). */
+@theme static {
+	/* Brand: HelaVoice logo pack 2026-11 (assets/logo-pack-2026-11, .hallmark/brand-spec.md).
+	   Indigo ink from the wordmark, violet as the one action colour, pink / amber / cyan as tool lanes. */
+	--color-ink: oklch(28.1% 0.091 282); /* #242054, the wordmark */
+	--color-ink-2: oklch(38% 0.075 284);
+	--color-muted-ink: oklch(47% 0.04 290); /* 6.7:1 on paper */
+	--color-paper: oklch(98.6% 0.006 300);
+	--color-paper-2: oklch(96.2% 0.02 302); /* lilac #f5eeff family */
+	--color-paper-3: oklch(92.8% 0.034 300);
+	--color-sheet: oklch(99.6% 0.003 300);
+	--color-rule: oklch(90.5% 0.02 295);
+	--color-violet: oklch(54.1% 0.247 293); /* #7c3aed */
+	--color-violet-ink: oklch(49.6% 0.241 293); /* links and small violet text, 6.8:1 */
+	--color-on-violet: oklch(99% 0.005 300);
+	--color-pink: oklch(65.6% 0.212 354); /* #ec4899 */
+	--color-amber: oklch(76.9% 0.165 70); /* #f59e0b */
+	--color-cyan: oklch(71.5% 0.126 215); /* #06b6d4 */
+	--color-night: oklch(25.9% 0.052 282); /* #20203c, the dark logo tile */
+	--color-on-night: oklch(93.5% 0.03 290);
+	--color-on-night-muted: oklch(80% 0.055 290);
+	--color-lilac: oklch(95.9% 0.024 304); /* #f5eeff */
+	--color-cream: oklch(97.9% 0.017 76); /* #fff7ec */
+	/* Legacy names, re-pointed so every page follows the brand */
+	--color-leaf: var(--color-violet-ink);
+	--color-ember: oklch(52.5% 0.199 3);
+	--color-mint: oklch(95.5% 0.018 161); /* #e6f4ec */
+	--color-peach: var(--color-cream);
+	--color-sky: oklch(96.5% 0.03 210);
 }
 
 :root {
-	--radius: 0.625rem;
+	--radius: 0.75rem;
 
-	/* Design System: soft pastel glass — ink on mint/peach/sky */
-	--background: #f3f7f2;
-	--foreground: #15201b;
-	--card: #ffffff;
-	--card-foreground: #15201b;
-	--popover: #ffffff;
-	--popover-foreground: #15201b;
-	--primary: #15201b;
-	--primary-foreground: #ffffff;
-	--secondary: #2f7d5b;
-	--secondary-foreground: #ffffff;
-	--muted: #eef3ec;
-	--muted-foreground: #5b6660;
-	--accent: #e6efe6;
-	--accent-foreground: #15201b;
-	--destructive: #ba1a1a;
-	--border: #d3dcd4;
-	--input: #eef3ec;
-	--ring: #2f7d5b;
-	--chart-1: #2f7d5b;
-	--chart-2: #2f7fa0;
-	--chart-3: #c2643a;
-	--chart-4: #cfe9d3;
-	--chart-5: #c6e6f0;
+	/* shadcn roles on the brand palette */
+	--background: oklch(98.6% 0.006 300);
+	--foreground: oklch(28.1% 0.091 282);
+	--card: oklch(99.6% 0.003 300);
+	--card-foreground: oklch(28.1% 0.091 282);
+	--popover: oklch(99.6% 0.003 300);
+	--popover-foreground: oklch(28.1% 0.091 282);
+	--primary: oklch(54.1% 0.247 293);
+	--primary-foreground: oklch(99% 0.005 300);
+	--secondary: oklch(49.6% 0.241 293);
+	--secondary-foreground: oklch(99% 0.005 300);
+	--muted: oklch(96.8% 0.016 300);
+	--muted-foreground: oklch(47% 0.04 290);
+	--accent: oklch(95.5% 0.024 304);
+	--accent-foreground: oklch(28.1% 0.091 282);
+	--destructive: oklch(52% 0.19 27);
+	--border: oklch(90.5% 0.02 295);
+	--input: oklch(96.8% 0.016 300);
+	--ring: oklch(54.1% 0.247 293);
+	--chart-1: oklch(54.1% 0.247 293);
+	--chart-2: oklch(71.5% 0.126 215);
+	--chart-3: oklch(65.6% 0.212 354);
+	--chart-4: oklch(76.9% 0.165 70);
+	--chart-5: oklch(95.5% 0.018 161);
 
 	/* Surface hierarchy tokens */
-	--ds-surface: #f6f8f3;
-	--ds-surface-low: #eef3ec;
-	--ds-surface-lowest: #ffffff;
-	--ds-surface-container: #e6efe6;
-	--ds-surface-high: #e1ece0;
-	--ds-surface-highest: #dbe7dc;
+	--ds-surface: oklch(97.8% 0.01 300);
+	--ds-surface-low: oklch(96.8% 0.016 300);
+	--ds-surface-lowest: oklch(99.6% 0.003 300);
+	--ds-surface-container: oklch(95.5% 0.024 304);
+	--ds-surface-high: oklch(94% 0.03 302);
+	--ds-surface-highest: oklch(92.8% 0.034 300);
 
 	/* Sidebar */
-	--sidebar: #eef3ec;
-	--sidebar-foreground: #15201b;
-	--sidebar-primary: #15201b;
-	--sidebar-primary-foreground: #ffffff;
-	--sidebar-accent: #e6efe6;
-	--sidebar-accent-foreground: #15201b;
-	--sidebar-border: #d3dcd4;
-	--sidebar-ring: #2f7d5b;
+	--sidebar: oklch(96.8% 0.016 300);
+	--sidebar-foreground: oklch(28.1% 0.091 282);
+	--sidebar-primary: oklch(54.1% 0.247 293);
+	--sidebar-primary-foreground: oklch(99% 0.005 300);
+	--sidebar-accent: oklch(95.5% 0.024 304);
+	--sidebar-accent-foreground: oklch(28.1% 0.091 282);
+	--sidebar-border: oklch(90.5% 0.02 295);
+	--sidebar-ring: oklch(54.1% 0.247 293);
+
+	/* Hallmark scale (layout.md § 2, craft.md § 3, § 5) */
+	--space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+	--text-display: clamp(2.6rem, 4.6vw + 1rem, 5.25rem);
+	--text-display-s: clamp(2.25rem, 4vw + 0.5rem, 3.75rem);
+	--text-section: clamp(2rem, 2.5vw + 1rem, 3.5rem);
+	--text-title: clamp(1.25rem, 0.75vw + 0.875rem, 1.625rem);
+	--text-lead: clamp(1.125rem, 0.35vw + 1rem, 1.375rem);
+	--ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-in: cubic-bezier(0.7, 0, 0.84, 0); --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+	--dur-micro: 120ms; --dur-short: 220ms; --dur-long: 420ms;
+	--container: 1440px; --gutter: 64px; --gap-columns: 32px; --section-gap-s: 120px; --section-gap: 144px; --section-gap-l: 176px;
+	--radius-card: 22px; --radius-inner: 12px; --radius-clip: 8px; --radius-pill: 999px;
+	--shadow-card: 0 1px 2px oklch(28% 0.09 282 / 0.06), 0 18px 40px -22px oklch(28% 0.09 282 / 0.28);
+	--shadow-lift: 0 2px 4px oklch(28% 0.09 282 / 0.07), 0 40px 80px -36px oklch(45% 0.2 293 / 0.38);
+	--tracking-display: -0.025em;
+	/* Shade and light, tinted with the ink and the violet (craft.md § 3) */
+	--shade-1: oklch(28% 0.09 282 / 0.06);
+	--shade-2: oklch(28% 0.09 282 / 0.3);
+	--shade-3: oklch(28% 0.09 282 / 0.36);
+	--glow-violet: oklch(45% 0.2 293 / 0.7);
+	--hi: oklch(100% 0 0 / 0.65);
+	--hi-soft: oklch(100% 0 0 / 0.2);
+	--rule-night: oklch(93.5% 0.03 290 / 0.16);
+	--tag-trial-ink: oklch(42% 0.12 60);
+	--tag-free-ink: oklch(40% 0.1 160);
 }
 
 .dark {
@@ -155,9 +208,24 @@
 	* {
 		@apply border-border outline-ring/50;
 	}
+	html,
+	body {
+		overflow-x: clip;
+	}
+	html {
+		scrollbar-color: var(--color-paper-3) var(--color-paper);
+	}
 	body {
 		@apply bg-background text-foreground font-sans;
-		overflow-x: clip;
+		caret-color: var(--color-violet);
+	}
+	::selection {
+		background: color-mix(in oklab, var(--color-violet) 22%, transparent);
+		color: var(--color-ink);
+	}
+	:focus-visible {
+		outline: 2px solid var(--color-violet);
+		outline-offset: 2px;
 	}
 }
 
@@ -165,39 +233,24 @@
 
 /* Glassmorphism panel — per DESIGN.md §2 "Glass & Gradient" rule */
 .glass-panel {
-	background: rgba(255, 255, 255, 0.6);
+	background: oklch(99.6% 0.003 300 / 0.72);
 	backdrop-filter: blur(20px);
 	-webkit-backdrop-filter: blur(20px);
-	border: 1px solid rgba(255, 255, 255, 0.75);
+	border: 1px solid oklch(99.6% 0.003 300 / 0.8);
 }
 
-/* Primary gradient — ink to soft ink */
-.bg-gradient-primary {
-	background: linear-gradient(135deg, #15201b, #2c3a33);
-}
 
 /* Pastel iridescent fill (the reference's "AI" chip / orb) */
 .bg-gradient-pastel {
-	background: linear-gradient(135deg, #ffd8c2 0%, #d9efcf 50%, #c6e6f0 100%);
+	background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-lilac) 50%, var(--color-mint) 100%);
 }
 
-/* Text gradient helper */
-.text-gradient-primary {
-	background: linear-gradient(135deg, #15201b, #2f7d5b);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-clip: text;
-}
 
 /* Ambient shadow — per DESIGN.md §4 "Ambient Shadows" */
 .shadow-ambient {
-	box-shadow: 0 10px 30px rgba(21, 32, 27, 0.06);
+	box-shadow: var(--shadow-card);
 }
 
-/* Ghost border — per DESIGN.md §4 */
-.border-ghost {
-	border: 1px solid rgba(21, 32, 27, 0.08);
-}
 
 /* Sinhala text needs extra line-height — per DESIGN.md §3 */
 .sinhala-text {
@@ -217,45 +270,27 @@
 }
 
 .hero-gradient-text {
-	background: linear-gradient(130deg, #c2643a 0%, #2f7d5b 55%, #2f7fa0 100%);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-clip: text;
+	color: var(--color-violet-ink);
 }
 
-.hero-word-clip {
-	display: inline-block;
-	overflow: hidden;
-	vertical-align: bottom;
-}
 
 .hero-primary-button {
 	position: relative;
-	overflow: hidden;
-	background: linear-gradient(135deg, #15201b 0%, #2c3a33 100%);
-	color: #ffffff;
-	box-shadow: 0 0 0 1px rgba(21, 32, 27, 0.9), 0 8px 24px rgba(21, 32, 27, 0.18);
-	transition: transform 0.15s, box-shadow 0.15s;
+	background: var(--color-violet);
+	color: var(--color-on-violet);
+	box-shadow: 0 10px 24px -12px oklch(45% 0.2 293 / 0.55);
+	transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
 }
 
-.hero-primary-button::before {
-	content: "";
-	position: absolute;
-	inset: 0;
-	border-radius: inherit;
-	background: linear-gradient(90deg, transparent, rgba(255, 216, 194, 0.22), rgba(198, 230, 240, 0.22), transparent);
-	background-size: 200%;
-	animation: heroShimmer 2.4s ease-in-out infinite;
-}
 
 .hero-primary-button:hover {
 	transform: translateY(-1px);
-	box-shadow: 0 0 0 1px rgba(21, 32, 27, 1), 0 12px 32px rgba(21, 32, 27, 0.25);
+	background: var(--color-violet-ink);
 }
 
 .hero-wave-bar {
 	transform-origin: bottom;
-	background: linear-gradient(to top, #8fd0b0, #f4b08f);
+	background: linear-gradient(to top, var(--color-violet), var(--color-pink));
 	opacity: 0.88;
 	animation: heroBar 0.9s ease-in-out infinite alternate;
 }
@@ -265,34 +300,19 @@
 	position: absolute;
 	inset: -3px;
 	border-radius: 9999px;
-	border: 1.5px solid #2f7d5b;
+	border: 1.5px solid var(--color-violet);
 	animation: heroDotPulse 1.8s ease-in-out infinite;
 	opacity: 0.5;
 }
 
 .hero-caret {
-	background: #2f7d5b;
+	background: var(--color-violet);
 	animation: heroCaret 1s step-end infinite;
 }
 
-.hero-ticker-mask {
-	mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-	-webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-}
 
-.hero-stat-card {
-	transition: background 0.2s, border-color 0.2s, transform 0.18s;
-}
 
-.hero-stat-card:hover {
-	transform: translateY(-2px);
-	background: rgba(255, 255, 255, 0.85);
-	border-color: rgba(47, 125, 91, 0.25);
-}
 
-.hero-glow-fast {
-	animation: heroGlow 2s ease-in-out infinite;
-}
 
 .hero-glow-slow {
 	animation: heroGlow 7s ease-in-out infinite;
@@ -340,14 +360,6 @@
 	}
 }
 
-@keyframes heroTicker {
-	from {
-		transform: translateX(0);
-	}
-	to {
-		transform: translateX(-33.333%);
-	}
-}
 
 @keyframes heroGlow {
 	0%,
@@ -368,36 +380,8 @@
 	}
 }
 
-@keyframes heroWordIn {
-	from {
-		opacity: 0;
-		transform: translateY(55%) skewY(4deg);
-	}
-	to {
-		opacity: 1;
-		transform: none;
-	}
-}
 
-@keyframes heroWordOut {
-	from {
-		opacity: 1;
-		transform: none;
-	}
-	to {
-		opacity: 0;
-		transform: translateY(-45%) skewY(-3deg);
-	}
-}
 
-@keyframes heroShimmer {
-	0% {
-		background-position: -200% center;
-	}
-	100% {
-		background-position: 200% center;
-	}
-}
 
 @keyframes heroDotPulse {
 	0%,
@@ -425,38 +409,21 @@
 
 /* Mono eyebrow label reused across every section */
 .section-eyebrow {
-	font-family: var(--font-mono);
-	font-size: 0.72rem;
-	line-height: 1;
-	letter-spacing: 0.26em;
-	text-transform: uppercase;
+	font-size: 0.875rem;
+	font-weight: 600;
+	line-height: 1.2;
 }
 
-/* Frosted glass card (class name kept from the old dark theme) */
-.dark-card {
-	background: rgba(255, 255, 255, 0.55);
-	border: 1px solid rgba(255, 255, 255, 0.85);
-	box-shadow: 0 10px 30px rgba(21, 32, 27, 0.05);
-	backdrop-filter: blur(16px);
-	-webkit-backdrop-filter: blur(16px);
-	transition: transform 0.2s, border-color 0.2s, background 0.2s;
-}
-
-.dark-card:hover {
-	transform: translateY(-3px);
-	border-color: rgba(47, 125, 91, 0.25);
-	background: rgba(255, 255, 255, 0.8);
-}
 
 /* Signature: the voice→text throughline. A flowing gradient hairline
    that connects the How-it-works steps and divides sections. */
 .flow-line {
 	background: linear-gradient(
 		90deg,
-		rgba(244, 176, 143, 0) 0%,
-		rgba(244, 176, 143, 0.8) 30%,
-		rgba(143, 208, 176, 0.8) 60%,
-		rgba(124, 195, 221, 0) 100%
+		transparent 0%,
+		color-mix(in oklab, var(--color-pink) 70%, transparent) 30%,
+		color-mix(in oklab, var(--color-amber) 70%, transparent) 60%,
+		transparent 100%
 	);
 	background-size: 200% 100%;
 	animation: flowShift 3.2s linear infinite;
@@ -473,22 +440,19 @@
 
 /* Static waveform bar (rendered inline for connectors/dividers) */
 .wave-tick {
-	background: linear-gradient(to top, #8fd0b0, #f4b08f);
+	background: linear-gradient(to top, var(--color-violet), var(--color-pink));
 	border-radius: 9999px;
 }
 
 /* Big step numeral */
 .step-numeral {
 	font-family: var(--font-mono);
-	background: linear-gradient(130deg, #c2643a 0%, #2f7d5b 60%, #2f7fa0 100%);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-clip: text;
+	color: var(--color-violet-ink);
 }
 
 /* Visible keyboard focus across interactive landing elements */
 .focus-ring:focus-visible {
-	outline: 2px solid #2f7d5b;
+	outline: 2px solid var(--color-violet);
 	outline-offset: 3px;
 	border-radius: 0.5rem;
 }
@@ -509,7 +473,7 @@
 /* Rendered markdown (react-markdown output) — restores block styling that
    Tailwind's preflight strips, scoped so it only affects transcript previews. */
 .markdown-body {
-	color: #111c2d;
+	color: var(--color-ink);
 	line-height: 1.65;
 	word-break: break-word;
 }
@@ -542,7 +506,7 @@
 	border-inline-start: 3px solid #d8e3fb;
 	color: #4a4452;
 }
-.markdown-body a { color: #4c1d95; text-decoration: underline; }
+.markdown-body a { color: var(--color-violet-ink); text-decoration: underline; }
 .markdown-body code {
 	background: #f0f3ff;
 	border-radius: 0.35em;

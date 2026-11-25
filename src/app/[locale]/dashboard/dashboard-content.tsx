@@ -783,7 +783,7 @@ export function DashboardContent({
     totalChunks > 0 ? Math.round((currentChunk / totalChunks) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-[#eef3ec] text-[#15201b] pb-16">
+    <div className="min-h-screen bg-paper-2 text-ink pb-16">
       {/* ── Glassmorphic Navbar ── */}
       <header className="glass-panel shadow-ambient sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4 whitespace-nowrap">
@@ -797,7 +797,7 @@ export function DashboardContent({
                 height={32}
                 className="w-8 h-8 rounded-xl object-cover"
               />
-              <span className="text-base font-bold hidden sm:block font-display text-[#15201b]">
+              <span className="text-base font-bold hidden sm:block font-display text-ink">
                 HelaVoice.lk
               </span>
             </LocaleLink>
@@ -805,14 +805,14 @@ export function DashboardContent({
             <nav className="hidden lg:flex items-center gap-1">
               <LocaleLink
                 href="/"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-muted-ink hover:text-ink hover:bg-lilac transition-colors"
               >
                 <House className="w-4 h-4" />
                 {d.home}
               </LocaleLink>
               <LocaleLink
                 href="/dashboard/subtitles"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-muted-ink hover:text-ink hover:bg-lilac transition-colors"
               >
                 <Captions className="w-4 h-4" />
                 {nav.subtitles}
@@ -820,14 +820,14 @@ export function DashboardContent({
               <ToolsMenu signedIn />
               <LocaleLink
                 href="/blog"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-muted-ink hover:text-ink hover:bg-lilac transition-colors"
               >
                 <BookOpen className="w-4 h-4" />
                 {nav.blog}
               </LocaleLink>
               <LocaleLink
                 href="/pricing"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-muted-ink hover:text-ink hover:bg-lilac transition-colors"
               >
                 <Tag className="w-4 h-4" />
                 {nav.pricing}
@@ -838,25 +838,25 @@ export function DashboardContent({
           {/* Right: Credits + Language + Sign Out */}
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Credits pill */}
-            <div data-tour="credits" className="bg-[#ffffff] rounded-full px-3 py-1.5 flex items-center gap-2 shadow-[0_10px_30px_rgba(21,32,27,0.06)]">
-              <div className="w-6 h-6 rounded-lg bg-[#15201b] flex items-center justify-center shrink-0">
+            <div data-tour="credits" className="bg-sheet rounded-full px-3 py-1.5 flex items-center gap-2 shadow-[0_10px_30px_rgba(21,32,27,0.06)]">
+              <div className="w-6 h-6 rounded-lg bg-ink flex items-center justify-center shrink-0">
                 <FileText className="w-3 h-3 text-white" />
               </div>
               <div className="leading-tight">
-                <div className="text-[11px] text-[#5b6660]">{d.creditsLabel}</div>
-                <div className="text-sm font-bold text-[#15201b]">{credits}</div>
+                <div className="text-[11px] text-muted-ink">{d.creditsLabel}</div>
+                <div className="text-sm font-bold text-ink">{credits}</div>
               </div>
             </div>
 
             <LocaleLink
               href="/pricing"
               data-tour="buy"
-              className="inline-flex items-center whitespace-nowrap bg-[#15201b] text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors hover:bg-[#2c3a33]"
+              className="inline-flex items-center whitespace-nowrap bg-ink text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors hover:bg-ink-2"
             >
               {d.buyCredits}
             </LocaleLink>
 
-            <div className="[&_button]:text-[#5b6660] [&_button]:hover:text-[#15201b]">
+            <div className="[&_button]:text-muted-ink [&_button]:hover:text-ink">
               <LanguageSwitcher />
             </div>
 
@@ -866,14 +866,14 @@ export function DashboardContent({
               onClick={() => setTourOpen(true)}
               title={d.takeTour}
               aria-label={d.takeTour}
-              className="w-9 h-9 flex items-center justify-center rounded-full text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
+              className="w-9 h-9 flex items-center justify-center rounded-full text-muted-ink hover:text-ink hover:bg-lilac transition-colors"
             >
               <CircleHelp className="w-5 h-5" />
             </button>
 
             <button
               onClick={handleSignOut}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-full text-sm text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-full text-sm text-muted-ink hover:text-ink hover:bg-lilac transition-colors"
             >
               <LogOut className="w-4 h-4" />
               <span className="hidden sm:inline">{nav.signOut}</span>
@@ -883,23 +883,23 @@ export function DashboardContent({
       </header>
 
       {/* ── Hero / Transcription Workspace ── */}
-      <section className="bg-[#f6f8f3] pt-12 pb-14">
+      <section className="bg-paper pt-12 pb-14">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           {/* ── Idle ── */}
           {transcribeState === "idle" && (
             <>
               <div className="text-center mb-8">
-                <h1 className="font-display text-3xl md:text-4xl font-bold text-[#15201b] mb-3">
+                <h1 className="font-display text-3xl md:text-4xl font-bold text-ink mb-3">
                   {d.transcribeTitle}
                 </h1>
-                <p className="text-[#5b6660] text-base">{d.transcribeDesc}</p>
+                <p className="text-muted-ink text-base">{d.transcribeDesc}</p>
               </div>
 
               <div
                 role="tablist"
                 aria-label={d.inputMethod}
                 data-tour="mode"
-                className="flex gap-1 p-1 mb-6 max-w-sm mx-auto rounded-full bg-[#e6efe6]"
+                className="flex gap-1 p-1 mb-6 max-w-sm mx-auto rounded-full bg-lilac"
               >
                 <button
                   role="tab"
@@ -907,8 +907,8 @@ export function DashboardContent({
                   onClick={() => setMode("record")}
                   className={`flex-1 flex items-center justify-center gap-2 py-1.5 px-4 rounded-full text-sm font-semibold transition-all ${
                     mode === "record"
-                      ? "bg-white text-[#15201b] shadow-sm"
-                      : "text-[#5b6660] hover:text-[#15201b]"
+                      ? "bg-white text-ink shadow-sm"
+                      : "text-muted-ink hover:text-ink"
                   }`}
                 >
                   <IconTile icon={Mic} tone="mint" size="sm" className="rounded-full" />
@@ -920,8 +920,8 @@ export function DashboardContent({
                   onClick={() => setMode("upload")}
                   className={`flex-1 flex items-center justify-center gap-2 py-1.5 px-4 rounded-full text-sm font-semibold transition-all ${
                     mode === "upload"
-                      ? "bg-white text-[#15201b] shadow-sm"
-                      : "text-[#5b6660] hover:text-[#15201b]"
+                      ? "bg-white text-ink shadow-sm"
+                      : "text-muted-ink hover:text-ink"
                   }`}
                 >
                   <IconTile icon={Upload} tone="sky" size="sm" className="rounded-full" />
@@ -944,9 +944,9 @@ export function DashboardContent({
               </div>
 
               {noCredits && (
-                <div className="mt-6 rounded-2xl border border-[#15201b]/10 bg-white px-5 py-5 text-center">
-                  <p className="font-semibold text-[#15201b]">{d.outOfCredits}</p>
-                  <p className="mt-1 text-sm text-[#5b6660]">
+                <div className="mt-6 rounded-2xl border border-ink/10 bg-white px-5 py-5 text-center">
+                  <p className="font-semibold text-ink">{d.outOfCredits}</p>
+                  <p className="mt-1 text-sm text-muted-ink">
                     {fill(d.outOfCreditsBody, {
                       credits: STARTER.credits,
                       price: STARTER.priceDisplay,
@@ -957,9 +957,9 @@ export function DashboardContent({
                     <PricingBuyButton
                       packageId={STARTER.id}
                       label={fill(d.buyStarter, { credits: STARTER.credits, price: STARTER.priceDisplay })}
-                      className="inline-flex h-11 items-center justify-center rounded-full bg-[#15201b] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#2c3a33]"
+                      className="inline-flex h-11 items-center justify-center rounded-full bg-ink px-6 text-sm font-semibold text-white transition-colors hover:bg-ink-2"
                     />
-                    <LocaleLink href="/pricing" className="text-sm font-semibold text-[#15201b] underline underline-offset-4 hover:opacity-80">
+                    <LocaleLink href="/pricing" className="text-sm font-semibold text-ink underline underline-offset-4 hover:opacity-80">
                       {d.seeAllPrices}
                     </LocaleLink>
                   </div>
@@ -975,8 +975,8 @@ export function DashboardContent({
           {/* ── Analyzing ── */}
           {transcribeState === "analyzing" && (
             <div className="flex flex-col items-center justify-center py-20 gap-4">
-              <Loader2 className="w-8 h-8 text-[#15201b] animate-spin" />
-              <p className="text-[#5b6660] text-base font-medium">{d.analyzing}</p>
+              <Loader2 className="w-8 h-8 text-ink animate-spin" />
+              <p className="text-muted-ink text-base font-medium">{d.analyzing}</p>
             </div>
           )}
 
@@ -984,42 +984,42 @@ export function DashboardContent({
           {transcribeState === "ready" && analyzeResult && (
             <div>
               <div className="text-center mb-6">
-                <h1 className="font-display text-3xl md:text-4xl font-bold text-[#15201b] mb-3">
+                <h1 className="font-display text-3xl md:text-4xl font-bold text-ink mb-3">
                   {d.transcribeTitle}
                 </h1>
               </div>
 
-              <div className="bg-[#ffffff] rounded-2xl shadow-[0_10px_30px_rgba(21,32,27,0.06)] p-6 space-y-4 max-w-md mx-auto">
+              <div className="bg-sheet rounded-2xl shadow-[0_10px_30px_rgba(21,32,27,0.06)] p-6 space-y-4 max-w-md mx-auto">
                 <div className="flex items-center justify-between">
-                  <span className="text-[#5b6660] text-sm">{d.audioDuration}</span>
-                  <span className="text-[#15201b] font-mono font-bold text-sm">
+                  <span className="text-muted-ink text-sm">{d.audioDuration}</span>
+                  <span className="text-ink font-mono font-bold text-sm">
                     {formatDurationFull(analyzeResult.durationSeconds)}
                   </span>
                 </div>
-                <div className="h-px bg-[#eef3ec]" />
+                <div className="h-px bg-paper-2" />
                 <div className="flex items-center justify-between">
-                  <span className="text-[#5b6660] text-sm">
+                  <span className="text-muted-ink text-sm">
                     {d.creditsRequired}{" "}
                     <span className="text-xs">({d.perMinute})</span>
                   </span>
-                  <span className="text-[#15201b] font-bold text-sm">
+                  <span className="text-ink font-bold text-sm">
                     {analyzeResult.requiredCredits}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-[#5b6660] text-sm">{d.creditsAvailable}</span>
-                  <span className="text-[#15201b] font-bold text-sm">
+                  <span className="text-muted-ink text-sm">{d.creditsAvailable}</span>
+                  <span className="text-ink font-bold text-sm">
                     {analyzeResult.currentCredits}
                   </span>
                 </div>
 
-                <div className="h-px bg-[#eef3ec]" />
+                <div className="h-px bg-paper-2" />
                 <div className="flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-[#15201b] text-sm font-semibold">
+                    <p className="text-ink text-sm font-semibold">
                       {d.conversationMode}
                     </p>
-                    <p className="text-[#5b6660] text-xs mt-0.5">
+                    <p className="text-muted-ink text-xs mt-0.5">
                       {d.conversationModeDesc}
                     </p>
                   </div>
@@ -1031,10 +1031,10 @@ export function DashboardContent({
                 </div>
                 <div className="flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-[#15201b] text-sm font-semibold">
+                    <p className="text-ink text-sm font-semibold">
                       {d.timestampsToggle}
                     </p>
-                    <p className="text-[#5b6660] text-xs mt-0.5">
+                    <p className="text-muted-ink text-xs mt-0.5">
                       {d.timestampsToggleDesc}
                     </p>
                   </div>
@@ -1063,14 +1063,14 @@ export function DashboardContent({
                     setAudioSource(null);
                     setAnalyzeResult(null);
                   }}
-                  className="flex-1 py-3 rounded-full font-semibold bg-[#e6efe6] text-[#5b6660] hover:bg-[#dbe7dc] transition-colors text-sm"
+                  className="flex-1 py-3 rounded-full font-semibold bg-lilac text-muted-ink hover:bg-paper-3 transition-colors text-sm"
                 >
                   {d.cancel}
                 </button>
                 <button
                   onClick={handleConfirmTranscribe}
                   disabled={!analyzeResult.canProceed}
-                  className="flex-1 bg-gradient-to-r from-[#15201b] to-[#2c3a33] text-white py-3 rounded-full font-semibold text-sm transition-opacity hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed shadow-[0_10px_30px_rgba(21,32,27,0.06)]"
+                  className="flex-1 bg-gradient-to-r from-ink to-ink-2 text-white py-3 rounded-full font-semibold text-sm transition-opacity hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed shadow-[0_10px_30px_rgba(21,32,27,0.06)]"
                 >
                   {d.confirmTranscription}
                 </button>
@@ -1083,33 +1083,33 @@ export function DashboardContent({
             <div className="max-w-md mx-auto py-8 space-y-6">
               <div>
                 <div className="flex items-center justify-between text-sm mb-2">
-                  <span className="text-[#5b6660]">
+                  <span className="text-muted-ink">
                     {d.processingChunk
                       .replace("{current}", String(currentChunk))
                       .replace("{total}", String(totalChunks))}
                   </span>
-                  <span className="text-[#5b6660] font-mono tabular-nums">
+                  <span className="text-muted-ink font-mono tabular-nums">
                     {progressPercent}%
                   </span>
                 </div>
-                <div className="w-full bg-[#e6efe6] rounded-full h-2">
+                <div className="w-full bg-lilac rounded-full h-2">
                   <div
-                    className="bg-gradient-to-r from-[#15201b] to-[#2c3a33] h-2 rounded-full transition-all duration-500"
+                    className="bg-gradient-to-r from-ink to-ink-2 h-2 rounded-full transition-all duration-500"
                     style={{ width: `${progressPercent}%` }}
                   />
                 </div>
               </div>
 
               {accumulatedText && (
-                <div className="bg-[#ffffff] rounded-2xl shadow-[0_10px_30px_rgba(21,32,27,0.06)] p-4 max-h-48 overflow-y-auto">
-                  <p className="text-sm text-[#15201b] leading-relaxed sinhala-text whitespace-pre-wrap">
+                <div className="bg-sheet rounded-2xl shadow-[0_10px_30px_rgba(21,32,27,0.06)] p-4 max-h-48 overflow-y-auto">
+                  <p className="text-sm text-ink leading-relaxed sinhala-text whitespace-pre-wrap">
                     {accumulatedText}
                   </p>
                 </div>
               )}
 
-              <div className="flex items-center justify-center gap-2 text-[#5b6660]">
-                <Loader2 className="w-5 h-5 animate-spin text-[#15201b]" />
+              <div className="flex items-center justify-center gap-2 text-muted-ink">
+                <Loader2 className="w-5 h-5 animate-spin text-ink" />
                 <span className="text-sm font-medium">{d.transcribing}</span>
               </div>
             </div>
@@ -1121,11 +1121,11 @@ export function DashboardContent({
       <section data-tour="tools" className="max-w-5xl mx-auto px-4 sm:px-6 pt-10">
         <div className="flex items-end justify-between gap-4 mb-4">
           <div>
-            <h2 className="font-display text-lg font-bold text-[#15201b] flex items-center gap-2">
+            <h2 className="font-display text-lg font-bold text-ink flex items-center gap-2">
               <LayoutGrid className="w-5 h-5 text-[#7c3aed]" />
               {d.yourTools}
             </h2>
-            <p className="text-sm text-[#5b6660]">{d.yourToolsDesc}</p>
+            <p className="text-sm text-muted-ink">{d.yourToolsDesc}</p>
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
@@ -1134,18 +1134,18 @@ export function DashboardContent({
               key={t.key}
               href={t.appHref ?? t.href}
               data-tour={`tool-${t.key}`}
-              className="group relative flex lg:flex-col items-start gap-3 rounded-2xl bg-white/80 border border-white p-4 shadow-[0_10px_30px_rgba(21,32,27,0.05)] transition-all hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_16px_40px_rgba(21,32,27,0.09)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2f7d5b]"
+              className="group relative flex lg:flex-col items-start gap-3 rounded-2xl bg-white/80 border border-white p-4 shadow-[0_10px_30px_rgba(21,32,27,0.05)] transition-all hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_16px_40px_rgba(21,32,27,0.09)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-ink"
             >
               <IconTile icon={t.icon} tone={t.tone} size="lg" />
               <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-1.5 font-semibold text-sm text-[#15201b]">
+                <div className="flex items-center gap-1.5 font-semibold text-sm text-ink">
                   {nav[t.key]}
                   <CostBadge cost={t.cost} labels={nav} />
                 </div>
-                <p className="mt-1 text-xs leading-relaxed text-[#5b6660] line-clamp-3">{d.toolDesc[t.key]}</p>
-                <p className="mt-1.5 text-xs font-medium text-[#15201b]/70">{costNote(nav, t.key)}</p>
+                <p className="mt-1 text-xs leading-relaxed text-muted-ink line-clamp-3">{d.toolDesc[t.key]}</p>
+                <p className="mt-1.5 text-xs font-medium text-ink/70">{costNote(nav, t.key)}</p>
               </div>
-              <ArrowUpRight className="absolute right-3 top-3 w-4 h-4 text-[#8f9a94] transition-colors group-hover:text-[#15201b]" />
+              <ArrowUpRight className="absolute right-3 top-3 w-4 h-4 text-muted-ink transition-colors group-hover:text-ink" />
             </LocaleLink>
           ))}
         </div>
@@ -1155,7 +1155,7 @@ export function DashboardContent({
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
         <div className="flex items-center justify-between mb-6 gap-4">
           <div className="flex items-center gap-3">
-            <h2 data-tour="list" className="font-display text-lg font-bold text-[#15201b] flex items-center gap-2">
+            <h2 data-tour="list" className="font-display text-lg font-bold text-ink flex items-center gap-2">
               <ListMusic className="w-5 h-5 text-[#0891b2]" />
               {d.recordingList}
             </h2>
@@ -1167,8 +1167,8 @@ export function DashboardContent({
                   onClick={() => setFilter(f)}
                   className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-colors ${
                     filter === f
-                      ? "bg-[#15201b] text-white"
-                      : "bg-[#ffffff] text-[#5b6660] hover:bg-[#e6efe6]"
+                      ? "bg-ink text-white"
+                      : "bg-sheet text-muted-ink hover:bg-lilac"
                   }`}
                 >
                   {f === "all"
@@ -1184,14 +1184,14 @@ export function DashboardContent({
           <div className="flex items-center gap-2">
             {showSearch ? (
               <div className="relative flex items-center">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#5b6660]" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-ink" />
                 <input
                   type="text"
                   autoFocus
                   placeholder={d.searchPlaceholder}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-[#eef3ec] focus:bg-[#dbe7dc] rounded-full pl-9 pr-9 py-2 text-sm text-[#15201b] placeholder:text-[#5b6660] focus:outline-none transition-colors w-48"
+                  className="bg-paper-2 focus:bg-paper-3 rounded-full pl-9 pr-9 py-2 text-sm text-ink placeholder:text-muted-ink focus:outline-none transition-colors w-48"
                 />
                 <button
                   onClick={() => {
@@ -1199,7 +1199,7 @@ export function DashboardContent({
                     setSearchQuery("");
                   }}
                   aria-label={d.clearSearch}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 w-5 h-5 bg-[#e6efe6] hover:bg-[#dbe7dc] rounded-full flex items-center justify-center text-[#5b6660] transition-colors"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 w-5 h-5 bg-lilac hover:bg-paper-3 rounded-full flex items-center justify-center text-muted-ink transition-colors"
                 >
                   <X className="w-3 h-3" />
                 </button>
@@ -1208,9 +1208,9 @@ export function DashboardContent({
               <button
                 onClick={() => setShowSearch(true)}
                 aria-label={d.searchPlaceholder}
-                className="w-9 h-9 bg-[#ffffff] hover:bg-[#e6efe6] rounded-full flex items-center justify-center transition-colors shadow-[0_10px_30px_rgba(21,32,27,0.06)]"
+                className="w-9 h-9 bg-sheet hover:bg-lilac rounded-full flex items-center justify-center transition-colors shadow-[0_10px_30px_rgba(21,32,27,0.06)]"
               >
-                <Search className="w-4 h-4 text-[#5b6660]" />
+                <Search className="w-4 h-4 text-muted-ink" />
               </button>
             )}
           </div>
@@ -1218,23 +1218,23 @@ export function DashboardContent({
 
         {/* Transcription list */}
         {filteredTranscriptions.length === 0 ? (
-          <div className="bg-[#ffffff] rounded-2xl shadow-[0_10px_30px_rgba(21,32,27,0.06)] px-8 py-16 text-center">
-            <div className="w-16 h-16 bg-[#e6efe6] rounded-2xl flex items-center justify-center mx-auto mb-5">
-              <Mic className="w-8 h-8 text-[#15201b]" />
+          <div className="bg-sheet rounded-2xl shadow-[0_10px_30px_rgba(21,32,27,0.06)] px-8 py-16 text-center">
+            <div className="w-16 h-16 bg-lilac rounded-2xl flex items-center justify-center mx-auto mb-5">
+              <Mic className="w-8 h-8 text-ink" />
             </div>
-            <h3 className="font-display text-lg font-bold text-[#15201b] mb-2">
+            <h3 className="font-display text-lg font-bold text-ink mb-2">
               {d.noTranscriptions}
             </h3>
-            <p className="text-sm text-[#5b6660] max-w-xs mx-auto leading-relaxed">
+            <p className="text-sm text-muted-ink max-w-xs mx-auto leading-relaxed">
               {d.noTranscriptionsDesc}
             </p>
           </div>
         ) : (
-          <div className="bg-[#ffffff] rounded-2xl shadow-[0_10px_30px_rgba(21,32,27,0.06)] overflow-hidden">
+          <div className="bg-sheet rounded-2xl shadow-[0_10px_30px_rgba(21,32,27,0.06)] overflow-hidden">
             {flatTranscriptions.map(([date, items], groupIndex) => (
               <div key={date}>
-                <div className="px-5 py-2.5 bg-[#eef3ec]">
-                  <span className="text-xs font-semibold text-[#5b6660] uppercase tracking-widest">
+                <div className="px-5 py-2.5 bg-paper-2">
+                  <span className="text-xs font-semibold text-muted-ink uppercase tracking-widest">
                     {date}
                   </span>
                 </div>
@@ -1249,16 +1249,16 @@ export function DashboardContent({
                   return (
                     <div
                       key={t.id}
-                      className={`flex flex-wrap lg:flex-nowrap items-center gap-x-4 gap-y-2 px-4 sm:px-5 py-4 transition-colors hover:bg-[#e6efe6] ${
-                        isEven ? "bg-[#ffffff]" : "bg-[#eef3ec]"
+                      className={`flex flex-wrap lg:flex-nowrap items-center gap-x-4 gap-y-2 px-4 sm:px-5 py-4 transition-colors hover:bg-lilac ${
+                        isEven ? "bg-sheet" : "bg-paper-2"
                       }`}
                     >
                       {/* Left: text + metadata (own line below lg) */}
                       <div className="w-full lg:w-auto lg:flex-1 min-w-0">
-                        <p className="text-sm text-[#15201b] line-clamp-1 font-medium sinhala-text leading-snug">
+                        <p className="text-sm text-ink line-clamp-1 font-medium sinhala-text leading-snug">
                           {t.transcription_text}
                         </p>
-                        <p className="text-xs text-[#5b6660] mt-0.5 flex items-center gap-1 flex-wrap">
+                        <p className="text-xs text-muted-ink mt-0.5 flex items-center gap-1 flex-wrap">
                           {new Date(t.created_at).toLocaleTimeString("en-US", {
                             hour: "numeric",
                             minute: "2-digit",
@@ -1275,7 +1275,7 @@ export function DashboardContent({
                             </span>
                           )}
                           {t.is_conversation && (
-                            <span className="inline-flex items-center bg-[#e6efe6] text-[#15201b] text-[10px] font-semibold px-2 py-0.5 rounded-full">
+                            <span className="inline-flex items-center bg-lilac text-ink text-[10px] font-semibold px-2 py-0.5 rounded-full">
                               {d.badgeConversation}
                             </span>
                           )}
@@ -1288,7 +1288,7 @@ export function DashboardContent({
                       </div>
 
                       {/* Center: duration */}
-                      <div className="shrink-0 text-xs text-[#5b6660] font-mono tabular-nums lg:w-14 lg:text-center">
+                      <div className="shrink-0 text-xs text-muted-ink font-mono tabular-nums lg:w-14 lg:text-center">
                         {formatDuration(t.audio_duration_seconds)}
                       </div>
 
@@ -1297,7 +1297,7 @@ export function DashboardContent({
                         <button
                           onClick={() => setViewTranscription(t)}
                           title={d.view}
-                          className="flex items-center gap-1.5 bg-[#e6efe6] hover:bg-[#dbe7dc] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
+                          className="flex items-center gap-1.5 bg-lilac hover:bg-paper-3 text-ink rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                         >
                           <Eye className="w-4 h-4 text-[#0891b2]" />
                           <span className="hidden lg:inline">{d.view}</span>
@@ -1306,7 +1306,7 @@ export function DashboardContent({
                         <button
                           onClick={() => openEdit(t)}
                           title={d.edit}
-                          className="flex items-center gap-1.5 bg-[#e6efe6] hover:bg-[#dbe7dc] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
+                          className="flex items-center gap-1.5 bg-lilac hover:bg-paper-3 text-ink rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                         >
                           <Pencil className="w-4 h-4 text-[#7c3aed]" />
                           <span className="hidden lg:inline">{d.edit}</span>
@@ -1316,7 +1316,7 @@ export function DashboardContent({
                         {translatingId === t.id ? (
                           <button
                             disabled
-                            className="flex items-center gap-1.5 bg-[#e6efe6] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold opacity-60 cursor-not-allowed"
+                            className="flex items-center gap-1.5 bg-lilac text-ink rounded-full px-3 py-1.5 text-xs font-semibold opacity-60 cursor-not-allowed"
                           >
                             <Loader2 className="w-3.5 h-3.5 animate-spin" />
                             <span className="hidden lg:inline">{d.translating}</span>
@@ -1325,7 +1325,7 @@ export function DashboardContent({
                           <button
                             onClick={() => setTranslateTarget(t)}
                             title={t.english_translation ? d.retranslate : d.translate}
-                            className="flex items-center gap-1.5 bg-[#e6efe6] hover:bg-[#dbe7dc] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
+                            className="flex items-center gap-1.5 bg-lilac hover:bg-paper-3 text-ink rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                           >
                             <Globe className="w-4 h-4 text-[#ea8a00]" />
                             <span className="hidden lg:inline">
@@ -1337,7 +1337,7 @@ export function DashboardContent({
                         <button
                           onClick={() => handleCopy(t.transcription_text, t.id)}
                           title={d.copy}
-                          className="flex items-center gap-1.5 bg-[#e6efe6] hover:bg-[#dbe7dc] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
+                          className="flex items-center gap-1.5 bg-lilac hover:bg-paper-3 text-ink rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                         >
                           {copiedId === t.id ? (
                             <Check className="w-3.5 h-3.5 text-green-600" />
@@ -1380,16 +1380,16 @@ export function DashboardContent({
           onClick={() => setViewTranscription(null)}
         >
           <div
-            className="bg-[#ffffff] rounded-3xl shadow-[0_24px_64px_rgba(21,32,27,0.18)] w-full max-w-2xl max-h-[80vh] flex flex-col overflow-hidden"
+            className="bg-sheet rounded-3xl shadow-[0_24px_64px_rgba(21,32,27,0.18)] w-full max-w-2xl max-h-[80vh] flex flex-col overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-[#eef3ec]">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-paper-2">
               <div>
-                <h2 className="font-display text-lg font-bold text-[#15201b]">
+                <h2 className="font-display text-lg font-bold text-ink">
                   {d.viewTitle}
                 </h2>
-                <p className="text-xs text-[#5b6660] mt-0.5">
+                <p className="text-xs text-muted-ink mt-0.5">
                   {new Date(viewTranscription.created_at).toLocaleString("en-US", {
                     month: "long",
                     day: "numeric",
@@ -1408,9 +1408,9 @@ export function DashboardContent({
               />
               <button
                 onClick={() => setViewTranscription(null)}
-                className="w-9 h-9 rounded-full bg-[#eef3ec] hover:bg-[#e6efe6] flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-paper-2 hover:bg-lilac flex items-center justify-center transition-colors"
               >
-                <X className="w-4 h-4 text-[#5b6660]" />
+                <X className="w-4 h-4 text-muted-ink" />
               </button>
               </div>
             </div>
@@ -1419,14 +1419,14 @@ export function DashboardContent({
             <div
               className={`flex-1 overflow-y-auto px-6 py-5 grid grid-cols-1 gap-6 ${
                 viewTranscription.english_translation
-                  ? "sm:grid-cols-2 sm:gap-8 sm:divide-x divide-[#eef3ec]"
+                  ? "sm:grid-cols-2 sm:gap-8 sm:divide-x divide-paper-2"
                   : ""
               }`}
             >
               {/* Sinhala */}
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-xs font-semibold text-[#5b6660] uppercase tracking-widest">
+                  <h3 className="text-xs font-semibold text-muted-ink uppercase tracking-widest">
                     {d.sinhala}
                   </h3>
                   <button
@@ -1437,7 +1437,7 @@ export function DashboardContent({
                       )
                     }
                     title={d.copy}
-                    className="flex items-center gap-1.5 bg-[#e6efe6] hover:bg-[#dbe7dc] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
+                    className="flex items-center gap-1.5 bg-lilac hover:bg-paper-3 text-ink rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                   >
                     {copiedId === viewTranscription.id + "-si" ? (
                       <Check className="w-3.5 h-3.5 text-green-600" />
@@ -1456,7 +1456,7 @@ export function DashboardContent({
               {viewTranscription.english_translation && (
                 <div className="sm:pl-8">
                   <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-xs font-semibold text-[#5b6660] uppercase tracking-widest">
+                    <h3 className="text-xs font-semibold text-muted-ink uppercase tracking-widest">
                       {d.english}
                     </h3>
                     <button
@@ -1467,7 +1467,7 @@ export function DashboardContent({
                         )
                       }
                       title={d.copy}
-                      className="flex items-center gap-1.5 bg-[#e6efe6] hover:bg-[#dbe7dc] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
+                      className="flex items-center gap-1.5 bg-lilac hover:bg-paper-3 text-ink rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                     >
                       {copiedId === viewTranscription.id + "-en" ? (
                         <Check className="w-3.5 h-3.5 text-green-600" />
@@ -1485,15 +1485,15 @@ export function DashboardContent({
             </div>
 
             {/* Footer */}
-            <div className="px-6 py-3 border-t border-[#eef3ec] flex items-center justify-between">
-              <span className="text-xs text-[#5b6660]">
+            <div className="px-6 py-3 border-t border-paper-2 flex items-center justify-between">
+              <span className="text-xs text-muted-ink">
                 {d.charCount.replace(
                   "{count}",
                   String(viewTranscription.transcription_text.length)
                 )}
               </span>
               {viewTranscription.audio_duration_seconds && (
-                <span className="text-xs text-[#5b6660] font-mono">
+                <span className="text-xs text-muted-ink font-mono">
                   {formatDuration(viewTranscription.audio_duration_seconds)}
                 </span>
               )}
@@ -1510,38 +1510,38 @@ export function DashboardContent({
           onClick={() => !isSaving && closeEditModal()}
         >
           <div
-            className="bg-[#ffffff] rounded-3xl shadow-[0_24px_64px_rgba(21,32,27,0.18)] w-full max-w-5xl h-[92vh] sm:h-[88vh] flex flex-col overflow-hidden"
+            className="bg-sheet rounded-3xl shadow-[0_24px_64px_rgba(21,32,27,0.18)] w-full max-w-5xl h-[92vh] sm:h-[88vh] flex flex-col overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-[#eef3ec]">
-              <h2 className="font-display text-lg font-bold text-[#15201b]">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-paper-2">
+              <h2 className="font-display text-lg font-bold text-ink">
                 {d.editTitle}
               </h2>
               <button
                 onClick={() => !isSaving && closeEditModal()}
-                className="w-9 h-9 rounded-full bg-[#eef3ec] hover:bg-[#e6efe6] flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-paper-2 hover:bg-lilac flex items-center justify-center transition-colors"
                 disabled={isSaving}
               >
-                <X className="w-4 h-4 text-[#5b6660]" />
+                <X className="w-4 h-4 text-muted-ink" />
               </button>
             </div>
 
             {/* Two-pane editor */}
-            <div className="flex flex-col sm:flex-row flex-1 overflow-hidden divide-y sm:divide-y-0 sm:divide-x divide-[#eef3ec] min-h-0">
+            <div className="flex flex-col sm:flex-row flex-1 overflow-hidden divide-y sm:divide-y-0 sm:divide-x divide-paper-2 min-h-0">
               {/* Sinhala pane */}
               <div className="flex flex-col flex-1 overflow-hidden min-h-0">
                 <div className="flex items-center justify-between px-4 pt-3 pb-1 shrink-0">
-                  <span className="text-xs font-semibold text-[#5b6660] uppercase tracking-widest">
+                  <span className="text-xs font-semibold text-muted-ink uppercase tracking-widest">
                     {d.sinhala}
                   </span>
                   <div className="flex items-center gap-3">
-                    <span className="text-xs text-[#5b6660]">
+                    <span className="text-xs text-muted-ink">
                       {d.charCount.replace("{count}", String(editText.length))}
                     </span>
                     <button
                       onClick={() => setEditText(editTranscription.transcription_text)}
-                      className="text-xs text-[#5b6660] hover:text-[#15201b] underline"
+                      className="text-xs text-muted-ink hover:text-ink underline"
                     >
                       Reset
                     </button>
@@ -1568,11 +1568,11 @@ export function DashboardContent({
               {/* English pane */}
               <div className="flex flex-col flex-1 overflow-hidden min-h-0">
                 <div className="flex items-center justify-between px-4 pt-3 pb-1 shrink-0">
-                  <span className="text-xs font-semibold text-[#5b6660] uppercase tracking-widest">
+                  <span className="text-xs font-semibold text-muted-ink uppercase tracking-widest">
                     {d.english}
                   </span>
                   <div className="flex items-center gap-3">
-                    <span className="text-xs text-[#5b6660]">
+                    <span className="text-xs text-muted-ink">
                       {d.charCount.replace("{count}", String(editEnglishText.length))}
                     </span>
                     {editTranscription.english_translation && (
@@ -1580,7 +1580,7 @@ export function DashboardContent({
                         onClick={() =>
                           setEditEnglishText(editTranscription.english_translation!)
                         }
-                        className="text-xs text-[#5b6660] hover:text-[#15201b] underline"
+                        className="text-xs text-muted-ink hover:text-ink underline"
                       >
                         {d.resetEnglish}
                       </button>
@@ -1599,7 +1599,7 @@ export function DashboardContent({
                       {translatingId === editTranscription.id ? (
                         <button
                           disabled
-                          className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold bg-[#e6efe6] text-[#15201b] opacity-60 cursor-not-allowed"
+                          className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold bg-lilac text-ink opacity-60 cursor-not-allowed"
                         >
                           <Loader2 className="w-4 h-4 animate-spin" />
                           {d.translating}
@@ -1607,7 +1607,7 @@ export function DashboardContent({
                       ) : (
                         <button
                           onClick={() => setTranslateTarget(editTranscription)}
-                          className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold bg-gradient-to-r from-[#15201b] to-[#2c3a33] text-white hover:opacity-90 transition-opacity"
+                          className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold bg-gradient-to-r from-ink to-ink-2 text-white hover:opacity-90 transition-opacity"
                         >
                           <Globe className="w-4 h-4" />
                           {d.translate}
@@ -1620,18 +1620,18 @@ export function DashboardContent({
             </div>
 
             {/* Footer */}
-            <div className="px-6 py-4 border-t border-[#eef3ec] flex items-center justify-end gap-3 shrink-0">
+            <div className="px-6 py-4 border-t border-paper-2 flex items-center justify-end gap-3 shrink-0">
               <button
                 onClick={closeEditModal}
                 disabled={isSaving}
-                className="px-5 py-2.5 rounded-full text-sm font-semibold bg-[#e6efe6] text-[#5b6660] hover:bg-[#dbe7dc] transition-colors disabled:opacity-50"
+                className="px-5 py-2.5 rounded-full text-sm font-semibold bg-lilac text-muted-ink hover:bg-paper-3 transition-colors disabled:opacity-50"
               >
                 {d.cancel}
               </button>
               <button
                 onClick={handleSaveEdit}
                 disabled={isSaving || editText.trim() === ""}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold bg-gradient-to-r from-[#15201b] to-[#2c3a33] text-white hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold bg-gradient-to-r from-ink to-ink-2 text-white hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSaving && <Loader2 className="w-4 h-4 animate-spin" />}
                 {d.save}
@@ -1653,39 +1653,39 @@ export function DashboardContent({
             onClick={() => setTranslateTarget(null)}
           >
             <div
-              className="bg-[#ffffff] rounded-3xl shadow-[0_24px_64px_rgba(21,32,27,0.18)] w-full max-w-md overflow-hidden"
+              className="bg-sheet rounded-3xl shadow-[0_24px_64px_rgba(21,32,27,0.18)] w-full max-w-md overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="flex items-center justify-between px-6 py-4 border-b border-[#eef3ec]">
-                <h2 className="font-display text-lg font-bold text-[#15201b]">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-paper-2">
+                <h2 className="font-display text-lg font-bold text-ink">
                   {d.translateConfirmTitle}
                 </h2>
                 <button
                   onClick={() => setTranslateTarget(null)}
-                  className="w-9 h-9 rounded-full bg-[#eef3ec] hover:bg-[#e6efe6] flex items-center justify-center transition-colors"
+                  className="w-9 h-9 rounded-full bg-paper-2 hover:bg-lilac flex items-center justify-center transition-colors"
                 >
-                  <X className="w-4 h-4 text-[#5b6660]" />
+                  <X className="w-4 h-4 text-muted-ink" />
                 </button>
               </div>
 
               {/* Body */}
               <div className="px-6 py-5 space-y-4">
-                <p className="text-sm text-[#5b6660]">
+                <p className="text-sm text-muted-ink">
                   {d.translateConfirmBody.replace("{chars}", String(charCount))}
                 </p>
-                <div className="bg-[#eef3ec] rounded-2xl px-4 py-3 space-y-3">
+                <div className="bg-paper-2 rounded-2xl px-4 py-3 space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-[#5b6660]">{d.translateCost}</span>
-                    <span className="text-sm font-bold text-[#15201b]">
+                    <span className="text-sm text-muted-ink">{d.translateCost}</span>
+                    <span className="text-sm font-bold text-ink">
                       {creditsNeeded}{" "}
                       {creditsNeeded === 1 ? dict.credits.credit : dict.credits.credits}
                     </span>
                   </div>
-                  <div className="h-px bg-[#e6efe6]" />
+                  <div className="h-px bg-lilac" />
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-[#5b6660]">{d.creditsAvailable}</span>
-                    <span className="text-sm font-bold text-[#15201b]">{credits}</span>
+                    <span className="text-sm text-muted-ink">{d.creditsAvailable}</span>
+                    <span className="text-sm font-bold text-ink">{credits}</span>
                   </div>
                 </div>
                 {!canAfford && (
@@ -1704,17 +1704,17 @@ export function DashboardContent({
               </div>
 
               {/* Footer */}
-              <div className="px-6 py-4 border-t border-[#eef3ec] flex items-center justify-end gap-3">
+              <div className="px-6 py-4 border-t border-paper-2 flex items-center justify-end gap-3">
                 <button
                   onClick={() => setTranslateTarget(null)}
-                  className="px-5 py-2.5 rounded-full text-sm font-semibold bg-[#e6efe6] text-[#5b6660] hover:bg-[#dbe7dc] transition-colors"
+                  className="px-5 py-2.5 rounded-full text-sm font-semibold bg-lilac text-muted-ink hover:bg-paper-3 transition-colors"
                 >
                   {d.cancel}
                 </button>
                 <button
                   onClick={handleTranslate}
                   disabled={!canAfford}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold bg-gradient-to-r from-[#15201b] to-[#2c3a33] text-white hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold bg-gradient-to-r from-ink to-ink-2 text-white hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   <Globe className="w-4 h-4" />
                   {d.translate}
@@ -1733,33 +1733,33 @@ export function DashboardContent({
           onClick={() => !isSubmittingFeedback && resetFeedbackState()}
         >
           <div
-            className="bg-[#ffffff] rounded-3xl shadow-[0_24px_64px_rgba(21,32,27,0.18)] w-full max-w-lg overflow-hidden"
+            className="bg-sheet rounded-3xl shadow-[0_24px_64px_rgba(21,32,27,0.18)] w-full max-w-lg overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between px-6 py-4 border-b border-[#eef3ec]">
-              <h2 className="font-display text-lg font-bold text-[#15201b]">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-paper-2">
+              <h2 className="font-display text-lg font-bold text-ink">
                 {d.feedbackTitle}
               </h2>
               <button
                 onClick={resetFeedbackState}
                 disabled={isSubmittingFeedback}
-                className="w-9 h-9 rounded-full bg-[#eef3ec] hover:bg-[#e6efe6] flex items-center justify-center transition-colors disabled:opacity-50"
+                className="w-9 h-9 rounded-full bg-paper-2 hover:bg-lilac flex items-center justify-center transition-colors disabled:opacity-50"
               >
-                <X className="w-4 h-4 text-[#5b6660]" />
+                <X className="w-4 h-4 text-muted-ink" />
               </button>
             </div>
 
             <div className="px-6 py-5 space-y-5">
-              <p className="text-sm text-[#5b6660]">{d.feedbackPrompt}</p>
+              <p className="text-sm text-muted-ink">{d.feedbackPrompt}</p>
 
               <div>
-                <p className="text-sm font-semibold text-[#15201b] mb-2">{d.feedbackRatingLabel}</p>
+                <p className="text-sm font-semibold text-ink mb-2">{d.feedbackRatingLabel}</p>
                 <div className="flex items-center gap-2">
                   {[1, 2, 3, 4, 5].map((rating) => (
                     <button
                       key={rating}
                       onClick={() => setFeedbackRating(rating)}
-                      className="w-9 h-9 rounded-full bg-[#eef3ec] hover:bg-[#e6efe6] flex items-center justify-center transition-colors"
+                      className="w-9 h-9 rounded-full bg-paper-2 hover:bg-lilac flex items-center justify-center transition-colors"
                       title={`${rating}`}
                     >
                       <Star
@@ -1775,14 +1775,14 @@ export function DashboardContent({
               </div>
 
               <div>
-                <p className="text-sm font-semibold text-[#15201b] mb-2">{d.feedbackRecommendLabel}</p>
+                <p className="text-sm font-semibold text-ink mb-2">{d.feedbackRecommendLabel}</p>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setWouldRecommend(true)}
                     className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
                       wouldRecommend === true
                         ? "bg-[#d6f5e3] text-[#0d6832]"
-                        : "bg-[#e6efe6] text-[#5b6660] hover:bg-[#dbe7dc]"
+                        : "bg-lilac text-muted-ink hover:bg-paper-3"
                     }`}
                   >
                     {d.feedbackRecommendYes}
@@ -1792,7 +1792,7 @@ export function DashboardContent({
                     className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
                       wouldRecommend === false
                         ? "bg-[#ffdad6] text-[#ba1a1a]"
-                        : "bg-[#e6efe6] text-[#5b6660] hover:bg-[#dbe7dc]"
+                        : "bg-lilac text-muted-ink hover:bg-paper-3"
                     }`}
                   >
                     {d.feedbackRecommendNo}
@@ -1802,11 +1802,11 @@ export function DashboardContent({
 
               {wouldRecommend === false && (
                 <div>
-                  <p className="text-sm font-semibold text-[#15201b] mb-2">{d.feedbackWhyNoLabel}</p>
+                  <p className="text-sm font-semibold text-ink mb-2">{d.feedbackWhyNoLabel}</p>
                   <textarea
                     value={recommendationReason}
                     onChange={(e) => setRecommendationReason(e.target.value)}
-                    className="w-full min-h-[90px] resize-y rounded-2xl bg-[#f6f8f3] focus:bg-[#eef3ec] border-0 outline-none px-4 py-3 text-[#15201b] text-sm leading-relaxed transition-colors"
+                    className="w-full min-h-[90px] resize-y rounded-2xl bg-paper focus:bg-paper-2 border-0 outline-none px-4 py-3 text-ink text-sm leading-relaxed transition-colors"
                     placeholder={d.feedbackWhyNoPlaceholder}
                     maxLength={500}
                   />
@@ -1814,29 +1814,29 @@ export function DashboardContent({
               )}
 
               <div>
-                <p className="text-sm font-semibold text-[#15201b] mb-2">{d.feedbackCommentLabel}</p>
+                <p className="text-sm font-semibold text-ink mb-2">{d.feedbackCommentLabel}</p>
                 <textarea
                   value={feedbackComment}
                   onChange={(e) => setFeedbackComment(e.target.value)}
-                  className="w-full min-h-[120px] resize-y rounded-2xl bg-[#f6f8f3] focus:bg-[#eef3ec] border-0 outline-none px-4 py-3 text-[#15201b] text-sm leading-relaxed transition-colors"
+                  className="w-full min-h-[120px] resize-y rounded-2xl bg-paper focus:bg-paper-2 border-0 outline-none px-4 py-3 text-ink text-sm leading-relaxed transition-colors"
                   placeholder={d.feedbackCommentPlaceholder}
                   maxLength={1200}
                 />
               </div>
             </div>
 
-            <div className="px-6 py-4 border-t border-[#eef3ec] flex items-center justify-end gap-3">
+            <div className="px-6 py-4 border-t border-paper-2 flex items-center justify-end gap-3">
               <button
                 onClick={resetFeedbackState}
                 disabled={isSubmittingFeedback}
-                className="px-5 py-2.5 rounded-full text-sm font-semibold bg-[#e6efe6] text-[#5b6660] hover:bg-[#dbe7dc] transition-colors disabled:opacity-50"
+                className="px-5 py-2.5 rounded-full text-sm font-semibold bg-lilac text-muted-ink hover:bg-paper-3 transition-colors disabled:opacity-50"
               >
                 {d.feedbackSkip}
               </button>
               <button
                 onClick={handleSubmitFeedback}
                 disabled={isSubmittingFeedback}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold bg-gradient-to-r from-[#15201b] to-[#2c3a33] text-white hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold bg-gradient-to-r from-ink to-ink-2 text-white hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmittingFeedback && <Loader2 className="w-4 h-4 animate-spin" />}
                 {d.feedbackSubmit}
@@ -1872,7 +1872,7 @@ function ModeSwitch({
       aria-label={label}
       onClick={() => onChange(!checked)}
       className={`relative w-11 h-6 rounded-full transition-colors shrink-0 ${
-        checked ? "bg-[#15201b]" : "bg-[#e6efe6]"
+        checked ? "bg-ink" : "bg-lilac"
       }`}
     >
       <span

@@ -44,7 +44,10 @@
     "mySubtitles": "My subtitles",
     "home": "Home",
     "menu": "Menu",
-    "creditsShort": "{count} credits"
+    "creditsShort": "{count} credits",
+    "banner": "Sinhala text to speech, {chars} characters free",
+    "bannerLink": "Try it",
+    "bannerShort": "{chars} free characters of text to speech"
   },
   "landing": {
     "heroSubtitle": "HelaVoice turns Sinhala speech into text you can edit and download. Record in your browser or upload an audio file, and pay with credits, with no subscription.",
@@ -67,11 +70,11 @@
     "creditsNeverExpire": "credits never expire",
     "credits": "credits",
     "mostPopular": "Most popular",
-    "allAudioFormats": "All audio formats",
+    "allAudioFormats": "MP3, M4A, WAV, OGG, FLAC and WebM",
     "startFree": "Start free",
     "guideIntro": "Prefer a step-by-step tutorial?",
     "guideLink": "How to transcribe Sinhala audio to text",
-    "footerDesc": "Professional Sinhala speech-to-text powered by advanced AI.",
+    "footerDesc": "Sinhala voice to text, subtitles and text to speech, in your browser.",
     "footerContact": "Need help? Email us at",
     "footerProduct": "Product",
     "footerFeatures": "Features",
@@ -148,7 +151,7 @@
     "audioPageIntro": "Have a recording or voice note instead?",
     "audioPageLink": "Use our Sinhala audio to text converter",
     "h1": "Sinhala voice to text and subtitles",
-    "heroLead": "Upload a recording or speak into your browser and get Sinhala text you can edit and download. Four of our tools are free and need no account.",
+    "heroLead": "Record or upload Sinhala audio. Get text you can edit and download.",
     "heroFactRate": "1 credit = {chunkMin} minutes of audio",
     "heroPrimaryFree": "Start transcribing free",
     "heroPrimary": "Start transcribing",
@@ -175,7 +178,50 @@
     "closeTitle": "Transcribe your first recording",
     "closeLeadFree": "Sign up and get {count} free credits. No card needed.",
     "closeLead": "Buy credits once and use them whenever you need them.",
-    "perCreditPrice": "${price} a credit"
+    "perCreditPrice": "${price} a credit",
+    "mockAudio": "Your recording",
+    "mockText": "Sinhala text",
+    "mockCredit": "1 credit",
+    "formatsTitle": "Files in, text out",
+    "formatsLead": "Bring the recording you already have. Take the text wherever it needs to go.",
+    "formatsIn": "You bring",
+    "formatsOut": "You get",
+    "formatsInItems": [
+      {
+        "dt": "Audio files",
+        "dd": "MP3, M4A, WAV, OGG, FLAC or WebM, up to {mb} MB"
+      },
+      {
+        "dt": "Voice notes",
+        "dd": "Saved from WhatsApp or any messaging app"
+      },
+      {
+        "dt": "Video",
+        "dd": "For subtitles, read in your browser and never uploaded"
+      }
+    ],
+    "formatsOutItems": [
+      {
+        "dt": "Transcripts",
+        "dd": "PDF, Word, TXT or Markdown"
+      },
+      {
+        "dt": "Subtitles",
+        "dd": "SRT, VTT, TXT or an MP4 with the captions burned in"
+      },
+      {
+        "dt": "Speech",
+        "dd": "A WAV file from text to speech"
+      }
+    ],
+    "statUnit": "minutes",
+    "statLine": "of Sinhala audio transcribed for {price}, with the {pack} pack.",
+    "thPack": "Pack",
+    "thCredits": "Credits",
+    "thTranscription": "Transcription",
+    "thPrice": "Price",
+    "cellMinutes": "up to {min} min",
+    "footerStatement": "Speak. Convert. Transcribe."
   },
   "auth": {
     "logInTitle": "Log In",

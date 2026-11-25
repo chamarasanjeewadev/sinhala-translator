@@ -90,7 +90,7 @@ export function VideoUploader({ onFileSelected, disabled }: VideoUploaderProps) 
         onClick={() => inputRef.current?.click()}
       >
         <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 bg-gradient-to-br from-[#15201b] to-[#2c3a33] rounded-full flex items-center justify-center">
+          <div className="w-16 h-16 bg-gradient-to-br from-ink to-ink-2 rounded-full flex items-center justify-center">
             <Clapperboard className="h-8 w-8 text-ink" />
           </div>
           <div>

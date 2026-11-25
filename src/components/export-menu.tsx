@@ -103,7 +103,7 @@ export function ExportMenu({
         title={labels.download}
         aria-haspopup="menu"
         aria-expanded={open}
-        className="flex items-center gap-1.5 bg-[#e6efe6] hover:bg-[#dbe7dc] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
+        className="flex items-center gap-1.5 bg-lilac hover:bg-paper-3 text-ink rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
       >
         <Download className="w-3.5 h-3.5" />
         <span className={compact ? "hidden sm:inline" : ""}>{labels.download}</span>
@@ -116,7 +116,7 @@ export function ExportMenu({
             ref={menuRef}
             role="menu"
             style={{ top: pos.top, right: pos.right }}
-            className="fixed z-[60] min-w-[180px] rounded-2xl bg-white p-1.5 shadow-[0_12px_32px_rgba(21,32,27,0.16)] border border-[#eef3ec]"
+            className="fixed z-[60] min-w-[180px] rounded-2xl bg-white p-1.5 shadow-[0_12px_32px_rgba(21,32,27,0.16)] border border-paper-2"
           >
             {items.map(({ format, label, icon: Icon }) => (
               <button
@@ -125,12 +125,12 @@ export function ExportMenu({
                 type="button"
                 disabled={busy !== null}
                 onClick={() => run(format)}
-                className="w-full flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-[#15201b] hover:bg-[#eef3ec] disabled:opacity-60 text-left"
+                className="w-full flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-ink hover:bg-paper-2 disabled:opacity-60 text-left"
               >
                 {busy === format ? (
-                  <Loader2 className="w-4 h-4 animate-spin text-[#15201b]" />
+                  <Loader2 className="w-4 h-4 animate-spin text-ink" />
                 ) : (
-                  <Icon className="w-4 h-4 text-[#15201b]" />
+                  <Icon className="w-4 h-4 text-ink" />
                 )}
                 {label}
               </button>

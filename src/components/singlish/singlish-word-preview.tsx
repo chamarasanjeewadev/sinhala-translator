@@ -22,14 +22,14 @@ export function SinglishWordPreview({
     >
       {pending ? (
         <>
-          <code className="font-mono text-[#5b6660] truncate">{pending.roman}</code>
-          <span className="text-[#5b6660]/60">→</span>
-          <span className="sinhala-text text-base font-semibold text-[#15201b] truncate">
+          <code className="font-mono text-muted-ink truncate">{pending.roman}</code>
+          <span className="text-muted-ink/60">→</span>
+          <span className="sinhala-text text-base font-semibold text-ink truncate">
             {pending.rendered}
           </span>
         </>
       ) : (
-        <span className="text-[#5b6660]/80 truncate">{idleHint}</span>
+        <span className="text-muted-ink/80 truncate">{idleHint}</span>
       )}
     </div>
   );
