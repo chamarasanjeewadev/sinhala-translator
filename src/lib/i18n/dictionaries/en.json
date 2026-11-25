@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Sinhala Voice to Text & Speech to Text | HelaVoice.lk",
-    "description": "Sinhala voice to text and speech to text with AI. Record or upload a voice note, meeting or interview and get an accurate Sinhala transcript in seconds."
+    "description": "Sinhala voice to text and speech to text. Record or upload a voice note, meeting or interview and get an editable Sinhala transcript you can copy or download."
   },
   "navbar": {
     "dashboard": "Dashboard",
@@ -349,7 +349,7 @@
       "listTitle": "Your transcripts",
       "listBody": "Every transcript is saved here. View it, Edit the text, Translate it to English, Copy it, Download as PDF, Word or text, or Delete it. Filter by day or search.",
       "toolsTitle": "Your tools",
-      "toolsBody": "Beyond transcription, HelaVoice has five more tools. Let's look at each one.",
+      "toolsBody": "Beyond transcription, HelaVoice has more tools. Let's look at each one.",
       "helpTitle": "Need this again?",
       "helpBody": "Press this button any time to replay the tour. Questions? Message us on WhatsApp from the green button."
     },
@@ -1138,8 +1138,6 @@
       "play": "Play",
       "pause": "Pause",
       "seek": "Seek",
-      "female": "Woman",
-      "male": "Man",
       "noCreditsBody": "{credits} credits for {price} cover about {chars} characters of speech. Credits never expire.",
       "buyStarter": "Buy {credits} credits for {price}",
       "seeAllPrices": "See all prices"
@@ -1152,44 +1150,7 @@
       "Puck": "Upbeat",
       "Charon": "Informative",
       "Orus": "Firm",
-      "Achird": "Friendly",
-      "Achernar": "Soft",
-      "Vindemiatrix": "Gentle",
-      "Zephyr": "Bright",
-      "Erinome": "Clear"
-    },
-    "myVoice": {
-      "title": "Your own voice",
-      "subtitle": "Record about 20 seconds and HelaVoice speaks any Sinhala text in your voice.",
-      "card": "My voice",
-      "cardSub": "Made from your recording",
-      "create": "Create my voice",
-      "redo": "Record again",
-      "remove": "Delete my voice",
-      "removeConfirm": "Delete your voice? You can record a new one any time.",
-      "removed": "Your voice was deleted.",
-      "help": "Use a quiet room and the same microphone for both recordings. Speak naturally, at your normal pace.",
-      "step1": "1. Read this aloud ({min}–{max} seconds)",
-      "passage": "ආයුබෝවන්! අද දවස ඔබට සුබදායක වේවා. ශ්‍රී ලංකාව ඉන්දියන් සාගරයේ පිහිටි, හරිත පැහැති, අලංකාර දිවයිනකි. උදෑසන හිරු එළිය සමඟ ගස්වල කුරුල්ලන් ගී ගයයි. පොඩි දරුවන් පාසල් යන අතර, වෙළෙන්දෝ වෙළඳපොළට පැමිණෙති. අපි ඉතා සන්සුන්ව, සාමයෙන් හා සතුටින් ජීවත් වෙමු.",
-      "step2": "2. Now read this sentence exactly (in English)",
-      "record": "Record",
-      "stop": "Stop",
-      "recordAgain": "Record again",
-      "processing": "Processing…",
-      "agree": "This is my own voice and I am an adult. I agree that Google may use my recording to create a synthetic copy of my voice. HelaVoice does not keep the recordings, and I can delete my voice at any time.",
-      "save": "Create my voice",
-      "saving": "Creating your voice… this can take up to a minute",
-      "cancel": "Cancel",
-      "created": "Your voice is ready and selected.",
-      "tooShort": "That was too short. Please record at least {min} seconds.",
-      "micError": "We couldn't use your microphone. Please allow microphone access and try again.",
-      "rejected": "We couldn't verify the recording. Read the sentence exactly, use the same microphone for both, and use your real voice (no edited or computer-made audio).",
-      "notAllowed": "Your own voice unlocks after your first credit purchase.",
-      "capacity": "Own-voice slots are full right now. Please try again later.",
-      "gone": "Your voice expired after a year without use. Please record it again.",
-      "loginNeeded": "Log in to create your own voice",
-      "failed": "Could not complete that. Please try again.",
-      "buyCredits": "Buy credits"
+      "Achird": "Friendly"
     },
     "faqEyebrow": "FAQ",
     "faqTitle": "Sinhala text to speech — common questions",

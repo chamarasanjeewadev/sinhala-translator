@@ -465,7 +465,7 @@ export function TtsTool({
                   <PricingBuyButton
                     packageId={STARTER.id}
                     label={l.buyStarter.replace("{credits}", String(STARTER.credits)).replace("{price}", STARTER.priceDisplay)}
-                    className={`${pill} hero-primary-button text-white disabled:opacity-60`}
+                    className={`${pill} hero-primary-button text-white`}
                   />
                   <Link href={pricingHref} className="font-semibold text-ink underline underline-offset-4 hover:text-ink/70">
                     {l.seeAllPrices}

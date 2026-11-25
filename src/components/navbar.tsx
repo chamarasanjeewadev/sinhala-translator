@@ -243,9 +243,10 @@ export function Navbar() {
     <div className="sticky top-0 z-50 w-full">
       <header className="border-b border-ink/10 bg-[#f3f7f2]/95 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-4 sm:px-6 lg:px-8">
-          <LocaleLink href="/" className="flex shrink-0 items-center gap-2.5">
+          <LocaleLink href="/" aria-label="HelaVoice.lk" className="flex shrink-0 items-center gap-2.5">
             <Image src="/logo.png" alt="" width={32} height={32} className="h-8 w-8 rounded-lg object-cover" />
-            <span className="font-display text-[17px] font-bold tracking-tight text-ink">HelaVoice.lk</span>
+            {/* Signed in, the credits chip needs the room on small phones; the logo stays. */}
+            <span className={`font-display text-[17px] font-bold tracking-tight text-ink ${user ? "hidden min-[420px]:inline" : ""}`}>HelaVoice.lk</span>
           </LocaleLink>
 
           {/* Desktop: what you can use on the left, your account on the right */}

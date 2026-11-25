@@ -802,7 +802,7 @@ export function DashboardContent({
               </span>
             </LocaleLink>
 
-            <nav className="hidden sm:flex items-center gap-1">
+            <nav className="hidden lg:flex items-center gap-1">
               <LocaleLink
                 href="/"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
@@ -957,7 +957,7 @@ export function DashboardContent({
                     <PricingBuyButton
                       packageId={STARTER.id}
                       label={fill(d.buyStarter, { credits: STARTER.credits, price: STARTER.priceDisplay })}
-                      className="inline-flex h-11 items-center justify-center rounded-full bg-[#15201b] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#2c3a33] disabled:opacity-60"
+                      className="inline-flex h-11 items-center justify-center rounded-full bg-[#15201b] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#2c3a33]"
                     />
                     <LocaleLink href="/pricing" className="text-sm font-semibold text-[#15201b] underline underline-offset-4 hover:opacity-80">
                       {d.seeAllPrices}
@@ -1249,12 +1249,12 @@ export function DashboardContent({
                   return (
                     <div
                       key={t.id}
-                      className={`flex flex-wrap sm:flex-nowrap items-center gap-x-4 gap-y-2 px-4 sm:px-5 py-4 transition-colors hover:bg-[#e6efe6] ${
+                      className={`flex flex-wrap lg:flex-nowrap items-center gap-x-4 gap-y-2 px-4 sm:px-5 py-4 transition-colors hover:bg-[#e6efe6] ${
                         isEven ? "bg-[#ffffff]" : "bg-[#eef3ec]"
                       }`}
                     >
-                      {/* Left: text + metadata (full width on phones) */}
-                      <div className="w-full sm:w-auto sm:flex-1 min-w-0">
+                      {/* Left: text + metadata (own line below lg) */}
+                      <div className="w-full lg:w-auto lg:flex-1 min-w-0">
                         <p className="text-sm text-[#15201b] line-clamp-1 font-medium sinhala-text leading-snug">
                           {t.transcription_text}
                         </p>
@@ -1288,7 +1288,7 @@ export function DashboardContent({
                       </div>
 
                       {/* Center: duration */}
-                      <div className="shrink-0 text-xs text-[#5b6660] font-mono tabular-nums sm:w-14 sm:text-center">
+                      <div className="shrink-0 text-xs text-[#5b6660] font-mono tabular-nums lg:w-14 lg:text-center">
                         {formatDuration(t.audio_duration_seconds)}
                       </div>
 
@@ -1300,7 +1300,7 @@ export function DashboardContent({
                           className="flex items-center gap-1.5 bg-[#e6efe6] hover:bg-[#dbe7dc] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                         >
                           <Eye className="w-4 h-4 text-[#0891b2]" />
-                          <span className="hidden sm:inline">{d.view}</span>
+                          <span className="hidden lg:inline">{d.view}</span>
                         </button>
 
                         <button
@@ -1309,7 +1309,7 @@ export function DashboardContent({
                           className="flex items-center gap-1.5 bg-[#e6efe6] hover:bg-[#dbe7dc] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                         >
                           <Pencil className="w-4 h-4 text-[#7c3aed]" />
-                          <span className="hidden sm:inline">{d.edit}</span>
+                          <span className="hidden lg:inline">{d.edit}</span>
                         </button>
 
                         {/* Translate button */}
@@ -1319,7 +1319,7 @@ export function DashboardContent({
                             className="flex items-center gap-1.5 bg-[#e6efe6] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold opacity-60 cursor-not-allowed"
                           >
                             <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                            <span className="hidden sm:inline">{d.translating}</span>
+                            <span className="hidden lg:inline">{d.translating}</span>
                           </button>
                         ) : (
                           <button
@@ -1328,7 +1328,7 @@ export function DashboardContent({
                             className="flex items-center gap-1.5 bg-[#e6efe6] hover:bg-[#dbe7dc] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                           >
                             <Globe className="w-4 h-4 text-[#ea8a00]" />
-                            <span className="hidden sm:inline">
+                            <span className="hidden lg:inline">
                               {t.english_translation ? d.retranslate : d.translate}
                             </span>
                           </button>
@@ -1344,7 +1344,7 @@ export function DashboardContent({
                           ) : (
                             <Copy className="w-4 h-4 text-[#16a34a]" />
                           )}
-                          <span className="hidden sm:inline">{d.copy}</span>
+                          <span className="hidden lg:inline">{d.copy}</span>
                         </button>
 
                         <ExportMenu
@@ -1360,7 +1360,7 @@ export function DashboardContent({
                           className="flex items-center gap-1.5 bg-[#ffdad6] hover:bg-[#ffb4ab] text-[#ba1a1a] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                         >
                           <Trash2 className="w-4 h-4" />
-                          <span className="hidden sm:inline">{d.delete}</span>
+                          <span className="hidden lg:inline">{d.delete}</span>
                         </button>
                       </div>
                     </div>
