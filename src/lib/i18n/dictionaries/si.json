@@ -47,7 +47,7 @@
     "creditsShort": "ක්‍රෙඩිට් {count}",
     "banner": "සිංහල text to speech, අකුරු {chars}ක් නොමිලේ",
     "bannerLink": "අත්හදා බලන්න",
-    "bannerShort": "text to speech අකුරු {chars}ක් නොමිලේ"
+    "bannerShort": "අකුරු {chars}ක් හඬට, නොමිලේ"
   },
   "landing": {
     "heroSubtitle": "HelaVoice සිංහල කථනය, සංස්කරණය කර බාගත හැකි පෙළ බවට හරවයි. බ්‍රවුසරයෙන් පටිගත කරන්න හෝ හඬ ගොනුවක් උඩුගත කරන්න. ක්‍රෙඩිට් වලින් ගෙවන්න, මාසික ගාස්තුවක් නැත.",
