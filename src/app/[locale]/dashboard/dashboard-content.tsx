@@ -1352,6 +1352,7 @@ export function DashboardContent({
                           source={() => exportSource(t)}
                           labels={exportLabels}
                           compact
+                          onExported={(format) => trackEvent("transcript_export", { format, where: "list" })}
                         />
 
                         <button
@@ -1404,6 +1405,7 @@ export function DashboardContent({
               <ExportMenu
                 source={() => exportSource(viewTranscription)}
                 labels={exportLabels}
+                onExported={(format) => trackEvent("transcript_export", { format, where: "viewer" })}
               />
               <button
                 onClick={() => setViewTranscription(null)}

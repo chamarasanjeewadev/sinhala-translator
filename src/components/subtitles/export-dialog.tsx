@@ -14,6 +14,7 @@ import {
 import { unicodeToFmAbhaya } from "@/lib/sinhala-legacy";
 import { getVideoCapabilities } from "@/lib/video-support";
 import { useDictionary } from "@/lib/i18n/dictionary-context";
+import { trackEvent } from "@/lib/analytics";
 
 interface ExportDialogProps {
   videoFile: File | null;
@@ -45,6 +46,7 @@ export function ExportDialog({
     a.download = `${title || "subtitles"}${name}`;
     a.click();
     URL.revokeObjectURL(url);
+    trackEvent("subtitles_export", { format: name.split(".").pop(), grouping, legacy_font: name.includes("fm-abhaya") });
     toast.success(d.exportDone);
   };
   const files: { label: string; desc: string; run: () => void }[] = [
@@ -84,6 +86,7 @@ export function ExportDialog({
       a.download = `${title || "video"}-subtitled.mp4`;
       a.click();
       URL.revokeObjectURL(url);
+      trackEvent("subtitles_export", { format: "mp4" });
       toast.success(d.exportDone);
       onClose();
     } catch (err) {
@@ -91,6 +94,7 @@ export function ExportDialog({
         toast.info(d.exportCancelled);
       } else {
         console.error("MP4 export failed:", err);
+        trackEvent("subtitles_export_failed", { format: "mp4" });
         toast.error(d.exportFailed);
       }
     } finally {

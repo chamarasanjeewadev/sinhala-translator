@@ -9,6 +9,7 @@ import {
 } from "@/lib/transcription-provider";
 import { getTranscriptionConfig } from "@/lib/app-settings";
 import { MAX_RETRIES } from "@/lib/constants";
+import { clientPlatform } from "@/lib/client-platform";
 
 // Whole-file transcription for the mobile app: one request transcribes,
 // bills and saves. Unlike the chunked web flow, timestamps come back
@@ -169,6 +170,8 @@ export async function POST(request: Request) {
       chunk_index: null,
       total_chunks: null,
       audio_seconds: Math.round(durationSeconds),
+      feature: "transcription",
+      client: clientPlatform(request.headers.get("user-agent")),
       prompt_tokens: result.usage?.promptTokens ?? null,
       output_tokens: result.usage?.outputTokens ?? null,
       thoughts_tokens: result.usage?.thoughtsTokens ?? null,

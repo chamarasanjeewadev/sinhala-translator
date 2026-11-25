@@ -14,6 +14,7 @@ import {
   SUBTITLE_CREDITS_PER_MINUTE,
 } from "@/lib/constants";
 import type { SubtitleLanguage } from "@/lib/types";
+import { clientPlatform } from "@/lib/client-platform";
 
 export async function POST(request: Request) {
   const { supabase, bearerToken } = await createClientFromRequest(request);
@@ -141,6 +142,8 @@ export async function POST(request: Request) {
       chunk_index: chunkIndex,
       total_chunks: totalChunks,
       audio_seconds: chunkDurationSec,
+      feature: "subtitles",
+      client: clientPlatform(request.headers.get("user-agent")),
       prompt_tokens: result.usage?.promptTokens ?? null,
       output_tokens: result.usage?.outputTokens ?? null,
       total_tokens: result.usage?.totalTokens ?? null,

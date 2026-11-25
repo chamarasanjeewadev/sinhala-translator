@@ -16,6 +16,7 @@ import { Timeline } from "./timeline";
 import { StylePanel } from "./style-panel";
 import { ExportDialog } from "./export-dialog";
 import { useDictionary } from "@/lib/i18n/dictionary-context";
+import { trackEvent } from "@/lib/analytics";
 import { apiErrorMessage } from "@/lib/client-error";
 import { t } from "@/lib/i18n/utils";
 import { takePendingVideo } from "@/lib/pending-video";
@@ -247,9 +248,11 @@ export function SubtitleEditor({ project, initialCredits }: SubtitleEditorProps)
         isPartial,
       });
       setGenState("idle");
+      trackEvent("subtitles_generated", { credits: usedCredits, partial: isPartial, segments: finalSegments.length });
       toast.success(isPartial ? d.generatedPartial : d.generated);
     } catch (err) {
       console.error("Subtitle generation failed:", err);
+      trackEvent("subtitles_failed", {});
       toast.error(d.generationFailed);
       setGenState("idle");
     }

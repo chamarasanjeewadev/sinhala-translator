@@ -14,6 +14,7 @@ import {
   MAX_RETRIES,
   TARGET_SAMPLE_RATE,
 } from "@/lib/constants";
+import { clientPlatform } from "@/lib/client-platform";
 
 const MAX_PREVIOUS_TAIL_CHARS = 500;
 const MAX_KNOWN_SPEAKERS = 10;
@@ -166,6 +167,8 @@ export async function POST(request: Request) {
       chunk_index: chunkIndex,
       total_chunks: totalChunks,
       audio_seconds: chunkDurationSec ?? CHUNK_DURATION_SECONDS,
+      feature: "transcription",
+      client: clientPlatform(request.headers.get("user-agent")),
       prompt_tokens: result.usage?.promptTokens ?? null,
       output_tokens: result.usage?.outputTokens ?? null,
       thoughts_tokens: result.usage?.thoughtsTokens ?? null,
