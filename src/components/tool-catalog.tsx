@@ -63,9 +63,9 @@ export const FREE_TOOLS = TOOLS.filter((t) => t.cost === "free");
 export const PAID_TOOLS = TOOLS.filter((t) => t.cost !== "free");
 
 const COST_STYLES: Record<ToolCost, string> = {
-  free: "bg-[#e3f3e8] text-[#1d6b47]",
+  free: "bg-mint text-[#1d6b47]",
   trial: "bg-[#fff1e0] text-[#9a4a16]",
-  credits: "bg-[#15201b] text-white",
+  credits: "bg-ink text-white",
 };
 
 /** The one free/paid label used everywhere a tool is listed. `labels` comes from dict.navbar. */

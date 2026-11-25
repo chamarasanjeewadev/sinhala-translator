@@ -19,7 +19,7 @@ export function PromoCodeForm({ onRedeemed }: { onRedeemed: (credits: number) =>
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="text-sm text-[#5b6660] underline hover:text-[#15201b]"
+        className="text-sm text-muted-ink underline hover:text-ink"
       >
         {d.promoHave}
       </button>
@@ -61,12 +61,12 @@ export function PromoCodeForm({ onRedeemed }: { onRedeemed: (credits: number) =>
         placeholder={d.promoPlaceholder}
         aria-label={d.promoPlaceholder}
         autoFocus
-        className="w-40 rounded-full border border-[#dbe7dc] bg-white px-4 py-2 text-sm uppercase text-[#15201b] outline-none focus:border-[#15201b]"
+        className="w-40 rounded-full border border-paper-3 bg-white px-4 py-2 text-sm uppercase text-ink outline-none focus:border-ink"
       />
       <button
         type="submit"
         disabled={loading || !code.trim()}
-        className="rounded-full bg-[#15201b] px-4 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-40"
+        className="rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-40"
       >
         {d.promoApply}
       </button>

@@ -57,7 +57,7 @@ function PaymentCompleteInner() {
   return (
     <main className="min-h-screen bg-[#f7faf5] flex items-center justify-center px-6">
       <div className="max-w-md text-center">
-        <p className="font-sans text-lg font-medium text-[#15201b] mb-4">
+        <p className="font-sans text-lg font-medium text-ink mb-4">
           {status === "success" ? "Payment complete!" : "Payment not completed."}
         </p>
         {failureMessage && (
@@ -65,7 +65,7 @@ function PaymentCompleteInner() {
             {failureMessage}
           </p>
         )}
-        <p className="font-sans text-sm text-[#5b6660] mb-6">
+        <p className="font-sans text-sm text-muted-ink mb-6">
           Returning to the HelaVoice app…
         </p>
         <a

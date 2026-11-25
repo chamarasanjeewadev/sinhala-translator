@@ -44,7 +44,9 @@
     "mySubtitles": "මගේ උපසිරැසි",
     "home": "මුල් පිටුව",
     "menu": "මෙනුව",
-    "creditsShort": "ක්‍රෙඩිට් {count}"
+    "creditsShort": "ක්‍රෙඩිට් {count}",
+    "banner": "සිංහල text to speech, අකුරු {chars}ක් නොමිලේ",
+    "bannerLink": "අත්හදා බලන්න"
   },
   "landing": {
     "heroSubtitle": "HelaVoice සිංහල කථනය, සංස්කරණය කර බාගත හැකි පෙළ බවට හරවයි. බ්‍රවුසරයෙන් පටිගත කරන්න හෝ හඬ ගොනුවක් උඩුගත කරන්න. ක්‍රෙඩිට් වලින් ගෙවන්න, මාසික ගාස්තුවක් නැත.",
@@ -71,7 +73,7 @@
     "startFree": "නොමිලේ අරඹන්න",
     "guideIntro": "පියවරෙන් පියවර මාර්ගෝපදේශයක් අවශ්‍යද?",
     "guideLink": "Sinhala audio to text පරිවර්තනය කරන ක්‍රමය",
-    "footerDesc": "ඉහළම AI තාක්ෂණය මඟින් බලගැන්වෙන වෘත්තීය මට්ටමේ සිංහල හඬ පරිවර්තන සේවාව.",
+    "footerDesc": "සිංහල හඬ වචන වලට, උපසිරැසි සහ text to speech, ඔබේ බ්‍රවුසරයෙන්ම.",
     "footerContact": "උදව් අවශ්‍යද? අපට ලියන්න:",
     "footerProduct": "නිෂ්පාදන",
     "footerFeatures": "විශේෂාංග",
@@ -148,7 +150,7 @@
     "audioPageIntro": "ඒ වෙනුවට පටිගත කිරීමක් හෝ voice note එකක් තිබේද?",
     "audioPageLink": "අපේ සිංහල audio to text converter එක භාවිත කරන්න",
     "h1": "සිංහල හඬ වචන වලට සහ උපසිරැසි",
-    "heroLead": "පටිගත කිරීමක් උඩුගත කරන්න හෝ බ්‍රවුසරයට කතා කරන්න. සංස්කරණය කර බාගත හැකි සිංහල පෙළ ලැබේ. අපේ මෙවලම් හතරක් නොමිලේ, ගිණුමක් ද අවශ්‍ය නැත.",
+    "heroLead": "සිංහල හඬ පටිගත කරන්න හෝ උඩුගත කරන්න. සංස්කරණය කර බාගත හැකි පෙළ ලබාගන්න.",
     "heroFactRate": "ක්‍රෙඩිට් 1 = ශ්‍රව්‍ය විනාඩි {chunkMin}",
     "heroPrimaryFree": "නොමිලේ වචන වලට හරවන්න",
     "heroPrimary": "වචන වලට හැරවීම අරඹන්න",
@@ -175,7 +177,50 @@
     "closeTitle": "ඔබේ පළමු පටිගත කිරීම වචන වලට හරවන්න",
     "closeLeadFree": "ලියාපදිංචි වී නොමිලේ ක්‍රෙඩිට් {count} ලබාගන්න. කාඩ්පතක් අවශ්‍ය නැත.",
     "closeLead": "ක්‍රෙඩිට් එක් වරක් මිලදී ගෙන අවශ්‍ය විටෙක භාවිත කරන්න.",
-    "perCreditPrice": "ක්‍රෙඩිට් එකකට ${price}"
+    "perCreditPrice": "ක්‍රෙඩිට් එකකට ${price}",
+    "mockAudio": "ඔබේ පටිගත කිරීම",
+    "mockText": "සිංහල පෙළ",
+    "mockCredit": "ක්‍රෙඩිට් 1",
+    "formatsTitle": "හඬ ඇතුළට, පෙළ පිටතට",
+    "formatsLead": "ඔබ සතු පටිගත කිරීම ගෙනෙන්න. පෙළ අවශ්‍ය ඕනෑම තැනකට ගෙන යන්න.",
+    "formatsIn": "ඔබ ගෙනෙන්නේ",
+    "formatsOut": "ඔබට ලැබෙන්නේ",
+    "formatsInItems": [
+      {
+        "dt": "හඬ ගොනු",
+        "dd": "MP3, M4A, WAV, OGG, FLAC හෝ WebM, MB {mb} දක්වා"
+      },
+      {
+        "dt": "Voice notes",
+        "dd": "WhatsApp හෝ ඕනෑම පණිවිඩ යෙදුමකින් සුරැකූ"
+      },
+      {
+        "dt": "වීඩියෝ",
+        "dd": "උපසිරැසි සඳහා, ඔබේ බ්‍රවුසරය තුළම කියවයි, කිසිදා උඩුගත නොකෙරේ"
+      }
+    ],
+    "formatsOutItems": [
+      {
+        "dt": "පිටපත්",
+        "dd": "PDF, Word, TXT හෝ Markdown"
+      },
+      {
+        "dt": "උපසිරැසි",
+        "dd": "SRT, VTT, TXT හෝ උපසිරැසි ඇතුළත් MP4 එකක්"
+      },
+      {
+        "dt": "කටහඬ",
+        "dd": "text to speech මඟින් WAV ගොනුවක්"
+      }
+    ],
+    "statUnit": "විනාඩි",
+    "statLine": "ක සිංහල හඬ, {pack} පැකේජයෙන් {price}කට වචන වලට.",
+    "thPack": "පැකේජය",
+    "thCredits": "ක්‍රෙඩිට්",
+    "thTranscription": "වචන වලට හැරවීම",
+    "thPrice": "මිල",
+    "cellMinutes": "විනාඩි {min} දක්වා",
+    "footerStatement": "Speak. Convert. Transcribe."
   },
   "auth": {
     "logInTitle": "ඇතුල් වන්න",

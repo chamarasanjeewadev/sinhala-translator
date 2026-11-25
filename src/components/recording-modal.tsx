@@ -309,7 +309,7 @@ export function RecordingModal({
               <button
                 onClick={handleConfirmTranscribe}
                 disabled={!analyzeResult.canProceed}
-                className="flex-1 bg-gradient-to-r from-[#15201b] to-[#2c3a33] hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-white py-4 rounded-xl font-bold transition-all shadow-lg shadow-leaf/25"
+                className="flex-1 bg-gradient-to-r from-ink to-ink-2 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-white py-4 rounded-xl font-bold transition-all shadow-lg shadow-leaf/25"
               >
                 {d.confirmTranscription}
               </button>
@@ -385,7 +385,7 @@ export function RecordingModal({
                   onClick={() => setMode("record")}
                   className={`flex-1 py-2.5 px-4 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 ${
                     mode === "record"
-                      ? "bg-gradient-to-r from-[#15201b] to-[#2c3a33] text-white shadow-sm"
+                      ? "bg-gradient-to-r from-ink to-ink-2 text-white shadow-sm"
                       : "text-ink/55 hover:text-ink"
                   }`}
                 >
@@ -398,7 +398,7 @@ export function RecordingModal({
                   onClick={() => setMode("upload")}
                   className={`flex-1 py-2.5 px-4 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 ${
                     mode === "upload"
-                      ? "bg-gradient-to-r from-[#15201b] to-[#2c3a33] text-white shadow-sm"
+                      ? "bg-gradient-to-r from-ink to-ink-2 text-white shadow-sm"
                       : "text-ink/55 hover:text-ink"
                   }`}
                 >
@@ -454,7 +454,7 @@ function ToggleRow({
         onClick={() => onChange(!checked)}
         className={`relative w-11 h-6 rounded-full transition-all shrink-0 ${
           checked
-            ? "bg-gradient-to-r from-[#15201b] to-[#2c3a33]"
+            ? "bg-gradient-to-r from-ink to-ink-2"
             : "bg-white/60"
         }`}
       >

@@ -138,7 +138,7 @@ export function SubtitlesContent({
                 }
                 className="group flex items-center gap-4 rounded-xl bg-white/60 hover:bg-white/80 border border-ink/10 p-4 cursor-pointer transition-colors"
               >
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#15201b] to-[#2c3a33] flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-ink to-ink-2 flex items-center justify-center shrink-0">
                   <Clapperboard className="w-5 h-5 text-ink" />
                 </div>
                 <div className="min-w-0 flex-1">

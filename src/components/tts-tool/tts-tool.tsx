@@ -240,7 +240,7 @@ export function TtsTool({
               }}
               className={`flex items-center gap-2 rounded-full text-left ${focus}`}
             >
-              <span className={`relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors ${singlishOn ? "bg-[#2c3a33]" : "bg-[#cdd6ce]"}`}>
+              <span className={`relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors ${singlishOn ? "bg-ink-2" : "bg-[#cdd6ce]"}`}>
                 <span className={`absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-all ${singlishOn ? "left-[18px]" : "left-0.5"}`} />
               </span>
               <span className="text-xs font-semibold">
@@ -280,7 +280,7 @@ export function TtsTool({
                     setText(ex);
                     textareaRef.current?.focus();
                   }}
-                  className={`sinhala-text max-w-full truncate rounded-full bg-mint/50 px-3.5 py-1 text-sm text-[#2c3a33] transition-colors hover:bg-mint ${focus}`}
+                  className={`sinhala-text max-w-full truncate rounded-full bg-mint/50 px-3.5 py-1 text-sm text-ink-2 transition-colors hover:bg-mint ${focus}`}
                 >
                   {ex}
                 </button>
@@ -288,10 +288,10 @@ export function TtsTool({
             </div>
           )}
 
-          {singlishOn && <SinglishWordPreview pending={pending} idleHint={l.previewIdle} className="border-t border-[#e6efe6] py-1.5" />}
-          <div className="h-1 bg-[#e6efe6]" aria-hidden>
+          {singlishOn && <SinglishWordPreview pending={pending} idleHint={l.previewIdle} className="border-t border-lilac py-1.5" />}
+          <div className="h-1 bg-lilac" aria-hidden>
             <div
-              className={`h-full transition-[width] duration-200 ${overLimit ? "bg-[#ba1a1a]" : "bg-gradient-to-r from-[#2f7d5b] to-[#f4b08f]"}`}
+              className={`h-full transition-[width] duration-200 ${overLimit ? "bg-[#ba1a1a]" : "bg-gradient-to-r from-violet-ink to-[#f4b08f]"}`}
               style={{ width: `${Math.min(100, (count / TTS_MAX_CHARS) * 100)}%` }}
             />
           </div>
@@ -380,7 +380,7 @@ export function TtsTool({
                 type="button"
                 onClick={togglePlay}
                 aria-label={playing ? l.pause : l.play}
-                className={`grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#15201b] to-[#2c3a33] text-white shadow-[0_6px_20px_rgba(143,208,176,0.5)] transition-transform hover:scale-105 ${focus}`}
+                className={`grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gradient-to-br from-ink to-ink-2 text-white shadow-[0_6px_20px_rgba(143,208,176,0.5)] transition-transform hover:scale-105 ${focus}`}
               >
                 {playing ? <Pause className="h-5 w-5 fill-current" /> : <Play className="ml-0.5 h-5 w-5 fill-current" />}
               </button>

@@ -132,20 +132,20 @@ export function OnboardingTour({
           type="button"
           onClick={onClose}
           aria-label={labels.skip}
-          className="absolute right-3 top-3 rounded-full p-1.5 text-[#5b6660] hover:bg-[#eef3ec] hover:text-[#15201b]"
+          className="absolute right-3 top-3 rounded-full p-1.5 text-muted-ink hover:bg-paper-2 hover:text-ink"
         >
           <X className="h-4 w-4" />
         </button>
         <div className="mb-3 flex items-center gap-3 pr-6">
           {step.icon && <IconTile icon={step.icon} tone={step.tone ?? "mint"} size="lg" />}
-          <h2 id="tour-title" className="font-display text-base font-bold leading-snug text-[#15201b]">
+          <h2 id="tour-title" className="font-display text-base font-bold leading-snug text-ink">
             {step.title}
           </h2>
         </div>
-        <p className="text-sm leading-relaxed text-[#5b6660]">{step.body}</p>
+        <p className="text-sm leading-relaxed text-muted-ink">{step.body}</p>
 
         <div className="mt-5 flex items-center justify-between gap-3">
-          <span className="text-xs font-medium text-[#8f9a94]">
+          <span className="text-xs font-medium text-muted-ink">
             {labels.stepOf.replace("{n}", String(i + 1)).replace("{total}", String(steps.length))}
           </span>
           <div className="flex items-center gap-2">
@@ -153,7 +153,7 @@ export function OnboardingTour({
               <button
                 type="button"
                 onClick={() => go(-1)}
-                className="rounded-full px-3.5 py-2 text-sm font-semibold text-[#5b6660] hover:bg-[#eef3ec] hover:text-[#15201b]"
+                className="rounded-full px-3.5 py-2 text-sm font-semibold text-muted-ink hover:bg-paper-2 hover:text-ink"
               >
                 {labels.back}
               </button>
@@ -161,7 +161,7 @@ export function OnboardingTour({
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-full px-3.5 py-2 text-sm font-semibold text-[#5b6660] hover:bg-[#eef3ec] hover:text-[#15201b]"
+                className="rounded-full px-3.5 py-2 text-sm font-semibold text-muted-ink hover:bg-paper-2 hover:text-ink"
               >
                 {labels.skip}
               </button>
@@ -170,7 +170,7 @@ export function OnboardingTour({
               ref={nextRef}
               type="button"
               onClick={() => go(1)}
-              className="rounded-full bg-[#15201b] px-4 py-2 text-sm font-semibold text-white hover:bg-[#2c3a33] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2f7d5b] focus-visible:ring-offset-2"
+              className="rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white hover:bg-ink-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-ink focus-visible:ring-offset-2"
             >
               {last ? labels.done : labels.next}
             </button>
@@ -180,7 +180,7 @@ export function OnboardingTour({
           {steps.map((_, n) => (
             <span
               key={n}
-              className={`h-1.5 rounded-full transition-all ${n === i ? "w-5 bg-[#15201b]" : "w-1.5 bg-[#d3dcd4]"}`}
+              className={`h-1.5 rounded-full transition-all ${n === i ? "w-5 bg-ink" : "w-1.5 bg-rule"}`}
             />
           ))}
         </div>

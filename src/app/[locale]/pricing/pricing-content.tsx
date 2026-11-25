@@ -135,7 +135,7 @@ export function PricingContent({
   };
 
   const BTN_PRIMARY =
-    "inline-flex h-11 w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-ink px-3 text-sm font-semibold text-white transition-[background-color,transform] hover:bg-[#2c3a33] active:translate-y-px disabled:opacity-60";
+    "inline-flex h-11 w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-ink px-3 text-sm font-semibold text-white transition-[background-color,transform] hover:bg-ink-2 active:translate-y-px disabled:opacity-60";
   const BTN_SECONDARY =
     "inline-flex h-11 w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-ink/15 bg-white px-3 text-sm font-semibold text-ink transition-[border-color,transform] hover:border-ink/35 active:translate-y-px disabled:opacity-60";
   const l = dict.landing;
@@ -163,7 +163,7 @@ export function PricingContent({
         {/* ── Packs ───────────────────────────────────────────────────── */}
         <div className={`hv-enter grid gap-4 sm:grid-cols-2 ${freeTier ? "lg:grid-cols-5" : "lg:grid-cols-4"}`} style={{ ["--d" as string]: ".12s" }}>
           {freeTier && (
-            <div className="flex flex-col rounded-2xl border border-ink/10 bg-[#f3f7f2] p-6">
+            <div className="flex flex-col rounded-2xl border border-ink/10 bg-paper p-6">
               <p className="text-sm font-semibold text-ink/65">{l.freeCardTitle}</p>
               <p className="mt-3 font-display text-4xl font-bold">{freeCredits}</p>
               <p className="text-sm text-ink/65">{l.credits}</p>
@@ -257,7 +257,7 @@ export function PricingContent({
           </p>
           <Link
             href={localePath("/signup", locale)}
-            className="inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-lg bg-white px-6 text-[15px] font-semibold text-ink transition-[background-color,transform] hover:bg-[#e3f3e8] active:translate-y-px"
+            className="inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-lg bg-white px-6 text-[15px] font-semibold text-ink transition-[background-color,transform] hover:bg-mint active:translate-y-px"
           >
             {freeTier ? fill(d.startFreeCount, { count: freeCredits }) : d.startPaid}
             <ArrowRight className="h-4 w-4" />
