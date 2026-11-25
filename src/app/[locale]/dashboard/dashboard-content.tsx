@@ -33,8 +33,8 @@ import {
   LayoutGrid,
 } from "lucide-react";
 import { toast } from "sonner";
-import { ToolsMenu, TOOL_LINKS } from "@/components/navbar";
-import { TOOLS, IconTile } from "@/components/tool-catalog";
+import { ToolsMenu } from "@/components/navbar";
+import { TOOLS, IconTile, CostBadge, costNote } from "@/components/tool-catalog";
 import { OnboardingTour, tourSeen, type TourStep } from "@/components/onboarding-tour";
 import { LocaleLink } from "@/components/locale-link";
 import { LanguageSwitcher } from "@/components/language-switcher";
@@ -812,12 +812,7 @@ export function DashboardContent({
                 <Captions className="w-4 h-4" />
                 {nav.subtitles}
               </LocaleLink>
-              <ToolsMenu
-                light
-                label={nav.tools}
-                newLabel={nav.new}
-                items={TOOL_LINKS.map((t) => ({ href: t.href, label: nav[t.key], isNew: t.isNew, icon: t.icon, tone: t.tone }))}
-              />
+              <ToolsMenu signedIn />
               <LocaleLink
                 href="/blog"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
@@ -1140,13 +1135,10 @@ export function DashboardContent({
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-1.5 font-semibold text-sm text-[#15201b]">
                   {nav[t.key]}
-                  {t.isNew && (
-                    <span className="rounded-full bg-red-500 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none text-white">
-                      {nav.new}
-                    </span>
-                  )}
+                  <CostBadge cost={t.cost} labels={nav} />
                 </div>
                 <p className="mt-1 text-xs leading-relaxed text-[#5b6660] line-clamp-3">{d.toolDesc[t.key]}</p>
+                <p className="mt-1.5 text-xs font-medium text-[#15201b]/70">{costNote(nav, t.key)}</p>
               </div>
               <ArrowUpRight className="absolute right-3 top-3 w-4 h-4 text-[#8f9a94] transition-colors group-hover:text-[#15201b]" />
             </LocaleLink>

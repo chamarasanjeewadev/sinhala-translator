@@ -18,8 +18,33 @@
     "singlishTool": "Sinhala Typing",
     "translate": "Translate",
     "textToSpeech": "Text to Speech",
+    "scanToText": "Scan to Text",
     "tools": "Tools",
-    "voiceTyping": "Voice Typing"
+    "voiceTyping": "Voice Typing",
+    "transcribe": "Voice to Text",
+    "costFree": "Free",
+    "costTrial": "Free to try",
+    "costCredits": "Credits",
+    "freeGroup": "Free, no account needed",
+    "paidGroup": "Paid with credits",
+    "costNote": {
+      "transcribe": "1 credit per {chunkMin} minutes of audio",
+      "subtitles": "2 credits a minute of video",
+      "textToSpeech": "700 characters free, then credits",
+      "scanToText": "3 pages free, then 1 credit a page",
+      "translate": "Typing is free, speaking uses credits",
+      "voiceTyping": "Speak and it types Sinhala",
+      "singlishTool": "Type Singlish, get Sinhala letters",
+      "qrGenerator": "QR codes with your own logo"
+    },
+    "seePrices": "See credit prices",
+    "startFree": "Start free",
+    "account": "Account",
+    "signedInAs": "Signed in as",
+    "mySubtitles": "My subtitles",
+    "home": "Home",
+    "menu": "Menu",
+    "creditsShort": "{count} credits"
   },
   "landing": {
     "badge": "AI-Powered Sinhala Transcription",
@@ -127,7 +152,7 @@
     "footerPrivacy": "Privacy",
     "footerTerms": "Terms",
     "footerSupport": "Support",
-    "footerCopyright": "© 2025 HelaVoice.lk. All rights reserved.",
+    "footerCopyright": "© {year} HelaVoice.lk. All rights reserved.",
     "footerGritTechNetwork": "GritTech network",
     "footerBuiltBy": "Built by",
     "faqEyebrow": "Frequently asked questions",
@@ -149,11 +174,11 @@
       },
       {
         "q": "Is there an online Sinhala audio to text converter?",
-        "a": "Yes. HelaVoice is an online Sinhala audio to text converter. Upload an audio file (MP3, M4A, WAV, OGG, FLAC or WebM) or record in your browser, and you get an editable Sinhala transcript. There is nothing to install, and 1 minute of audio uses 1 credit."
+        "a": "Yes. HelaVoice is an online Sinhala audio to text converter. Upload an audio file (MP3, M4A, WAV, OGG, FLAC or WebM) or record in your browser, and you get an editable Sinhala transcript. There is nothing to install, and 1 credit covers up to {chunkMin} minutes of audio."
       },
       {
         "q": "What is the difference between Sinhala voice typing and transcription?",
-        "a": "Voice typing writes your words live while you speak into the microphone, and it is free on our Sinhala voice typing page. Transcription turns a recording you already have, such as a voice note, meeting or interview, into text, and uses 1 credit per minute of audio."
+        "a": "Voice typing writes your words live while you speak into the microphone, and it is free on our Sinhala voice typing page. Transcription turns a recording you already have, such as a voice note, meeting or interview, into text, and uses 1 credit per {chunkMin} minutes of audio."
       },
       {
         "q": "Can HelaVoice turn Sinhala text into speech?",
@@ -173,7 +198,7 @@
       },
       {
         "q": "How much does HelaVoice cost?",
-        "a": "HelaVoice charges by the minute: 1 minute of audio uses 1 credit, and credits never expire. Credit packs start at {starterPrice} for {starterCredits} credits, with no subscription."
+        "a": "HelaVoice charges by length: 1 credit covers up to {chunkMin} minutes of audio, and credits never expire. Credit packs start at {starterPrice} for {starterCredits} credits, with no subscription."
       },
       {
         "q": "What audio formats and file sizes are supported?",
@@ -184,10 +209,40 @@
     "footerEnSi": "English to Sinhala",
     "footerSiEn": "Sinhala to English",
     "footerTts": "Sinhala Text to Speech",
+    "footerScan": "Sinhala Scan to Text",
     "footerVoiceTyping": "Sinhala Voice Typing",
     "footerAudioToText": "Sinhala Audio to Text",
     "audioPageIntro": "Have a recording or voice note instead?",
-    "audioPageLink": "Use our Sinhala audio to text converter"
+    "audioPageLink": "Use our Sinhala audio to text converter",
+    "h1": "Sinhala voice to text and subtitles",
+    "heroLead": "Upload a recording or speak into your browser and get Sinhala text you can edit and download. Four of our tools are free and need no account.",
+    "heroFactRate": "1 credit = {chunkMin} minutes of audio",
+    "heroPrimaryFree": "Start transcribing free",
+    "heroPrimary": "Start transcribing",
+    "heroSecondary": "See the free tools",
+    "mockFile": "voice-note-03.m4a",
+    "mockDone": "Transcribed",
+    "mockCost": "{count} credits used",
+    "mockCopy": "Copy",
+    "mockDownload": "Download",
+    "toolsTitle": "Which HelaVoice tools are free",
+    "toolsLead": "The tools on the left cost nothing and work without signing up. The tools on the right are paid from your credit balance.",
+    "toolsTranslateNote": "In the translator, typed text is free. Speaking into it uses 1 credit a clip and needs an account.",
+    "toolsSiEn": "Sinhala to English",
+    "howHeading": "How transcription works",
+    "pricesTitle": "Credit prices",
+    "pricesLead": "Buy a pack once and use it on any paid tool. Credits never expire and there is no subscription.",
+    "buyPack": "Buy {count} credits",
+    "upToMb": "Files up to {mb} MB",
+    "allTools": "Works on every paid tool",
+    "freeCardTitle": "Free account",
+    "freeCardNote": "No card needed",
+    "faqHeading": "Questions about HelaVoice",
+    "closeTitleFree": "Transcribe your first recording free",
+    "closeTitle": "Transcribe your first recording",
+    "closeLeadFree": "Sign up and get {count} free credits. No card needed.",
+    "closeLead": "Buy credits once and use them whenever you need them.",
+    "perCreditPrice": "${price} a credit"
   },
   "auth": {
     "logInTitle": "Log In",
@@ -338,6 +393,7 @@
       "singlishTool": "Type Sinhala with English letters (mama → මම) and copy it anywhere.",
       "translate": "Translate between English and Sinhala, and listen to the result.",
       "textToSpeech": "Turn Sinhala text into natural speech and download the audio.",
+      "scanToText": "Photograph or scan a Sinhala page and get editable text back.",
       "qrGenerator": "Make a QR code with your logo and colours, free.",
       "voiceTyping": "Speak in Sinhala and watch your words appear as text, free."
     },
@@ -376,7 +432,25 @@
     "redirecting": "Redirecting...",
     "paymentCancelled": "Payment was cancelled.",
     "checkoutError": "Failed to start checkout",
-    "genericError": "Something went wrong. Please try again."
+    "genericError": "Something went wrong. Please try again.",
+    "toolsTitle": "What is free and what uses credits",
+    "toolsLead": "Four tools are free with no account. The others are paid from your credit balance at the rates below.",
+    "h1": "HelaVoice credit prices",
+    "lead": "Buy a pack once and spend it on any paid tool. Prices are in US dollars, credits never expire, and there is no subscription.",
+    "promo": "Have a promo code? Enter it at checkout.",
+    "faqTitle": "Questions about credits",
+    "faqCreditsQ": "How do credits work?",
+    "faqCreditsA": "Voice to text uses 1 credit per {chunkMin} minutes of audio. Subtitles use 2 credits a minute of video. Credits come off only when the job succeeds.",
+    "faqExpireQ": "Do credits expire?",
+    "faqExpireA": "No. Buy once and use your credits whenever you need them.",
+    "faqCardQ": "Do I need a card for the free credits?",
+    "faqCardA": "No. Sign up and you get {count} free credits straight away. A card is only needed to buy a pack.",
+    "faqSubQ": "Do I need a subscription?",
+    "faqSubA": "No. Buy a credit pack once and use it whenever you like. There are no recurring charges.",
+    "contactLead": "Questions about prices? Email",
+    "contactOr": "or message us on WhatsApp at",
+    "startFreeCount": "Start with {count} free credits",
+    "startPaid": "Create an account"
   },
   "reviews": {
     "metaTitle": "HelaVoice Reviews: What Customers Say",
@@ -1126,7 +1200,9 @@
       "stopPreview": "Stop preview",
       "play": "Play",
       "pause": "Pause",
-      "seek": "Seek"
+      "seek": "Seek",
+      "female": "Woman",
+      "male": "Man"
     },
     "voiceStyles": {
       "Kore": "Firm",
@@ -1136,7 +1212,44 @@
       "Puck": "Upbeat",
       "Charon": "Informative",
       "Orus": "Firm",
-      "Achird": "Friendly"
+      "Achird": "Friendly",
+      "Achernar": "Soft",
+      "Vindemiatrix": "Gentle",
+      "Zephyr": "Bright",
+      "Erinome": "Clear"
+    },
+    "myVoice": {
+      "title": "Your own voice",
+      "subtitle": "Record about 20 seconds and HelaVoice speaks any Sinhala text in your voice.",
+      "card": "My voice",
+      "cardSub": "Made from your recording",
+      "create": "Create my voice",
+      "redo": "Record again",
+      "remove": "Delete my voice",
+      "removeConfirm": "Delete your voice? You can record a new one any time.",
+      "removed": "Your voice was deleted.",
+      "help": "Use a quiet room and the same microphone for both recordings. Speak naturally, at your normal pace.",
+      "step1": "1. Read this aloud ({min}–{max} seconds)",
+      "passage": "ආයුබෝවන්! අද දවස ඔබට සුබදායක වේවා. ශ්‍රී ලංකාව ඉන්දියන් සාගරයේ පිහිටි, හරිත පැහැති, අලංකාර දිවයිනකි. උදෑසන හිරු එළිය සමඟ ගස්වල කුරුල්ලන් ගී ගයයි. පොඩි දරුවන් පාසල් යන අතර, වෙළෙන්දෝ වෙළඳපොළට පැමිණෙති. අපි ඉතා සන්සුන්ව, සාමයෙන් හා සතුටින් ජීවත් වෙමු.",
+      "step2": "2. Now read this sentence exactly (in English)",
+      "record": "Record",
+      "stop": "Stop",
+      "recordAgain": "Record again",
+      "processing": "Processing…",
+      "agree": "This is my own voice and I am an adult. I agree that Google may use my recording to create a synthetic copy of my voice. HelaVoice does not keep the recordings, and I can delete my voice at any time.",
+      "save": "Create my voice",
+      "saving": "Creating your voice… this can take up to a minute",
+      "cancel": "Cancel",
+      "created": "Your voice is ready and selected.",
+      "tooShort": "That was too short. Please record at least {min} seconds.",
+      "micError": "We couldn't use your microphone. Please allow microphone access and try again.",
+      "rejected": "We couldn't verify the recording. Read the sentence exactly, use the same microphone for both, and use your real voice (no edited or computer-made audio).",
+      "notAllowed": "Your own voice unlocks after your first credit purchase.",
+      "capacity": "Own-voice slots are full right now. Please try again later.",
+      "gone": "Your voice expired after a year without use. Please record it again.",
+      "loginNeeded": "Log in to create your own voice",
+      "failed": "Could not complete that. Please try again.",
+      "buyCredits": "Buy credits"
     },
     "faqEyebrow": "FAQ",
     "faqTitle": "Sinhala text to speech — common questions",
@@ -1265,6 +1378,10 @@
       "subtitles": {
         "label": "Sinhala subtitle generator",
         "desc": "Auto-generate timed Sinhala captions for any video."
+      },
+      "scanToText": {
+        "label": "Sinhala image to text",
+        "desc": "Upload a photo or scan of Sinhala text and get it back as editable text."
       },
       "textToSpeech": {
         "label": "Sinhala text to speech",

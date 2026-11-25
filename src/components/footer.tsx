@@ -131,6 +131,14 @@ export function Footer({ locale, dict }: FooterProps) {
               </li>
               <li>
                 <Link
+                  href={lp("/sinhala-scan-to-text")}
+                  className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
+                >
+                  {d.footerScan}
+                </Link>
+              </li>
+              <li>
+                <Link
                   href={lp("/qr-code-generator")}
                   className="text-sm font-medium text-[#8f9a94] transition-colors hover:text-ink"
                 >
@@ -254,7 +262,7 @@ export function Footer({ locale, dict }: FooterProps) {
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-ink/10 pt-8 md:flex-row">
           <p className="text-sm font-medium text-[#8f9a94]/70">
-            {d.footerCopyright}
+            {d.footerCopyright.replace("{year}", String(new Date().getFullYear()))}
           </p>
           <p className="text-sm font-medium text-[#8f9a94]/70">
             {d.footerBuiltBy}{" "}

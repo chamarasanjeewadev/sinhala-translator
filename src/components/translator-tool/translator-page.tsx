@@ -207,7 +207,7 @@ export async function TranslatorPage({
         </div>
       </section>
 
-      <RelatedTools locale={locale} copy={dict.relatedTools} current={page.dictKey} />
+      <RelatedTools locale={locale} copy={dict.relatedTools} labels={dict.navbar} current={page.dictKey} />
 
       {/* ── CTA (cross-link to the core product) ── */}
       <section className="px-4 sm:px-6 lg:px-8 pb-24">

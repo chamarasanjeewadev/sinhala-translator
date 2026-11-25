@@ -112,7 +112,7 @@ export default async function SinhalaScanToTextPage({ params }: Props) {
         </div>
       </section>
 
-      <RelatedTools locale={locale as Locale} copy={dict.relatedTools} current="scanToText" />
+      <RelatedTools locale={locale as Locale} copy={dict.relatedTools} labels={dict.navbar} current="scanToText" />
 
       <section className="px-4 sm:px-6 lg:px-8 pb-24">
         <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-white/80 bg-gradient-pastel px-6 py-16 text-center">
