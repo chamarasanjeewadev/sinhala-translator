@@ -3,46 +3,31 @@
 import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
-import { ChevronDown, Menu, X, type LucideIcon } from "lucide-react";
-import { TOOLS, IconTile, type Tone } from "@/components/tool-catalog";
-import { CreditBalance } from "@/components/credit-balance";
+import { ChevronDown, Menu, X, LogOut } from "lucide-react";
+import { FREE_TOOLS, PAID_TOOLS, TOOLS, IconTile, CostBadge, costNote, type ToolKey } from "@/components/tool-catalog";
 import { LocaleLink } from "@/components/locale-link";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { useDictionary } from "@/lib/i18n/dictionary-context";
 import { useLocale } from "@/lib/i18n/locale-context";
-import { localePath, parsePathname } from "@/lib/i18n/utils";
+import { localePath, parsePathname, t } from "@/lib/i18n/utils";
 import { createClient } from "@/lib/supabase/client";
 import type { User, SupabaseClient } from "@supabase/supabase-js";
 
-function NewBadge({ label }: { label: string }) {
-  return (
-    <span className="ml-1.5 inline-flex items-center rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] font-bold uppercase leading-none tracking-wide text-white shadow-[0_0_10px_rgba(239,68,68,0.7)] animate-pulse">
-      {label}
-    </span>
-  );
-}
+/** dict.navbar; dictionaries are untyped JSON. */
+type NavDict = ReturnType<typeof useDictionary>["navbar"];
 
-export const TOOL_LINKS = TOOLS.filter((t) => t.inMenu);
-type MenuItem = { href: string; label: string; isNew: boolean; icon: LucideIcon; tone: Tone };
+const LINK =
+  "inline-flex h-10 items-center rounded-lg px-3 text-sm font-medium text-ink/70 transition-colors hover:bg-ink/[0.05] hover:text-ink";
+const PRIMARY =
+  "inline-flex h-10 items-center rounded-lg bg-ink px-4 text-sm font-semibold text-white transition-[background-color,transform] hover:bg-[#2c3a33] active:translate-y-px";
 
-// Desktop-only dropdown: six flat links no longer fit the bar, so the tool pages live here.
-export function ToolsMenu({
-  label,
-  newLabel,
-  items,
-  light = false,
-}: {
-  label: string;
-  newLabel: string;
-  items: MenuItem[];
-  light?: boolean;
-}) {
+/** Open state that closes on outside click, Escape and route change. */
+function useDisclosure() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => setOpen(false), [pathname]);
-
   useEffect(() => {
     if (!open) return;
     const onDown = (e: MouseEvent) => {
@@ -57,55 +42,139 @@ export function ToolsMenu({
     };
   }, [open]);
 
+  return { open, setOpen, ref };
+}
+
+/** One tool row: icon, name, its cost badge, and what it costs or does. */
+function ToolRow({ k, signedIn, d }: { k: ToolKey; signedIn: boolean; d: NavDict }) {
+  const tool = TOOLS.find((x) => x.key === k)!;
+  return (
+    <LocaleLink
+      href={signedIn ? (tool.appHref ?? tool.href) : tool.href}
+      className="flex items-start gap-3 rounded-lg px-2.5 py-2 transition-colors hover:bg-ink/[0.04]"
+    >
+      <IconTile icon={tool.icon} tone={tool.tone} size="sm" />
+      <span className="min-w-0 flex-1">
+        <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-semibold text-ink">
+          {d[k]}
+          <CostBadge cost={tool.cost} labels={d} />
+        </span>
+        <span className="mt-0.5 block text-[13px] leading-snug text-ink/60">{costNote(d, k)}</span>
+      </span>
+    </LocaleLink>
+  );
+}
+
+/** The two tool groups, free first. Used by the desktop panel and the mobile menu. */
+export function ToolGroups({ signedIn, d, stacked = false }: { signedIn: boolean; d: NavDict; stacked?: boolean }) {
+  return (
+    <div className={stacked ? "grid gap-5" : "grid grid-cols-2 gap-4"}>
+      {[
+        { title: d.freeGroup, tools: FREE_TOOLS },
+        { title: d.paidGroup, tools: PAID_TOOLS },
+      ].map((g) => (
+        <div key={g.title}>
+          <p className="px-2.5 pb-1.5 text-xs font-semibold uppercase tracking-wider text-ink/50">{g.title}</p>
+          <div className="grid gap-0.5">
+            {g.tools.map((tool) => (
+              <ToolRow key={tool.key} k={tool.key} signedIn={signedIn} d={d} />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Desktop Tools button with the free / paid panel. Also used in the dashboard header. */
+export function ToolsMenu({ signedIn, align = "left" }: { signedIn: boolean; align?: "left" | "right" }) {
+  const d = useDictionary().navbar;
+  const { open, setOpen, ref } = useDisclosure();
+
   return (
     <div ref={ref} className="relative">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        aria-haspopup="menu"
-        className={
-          light
-            ? "inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
-            : "inline-flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium text-ink/65 hover:text-ink hover:bg-white/80 transition-colors"
-        }
+        aria-controls="tools-panel"
+        className={`${LINK} gap-1 ${open ? "bg-ink/[0.05] text-ink" : ""}`}
       >
-        {label}
+        {d.tools}
         <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
-        <NewBadge label={newLabel} />
       </button>
       {open && (
         <div
-          role="menu"
-          className={`absolute left-0 top-full mt-2 min-w-[230px] rounded-2xl border p-1.5 shadow-xl ${light ? "border-[#e6efe6]" : "border-ink/10"}`}
-          style={{
-            background: light ? "rgba(255,255,255,0.97)" : "rgba(255,255,255,0.96)",
-            backdropFilter: "blur(20px)",
-            WebkitBackdropFilter: "blur(20px)",
-          }}
+          id="tools-panel"
+          className={`absolute top-full z-50 mt-2 w-[620px] rounded-xl border border-ink/10 bg-white p-3 text-left shadow-[0_18px_50px_rgba(21,32,27,0.12)] ${align === "right" ? "right-0" : "left-0"}`}
         >
-          {items.map((i) => (
-            <LocaleLink
-              key={i.href}
-              href={i.href}
-              role="menuitem"
-              className={`flex items-center gap-3 px-2.5 py-2 rounded-xl text-sm font-medium transition-colors ${light ? "text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6]" : "text-ink/75 hover:text-ink hover:bg-white/80"}`}
-            >
-              <IconTile icon={i.icon} tone={i.tone} size="sm" />
-              {i.label}
-              {i.isNew && <NewBadge label={newLabel} />}
+          <ToolGroups signedIn={signedIn} d={d} />
+          <div className="mt-3 flex justify-end rounded-lg bg-[#f3f7f2] px-3 py-2.5 text-[13px]">
+            <LocaleLink href="/pricing" className="font-semibold text-ink underline-offset-4 hover:underline">
+              {d.seePrices} →
             </LocaleLink>
-          ))}
+          </div>
         </div>
       )}
     </div>
   );
 }
 
+function AccountMenu({ email, onSignOut, d }: { email: string; onSignOut: () => void; d: NavDict }) {
+  const { open, setOpen, ref } = useDisclosure();
+  const item = "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-ink/80 hover:bg-ink/[0.04]";
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        aria-label={d.account}
+        className="flex h-10 w-10 items-center justify-center rounded-full bg-[#e3f3e8] text-sm font-bold uppercase text-[#1d6b47] transition-colors hover:bg-[#d3ecdb]"
+      >
+        {email.charAt(0)}
+      </button>
+      {open && (
+        <div className="absolute right-0 top-full z-50 mt-2 w-64 rounded-xl border border-ink/10 bg-white p-1.5 shadow-[0_18px_50px_rgba(21,32,27,0.12)]">
+          <div className="px-3 py-2">
+            <p className="text-xs text-ink/55">{d.signedInAs}</p>
+            <p className="truncate text-sm font-semibold text-ink">{email}</p>
+          </div>
+          <LocaleLink href="/dashboard" className={item}>
+            {d.dashboard}
+          </LocaleLink>
+          <LocaleLink href="/dashboard/subtitles" className={item}>
+            {d.mySubtitles}
+          </LocaleLink>
+          <button type="button" onClick={onSignOut} className={item}>
+            <LogOut className="h-4 w-4" />
+            {d.signOut}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Balance and the way to top it up, as one control. */
+export function CreditsChip({ credits, d }: { credits: number; d: NavDict }) {
+  return (
+    <LocaleLink
+      href="/pricing"
+      className="inline-flex h-10 items-center gap-2 whitespace-nowrap rounded-lg border border-ink/10 bg-white pl-3 pr-1 text-sm transition-colors hover:border-ink/25"
+    >
+      <span className={`font-semibold ${credits > 0 ? "text-ink" : "text-[#ba1a1a]"}`}>
+        {t(d.creditsShort, { count: credits })}
+      </span>
+      <span className="rounded-md bg-ink px-2 py-1.5 text-xs font-semibold leading-none text-white">{d.buyCredits}</span>
+    </LocaleLink>
+  );
+}
+
 export function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
-  const dict = useDictionary();
+  const d = useDictionary().navbar;
   const locale = useLocale();
   const supabaseRef = useRef<SupabaseClient | null>(null);
   const [user, setUser] = useState<User | null>(null);
@@ -151,7 +220,6 @@ export function Navbar() {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [pathname]);
@@ -169,143 +237,63 @@ export function Navbar() {
     return null;
   }
 
-  const d = dict.navbar;
-  const tools = TOOL_LINKS.map((t) => ({ href: t.href, label: d[t.key], isNew: t.isNew, icon: t.icon, tone: t.tone }));
+  const signedIn = Boolean(user);
 
   return (
-    <div className="sticky top-0 z-50 w-screen max-w-[100vw] overflow-x-clip">
-      <header
-        className="w-full border-b border-ink/10"
-        style={{
-          background: "rgba(255,255,255,0.72)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-        }}
-      >
-        {/* Top accent line matching hero */}
-        <div className="absolute left-0 right-0 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(143,208,176,.45)_30%,rgba(244,176,143,.3)_70%,transparent)]" />
-
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-
-          {/* Logo */}
-          <LocaleLink href="/" className="flex shrink-0 items-center gap-2.5">
-            <Image
-              src="/logo.png"
-              alt="HelaVoice.lk"
-              width={36}
-              height={36}
-              className="h-9 w-9 rounded-xl object-cover"
-            />
-            <span className="font-display text-lg font-bold text-ink">
-              HelaVoice.lk
-            </span>
+    <div className="sticky top-0 z-50 w-full">
+      <header className="border-b border-ink/10 bg-[#f3f7f2]/95 backdrop-blur">
+        <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-4 sm:px-6 lg:px-8">
+          <LocaleLink href="/" aria-label="HelaVoice.lk" className="flex shrink-0 items-center gap-2.5">
+            <Image src="/logo.png" alt="" width={32} height={32} className="h-8 w-8 rounded-lg object-cover" />
+            {/* Signed in, the credits chip needs the room on small phones; the logo stays. */}
+            <span className={`font-display text-[17px] font-bold tracking-tight text-ink ${user ? "hidden min-[420px]:inline" : ""}`}>HelaVoice.lk</span>
           </LocaleLink>
 
-          {/* ── Desktop nav ───────────────────────────────────────────── */}
-          <div className="hidden lg:flex items-center gap-2 whitespace-nowrap">
-            <LanguageSwitcher />
+          {/* Desktop: what you can use on the left, your account on the right */}
+          <nav className="hidden flex-1 items-center gap-0.5 lg:flex" aria-label="Main">
+            {signedIn && (
+              <LocaleLink href="/dashboard" className={LINK}>
+                {d.dashboard}
+              </LocaleLink>
+            )}
+            <ToolsMenu signedIn={signedIn} />
+            <LocaleLink href="/pricing" className={LINK}>
+              {d.pricing}
+            </LocaleLink>
+            <LocaleLink href="/blog" className={LINK}>
+              {d.blog}
+            </LocaleLink>
+          </nav>
 
+          <div className="ml-auto hidden items-center gap-2 lg:flex">
+            <LanguageSwitcher />
             {user ? (
               <>
-                <LocaleLink
-                  href="/dashboard"
-                  className="px-4 py-2 rounded-full text-sm font-medium text-ink/65 hover:text-ink hover:bg-white/80 transition-colors"
-                >
-                  {d.dashboard}
-                </LocaleLink>
-
-                <LocaleLink
-                  href="/dashboard/subtitles"
-                  className="px-4 py-2 rounded-full text-sm font-medium text-ink/65 hover:text-ink hover:bg-white/80 transition-colors"
-                >
-                  {d.subtitles}
-                </LocaleLink>
-
-                <ToolsMenu label={d.tools} newLabel={d.new} items={tools} />
-
-                <LocaleLink href="/pricing">
-                  <button className="hero-primary-button inline-flex items-center gap-1.5 rounded-2xl px-5 py-2 text-sm font-semibold text-white hover:opacity-90 transition-opacity">
-                    {d.buyCredits}
-                  </button>
-                </LocaleLink>
-
-                {credits !== null && <CreditBalance credits={credits} />}
-
-                <div className="hidden xl:flex flex-col items-end">
-                  <span className="text-[11px] font-medium text-ink/55 leading-none mb-0.5">
-                    Logged in as
-                  </span>
-                  <span className="text-xs font-semibold text-ink/75 max-w-[140px] truncate">
-                    {user.email}
-                  </span>
-                </div>
-
-                <button
-                  onClick={handleSignOut}
-                  className="px-4 py-2 rounded-full text-sm font-medium text-ink/55 hover:text-ink hover:bg-white/80 transition-colors"
-                >
-                  {d.signOut}
-                </button>
+                {credits !== null && <CreditsChip credits={credits} d={d} />}
+                <AccountMenu email={user.email ?? "?"} onSignOut={handleSignOut} d={d} />
               </>
             ) : (
               <>
-                <nav className="flex items-center gap-1">
-                  <LocaleLink
-                    href="/subtitles"
-                    className="px-4 py-2 rounded-full text-sm font-medium text-ink/65 hover:text-ink hover:bg-white/80 transition-colors"
-                  >
-                    {d.subtitles}
-                  </LocaleLink>
-                  <ToolsMenu label={d.tools} newLabel={d.new} items={tools} />
-                  <LocaleLink
-                    href="/pricing"
-                    className="px-4 py-2 rounded-full text-sm font-medium text-ink/65 hover:text-ink hover:bg-white/80 transition-colors"
-                  >
-                    {d.pricing}
-                  </LocaleLink>
-                  <LocaleLink
-                    href="/blog"
-                    className="px-4 py-2 rounded-full text-sm font-medium text-ink/65 hover:text-ink hover:bg-white/80 transition-colors"
-                  >
-                    {d.blog}
-                  </LocaleLink>
-                </nav>
-
-                <LocaleLink
-                  href="/login"
-                  className="px-4 py-2 rounded-full text-sm font-medium text-ink/65 hover:text-ink hover:bg-white/80 transition-colors"
-                >
+                <LocaleLink href="/login" className={LINK}>
                   {d.logIn}
                 </LocaleLink>
-
-                <LocaleLink href="/signup">
-                  <button className="hero-primary-button inline-flex items-center gap-1.5 rounded-2xl px-5 py-2 text-sm font-semibold text-white">
-                    {d.getStarted}
-                  </button>
+                <LocaleLink href="/signup" className={PRIMARY}>
+                  {d.startFree}
                 </LocaleLink>
               </>
             )}
           </div>
 
-          {/* ── Mobile right side ─────────────────────────────────────── */}
-          <div className="flex lg:hidden items-center gap-2">
-            {user && (
-              <>
-                {/* Buy Credits — primary CTA always visible on mobile */}
-                <LocaleLink href="/pricing">
-                  <button className="hero-primary-button inline-flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-semibold text-white hover:opacity-90 transition-opacity">
-                    {d.buyCredits}
-                  </button>
-                </LocaleLink>
-                {credits !== null && <CreditBalance credits={credits} />}
-              </>
-            )}
-
-            {/* Hamburger */}
+          {/* Mobile */}
+          <div className="ml-auto flex items-center gap-2 lg:hidden">
+            {user && credits !== null && <CreditsChip credits={credits} d={d} />}
             <button
+              type="button"
               onClick={() => setMobileMenuOpen((o) => !o)}
-              className="p-2 rounded-full text-ink/65 hover:text-ink hover:bg-white/80 transition-colors"
-              aria-label="Toggle menu"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-menu"
+              aria-label={d.menu}
+              className="flex h-11 w-11 items-center justify-center rounded-lg text-ink/70 transition-colors hover:bg-ink/[0.05] hover:text-ink"
             >
               {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -313,112 +301,58 @@ export function Navbar() {
         </div>
       </header>
 
-      {/* ── Mobile dropdown ───────────────────────────────────────────── */}
       {mobileMenuOpen && (
         <div
-          className="lg:hidden border-b border-ink/10 px-5 pb-5 pt-3"
-          style={{
-            background: "rgba(255,255,255,0.95)",
-            backdropFilter: "blur(20px)",
-            WebkitBackdropFilter: "blur(20px)",
-          }}
+          id="mobile-menu"
+          className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-ink/10 bg-[#f3f7f2] px-4 pb-6 pt-4 lg:hidden"
         >
-          <div className="mb-2">
-            <LanguageSwitcher />
-          </div>
+          {user && (
+            <div className="mb-4 rounded-lg bg-white px-3 py-2.5">
+              <p className="text-xs text-ink/55">{d.signedInAs}</p>
+              <p className="truncate text-sm font-semibold text-ink">{user.email}</p>
+            </div>
+          )}
 
-          {user ? (
-            <>
-              <div className="mb-3 px-1 border-b border-ink/10 pb-3">
-                <p className="text-[11px] text-ink/55 mb-0.5">Signed in as</p>
-                <p className="text-sm font-semibold text-ink/85 truncate">{user.email}</p>
-              </div>
-              <nav className="flex flex-col gap-1">
-                <LocaleLink
-                  href="/dashboard"
-                  className="px-3 py-2.5 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"
-                >
+          <ToolGroups signedIn={signedIn} d={d} stacked />
+
+          <nav className="mt-5 grid gap-0.5 border-t border-ink/10 pt-4" aria-label="Mobile">
+            {user && (
+              <>
+                <LocaleLink href="/dashboard" className={LINK}>
                   {d.dashboard}
                 </LocaleLink>
-                <LocaleLink
-                  href="/dashboard/subtitles"
-                  className="px-3 py-2.5 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"
-                >
-                  {d.subtitles}
+                <LocaleLink href="/dashboard/subtitles" className={LINK}>
+                  {d.mySubtitles}
                 </LocaleLink>
-                {tools.map((i) => (
-                  <LocaleLink
-                    key={i.href}
-                    href={i.href}
-                    className="inline-flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"
-                  >
-                    <IconTile icon={i.icon} tone={i.tone} size="sm" />
-                    {i.label}
-                    {i.isNew && <NewBadge label={d.new} />}
-                  </LocaleLink>
-                ))}
-                <button
-                  onClick={handleSignOut}
-                  className="text-left px-3 py-2.5 rounded-xl text-sm font-medium text-ink/55 hover:text-ink hover:bg-white/80 transition-colors"
-                >
-                  {d.signOut}
-                </button>
-              </nav>
-            </>
-          ) : (
-            <>
-              <nav className="flex flex-col gap-1 mb-4">
-                <LocaleLink
-                  href="/"
-                  className="px-3 py-2.5 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"
-                >
-                  Home
+              </>
+            )}
+            <LocaleLink href="/pricing" className={LINK}>
+              {d.pricing}
+            </LocaleLink>
+            <LocaleLink href="/blog" className={LINK}>
+              {d.blog}
+            </LocaleLink>
+            <div className="px-1 pt-1">
+              <LanguageSwitcher />
+            </div>
+          </nav>
+
+          <div className="mt-4 grid gap-2">
+            {user ? (
+              <button type="button" onClick={handleSignOut} className={`${LINK} justify-center border border-ink/15`}>
+                {d.signOut}
+              </button>
+            ) : (
+              <>
+                <LocaleLink href="/signup" className={`${PRIMARY} justify-center`}>
+                  {d.startFree}
                 </LocaleLink>
-                <LocaleLink
-                  href="/subtitles"
-                  className="px-3 py-2.5 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"
-                >
-                  {d.subtitles}
-                </LocaleLink>
-                {tools.map((i) => (
-                  <LocaleLink
-                    key={i.href}
-                    href={i.href}
-                    className="inline-flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"
-                  >
-                    <IconTile icon={i.icon} tone={i.tone} size="sm" />
-                    {i.label}
-                    {i.isNew && <NewBadge label={d.new} />}
-                  </LocaleLink>
-                ))}
-                <LocaleLink
-                  href="/pricing"
-                  className="px-3 py-2.5 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"
-                >
-                  {d.pricing}
-                </LocaleLink>
-                <LocaleLink
-                  href="/blog"
-                  className="px-3 py-2.5 rounded-xl text-sm font-medium text-ink/75 hover:text-ink hover:bg-white/80 transition-colors"
-                >
-                  {d.blog}
-                </LocaleLink>
-              </nav>
-              <div className="flex flex-col gap-2">
-                <LocaleLink
-                  href="/login"
-                  className="block px-4 py-2.5 rounded-xl text-center text-sm font-medium text-ink/65 border border-ink/10 hover:text-ink hover:bg-white/80 transition-colors"
-                >
+                <LocaleLink href="/login" className={`${LINK} justify-center border border-ink/15`}>
                   {d.logIn}
                 </LocaleLink>
-                <LocaleLink href="/signup">
-                  <button className="hero-primary-button w-full rounded-xl px-4 py-2.5 text-sm font-semibold text-white">
-                    {d.getStarted}
-                  </button>
-                </LocaleLink>
-              </div>
-            </>
-          )}
+              </>
+            )}
+          </div>
         </div>
       )}
     </div>

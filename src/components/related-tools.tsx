@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { TOOLS, IconTile, type ToolKey } from "@/components/tool-catalog";
+import { TOOLS, IconTile, CostBadge, type ToolKey } from "@/components/tool-catalog";
 import { localePath } from "@/lib/i18n/utils";
 import type { Locale } from "@/lib/i18n/config";
 
@@ -12,16 +12,20 @@ const LINKS: { id: string; href: string; tool: ToolKey }[] = [
   { id: "enSi", href: "/english-to-sinhala", tool: "translate" },
   { id: "subtitles", href: "/subtitles", tool: "subtitles" },
   { id: "textToSpeech", href: "/sinhala-text-to-speech", tool: "textToSpeech" },
+  { id: "scanToText", href: "/sinhala-scan-to-text", tool: "scanToText" },
 ];
 
 export function RelatedTools({
   locale,
   copy,
   current,
+  labels,
 }: {
   locale: Locale;
   copy: { title: string; items: Record<string, { label: string; desc: string }> };
   current?: string;
+  /** dict.navbar, for the free / credits badge. */
+  labels: { costFree: string; costTrial: string; costCredits: string };
 }) {
   return (
     <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pb-20">
@@ -38,7 +42,10 @@ export function RelatedTools({
               >
                 <IconTile icon={tool.icon} tone={tool.tone} />
                 <span className="min-w-0">
-                  <span className="block text-sm font-semibold text-ink">{item.label}</span>
+                  <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-semibold text-ink">
+                    {item.label}
+                    <CostBadge cost={tool.cost} labels={labels} />
+                  </span>
                   <span className="mt-1 block text-xs leading-relaxed text-ink/65">{item.desc}</span>
                 </span>
               </Link>

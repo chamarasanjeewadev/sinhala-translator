@@ -33,8 +33,10 @@ import {
   LayoutGrid,
 } from "lucide-react";
 import { toast } from "sonner";
-import { ToolsMenu, TOOL_LINKS } from "@/components/navbar";
-import { TOOLS, IconTile } from "@/components/tool-catalog";
+import { ToolsMenu } from "@/components/navbar";
+import { TOOLS, IconTile, CostBadge, costNote, CHUNK_MINUTES } from "@/components/tool-catalog";
+import { PricingBuyButton } from "@/components/pricing-buy-button";
+import { CREDIT_PACKAGES } from "@/lib/constants";
 import { OnboardingTour, tourSeen, type TourStep } from "@/components/onboarding-tour";
 import { LocaleLink } from "@/components/locale-link";
 import { LanguageSwitcher } from "@/components/language-switcher";
@@ -45,7 +47,7 @@ import type { ExportSource } from "@/lib/transcript-export";
 import { useDictionary } from "@/lib/i18n/dictionary-context";
 import { apiErrorMessage } from "@/lib/client-error";
 import { useLocale } from "@/lib/i18n/locale-context";
-import { localePath } from "@/lib/i18n/utils";
+import { localePath, t as fill } from "@/lib/i18n/utils";
 import { createClient } from "@/lib/supabase/client";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Transcription, AnalyzeResponse, ChunkTranscribeResponse, TranslateResponse } from "@/lib/types";
@@ -122,6 +124,9 @@ function formatDurationFull(seconds: number): string {
 function calcTranslationCredits(text: string): number {
   return Math.max(1, Math.ceil(text.length / 1000));
 }
+
+// The out-of-credits prompt offers the cheapest pack; price and size come from CREDIT_PACKAGES.
+const STARTER = CREDIT_PACKAGES.reduce((a, b) => (b.price < a.price ? b : a));
 
 export function DashboardContent({
   initialCredits,
@@ -797,7 +802,7 @@ export function DashboardContent({
               </span>
             </LocaleLink>
 
-            <nav className="hidden sm:flex items-center gap-1">
+            <nav className="hidden lg:flex items-center gap-1">
               <LocaleLink
                 href="/"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
@@ -812,12 +817,7 @@ export function DashboardContent({
                 <Captions className="w-4 h-4" />
                 {nav.subtitles}
               </LocaleLink>
-              <ToolsMenu
-                light
-                label={nav.tools}
-                newLabel={nav.new}
-                items={TOOL_LINKS.map((t) => ({ href: t.href, label: nav[t.key], isNew: t.isNew, icon: t.icon, tone: t.tone }))}
-              />
+              <ToolsMenu signedIn />
               <LocaleLink
                 href="/blog"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-[#5b6660] hover:text-[#15201b] hover:bg-[#e6efe6] transition-colors"
@@ -839,11 +839,11 @@ export function DashboardContent({
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Credits pill */}
             <div data-tour="credits" className="bg-[#ffffff] rounded-full px-3 py-1.5 flex items-center gap-2 shadow-[0_10px_30px_rgba(21,32,27,0.06)]">
-              <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-[#15201b] to-[#2c3a33] flex items-center justify-center shrink-0">
+              <div className="w-6 h-6 rounded-lg bg-[#15201b] flex items-center justify-center shrink-0">
                 <FileText className="w-3 h-3 text-white" />
               </div>
               <div className="leading-tight">
-                <div className="text-[10px] text-[#5b6660]">{d.creditsLabel}</div>
+                <div className="text-[11px] text-[#5b6660]">{d.creditsLabel}</div>
                 <div className="text-sm font-bold text-[#15201b]">{credits}</div>
               </div>
             </div>
@@ -851,7 +851,7 @@ export function DashboardContent({
             <LocaleLink
               href="/pricing"
               data-tour="buy"
-              className="inline-flex items-center whitespace-nowrap bg-gradient-to-r from-[#15201b] to-[#2c3a33] text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-opacity hover:opacity-90"
+              className="inline-flex items-center whitespace-nowrap bg-[#15201b] text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors hover:bg-[#2c3a33]"
             >
               {d.buyCredits}
             </LocaleLink>
@@ -883,17 +883,8 @@ export function DashboardContent({
       </header>
 
       {/* ── Hero / Transcription Workspace ── */}
-      <section className="relative overflow-hidden bg-[#f6f8f3] pt-12 pb-14">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -top-32 -left-32 w-96 h-96 rounded-full bg-[#15201b]/6 blur-3xl"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -top-16 right-0 w-80 h-80 rounded-full bg-[#2c3a33]/5 blur-3xl"
-        />
-
-        <div className="relative max-w-3xl mx-auto px-4 sm:px-6">
+      <section className="bg-[#f6f8f3] pt-12 pb-14">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
           {/* ── Idle ── */}
           {transcribeState === "idle" && (
             <>
@@ -953,14 +944,23 @@ export function DashboardContent({
               </div>
 
               {noCredits && (
-                <div className="mt-6 flex items-center justify-center">
-                  <div className="inline-flex items-center gap-2 bg-[#ffdad6] text-[#ba1a1a] rounded-2xl px-5 py-3 text-sm font-medium">
-                    <span>{d.outOfCredits}</span>
-                    <LocaleLink
-                      href="/pricing"
-                      className="underline font-semibold hover:opacity-80"
-                    >
-                      {d.buyCredits}
+                <div className="mt-6 rounded-2xl border border-[#15201b]/10 bg-white px-5 py-5 text-center">
+                  <p className="font-semibold text-[#15201b]">{d.outOfCredits}</p>
+                  <p className="mt-1 text-sm text-[#5b6660]">
+                    {fill(d.outOfCreditsBody, {
+                      credits: STARTER.credits,
+                      price: STARTER.priceDisplay,
+                      minutes: STARTER.credits * CHUNK_MINUTES,
+                    })}
+                  </p>
+                  <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                    <PricingBuyButton
+                      packageId={STARTER.id}
+                      label={fill(d.buyStarter, { credits: STARTER.credits, price: STARTER.priceDisplay })}
+                      className="inline-flex h-11 items-center justify-center rounded-full bg-[#15201b] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#2c3a33]"
+                    />
+                    <LocaleLink href="/pricing" className="text-sm font-semibold text-[#15201b] underline underline-offset-4 hover:opacity-80">
+                      {d.seeAllPrices}
                     </LocaleLink>
                   </div>
                 </div>
@@ -1140,13 +1140,10 @@ export function DashboardContent({
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-1.5 font-semibold text-sm text-[#15201b]">
                   {nav[t.key]}
-                  {t.isNew && (
-                    <span className="rounded-full bg-red-500 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none text-white">
-                      {nav.new}
-                    </span>
-                  )}
+                  <CostBadge cost={t.cost} labels={nav} />
                 </div>
                 <p className="mt-1 text-xs leading-relaxed text-[#5b6660] line-clamp-3">{d.toolDesc[t.key]}</p>
+                <p className="mt-1.5 text-xs font-medium text-[#15201b]/70">{costNote(nav, t.key)}</p>
               </div>
               <ArrowUpRight className="absolute right-3 top-3 w-4 h-4 text-[#8f9a94] transition-colors group-hover:text-[#15201b]" />
             </LocaleLink>
@@ -1201,6 +1198,7 @@ export function DashboardContent({
                     setShowSearch(false);
                     setSearchQuery("");
                   }}
+                  aria-label={d.clearSearch}
                   className="absolute right-2.5 top-1/2 -translate-y-1/2 w-5 h-5 bg-[#e6efe6] hover:bg-[#dbe7dc] rounded-full flex items-center justify-center text-[#5b6660] transition-colors"
                 >
                   <X className="w-3 h-3" />
@@ -1209,6 +1207,7 @@ export function DashboardContent({
             ) : (
               <button
                 onClick={() => setShowSearch(true)}
+                aria-label={d.searchPlaceholder}
                 className="w-9 h-9 bg-[#ffffff] hover:bg-[#e6efe6] rounded-full flex items-center justify-center transition-colors shadow-[0_10px_30px_rgba(21,32,27,0.06)]"
               >
                 <Search className="w-4 h-4 text-[#5b6660]" />
@@ -1250,12 +1249,12 @@ export function DashboardContent({
                   return (
                     <div
                       key={t.id}
-                      className={`flex items-center gap-4 px-5 py-4 transition-colors hover:bg-[#e6efe6] ${
+                      className={`flex flex-wrap lg:flex-nowrap items-center gap-x-4 gap-y-2 px-4 sm:px-5 py-4 transition-colors hover:bg-[#e6efe6] ${
                         isEven ? "bg-[#ffffff]" : "bg-[#eef3ec]"
                       }`}
                     >
-                      {/* Left: text + metadata */}
-                      <div className="flex-1 min-w-0">
+                      {/* Left: text + metadata (own line below lg) */}
+                      <div className="w-full lg:w-auto lg:flex-1 min-w-0">
                         <p className="text-sm text-[#15201b] line-clamp-1 font-medium sinhala-text leading-snug">
                           {t.transcription_text}
                         </p>
@@ -1289,19 +1288,19 @@ export function DashboardContent({
                       </div>
 
                       {/* Center: duration */}
-                      <div className="shrink-0 text-xs text-[#5b6660] font-mono tabular-nums w-14 text-center">
+                      <div className="shrink-0 text-xs text-[#5b6660] font-mono tabular-nums lg:w-14 lg:text-center">
                         {formatDuration(t.audio_duration_seconds)}
                       </div>
 
                       {/* Right: action buttons */}
-                      <div className="flex items-center gap-1.5 shrink-0">
+                      <div className="ml-auto flex items-center gap-1.5 shrink-0">
                         <button
                           onClick={() => setViewTranscription(t)}
                           title={d.view}
                           className="flex items-center gap-1.5 bg-[#e6efe6] hover:bg-[#dbe7dc] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                         >
                           <Eye className="w-4 h-4 text-[#0891b2]" />
-                          <span className="hidden sm:inline">{d.view}</span>
+                          <span className="hidden lg:inline">{d.view}</span>
                         </button>
 
                         <button
@@ -1310,7 +1309,7 @@ export function DashboardContent({
                           className="flex items-center gap-1.5 bg-[#e6efe6] hover:bg-[#dbe7dc] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                         >
                           <Pencil className="w-4 h-4 text-[#7c3aed]" />
-                          <span className="hidden sm:inline">{d.edit}</span>
+                          <span className="hidden lg:inline">{d.edit}</span>
                         </button>
 
                         {/* Translate button */}
@@ -1320,7 +1319,7 @@ export function DashboardContent({
                             className="flex items-center gap-1.5 bg-[#e6efe6] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold opacity-60 cursor-not-allowed"
                           >
                             <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                            <span className="hidden sm:inline">{d.translating}</span>
+                            <span className="hidden lg:inline">{d.translating}</span>
                           </button>
                         ) : (
                           <button
@@ -1329,7 +1328,7 @@ export function DashboardContent({
                             className="flex items-center gap-1.5 bg-[#e6efe6] hover:bg-[#dbe7dc] text-[#15201b] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                           >
                             <Globe className="w-4 h-4 text-[#ea8a00]" />
-                            <span className="hidden sm:inline">
+                            <span className="hidden lg:inline">
                               {t.english_translation ? d.retranslate : d.translate}
                             </span>
                           </button>
@@ -1345,13 +1344,14 @@ export function DashboardContent({
                           ) : (
                             <Copy className="w-4 h-4 text-[#16a34a]" />
                           )}
-                          <span className="hidden sm:inline">{d.copy}</span>
+                          <span className="hidden lg:inline">{d.copy}</span>
                         </button>
 
                         <ExportMenu
                           source={() => exportSource(t)}
                           labels={exportLabels}
                           compact
+                          onExported={(format) => trackEvent("transcript_export", { format, where: "list" })}
                         />
 
                         <button
@@ -1360,7 +1360,7 @@ export function DashboardContent({
                           className="flex items-center gap-1.5 bg-[#ffdad6] hover:bg-[#ffb4ab] text-[#ba1a1a] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                         >
                           <Trash2 className="w-4 h-4" />
-                          <span className="hidden sm:inline">{d.delete}</span>
+                          <span className="hidden lg:inline">{d.delete}</span>
                         </button>
                       </div>
                     </div>
@@ -1404,6 +1404,7 @@ export function DashboardContent({
               <ExportMenu
                 source={() => exportSource(viewTranscription)}
                 labels={exportLabels}
+                onExported={(format) => trackEvent("transcript_export", { format, where: "viewer" })}
               />
               <button
                 onClick={() => setViewTranscription(null)}

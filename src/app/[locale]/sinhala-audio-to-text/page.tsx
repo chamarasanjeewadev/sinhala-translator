@@ -260,7 +260,7 @@ export default async function SinhalaAudioToTextPage({ params }: Props) {
         </div>
       </section>
 
-      <RelatedTools locale={locale as Locale} copy={dict.relatedTools} current="audioToText" />
+      <RelatedTools locale={locale as Locale} copy={dict.relatedTools} labels={dict.navbar} current="audioToText" />
 
       <section className="px-4 sm:px-6 lg:px-8 pb-24">
         <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-white/80 bg-gradient-pastel px-6 py-16 text-center">

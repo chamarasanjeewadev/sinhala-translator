@@ -158,12 +158,6 @@
 	body {
 		@apply bg-background text-foreground font-sans;
 		overflow-x: clip;
-		/* Ambient pastel wash from the brand reference: peach top-left, mint centre, sky right */
-		background-image:
-			radial-gradient(60rem 40rem at 0% 0%, rgba(255, 216, 194, 0.55), transparent 60%),
-			radial-gradient(50rem 40rem at 100% 10%, rgba(198, 230, 240, 0.6), transparent 60%),
-			radial-gradient(60rem 50rem at 50% 100%, rgba(207, 233, 211, 0.6), transparent 60%);
-		background-attachment: fixed;
 	}
 }
 
@@ -569,3 +563,11 @@
 .markdown-body table { border-collapse: collapse; margin: 0 0 0.75em; }
 .markdown-body th,
 .markdown-body td { border: 1px solid #e7eeff; padding: 0.35em 0.6em; }
+
+/* Hero entrance: once on load, staggered by --d; still under reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+	.hv-enter {
+		animation: heroFadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+		animation-delay: var(--d, 0s);
+	}
+}

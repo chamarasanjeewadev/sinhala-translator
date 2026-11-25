@@ -5,7 +5,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { locales, type Locale } from "@/lib/i18n/config";
 import { generateAlternates } from "@/lib/i18n/utils";
 import { CREDIT_PACKAGES } from "@/lib/constants";
-import { getSignupBonusConfig } from "@/lib/app-settings";
+import { getSignupBonusConfig, getAudioUploadLimitMb } from "@/lib/app-settings";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -21,7 +21,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const dict = await getDictionary(locale as Locale);
 
   return {
-    title: `${dict.pricing.title} | ${dict.metadata.title}`,
+    // The layout template already appends " | HelaVoice.lk"; don't print it twice.
+    title: `${dict.pricing.title} | ${dict.metadata.title.replace(/\s*\|\s*HelaVoice\.lk$/, "")}`,
     description: dict.pricing.subtitle,
     alternates: generateAlternates(locale as Locale, "/pricing"),
     robots: {
@@ -72,7 +73,10 @@ function buildPricingJsonLd(freeTier: boolean, freeCredits: number) {
 }
 
 export default async function PricingPage() {
-  const { enabled: freeTier, amount: freeCredits } = await getSignupBonusConfig();
+  const [{ enabled: freeTier, amount: freeCredits }, maxMb] = await Promise.all([
+    getSignupBonusConfig(),
+    getAudioUploadLimitMb(),
+  ]);
   const pricingJsonLd = buildPricingJsonLd(freeTier, freeCredits);
   return (
     <>
@@ -81,7 +85,7 @@ export default async function PricingPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingJsonLd) }}
       />
       <Suspense>
-        <PricingContent freeTier={freeTier} freeCredits={freeCredits} />
+        <PricingContent freeTier={freeTier} freeCredits={freeCredits} maxMb={maxMb} />
       </Suspense>
     </>
   );

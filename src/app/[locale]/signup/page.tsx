@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { enabled, amount } = await getSignupBonusConfig();
 
   return {
-    title: `${dict.auth.createAccountTitle} | ${dict.metadata.title}`,
+    title: dict.auth.createAccountTitle,
     description: enabled
       ? t(dict.auth.signUpDesc, { count: amount })
       : dict.auth.signUpDescNoBonus,

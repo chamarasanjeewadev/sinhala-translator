@@ -7,19 +7,24 @@ import { CREDIT_PACKAGES } from "@/lib/constants";
 import { WHATSAPP_NUMBER_DISPLAY, whatsappLink } from "@/lib/contact";
 import { useDictionary } from "@/lib/i18n/dictionary-context";
 import { useLocale } from "@/lib/i18n/locale-context";
-import { localePath } from "@/lib/i18n/utils";
+import { localePath, t } from "@/lib/i18n/utils";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
-import { Check, Zap, ArrowRight, Sparkles } from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { ToolCostTable } from "@/components/tool-cost-table";
+import { CHUNK_MINUTES } from "@/components/tool-catalog";
 import type { User } from "@supabase/supabase-js";
 
 export function PricingContent({
   freeTier,
   freeCredits,
+  maxMb,
 }: {
   freeTier: boolean;
   freeCredits: number;
+  /** Upload cap from app settings, so the page never repeats a stale figure. */
+  maxMb: number;
 }) {
   const searchParams = useSearchParams();
   const dict = useDictionary();
@@ -129,288 +134,133 @@ export function PricingContent({
     }
   };
 
+  const BTN_PRIMARY =
+    "inline-flex h-11 w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-ink px-3 text-sm font-semibold text-white transition-[background-color,transform] hover:bg-[#2c3a33] active:translate-y-px disabled:opacity-60";
+  const BTN_SECONDARY =
+    "inline-flex h-11 w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-ink/15 bg-white px-3 text-sm font-semibold text-ink transition-[border-color,transform] hover:border-ink/35 active:translate-y-px disabled:opacity-60";
+  const l = dict.landing;
+  const fill = (s: string, vars: Record<string, string | number>) => t(s, vars);
+  const faq = [
+    { q: d.faqCreditsQ, a: fill(d.faqCreditsA, { chunkMin: CHUNK_MINUTES }) },
+    { q: d.faqExpireQ, a: d.faqExpireA },
+    freeTier ? { q: d.faqCardQ, a: fill(d.faqCardA, { count: freeCredits }) } : { q: d.faqSubQ, a: d.faqSubA },
+  ];
+  const facts = [l.creditsNeverExpire, l.allTools, fill(l.upToMb, { mb: maxMb }), l.allAudioFormats];
+
   return (
-    <div className="min-h-screen bg-transparent text-ink">
-      {/* Ambient glows */}
-      <div className="pointer-events-none fixed -right-20 -top-20 h-[42rem] w-[42rem] rounded-full bg-[radial-gradient(circle,rgba(143,208,176,0.18)_0%,transparent_60%)]" />
-      <div className="pointer-events-none fixed bottom-0 left-0 h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgba(124,195,221,0.14)_0%,transparent_65%)]" />
-
-      <div className="relative z-10 mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-12">
-
-        {/* ── Hero header ─────────────────────────────────────────────── */}
-        <div className="mb-20 text-center">
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-leaf/25 bg-mint/70 px-3.5 py-1.5">
-            <Sparkles className="h-3.5 w-3.5 text-leaf" />
-            <span className="text-xs font-semibold uppercase tracking-[0.18em] text-leaf">
-              Transparent Pricing
-            </span>
-          </div>
-
-          <h1 className="font-display mb-5 text-[clamp(2.2rem,5vw,3.8rem)] font-black leading-[1.05] tracking-tight">
-            Simple,{" "}
-            <span
-              style={{
-                background: "linear-gradient(130deg,#c2643a 0%,#2f7d5b 55%,#2f7fa0 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              flexible pricing
-            </span>
+    <div className="text-ink">
+      <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        {/* ── Header ──────────────────────────────────────────────────── */}
+        <div className="mb-10 max-w-2xl">
+          <h1 className="hv-enter font-display text-[clamp(2.2rem,4.6vw,3.5rem)] font-bold leading-[1.05] tracking-[-0.02em]">
+            {d.h1}
           </h1>
-          <p className="mx-auto max-w-[42ch] text-[1.05rem] leading-relaxed text-ink/60">
-            Buy credits once, use them anytime.{" "}
-            <span className="font-medium text-ink/85">No subscriptions, no commitments.</span>
+          <p className="hv-enter mt-4 text-lg leading-relaxed text-ink/70" style={{ ["--d" as string]: ".06s" }}>
+            {d.lead}
           </p>
-
-          {/* Credit model pills */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            {[
-              { label: "Per-minute billing", color: "violet" },
-              ...(freeTier
-                ? [
-                    {
-                      label: `${freeCredits} free credits on signup`,
-                      color: "emerald",
-                    },
-                  ]
-                : []),
-              { label: "Credits never expire", color: "sky" },
-            ].map(({ label, color }) => (
-              <span
-                key={label}
-                className={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-semibold ${
-                  color === "emerald"
-                    ? "border-emerald-400/25 bg-emerald-500/10 text-emerald-300"
-                    : color === "sky"
-                    ? "border-sky-400/25 bg-sky-500/10 text-sky-300"
-                    : "border-leaf/25 bg-mint/70 text-leaf"
-                }`}
-              >
-                <Check className="h-3 w-3" />
-                {label}
-              </span>
-            ))}
-          </div>
         </div>
 
-        {/* ── Pricing grid ────────────────────────────────────────────── */}
-        <div
-          className={`grid gap-5 sm:grid-cols-2 ${
-            freeTier ? "lg:grid-cols-5" : "lg:grid-cols-4"
-          }`}
-        >
-
-          {/* Free tier — hidden while the free tier is disabled. */}
+        {/* ── Packs ───────────────────────────────────────────────────── */}
+        <div className={`hv-enter grid gap-4 sm:grid-cols-2 ${freeTier ? "lg:grid-cols-5" : "lg:grid-cols-4"}`} style={{ ["--d" as string]: ".12s" }}>
           {freeTier && (
-          <div className="relative flex flex-col overflow-hidden rounded-[1.35rem] border border-ink/10 bg-white/60 p-7 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-ink/10 hover:bg-white/80 lg:col-span-1">
-            <div className="mb-6">
-              <div className="mb-1 text-xs font-bold uppercase tracking-widest text-ink/55">
-                Free
-              </div>
-              <div className="mb-1 flex items-end gap-1.5">
-                <span className="font-display text-5xl font-extrabold text-ink">$0</span>
-              </div>
-              <p className="text-sm text-ink/55">Free forever · {freeCredits} credits</p>
+            <div className="flex flex-col rounded-2xl border border-ink/10 bg-[#f3f7f2] p-6">
+              <p className="text-sm font-semibold text-ink/65">{l.freeCardTitle}</p>
+              <p className="mt-3 font-display text-4xl font-bold">{freeCredits}</p>
+              <p className="text-sm text-ink/65">{l.credits}</p>
+              <p className="mt-4 text-sm font-semibold">$0</p>
+              <p className="text-sm text-ink/60">{l.freeCardNote}</p>
+              <span className="min-h-6 flex-1" />
+              <Link href={localePath("/signup", locale)} className={BTN_SECONDARY}>
+                {l.startFree}
+              </Link>
             </div>
-
-            <ul className="mb-8 flex-1 space-y-2.5">
-              {[
-                `${freeCredits} transcription credits`,
-                "All audio formats",
-                "Up to 25 MB per file",
-                "No credit card required",
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-2 text-sm text-ink/75">
-                  <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-emerald-400" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-
-            <Link
-              href={localePath("/signup", locale)}
-              className="block w-full rounded-2xl border border-ink/10 bg-white/60 py-3 text-center text-sm font-bold text-ink/85 transition-all hover:bg-white/80 hover:text-ink"
-            >
-              Get started free
-            </Link>
-          </div>
           )}
 
-          {/* Paid packages */}
           {CREDIT_PACKAGES.map((pkg) => {
-            const isPopular = pkg.popular;
-            const pricePerCredit = (pkg.price / 100 / pkg.credits).toFixed(3);
-            const minutes = pkg.credits;
             const isLoading = loadingId === pkg.id;
-
-            const features = [
-              `${minutes} transcription credits`,
-              "All audio formats",
-              "Up to 25 MB per file",
-            ];
-
-            if (isPopular) {
-              return (
-                <div
-                  key={pkg.id}
-                  className="relative flex flex-col rounded-[1.35rem] p-7 border border-white/80 shadow-[0_28px_70px_rgba(143,208,176,0.45)] sm:col-span-2 lg:col-span-1"
-                  style={{
-                    background: "linear-gradient(145deg,#ffd8c2 0%,#d9efcf 50%,#c6e6f0 100%)",
-                  }}
-                >
-                  {/* Shimmer overlay */}
-                  <div
-                    className="pointer-events-none absolute inset-0 rounded-[1.35rem]"
-                    style={{
-                      background:
-                        "linear-gradient(135deg,rgba(255,255,255,0.35) 0%,transparent 60%)",
-                    }}
-                  />
-
-                  {/* Popular badge */}
-                  <div className="absolute -top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <span className="inline-flex items-center gap-1 rounded-full bg-white px-3.5 py-1 text-[11px] font-black uppercase tracking-wider text-[#15201b] shadow-lg">
-                      <Zap className="h-3 w-3" />
-                      Most Popular
-                    </span>
-                  </div>
-
-                  <div className="relative mb-6 mt-5">
-                    <div className="mb-1 flex items-end gap-1.5">
-                      <span className="font-display text-5xl font-extrabold text-ink">
-                        {pkg.priceDisplay}
-                      </span>
-                      <span className="mb-1.5 text-sm font-semibold text-ink/55">one-time</span>
-                    </div>
-                    <p className="text-sm text-ink/55">
-                      ${pricePerCredit}/min · {minutes} credits
-                    </p>
-                  </div>
-
-                  <ul className="relative mb-8 flex-1 space-y-2.5">
-                    {features.map((item) => (
-                      <li key={item} className="flex items-start gap-2 text-sm text-ink/90">
-                        <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-ink/75" />
-                        <span className="font-medium">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <button
-                    onClick={() => handleBuy(pkg.id)}
-                    disabled={isLoading || !authLoaded}
-                    className="relative block w-full rounded-2xl bg-ink py-3.5 text-center text-sm font-black text-white shadow-[0_4px_16px_rgba(21,32,27,0.2)] transition-all hover:-translate-y-0.5 hover:bg-[#2c3a33] hover:shadow-[0_8px_24px_rgba(21,32,27,0.25)] disabled:opacity-60"
-                  >
-                    {isLoading ? "Redirecting…" : `Buy ${pkg.priceDisplay}`}
-                  </button>
-                </div>
-              );
-            }
-
             return (
               <div
                 key={pkg.id}
-                className="relative flex flex-col overflow-hidden rounded-[1.35rem] border border-ink/10 bg-white/60 p-7 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-ink/10 hover:bg-white/80 lg:col-span-1"
+                className={`flex flex-col rounded-2xl bg-white p-6 ${pkg.popular ? "border-2 border-ink" : "border border-ink/10"}`}
               >
-                <div className="mb-6">
-                  <div className="mb-1 text-xs font-bold uppercase tracking-widest text-ink/55">
-                    {pkg.name}
-                  </div>
-                  <div className="mb-1 flex items-end gap-1.5">
-                    <span className="font-display text-5xl font-extrabold text-ink">
-                      {pkg.priceDisplay}
-                    </span>
-                    <span className="mb-1.5 text-sm font-semibold text-ink/55">one-time</span>
-                  </div>
-                  <p className="text-sm text-ink/55">
-                    ${pricePerCredit}/min · {minutes} credits
-                  </p>
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-sm font-semibold text-ink/65">{pkg.name}</p>
+                  {pkg.popular && (
+                    <span className="rounded-md bg-ink px-2 py-1 text-[11px] font-semibold leading-none text-white">{d.mostPopular}</span>
+                  )}
                 </div>
-
-                <ul className="mb-8 flex-1 space-y-2.5">
-                  {features.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm text-ink/65">
-                      <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-leaf" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
+                <p className="mt-3 font-display text-4xl font-bold">{pkg.credits}</p>
+                <p className="text-sm text-ink/65">{l.credits}</p>
+                <p className="mt-4 text-sm font-semibold">
+                  {pkg.priceDisplay} <span className="font-normal text-ink/55">· {d.oneTime}</span>
+                </p>
+                <p className="text-sm text-ink/60">{fill(l.perCreditPrice, { price: (pkg.price / 100 / pkg.credits).toFixed(2) })}</p>
+                <span className="min-h-6 flex-1" />
                 <button
+                  type="button"
                   onClick={() => handleBuy(pkg.id)}
                   disabled={isLoading || !authLoaded}
-                  className="block w-full rounded-2xl border border-ink/10 bg-white/60 py-3 text-center text-sm font-bold text-ink/85 transition-all hover:bg-white/80 hover:text-ink disabled:opacity-60"
+                  className={pkg.popular ? BTN_PRIMARY : BTN_SECONDARY}
                 >
-                  {isLoading ? "Redirecting…" : `Buy ${pkg.priceDisplay}`}
+                  {isLoading ? d.redirecting : fill(l.buyPack, { count: pkg.credits })}
                 </button>
               </div>
             );
           })}
         </div>
 
-        <p className="mt-6 text-center text-xs text-ink/55">
-          Have a promo code? Enter it at checkout.
-        </p>
-
-        {/* ── FAQ / reassurance strip ──────────────────────────────────── */}
-        <div className="mt-20 grid gap-5 sm:grid-cols-3">
-          {[
-            {
-              q: "How do credits work?",
-              a: "1 minute of audio = 1 credit. Credits are deducted only when a transcription succeeds.",
-            },
-            {
-              q: "Do credits expire?",
-              a: "Never. Buy once and use your credits at your own pace — no rushing.",
-            },
-            freeTier
-              ? {
-                  q: "Is a credit card required for free?",
-                  a: `No. Sign up and instantly receive ${freeCredits} free credits. Card only needed when buying a pack.`,
-                }
-              : {
-                  q: "Do I need a subscription?",
-                  a: "No. HelaVoice is pay-as-you-go — buy a credit pack once and use it whenever you like. No recurring charges.",
-                },
-          ].map(({ q, a }) => (
-            <div
-              key={q}
-              className="rounded-[1.15rem] border border-ink/10 bg-white/60 p-6 backdrop-blur-sm"
-            >
-              <p className="mb-2 text-sm font-bold text-ink/90">{q}</p>
-              <p className="text-sm leading-relaxed text-ink/55">{a}</p>
-            </div>
+        <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink/65">
+          {[...facts, d.promo].map((x: string) => (
+            <li key={x} className="flex items-center gap-2">
+              <Check className="h-4 w-4 text-leaf" />
+              {x.charAt(0).toUpperCase() + x.slice(1)}
+            </li>
           ))}
-        </div>
+        </ul>
 
-        {/* ── Bottom CTA ──────────────────────────────────────────────── */}
-        <div className="mt-16 text-center">
-          <p className="mb-4 text-sm text-ink/55">
-            Have questions? Contact us at{" "}
-            <a
-              href="mailto:hi@helavoice.lk"
-              className="text-leaf hover:text-leaf transition-colors"
-            >
+        {/* ── Which tools are free and which use credits ───────────────── */}
+        <section id="tools" className="mt-20 scroll-mt-20">
+          <h2 className="font-display text-[clamp(1.6rem,3vw,2.25rem)] font-bold leading-[1.1] tracking-tight">{d.toolsTitle}</h2>
+          <p className="mb-8 mt-3 max-w-2xl text-lg text-ink/70">{d.toolsLead}</p>
+          <ToolCostTable
+            locale={locale}
+            nav={dict.navbar}
+            translateNote={l.toolsTranslateNote}
+            siEnLabel={l.toolsSiEn}
+          />
+        </section>
+
+        {/* ── Questions ───────────────────────────────────────────────── */}
+        <section className="mt-20 grid gap-10 lg:grid-cols-[1fr_2fr]">
+          <h2 className="font-display text-[clamp(1.6rem,3vw,2.25rem)] font-bold leading-[1.1] tracking-tight">{d.faqTitle}</h2>
+          <dl className="divide-y divide-ink/10 border-y border-ink/10">
+            {faq.map(({ q, a }) => (
+              <div key={q} className="py-5">
+                <dt className="font-semibold">{q}</dt>
+                <dd className="mt-1.5 text-[15px] leading-relaxed text-ink/70">{a}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        {/* ── Contact + start ─────────────────────────────────────────── */}
+        <div className="mt-16 flex flex-col gap-6 rounded-2xl bg-ink p-8 text-white sm:p-10 lg:flex-row lg:items-center lg:justify-between">
+          <p className="max-w-xl text-white/75">
+            {d.contactLead}{" "}
+            <a href="mailto:hi@helavoice.lk" className="font-semibold text-white underline underline-offset-4">
               hi@helavoice.lk
             </a>{" "}
-            {dict.whatsapp.pricingQuestion}{" "}
-            <a
-              href={whatsappLink()}
-              target="_blank"
-              rel="noopener"
-              className="whitespace-nowrap text-[#4ade80] hover:text-[#86efac] transition-colors"
-            >
+            {d.contactOr}{" "}
+            <a href={whatsappLink()} target="_blank" rel="noopener" className="whitespace-nowrap font-semibold text-white underline underline-offset-4">
               {WHATSAPP_NUMBER_DISPLAY}
             </a>
           </p>
           <Link
             href={localePath("/signup", locale)}
-            className="group inline-flex items-center gap-2 rounded-2xl border border-leaf/25 bg-mint/70 px-6 py-3 text-sm font-semibold text-leaf transition-all hover:bg-mint/70 hover:text-ink"
+            className="inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-lg bg-white px-6 text-[15px] font-semibold text-ink transition-[background-color,transform] hover:bg-[#e3f3e8] active:translate-y-px"
           >
-            {freeTier ? `Start with ${freeCredits} free credits` : "Get started"}
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            {freeTier ? fill(d.startFreeCount, { count: freeCredits }) : d.startPaid}
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       </div>

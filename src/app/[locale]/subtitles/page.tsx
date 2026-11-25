@@ -245,7 +245,7 @@ export default async function SubtitlesLandingPage({ params }: Props) {
         </section>
       )}
 
-      <RelatedTools locale={locale as Locale} copy={dict.relatedTools} current="subtitles" />
+      <RelatedTools locale={locale as Locale} copy={dict.relatedTools} labels={dict.navbar} current="subtitles" />
 
       {/* ── CTA ── */}
       <section className="px-4 sm:px-6 lg:px-8 pb-24">
