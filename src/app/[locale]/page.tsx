@@ -1,4 +1,4 @@
-import { ArrowRight, AudioLines, Captions, Check, ChevronDown, Copy, Download, Mic, ScanText } from "lucide-react";
+import { ArrowRight, AudioLines, Captions, Check, ChevronDown, Copy, Download, Gift, Mic, ScanText } from "lucide-react";
 import { CREDIT_PACKAGES } from "@/lib/constants";
 import { getSignupBonusConfig, getAudioUploadLimitMb } from "@/lib/app-settings";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
@@ -372,11 +372,12 @@ export default async function LandingPage({ params }: Props) {
               </div>
             </Link>
 
-            <div className="hv-tile hv-tile--third">
+            <div className="hv-tile hv-tile--third" style={{ ["--c" as string]: "var(--color-mint)" }}>
               <div className="hv-tile__top">
-                <h3>{nav.freeGroup}</h3>
+                <span className="hv-tile__swatch"><Gift aria-hidden /></span>
                 {tag("free")}
               </div>
+              <h3>{nav.freeGroup}</h3>
               <ul className="hv-free">
                 {FREE_TOOLS.map((tool) => (
                   <li key={tool.key}>
@@ -466,9 +467,9 @@ export default async function LandingPage({ params }: Props) {
                       {row.popular && <> <span className="hv-tag hv-tag--paid">{d.mostPopular}</span></>}
                       <span className="hv-sub">{row.sub}</span>
                     </td>
-                    <td className="num">{row.credits}</td>
-                    <td className="num">{t(d.cellMinutes, { min: row.credits * CHUNK_MINUTES })}</td>
-                    <td className="num"><strong>{row.price}</strong></td>
+                    <td className="num" data-label={d.thCredits}>{row.credits}</td>
+                    <td className="num" data-label={d.thTranscription}>{t(d.cellMinutes, { min: row.credits * CHUNK_MINUTES })}</td>
+                    <td className="num" data-label={d.thPrice}><strong>{row.price}</strong></td>
                     <td>
                       {row.id === "free" ? (
                         <Link href={lp("/signup")} className="hv-btn hv-btn--sheet hv-btn--small">

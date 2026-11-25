@@ -18,7 +18,7 @@ import type { User, SupabaseClient } from "@supabase/supabase-js";
 type NavDict = ReturnType<typeof useDictionary>["navbar"];
 
 const LINK =
-  "inline-flex h-10 items-center rounded-lg px-3 text-sm font-medium text-ink/70 transition-colors hover:bg-ink/[0.05] hover:text-ink";
+  "inline-flex h-10 items-center rounded-lg px-3 text-sm text-ink/75 transition-colors hover:bg-ink/[0.05] hover:text-ink";
 const PRIMARY =
   "inline-flex h-10 items-center rounded-full bg-ink px-5 text-sm font-semibold text-on-night transition-[background-color,transform] hover:bg-ink-2 active:translate-y-px";
 
@@ -247,7 +247,8 @@ export function Navbar() {
     <div className={`sticky z-50 w-full ${showBanner ? "top-[-2.5rem]" : "top-0"}`}>
       {showBanner && (
         <div className="flex h-10 items-center justify-center gap-3 bg-night px-4 text-sm text-on-night">
-          <span className="truncate">{t(d.banner, { chars: TTS_FREE_CHARS })}</span>
+          <span className="hidden truncate sm:inline">{t(d.banner, { chars: TTS_FREE_CHARS })}</span>
+          <span className="truncate sm:hidden">{t(d.bannerShort, { chars: TTS_FREE_CHARS })}</span>
           <LocaleLink href="/sinhala-text-to-speech" className="shrink-0 rounded font-semibold underline underline-offset-4 hover:no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-on-night">
             {d.bannerLink}
           </LocaleLink>

@@ -6,11 +6,12 @@ import { JetBrains_Mono, Noto_Sans_Sinhala, Poppins } from "next/font/google";
 import "./globals.css";
 import { SUPPORT_EMAIL, whatsappLink } from "@/lib/contact";
 
-// Poppins is the brand face (logo pack 2026-11). Three weights: body, controls, heads.
+// Poppins is the brand face (logo pack 2026-11): 400 body, 600 controls, 700 heads;
+// 500 because 24 older files use font-medium and would otherwise render at 400.
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 

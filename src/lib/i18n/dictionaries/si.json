@@ -46,7 +46,8 @@
     "menu": "මෙනුව",
     "creditsShort": "ක්‍රෙඩිට් {count}",
     "banner": "සිංහල text to speech, අකුරු {chars}ක් නොමිලේ",
-    "bannerLink": "අත්හදා බලන්න"
+    "bannerLink": "අත්හදා බලන්න",
+    "bannerShort": "text to speech අකුරු {chars}ක් නොමිලේ"
   },
   "landing": {
     "heroSubtitle": "HelaVoice සිංහල කථනය, සංස්කරණය කර බාගත හැකි පෙළ බවට හරවයි. බ්‍රවුසරයෙන් පටිගත කරන්න හෝ හඬ ගොනුවක් උඩුගත කරන්න. ක්‍රෙඩිට් වලින් ගෙවන්න, මාසික ගාස්තුවක් නැත.",
@@ -69,7 +70,7 @@
     "creditsNeverExpire": "ක්‍රෙඩිට් කල් ඉකුත් නොවේ",
     "credits": "ක්‍රෙඩිට්",
     "mostPopular": "වඩාත් ජනප්‍රිය",
-    "allAudioFormats": "ඕනෑම ඕඩියෝ ෆෝමැට් එකක්",
+    "allAudioFormats": "MP3, M4A, WAV, OGG, FLAC සහ WebM",
     "startFree": "නොමිලේ අරඹන්න",
     "guideIntro": "පියවරෙන් පියවර මාර්ගෝපදේශයක් අවශ්‍යද?",
     "guideLink": "Sinhala audio to text පරිවර්තනය කරන ක්‍රමය",

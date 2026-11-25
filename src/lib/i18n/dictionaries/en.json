@@ -46,7 +46,8 @@
     "menu": "Menu",
     "creditsShort": "{count} credits",
     "banner": "Sinhala text to speech, {chars} characters free",
-    "bannerLink": "Try it"
+    "bannerLink": "Try it",
+    "bannerShort": "{chars} free characters of text to speech"
   },
   "landing": {
     "heroSubtitle": "HelaVoice turns Sinhala speech into text you can edit and download. Record in your browser or upload an audio file, and pay with credits, with no subscription.",
@@ -69,7 +70,7 @@
     "creditsNeverExpire": "credits never expire",
     "credits": "credits",
     "mostPopular": "Most popular",
-    "allAudioFormats": "All audio formats",
+    "allAudioFormats": "MP3, M4A, WAV, OGG, FLAC and WebM",
     "startFree": "Start free",
     "guideIntro": "Prefer a step-by-step tutorial?",
     "guideLink": "How to transcribe Sinhala audio to text",
