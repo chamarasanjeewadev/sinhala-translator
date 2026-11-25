@@ -26,7 +26,8 @@ export const CREDIT_PACKAGES: CreditPackage[] = [
   {
     id: "pack_150",
     name: "Premium",
-    credits: 1000,
+    // 1250 keeps the per-credit price falling as packs grow ($0.04 vs Pro's $0.043).
+    credits: 1250,
     price: 5000,
     priceDisplay: "$50",
   },
@@ -56,7 +57,7 @@ export const IAP_PRODUCTS: Record<
     priceUsdCents: 3000,
   },
   "com.helavoice.app.credits.premium": {
-    credits: 1000,
+    credits: 1250,
     name: "Premium",
     priceUsdCents: 5000,
   },
