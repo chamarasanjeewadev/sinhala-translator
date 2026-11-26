@@ -449,6 +449,43 @@ a.hv-tile:focus-visible { outline: 2px solid var(--color-violet); outline-offset
 .hv-close .hv-btn--sheet:hover { background: var(--hi-soft); }
 .hv-close .hv-btn:focus-visible { outline-color: var(--color-on-violet); }
 
+/* ── Text fill + subtle reveals. Progressive: without scroll timelines or with reduced motion, headings are plain ink. ── */
+.hv-band-night { --fill-c: var(--color-on-night); }
+.hv-close { --fill-c: var(--color-on-violet); }
+@media (prefers-reduced-motion: no-preference) {
+	/* Hero title: fills once on load, left to right */
+	.hv-home h1 {
+		background: linear-gradient(to right, var(--color-ink) 50%, color-mix(in oklab, var(--color-ink) 22%, transparent) 50%) 100% 0 / 200% 100% no-repeat;
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+		animation: hv-text-fill 1.4s var(--ease-out) 0.15s both;
+	}
+	@supports (animation-timeline: view()) {
+		/* Section titles: fill as they scroll into view */
+		.hv-home h2 {
+			background: linear-gradient(to right, var(--fill-c, var(--color-ink)) 50%, color-mix(in oklab, var(--fill-c, var(--color-ink)) 22%, transparent) 50%) 100% 0 / 200% 100% no-repeat;
+			-webkit-background-clip: text;
+			background-clip: text;
+			color: transparent;
+			animation: hv-text-fill linear both;
+			animation-timeline: view();
+			animation-range: entry 40% cover 45%;
+		}
+		/* Tiles, steps and the price figure rise a little as they enter. `translate`, so hover `transform` still works. */
+		.hv-tile,
+		.hv-steps > li,
+		.hv-io__row,
+		.hv-stat__figure {
+			animation: hv-rise linear both;
+			animation-timeline: view();
+			animation-range: entry 0% entry 90%;
+		}
+	}
+}
+@keyframes hv-text-fill { from { background-position: 100% 0; } to { background-position: 0 0; } }
+@keyframes hv-rise { from { opacity: 0; translate: 0 18px; } to { opacity: 1; translate: 0 0; } }
+
 /* ── Under 60rem every composition stacks in reading order ── */
 @media (max-width: 60rem) {
 	.hv-home { --gutter: 24px; --section-gap-s: 80px; --section-gap: 96px; }
